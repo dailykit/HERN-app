@@ -8,6 +8,7 @@ import {
    TouchableOpacity,
    TouchableWithoutFeedback,
 } from 'react-native'
+import { ProductList } from '../../components/product'
 import { hydratedMenu } from './demoMenu'
 import { ProductCategory } from './productCategory'
 
@@ -16,6 +17,9 @@ const MenuScreen = () => {
       hydratedMenu.find(x => x.isCategoryPublished && x.isCategoryAvailable)
          ?.name
    )
+   const selectedCategoryWithCompleteData = React.useMemo(() => {
+      return hydratedMenu.find(x => x.name === selectedCategory)
+   }, [selectedCategory])
    return (
       <View style={{ backgroundColor: '#ffffff' }}>
          <View
@@ -38,6 +42,11 @@ const MenuScreen = () => {
                   />
                )
             })}
+         </ScrollView>
+         <ScrollView>
+            <ProductList
+               productsList={selectedCategoryWithCompleteData.products}
+            />
          </ScrollView>
       </View>
    )
