@@ -8,6 +8,7 @@ import {
    TouchableOpacity,
    TouchableWithoutFeedback,
 } from 'react-native'
+import { Divider } from '../../components/divider'
 import { ProductList } from '../../components/product'
 import { hydratedMenu } from './demoMenu'
 import { ProductCategory } from './productCategory'
@@ -25,7 +26,7 @@ const MenuScreen = () => {
          <View
             style={{ height: 64, width: '100%', backgroundColor: 'red' }}
          ></View>
-         <ScrollView style={categoryStyles.container} horizontal={true}>
+         <ScrollView style={styles.container} horizontal={true}>
             {hydratedMenu.map((eachCategory, index) => {
                if (!eachCategory.isCategoryPublished) {
                   return null
@@ -44,9 +45,20 @@ const MenuScreen = () => {
             })}
          </ScrollView>
          <ScrollView>
-            <ProductList
-               productsList={selectedCategoryWithCompleteData.products}
-            />
+            {hydratedMenu.map((eachCategory, index) => {
+               if (!eachCategory.isCategoryPublished) {
+                  return null
+               }
+               return (
+                  <View key={eachCategory.name + '--' + index}>
+                     <Text style={styles.categoryListName}>
+                        {eachCategory.name}
+                     </Text>
+                     <ProductList productsList={eachCategory.products} />
+                     <Divider />
+                  </View>
+               )
+            })}
          </ScrollView>
       </View>
    )
@@ -55,10 +67,16 @@ const MenuScreen = () => {
 const MenuScreenHeader = () => {
    return <View style={{ height: '64px', width: '100%' }}></View>
 }
-const categoryStyles = StyleSheet.create({
+const styles = StyleSheet.create({
    container: {
       display: 'flex',
       flexDirection: 'row',
+   },
+   categoryListName: {
+      fontSize: 24,
+      lineHeight: 36,
+      fontWeight: '600',
+      marginHorizontal: 12,
    },
 })
 export default MenuScreen

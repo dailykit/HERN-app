@@ -1,0 +1,81 @@
+{
+   "brandSettings": {
+      "brandLogo": {
+         "label": "brand Logo",
+         "value": "",
+         "dataType": "imageUpload",
+         "description": "Logo for brand.",
+         "defaultValue": "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/32397-taco_bell_logo.png",
+         "userInsertType": "imageUpload"
+      },
+      "buttonSettings": {
+         "textColor": {
+            "id": "text-col",
+            "label": "Text Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "buttonBGColor": {
+            "id": "button-col",
+            "label": "Button Background Color",
+            "value": "#000000",
+            "default": "#000000",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "buttonDisabledColor": {
+            "id": "button-disabled-col",
+            "label": "Button Disabled Color",
+            "value": "#7124B433",
+            "default": "#7124B4",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         }
+      },
+      "menuSettings": {
+         "numberOfProductsInRow": {
+            "label": "Number of products in row",
+            "value": 2,
+            "default": 2,
+            "dataType": "number",
+            "description": "Number Of Products In Row",
+            "userInsertType": "numberField"
+         },
+         "productListView": {
+            "type": "single",
+            "label": "Select view of product list",
+            "value": {
+               "id": 1,
+               "title": "Grid",
+               "value": "GRID"
+            },
+            "options": [
+               {
+                  "id": 1,
+                  "title": "Grid",
+                  "value": "GRID"
+               },
+               {
+                  "id": 2,
+                  "title": "Single",
+                  "value": "SINGLE"
+               }
+            ],
+            "dataType": "select",
+            "userInsertType": "dropdown"
+         }
+      },
+      "productSettings": {
+         "defaultImage": {
+            "label": "Default Image for product.",
+            "value": "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/41476-default.png",
+            "default": "",
+            "dataType": "imageUpload",
+            "description": "This will show as product image if specific product image is not exists.",
+            "userInsertType": "imageUpload"
+         }
+      }
+   }
+}

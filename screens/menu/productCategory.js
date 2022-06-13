@@ -71,6 +71,7 @@ const categoryStyles = StyleSheet.create({
    categoryText: {
       fontFamily: 'Metropolis',
       fontSize: 14,
+      lineHeight: 16,
       textTransform: 'uppercase',
       fontWeight: '500',
       marginLeft: 4,

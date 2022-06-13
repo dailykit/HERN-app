@@ -5,6 +5,8 @@ import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { Button } from './button'
 import { VegNonVegIcon } from '../assets/vegNonVegIcon'
+import appConfig from '../brandConfig.json'
+
 export const ProductList = ({ productsList }) => {
    // group the product list by product type
    const groupedByType = React.useMemo(() => {
@@ -111,7 +113,9 @@ export const ProductCard = ({ productData }) => {
          <View style={styles.productFloatContainer}>
             <Image
                source={{
-                  uri: productData.assets.images[0],
+                  uri:
+                     productData.assets.images[0] ||
+                     appConfig.brandSettings.productSettings.defaultImage.value,
                   width: 156,
                   height: 100,
                }}
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
       width: 176,
       height: 206,
       position: 'relative',
-      margin: 8,
+      margin: 10,
    },
    productFloatContainer: {
       width: 176,
