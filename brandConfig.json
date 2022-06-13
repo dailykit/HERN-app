@@ -1,4 +1,31 @@
 {
+   "data": {
+      "showPromotionImageOnMenuPage": {
+         "dataType": "boolean",
+         "default": true,
+         "description": "Show Promotion Image On Menu Page",
+         "label": "Show Promotion Image On Menu Page",
+         "userInsertType": "toggle",
+         "value": true
+      },
+      "menuPagePromotionImage": {
+         "label": "Menu Page Promotion Image",
+         "value": {
+            "url": [
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/78894-Banner.png",
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/78894-Banner.png"
+            ]
+         },
+         "default": {
+            "url": []
+         },
+         "dataType": "multipleImagesUpload",
+         "showModal": true,
+         "isRequired": true,
+         "description": "This sets menu page promotion images",
+         "userInsertType": "multipleImagesUpload"
+      }
+   },
    "brandSettings": {
       "brandLogo": {
          "label": "brand Logo",

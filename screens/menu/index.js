@@ -12,6 +12,8 @@ import { Divider } from '../../components/divider'
 import { ProductList } from '../../components/product'
 import { hydratedMenu } from './demoMenu'
 import { ProductCategory } from './productCategory'
+import appConfig from '../../brandConfig.json'
+import { MenuPromotionCarousel } from './menuPromotionCarousel'
 
 const MenuScreen = () => {
    const [selectedCategory, setSelectedCategory] = React.useState(
@@ -26,25 +28,32 @@ const MenuScreen = () => {
          <View
             style={{ height: 64, width: '100%', backgroundColor: 'red' }}
          ></View>
-         <ScrollView style={styles.container} horizontal={true}>
-            {hydratedMenu.map((eachCategory, index) => {
-               if (!eachCategory.isCategoryPublished) {
-                  return null
-               }
-               const isActiveCategory = selectedCategory === eachCategory.name
-               return (
-                  <ProductCategory
-                     key={`${eachCategory.name}-${index}`}
-                     onCategoryClick={() => {
-                        setSelectedCategory(eachCategory.name)
-                     }}
-                     isActiveCategory={isActiveCategory}
-                     eachCategory={eachCategory}
-                  />
-               )
-            })}
-         </ScrollView>
+         <View>
+            <ScrollView style={styles.container} horizontal={true}>
+               {hydratedMenu.map((eachCategory, index) => {
+                  if (!eachCategory.isCategoryPublished) {
+                     return null
+                  }
+                  const isActiveCategory =
+                     selectedCategory === eachCategory.name
+                  return (
+                     <ProductCategory
+                        key={`${eachCategory.name}-${index}`}
+                        onCategoryClick={() => {
+                           setSelectedCategory(eachCategory.name)
+                        }}
+                        isActiveCategory={isActiveCategory}
+                        eachCategory={eachCategory}
+                     />
+                  )
+               })}
+            </ScrollView>
+         </View>
          <ScrollView>
+            {appConfig.data.showPromotionImageOnMenuPage.value &&
+            appConfig.data.menuPagePromotionImage.value.url.length > 0 ? (
+               <MenuPromotionCarousel />
+            ) : null}
             {hydratedMenu.map((eachCategory, index) => {
                if (!eachCategory.isCategoryPublished) {
                   return null
