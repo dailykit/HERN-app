@@ -4,6 +4,7 @@ import SafeAreaView from 'react-native-safe-area-view'
 import { useNavigation } from '@react-navigation/native'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
+import { Header } from '../../components/header'
 const BRANDS = gql`
    query brands {
       brands {
@@ -15,7 +16,8 @@ const HomeScreen = () => {
    const navigation = useNavigation()
 
    return (
-      <SafeAreaView>
+      <View>
+         <Header />
          <View
             style={{
                display: 'flex',
@@ -29,7 +31,7 @@ const HomeScreen = () => {
                <Text>Move to Menu</Text>
             </TouchableOpacity>
          </View>
-      </SafeAreaView>
+      </View>
    )
 }
 

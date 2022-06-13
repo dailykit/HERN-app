@@ -14,6 +14,7 @@ import { hydratedMenu } from './demoMenu'
 import { ProductCategory } from './productCategory'
 import appConfig from '../../brandConfig.json'
 import { MenuPromotionCarousel } from './menuPromotionCarousel'
+import { Header } from '../../components/header'
 
 const MenuScreen = () => {
    const [selectedCategory, setSelectedCategory] = React.useState(
@@ -25,9 +26,7 @@ const MenuScreen = () => {
    }, [selectedCategory])
    return (
       <View style={{ backgroundColor: '#ffffff' }}>
-         <View
-            style={{ height: 64, width: '100%', backgroundColor: 'red' }}
-         ></View>
+         <Header />
          <View>
             <ScrollView style={styles.container} horizontal={true}>
                {hydratedMenu.map((eachCategory, index) => {
