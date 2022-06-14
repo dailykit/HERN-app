@@ -2,19 +2,10 @@ import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view'
 import { useNavigation } from '@react-navigation/native'
-import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
 import { Header } from '../../components/header'
-const BRANDS = gql`
-   query brands {
-      brands {
-         id
-      }
-   }
-`
+
 const HomeScreen = () => {
    const navigation = useNavigation()
-
    return (
       <View>
          <Header />
