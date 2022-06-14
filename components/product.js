@@ -6,6 +6,8 @@ import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { Button } from './button'
 import { VegNonVegIcon } from '../assets/vegNonVegIcon'
 import appConfig from '../brandConfig.json'
+import { ModifierPopup } from './modifierPopup'
+import Modal from 'react-native-modal'
 
 export const ProductList = ({ productsList }) => {
    // group the product list by product type
@@ -55,6 +57,7 @@ export const ProductList = ({ productsList }) => {
 
 export const ProductCard = ({ productData }) => {
    const isStoreAvailable = true
+   const [showModifierPopup, setShowModifierPopup] = useState(false)
    const defaultProductOption = React.useMemo(() => {
       if (productData.productOptions.length === 0) {
          return {}
@@ -174,7 +177,7 @@ export const ProductCard = ({ productData }) => {
                   <View>
                      <Button
                         onPress={() => {
-                           console.log('data', productData)
+                           setShowModifierPopup(true)
                         }}
                      >
                         +ADD
@@ -183,6 +186,14 @@ export const ProductCard = ({ productData }) => {
                </View>
             </View>
          </View>
+         {/* {showModifierPopup && <ModifierPopup />} */}
+         <Modal isVisible={showModifierPopup}>
+            <ModifierPopup
+               closeModifier={() => {
+                  setShowModifierPopup(false)
+               }}
+            />
+         </Modal>
       </View>
    )
 }

@@ -15,7 +15,6 @@ export const ProductCategory = ({
    return (
       <TouchableWithoutFeedback
          onPress={() => {
-            console.log('hello')
             onCategoryClick()
          }}
       >
