@@ -5,15 +5,18 @@ import 'react-native-gesture-handler'
 import { Platform, StatusBar } from 'react-native'
 import Navigation from './navigation'
 import { ApolloProvider } from './lib/apollo'
+import { ConfigProvider } from './lib/config'
 const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
 export default function App() {
    return (
-      <SafeAreaProvider  style={{ paddingTop: paddingTop }}>
+      <SafeAreaProvider style={{ paddingTop: paddingTop }}>
          <ApolloProvider>
-            <NavigationContainer>
-               <Navigation />
-            </NavigationContainer>
+            <ConfigProvider>
+               <NavigationContainer>
+                  <Navigation />
+               </NavigationContainer>
+            </ConfigProvider>
          </ApolloProvider>
       </SafeAreaProvider>
    )
