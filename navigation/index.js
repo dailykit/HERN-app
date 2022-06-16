@@ -3,6 +3,7 @@ import React from 'react'
 const Stack = createStackNavigator()
 import HomeScreen from '../screens/home'
 import MenuScreen from '../screens/menu'
+import LocationSelectorScreen from '../screens/locationSelector'
 
 const Navigation = () => {
    return (
@@ -17,6 +18,10 @@ const Navigation = () => {
             component={HomeScreen}
          />
          <Stack.Screen name="Menu" component={MenuScreen} />
+         <Stack.Screen
+            name="LocationSelector"
+            component={LocationSelectorScreen}
+         />
       </Stack.Navigator>
    )
 }

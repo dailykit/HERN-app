@@ -2,8 +2,10 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import CartIcon from '../assets/cartIcon'
 import LocationIcon from '../assets/locationIcon'
 import appConfig from '../brandConfig.json'
+import { useNavigation } from '@react-navigation/native'
 
 export const Header = () => {
+   const navigation = useNavigation()
    return (
       <View
          style={[
@@ -15,7 +17,12 @@ export const Header = () => {
             },
          ]}
       >
-         <TouchableOpacity style={styles.headerRight}>
+         <TouchableOpacity
+            style={styles.headerRight}
+            onPress={() => {
+               navigation.navigate('LocationSelector')
+            }}
+         >
             <LocationIcon />
             <Text
                style={[
