@@ -49,3 +49,38 @@ export const SETTINGS_QUERY = gql`
       }
    }
 `
+export const GET_ALL_RECURRENCES = gql`
+   query GET_ALL_RECURRENCES($where: fulfilment_brand_recurrence_bool_exp!) {
+      brandRecurrences(where: $where) {
+         brandId
+         brandLocationId
+         recurrenceId
+         recurrence {
+            id
+            rrule
+            type
+            timeSlots {
+               from
+               to
+               pickUpPrepTime
+               id
+               pickUpLeadTime
+               slotInterval
+               mileRanges {
+                  id
+                  from
+                  city
+                  distanceType
+                  to
+                  zipcodes
+                  state
+                  prepTime
+                  geoBoundary
+                  isExcluded
+                  leadTime
+               }
+            }
+         }
+      }
+   }
+`
