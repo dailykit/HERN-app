@@ -3,8 +3,8 @@ import { getDistance, convertDistance } from 'geolib'
 import {
    isStoreOnDemandDeliveryAvailable,
    isStorePreOrderDeliveryAvailable,
-   //    isStorePreOrderPickupAvailable,
-   //    isStoreOnDemandPickupAvailable,
+   isStorePreOrderPickupAvailable,
+   isStoreOnDemandPickupAvailable,
    //    isStoreOnDemandDineInAvailable,
    //    isStorePreOrderDineInAvailable,
 } from '.'
