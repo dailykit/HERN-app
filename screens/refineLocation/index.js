@@ -21,6 +21,7 @@ import { getStoresWithValidations } from '../../utils/location/sharedLocationUti
 import { useConfig } from '../../lib/config'
 import SearchIcon from '../../assets/searchIcon'
 import { GooglePlacesAutocompleteWrapper } from '../../components/location/googlePlaceAutoComplete'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const RefineLocation = () => {
    const navigation = useNavigation()
@@ -28,7 +29,7 @@ const RefineLocation = () => {
    const navAddress = route.params.address
    const navFulfillmentType = route.params.fulfillmentType
 
-   const { brand } = useConfig()
+   const { brand, orderTabs, dispatch } = useConfig()
    const [address, setAddress] = React.useState(navAddress)
    const [isGetStoresLoading, setIsGetStoresLoading] = useState(true)
    const [searchedLocation, setSearchedLocation] = React.useState(
@@ -86,9 +87,9 @@ const RefineLocation = () => {
                setSelectedStore(null)
             } else {
                setIsStoreAvailableOnAddress(true)
+               setSelectedStore(availableStore[0])
+               setIsGetStoresLoading(false)
             }
-            setSelectedStore(availableStore[0])
-            setIsGetStoresLoading(false)
          }
          fetchStores()
       }
@@ -178,6 +179,82 @@ const RefineLocation = () => {
             error: true,
             message: 'Unable to find location',
          })
+      }
+   }
+
+   const handleSubmit = async () => {
+      const selectedOrderTab = orderTabs.find(
+         x => x.orderFulfillmentTypeLabel === navFulfillmentType
+      )
+      // console.log('address', { ...address, ...additionalAddressInfo })
+      const customerAddress = {
+         line1: additionalAddressInfo?.line1 || '',
+         line2: address.line2 || '',
+         city: address.city,
+         state: address.state,
+         country: address.country,
+         zipcode: address.zipcode,
+         notes: additionalAddressInfo?.notes || '',
+         label: additionalAddressInfo?.label || '',
+         lat: address.latitude.toString(),
+         lng: address.longitude.toString(),
+         landmark: additionalAddressInfo?.landmark || '',
+         searched: searchedLocation,
+      }
+
+      dispatch({
+         type: 'SET_LOCATION_ID',
+         payload: selectedStore.location.id,
+      })
+      dispatch({
+         type: 'SET_SELECTED_ORDER_TAB',
+         payload: selectedOrderTab,
+      })
+      dispatch({
+         type: 'SET_USER_LOCATION',
+         payload: address,
+      })
+      dispatch({
+         type: 'SET_STORE_STATUS',
+         payload: {
+            status: true,
+            message: 'Store available on your location.',
+            loading: false,
+         },
+      })
+      try {
+         await AsyncStorage.setItem('orderTab', navFulfillmentType)
+         if (
+            (await AsyncStorage.getItem('storeLocationId')) !=
+            selectedStore.location.id
+         ) {
+            const lastStoreLocationId = await AsyncStorage.getItem(
+               'storeLocationId'
+            )
+            await AsyncStorage.setItem(
+               'lastStoreLocationId',
+               lastStoreLocationId
+            )
+            dispatch({
+               type: 'SET_LAST_LOCATION_ID',
+               payload: lastStoreLocationId,
+            })
+         }
+         await AsyncStorage.setItem(
+            'storeLocationId',
+            selectedStore.location.id.toString()
+         )
+         await AsyncStorage.setItem(
+            'userLocation',
+            JSON.stringify({
+               ...address,
+               ...additionalAddressInfo,
+               searched: searchedLocation,
+            })
+         )
+         await AsyncStorage.removeItem('storeLocation')
+      } catch (err) {
+         console.error('refineLocationSubmit', err)
       }
    }
 
@@ -284,6 +361,7 @@ const RefineLocation = () => {
                !additionalAddressInfo?.line1 ||
                isGetStoresLoading
             }
+            onPress={handleSubmit}
          >
             {isGetStoresLoading
                ? 'Searching store'
@@ -418,18 +496,3 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
    },
 })
-
-const navAddress = {
-   city: 'Jaipur',
-   country: 'India',
-   latitude: '26.9005832',
-   line1: 'Janki Marg, Chitrakoot',
-   line2: 'Chitrakoot ',
-   longitude: '75.7351296',
-   mainText: 'Chitrakoot Stadium',
-   searched:
-      'Chitrakoot Stadium, Janki Marg, Chitrakoot, Jaipur, Rajasthan, India',
-   secondaryText: 'Janki Marg, Chitrakoot, Jaipur, Rajasthan, India',
-   state: 'Rajasthan',
-   zipcode: '302021',
-}
