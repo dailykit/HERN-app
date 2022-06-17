@@ -12,6 +12,7 @@ export const Button = ({
    isActive = false,
    showRadio = false,
    radioSize = 16,
+   disabled = false,
 }) => {
    const { buttonSettings } = appConfig.brandSettings
    const containerStyleByVariant = variant => {
@@ -43,6 +44,7 @@ export const Button = ({
    return (
       <TouchableOpacity
          onPress={onPress}
+         disabled={disabled}
          style={[
             styles.buttonContainerStyle,
             containerStyleByVariant(variant),
@@ -53,6 +55,7 @@ export const Button = ({
                alignItems: 'center',
                flexDirection: 'row',
             },
+            disabled ? { opacity: 0.5 } : null,
          ]}
       >
          {showRadio ? (

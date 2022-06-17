@@ -4,7 +4,7 @@ const Stack = createStackNavigator()
 import HomeScreen from '../screens/home'
 import MenuScreen from '../screens/menu'
 import LocationSelectorScreen from '../screens/locationSelector'
-
+import RefineLocation from '../screens/refineLocation'
 const Navigation = () => {
    return (
       <Stack.Navigator
@@ -22,6 +22,7 @@ const Navigation = () => {
             name="LocationSelector"
             component={LocationSelectorScreen}
          />
+         <Stack.Screen name="RefineLocation" component={RefineLocation} />
       </Stack.Navigator>
    )
 }

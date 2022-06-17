@@ -9,8 +9,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import LocationIcon from '../../assets/locationIcon'
 import { getStoresWithValidations } from '../../utils/location/sharedLocationUtils'
 import { getFormattedAddress } from '../../utils/getFormattedAddress'
+import { AddressInfo } from './addressInfo'
+import { useNavigation } from '@react-navigation/native'
 
 export const Delivery = () => {
+   const navigation = useNavigation()
    const { orderTabs, brand } = useConfig()
 
    const [userCoordinate, setUserCoordinate] = useState({
@@ -75,6 +78,12 @@ export const Delivery = () => {
             })
             setStores(availableStore)
             setIsGetStoresLoading(false)
+            if (availableStore.length > 0) {
+               navigation.navigate('RefineLocation', {
+                  address: address,
+                  fulfillmentType: fulfillmentType,
+               })
+            }
          }
          fetchStores()
       }
@@ -108,7 +117,6 @@ export const Delivery = () => {
          longitude: location.coords.longitude,
          errorMessage: '',
       }))
-      console.log(location)
    }
 
    // get address from user current location
@@ -152,6 +160,12 @@ export const Delivery = () => {
                      }))
                   } else {
                      console.log('Error: ', getAddressResult.message)
+                     setLocationSearching(prev => ({
+                        ...prev,
+                        loading: false,
+                        error: true,
+                        errorType: 'zipcodeNotFound',
+                     }))
                   }
                }
             })
@@ -167,7 +181,7 @@ export const Delivery = () => {
       }
    }, [userCoordinate])
 
-   console.log('address', address, locationSearching)
+   // console.log('address', address, stores, fulfillmentType)
 
    const SERVER_URL = React.useMemo(() => {
       return __DEV__ ? 'http://192.168.43.137:4000' : get_env('BASE_BRAND_URL')
@@ -177,12 +191,6 @@ export const Delivery = () => {
       // save user's search text
       setSelectedLocationInputDescription(input.description)
       try {
-         console.log(
-            'finalurl',
-            `${SERVER_URL}/server/api/place/details/json?key=${get_env(
-               'GOOGLE_API_KEY'
-            )}&placeid=${input.place_id}&language=en`
-         )
          const response = await fetch(
             `${SERVER_URL}/server/api/place/details/json?key=${get_env(
                'GOOGLE_API_KEY'
@@ -213,6 +221,12 @@ export const Delivery = () => {
                })
             } else {
                console.log('error', getAddressResult.message)
+               setLocationSearching(prev => ({
+                  ...prev,
+                  loading: false,
+                  error: true,
+                  errorType: 'zipcodeNotFound',
+               }))
             }
          }
       } catch (err) {
@@ -279,7 +293,9 @@ export const Delivery = () => {
             ) : locationSearching.error ? (
                <Text style={{ color: 'red' }}>
                   {locationSearching.errorType === 'blockByPermission'
-                     ? 'Permission to access location was denied'
+                     ? locationSearching.errorType === 'zipcodeNotFound'
+                        ? 'Please select precise location'
+                        : 'Permission to access location was denied'
                      : 'Unable to get your location'}
                </Text>
             ) : address ? (
@@ -297,22 +313,21 @@ export const Delivery = () => {
                      source={require('../../assets/locationSearchGif.gif')}
                   />
                </View>
+            ) : stores?.length === 0 ? (
+               <View style={styles.noStoreContainer}>
+                  <Text style={styles.noStoreText1}>
+                     Store service not found at your location
+                  </Text>
+                  <Text style={styles.noStoreText2}>Try other Locations</Text>
+                  <Image
+                     source={require('../../assets/noStore.png')}
+                     style={{
+                        height: 300,
+                        width: '100%',
+                     }}
+                  />
+               </View>
             ) : null}
-         </View>
-      </View>
-   )
-}
-
-const AddressInfo = props => {
-   const { address } = props
-   return (
-      <View style={styles.addressContainer}>
-         <LocationIcon fill={'#A2A2A2'} />
-         <View style={{ flexShrink: 1 }}>
-            <Text style={styles.addressText}>{address.mainText}</Text>
-            <Text style={styles.addressText}>
-               {address.secondaryText} {address.zipcode}
-            </Text>
          </View>
       </View>
    )
@@ -326,21 +341,26 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       marginVertical: 18,
    },
-   addressContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 8,
-   },
-   addressText: {
-      color: 'rgba(0, 0, 0, 0.6)',
-      fontWeight: '500',
-      fontSize: 13,
-   },
+
    searchingStoreStyle: { marginVertical: 15, alignItems: 'center' },
    findingTextStyle: {
       fontSize: 18,
       fontWeight: '500',
       color: 'rgba(0, 0, 0, 0.8)',
       marginBottom: 16,
+   },
+   noStoreContainer: {
+      alignItems: 'center',
+      marginVertical: 8,
+   },
+   noStoreText1: {
+      fontSize: 16,
+      fontWeight: '600',
+      marginVertical: 4,
+   },
+   noStoreText2: {
+      color: '#A2A2A2',
+      fontSize: 12,
+      marginVertical: 4,
    },
 })

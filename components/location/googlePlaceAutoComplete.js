@@ -7,13 +7,20 @@ import { get_env } from '../../utils/get_env'
 export const GooglePlacesAutocompleteWrapper = ({
    formatAddress = () => {},
    onGPSiconClick,
+   showGPSicon = true,
+   googleContainerStyle,
 }) => {
    const _googleRef = React.useRef()
    React.useEffect(() => {
       _googleRef.current.focus()
    }, [])
    return (
-      <View style={styles.container}>
+      <View
+         style={[
+            styles.container,
+            googleContainerStyle ? googleContainerStyle : {},
+         ]}
+      >
          <GooglePlacesAutocomplete
             ref={_googleRef}
             placeholder="Search for area, street name..."
@@ -44,17 +51,19 @@ export const GooglePlacesAutocompleteWrapper = ({
             onFail={error => console.error('Hello', error)}
             debounce={200}
          />
-         <TouchableOpacity
-            style={{
-               position: 'absolute',
-               right: 0,
-               top: 10,
-               paddingHorizontal: 10,
-            }}
-            onPress={onGPSiconClick}
-         >
-            <GPSicon />
-         </TouchableOpacity>
+         {showGPSicon ? (
+            <TouchableOpacity
+               style={{
+                  position: 'absolute',
+                  right: 0,
+                  top: 10,
+                  paddingHorizontal: 10,
+               }}
+               onPress={onGPSiconClick}
+            >
+               <GPSicon />
+            </TouchableOpacity>
+         ) : null}
       </View>
    )
 }
