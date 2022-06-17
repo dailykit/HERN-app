@@ -26,6 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const RefineLocation = () => {
    const navigation = useNavigation()
    const route = useRoute()
+
    const navAddress = route.params.address
    const navFulfillmentType = route.params.fulfillmentType
 
@@ -253,6 +254,14 @@ const RefineLocation = () => {
             })
          )
          await AsyncStorage.removeItem('storeLocation')
+         const states = navigation.getState()
+         const lastRoute = states.routes[states.routes.length - 2]
+         if (lastRoute.name === 'LocationSelector') {
+            const secondLastRoute = states.routes[states.routes.length - 3]
+            navigation.navigate(secondLastRoute.name)
+         } else {
+            navigation.goBack()
+         }
       } catch (err) {
          console.error('refineLocationSubmit', err)
       }
