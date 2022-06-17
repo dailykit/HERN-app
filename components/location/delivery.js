@@ -11,6 +11,7 @@ import { getStoresWithValidations } from '../../utils/location/sharedLocationUti
 import { getFormattedAddress } from '../../utils/getFormattedAddress'
 import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
+import { Button } from '../button'
 
 export const Delivery = () => {
    const navigation = useNavigation()
@@ -239,45 +240,21 @@ export const Delivery = () => {
             <Text>Delivery Time</Text>
             <View style={{ flexDirection: 'row' }}>
                {deliveryRadioOptions.map((option, index) => (
-                  <>
-                     <TouchableOpacity
-                        style={[
-                           { marginHorizontal: 8 },
-                           index === deliveryRadioOptions.length - 1
-                              ? { marginRight: 0 }
-                              : {},
-                        ]}
-                        onPress={() => {
-                           setFulfillmentType(option.value)
-                           setIsGetStoresLoading(true)
-                        }}
-                        key={option.value}
-                     >
-                        <Text
-                           style={[
-                              { fontSize: 14, fontWeight: '500' },
-                              option.value === fulfillmentType
-                                 ? {
-                                      color: appConfig.brandSettings
-                                         .buttonSettings.borderActiveColor
-                                         .value,
-                                   }
-                                 : {},
-                           ]}
-                        >
-                           {option.label}
-                        </Text>
-                     </TouchableOpacity>
-                     {index !== deliveryRadioOptions.length - 1 ? (
-                        <View
-                           style={{
-                              width: 1,
-                              backgroundColor: '#000',
-                              marginVertical: 2,
-                           }}
-                        ></View>
-                     ) : null}
-                  </>
+                  <Button
+                     onPress={() => {
+                        setFulfillmentType(option.value)
+                        setIsGetStoresLoading(true)
+                     }}
+                     buttonStyle={{ marginLeft: 10 }}
+                     variant="outline"
+                     showRadio={true}
+                     isActive={option.value === fulfillmentType}
+                     key={index}
+                     radioSize={12}
+                     textStyle={{ paddingVertical: 5 }}
+                  >
+                     {option.label}
+                  </Button>
                ))}
             </View>
          </View>
