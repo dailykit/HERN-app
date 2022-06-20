@@ -1,0 +1,254 @@
+{
+   "data": {
+      "showPromotionImageOnMenuPage": {
+         "dataType": "boolean",
+         "default": true,
+         "description": "Show Promotion Image On Menu Page",
+         "label": "Show Promotion Image On Menu Page",
+         "userInsertType": "toggle",
+         "value": true
+      },
+      "menuPagePromotionImage": {
+         "label": "Menu Page Promotion Image",
+         "value": {
+            "url": [
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/78894-Banner.png",
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/78894-Banner.png"
+            ]
+         },
+         "default": {
+            "url": []
+         },
+         "dataType": "multipleImagesUpload",
+         "showModal": true,
+         "isRequired": true,
+         "description": "This sets menu page promotion images",
+         "userInsertType": "multipleImagesUpload"
+      }
+   },
+   "brandSettings": {
+      "brandLogo": {
+         "label": "brand Logo",
+         "value": "",
+         "dataType": "imageUpload",
+         "description": "Logo for brand.",
+         "defaultValue": "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/32397-taco_bell_logo.png",
+         "userInsertType": "imageUpload"
+      },
+      "buttonSettings": {
+         "textColor": {
+            "id": "text-col",
+            "label": "Text Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "buttonBGColor": {
+            "id": "button-col",
+            "label": "Button Background Color",
+            "value": "#EF5266",
+            "default": "#EF5266",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "borderActiveColor": {
+            "id": "button-col",
+            "label": "Button border active Color",
+            "value": "#EF5266",
+            "default": "#EF5266",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "borderInactiveColor": {
+            "id": "button-col",
+            "label": "Button border inactive Color",
+            "value": "#A2A2A2",
+            "default": "#A2A2A2",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "buttonDisabledColor": {
+            "id": "button-disabled-col",
+            "label": "Button Disabled Color",
+            "value": "#EF526633",
+            "default": "#EF526633",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         }
+      },
+      "menuSettings": {
+         "numberOfProductsInRow": {
+            "label": "Number of products in row",
+            "value": 2,
+            "default": 2,
+            "dataType": "number",
+            "description": "Number Of Products In Row",
+            "userInsertType": "numberField"
+         },
+         "productListView": {
+            "type": "single",
+            "label": "Select view of product list",
+            "value": {
+               "id": 1,
+               "title": "Grid",
+               "value": "GRID"
+            },
+            "options": [
+               {
+                  "id": 1,
+                  "title": "Grid",
+                  "value": "GRID"
+               },
+               {
+                  "id": 2,
+                  "title": "Single",
+                  "value": "SINGLE"
+               }
+            ],
+            "dataType": "select",
+            "userInsertType": "dropdown"
+         }
+      },
+      "productSettings": {
+         "defaultImage": {
+            "label": "Default Image for product.",
+            "value": "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/41476-default.png",
+            "default": "",
+            "dataType": "imageUpload",
+            "description": "This will show as product image if specific product image is not exists.",
+            "userInsertType": "imageUpload"
+         }
+      },
+      "headerSettings": {
+         "backgroundColor": {
+            "id": "header-bg-col",
+            "label": "Header Background Color",
+            "value": "#000000",
+            "default": "#000000",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "textColor": {
+            "id": "header-text-col",
+            "label": "Header Text Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "cartIconColor": {
+            "id": "cart-icon-col",
+            "label": "Cart Icon Color",
+            "value": "#f9f9f9",
+            "default": "#f9f9f9",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "cartItemCountTextColor": {
+            "id": "cart-item-count-text-col",
+            "label": "Cart Item Count Text Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "cartItemCountBackgroundColor": {
+            "id": "cart-item-count-bg-col",
+            "label": "Cart Item Count Background Color",
+            "value": "#EF5266",
+            "default": "#EF5266",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         }
+      },
+      "checkIconSettings": {
+         "boundaryColor": {
+            "id": "boundary-col",
+            "label": "Check Icon Boundary Color",
+            "value": "#A2a2a2",
+            "default": "#A2a2a2",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "checkIconUnFillColor": {
+            "id": "check-icon-unfill-col",
+            "label": "Check Icon UnFill Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "checkIconFillColor": {
+            "id": "check-icon-fill-col",
+            "label": "Check Icon Fill Color",
+            "value": "#EF5266",
+            "default": "#EF5266",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "checkIconTickColor": {
+            "id": "check-icon-tick-col",
+            "label": "Check Icon Tick Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         }
+      },
+      "counterButtonSettings": {
+         "backgroundColor": {
+            "id": "counter-button-bg-col",
+            "label": "Counter Button Background Color",
+            "value": "#EF5266",
+            "default": "#EF5266",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "countColor": {
+            "id": "counter-count-text-col",
+            "label": "Counter count Text Color",
+            "value": "#000000",
+            "default": "#000000",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "countBackgroundColor": {
+            "id": "counter-count-bg-col",
+            "label": "Counter count Background Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "iconColor": {
+            "id": "counter-icon-col",
+            "label": "Counter Icon Color",
+            "value": "#FFFFFF",
+            "default": "#FFFFFF",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         }
+      },
+      "modifierSettings": {
+         "footerBackgroundColor": {
+            "id": "footer-bg-col",
+            "label": "Footer Background Color",
+            "value": "#000000",
+            "default": "#000000",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         }
+      },
+      "cartSettings": {
+         "customEmptyMessage": {
+            "label": "Custom Empty Cart Message",
+            "value": "Add some caffeine to your cart",
+            "default": "Add some caffeine to your cart",
+            "dataType": "text",
+            "description": "Custom Empty Cart Message",
+            "userInsertType": "textField"
+         }
+      }
+   }
+}
