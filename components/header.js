@@ -156,7 +156,11 @@ export const Header = () => {
                )}
             </View>
          </TouchableOpacity>
-         <TouchableOpacity>
+         <TouchableOpacity
+            onPress={() => {
+               navigation.navigate('Cart')
+            }}
+         >
             {cartState?.cart?.cartItems_aggregate?.aggregate?.count > 0 ? (
                <Text
                   style={[

@@ -5,6 +5,7 @@ import HomeScreen from '../screens/home'
 import MenuScreen from '../screens/menu'
 import LocationSelectorScreen from '../screens/locationSelector'
 import RefineLocation from '../screens/refineLocation'
+import CartScreen from '../screens/cart'
 const Navigation = () => {
    return (
       <Stack.Navigator
@@ -23,6 +24,7 @@ const Navigation = () => {
             component={LocationSelectorScreen}
          />
          <Stack.Screen name="RefineLocation" component={RefineLocation} />
+         <Stack.Screen name="Cart" component={CartScreen} />
       </Stack.Navigator>
    )
 }

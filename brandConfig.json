@@ -239,6 +239,16 @@
             "dataType": "color",
             "userInsertType": "colorPicker"
          }
+      },
+      "cartSettings": {
+         "customEmptyMessage": {
+            "label": "Custom Empty Cart Message",
+            "value": "Add some caffeine to your cart",
+            "default": "Add some caffeine to your cart",
+            "dataType": "text",
+            "description": "Custom Empty Cart Message",
+            "userInsertType": "textField"
+         }
       }
    }
 }
