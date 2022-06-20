@@ -8,6 +8,7 @@ import { VegNonVegIcon } from '../assets/vegNonVegIcon'
 import appConfig from '../brandConfig.json'
 import { ModifierPopup } from './modifierPopup'
 import Modal from 'react-native-modal'
+import { useCart } from '../context'
 
 export const ProductList = ({ productsList }) => {
    // group the product list by product type
@@ -56,6 +57,7 @@ export const ProductList = ({ productsList }) => {
 }
 
 export const ProductCard = ({ productData }) => {
+   const { cartState, methods, addToCart, combinedCartItems } = useCart()
    const isStoreAvailable = true
    const [showModifierPopup, setShowModifierPopup] = useState(false)
    const defaultProductOption = React.useMemo(() => {
@@ -110,6 +112,28 @@ export const ProductCard = ({ productData }) => {
       }
       return true
    }, [productData])
+
+   const handelAddToCartClick = () => {
+      // product availability
+      if (productData.isAvailable) {
+         if (showAddToCartButton) {
+            if (
+               productData.productOptions.length > 0 &&
+               productData.isPopupAllowed
+            ) {
+               const availableProductOptions =
+                  productData.productOptions.filter(
+                     option => option.isAvailable && option.isPublished
+                  ).length
+               if (availableProductOptions > 0) {
+                  setShowModifierPopup(true)
+               }
+            } else {
+               addToCart(productData.defaultCartItem, 1)
+            }
+         }
+      }
+   }
 
    return (
       <View style={styles.productContainer}>
@@ -177,7 +201,7 @@ export const ProductCard = ({ productData }) => {
                   <View>
                      <Button
                         onPress={() => {
-                           setShowModifierPopup(true)
+                           handelAddToCartClick()
                         }}
                      >
                         +ADD

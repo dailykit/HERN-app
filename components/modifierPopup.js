@@ -23,6 +23,8 @@ import { DownVector, UpVector } from '../assets/vector'
 import { useConfig } from '../lib/config'
 import { useQuery } from '@apollo/client'
 import { PRODUCT_ONE } from '../graphql'
+import { useCart } from '../context'
+import { getCartItemWithModifiers } from '../utils'
 
 export const ModifierPopup = ({
    closeModifier,
@@ -34,6 +36,7 @@ export const ModifierPopup = ({
 }) => {
    // context
    const { brand, locationId, brandLocation } = useConfig()
+   const { addToCart, methods } = useCart()
 
    const [isModifiersLoading, setIsModifiersLoading] = useState(true)
    const [productOption, setProductOption] = useState(null) // for by default choose one product option
@@ -139,7 +142,167 @@ export const ModifierPopup = ({
          }
       }
    }, [completeProductData])
+   const handleAddOnCartOn = async () => {
+      //check category fulfillment conditions
+      const allSelectedOptions = [
+         ...selectedModifierOptions.single,
+         ...selectedModifierOptions.multiple,
+      ]
+      const allNestedSelectedOptions = [
+         ...nestedSelectedModifierOptions.single,
+         ...nestedSelectedModifierOptions.multiple,
+      ]
+      //no modifier available in product options
+      if (!productOption.modifier) {
+         // console.log('PASS')
+         // addToCart({ ...productOption, quantity })
+         const cartItem = getCartItemWithModifiers(
+            productOption.cartItem,
+            allSelectedOptions.map(x => x.cartItem)
+         )
+         // const objects = new Array(quantity).fill({ ...cartItem })
+         // console.log('cartItem', objects)
+         await addToCart(cartItem, quantity)
+         addToast(t('Added to the Cart!'), {
+            appearance: 'success',
+         })
+         if (edit) {
+            methods.cartItems.delete({
+               variables: {
+                  where: {
+                     id: {
+                        _in: productCartDetail.ids,
+                     },
+                  },
+               },
+            })
+         }
+         closeModifier()
+         return
+      }
 
+      let allCatagories = productOption.modifier?.categories || []
+      let allAdditionalCatagories = []
+      if (!isEmpty(productOption.additionalModifiers)) {
+         productOption.additionalModifiers.forEach(eachAdditionalModifier => {
+            eachAdditionalModifier.modifier.categories.forEach(eachCategory => {
+               allAdditionalCatagories.push(eachCategory)
+            })
+         })
+      }
+
+      let finalCategories = [...allCatagories, ...allAdditionalCatagories]
+
+      let errorState = []
+      for (let i = 0; i < finalCategories.length; i++) {
+         const allFoundedOptionsLength = allSelectedOptions.filter(
+            x => x.modifierCategoryID === finalCategories[i].id
+         ).length
+
+         if (
+            finalCategories[i]['isRequired'] &&
+            finalCategories[i]['type'] === 'multiple'
+         ) {
+            const min = finalCategories[i]['limits']['min']
+            const max = finalCategories[i]['limits']['max']
+            if (
+               allFoundedOptionsLength > 0 &&
+               min <= allFoundedOptionsLength &&
+               (max
+                  ? allFoundedOptionsLength <= max
+                  : allFoundedOptionsLength <=
+                    finalCategories[i].options.length)
+            ) {
+            } else {
+               errorState.push(finalCategories[i].id)
+            }
+         }
+      }
+      let nestedFinalCategories = []
+      let nestedFinalErrorCategories = []
+      // console.log('finalCategories', finalCategories)
+      finalCategories.forEach(eachCategory => {
+         eachCategory.options.forEach(eachOption => {
+            if (eachOption.additionalModifierTemplateId) {
+               nestedFinalCategories.push(
+                  ...eachOption.additionalModifierTemplate.categories
+               )
+            }
+         })
+      })
+      if (nestedFinalCategories.length > 0) {
+         for (let i = 0; i < nestedFinalCategories.length; i++) {
+            const allFoundedOptionsLength = allNestedSelectedOptions.filter(
+               x => x.modifierCategoryID === nestedFinalCategories[i].id
+            ).length
+
+            if (
+               nestedFinalCategories[i]['isRequired'] &&
+               nestedFinalCategories[i]['type'] === 'multiple'
+            ) {
+               const min = nestedFinalCategories[i]['limits']['min']
+               const max = nestedFinalCategories[i]['limits']['max']
+               if (
+                  allFoundedOptionsLength > 0 &&
+                  min <= allFoundedOptionsLength &&
+                  (max
+                     ? allFoundedOptionsLength <= max
+                     : allFoundedOptionsLength <=
+                       nestedFinalCategories[i].options.length)
+               ) {
+               } else {
+                  nestedFinalErrorCategories.push(nestedFinalCategories[i].id)
+               }
+            }
+         }
+      }
+      setErrorCategories(errorState)
+      nestedSetErrorCategories(nestedFinalErrorCategories)
+      if (errorState.length > 0 || nestedFinalErrorCategories.length > 0) {
+         // console.log('FAIL')
+         return
+      } else {
+         // console.log('PASS')
+         const nestedModifierOptionsGroupByParentModifierOptionId =
+            allNestedSelectedOptions.length > 0
+               ? chain(allNestedSelectedOptions)
+                    .groupBy('parentModifierOptionId')
+                    .map((value, key) => ({
+                       parentModifierOptionId: +key,
+                       data: value,
+                    }))
+                    .value()
+               : []
+
+         if (!isEmpty(nestedModifierOptionsGroupByParentModifierOptionId)) {
+            const cartItem = getCartItemWithModifiers(
+               productOption.cartItem,
+               allSelectedOptions.map(x => x.cartItem),
+               nestedModifierOptionsGroupByParentModifierOptionId
+            )
+            // console.log('finalCartItem', cartItem)
+            await addToCart(cartItem, quantity)
+         } else {
+            const cartItem = getCartItemWithModifiers(
+               productOption.cartItem,
+               allSelectedOptions.map(x => x.cartItem)
+            )
+            await addToCart(cartItem, quantity)
+         }
+         if (edit) {
+            methods.cartItems.delete({
+               variables: {
+                  where: {
+                     id: {
+                        _in: productCartDetail.ids,
+                     },
+                  },
+               },
+            })
+         }
+         closeModifier()
+      }
+   }
    const totalAmount = () => {
       if (!productOption) {
          return { total: 0, totalWithoutDiscount: 0, totalDiscount: 0 }
@@ -423,7 +586,7 @@ export const ModifierPopup = ({
             <Button
                buttonStyle={{ height: 42, borderRadius: 8 }}
                textStyle={{ fontSize: 14 }}
-               onPress
+               onPress={handleAddOnCartOn}
             >
                ADD ITEM {'('}
                {formatCurrency(total.toFixed(2))}

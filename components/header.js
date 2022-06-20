@@ -4,6 +4,7 @@ import LocationIcon from '../assets/locationIcon'
 import appConfig from '../brandConfig.json'
 import { useNavigation } from '@react-navigation/native'
 import { useConfig } from '../lib/config'
+import { useCart } from '../context/cart'
 import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -11,6 +12,7 @@ export const Header = () => {
    const navigation = useNavigation()
    const { dispatch, orderTabs, selectedOrderTab, userLocation, storeStatus } =
       useConfig()
+   const { cartState } = useCart()
    React.useEffect(() => {
       if (orderTabs?.length > 0) {
          ;(async function () {
@@ -22,7 +24,7 @@ export const Header = () => {
             const storeLocation = await AsyncStorage.getItem('storeLocation')
             if (storeLocationId) {
                dispatch({
-                  type: 'SET_STORE_LOCATION_ID',
+                  type: 'SET_LOCATION_ID',
                   payload: storeLocationId,
                })
                const selectedOrderTab = orderTabs.find(
@@ -155,20 +157,22 @@ export const Header = () => {
             </View>
          </TouchableOpacity>
          <TouchableOpacity>
-            <Text
-               style={[
-                  styles.cartItemCount,
-                  {
-                     backgroundColor:
-                        appConfig.brandSettings.headerSettings
-                           ?.cartItemCountBackgroundColor?.value,
-                     color: appConfig.brandSettings.headerSettings
-                        ?.cartItemCountTextColor?.value,
-                  },
-               ]}
-            >
-               1
-            </Text>
+            {cartState?.cart?.cartItems_aggregate?.aggregate?.count > 0 ? (
+               <Text
+                  style={[
+                     styles.cartItemCount,
+                     {
+                        backgroundColor:
+                           appConfig.brandSettings.headerSettings
+                              ?.cartItemCountBackgroundColor?.value,
+                        color: appConfig.brandSettings.headerSettings
+                           ?.cartItemCountTextColor?.value,
+                     },
+                  ]}
+               >
+                  {cartState?.cart?.cartItems_aggregate?.aggregate?.count}
+               </Text>
+            ) : null}
             <CartIcon
                size={30}
                fill={
