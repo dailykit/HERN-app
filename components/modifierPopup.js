@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import CloseIcon from '../assets/closeIcon'
 import { VegNonVegIcon } from '../assets/vegNonVegIcon'
-import { productData } from '../screens/menu/demoProduct'
+// import { productData } from '../screens/menu/demoProduct'
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { useModifier } from '../utils/useModifier'
@@ -20,6 +20,9 @@ import { CounterButton } from './counterButton'
 import { ModifierCategory } from './modifierCategory'
 import appConfig from '../brandConfig.json'
 import { DownVector, UpVector } from '../assets/vector'
+import { useConfig } from '../lib/config'
+import { useQuery } from '@apollo/client'
+import { PRODUCT_ONE } from '../graphql'
 
 export const ModifierPopup = ({
    closeModifier,
@@ -27,11 +30,15 @@ export const ModifierPopup = ({
    edit = false,
    productCartDetail = null,
    showModifiers = true,
+   productData,
 }) => {
+   // context
+   const { brand, locationId, brandLocation } = useConfig()
+
    const [isModifiersLoading, setIsModifiersLoading] = useState(true)
    const [productOption, setProductOption] = useState(null) // for by default choose one product option
    // console.log("product option needed",productData,productOption)
-   const completeProductData = React.useMemo(() => productData, [])
+   // const completeProductData = React.useMemo(() => productData, [])
    const [productOptionType, setProductOptionType] = useState(null)
    const [quantity, setQuantity] = useState(1)
 
@@ -75,6 +82,29 @@ export const ModifierPopup = ({
       setProductOption,
       productCartDetail,
       nestedModifier: true,
+   })
+
+   const argsForByLocation = React.useMemo(
+      () => ({
+         brandId: brand?.id,
+         locationId: locationId,
+         brand_locationId: brandLocation?.id,
+      }),
+      [brand, locationId, brandLocation?.id]
+   )
+
+   const {
+      loading,
+      error,
+      data: { product: completeProductData = {} } = {},
+   } = useQuery(PRODUCT_ONE, {
+      variables: {
+         id: productData.id,
+         params: argsForByLocation,
+      },
+      onError: error => {
+         console.error('kiosk modifier popup', error)
+      },
    })
 
    useEffect(() => {

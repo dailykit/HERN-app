@@ -192,6 +192,7 @@ export const ProductCard = ({ productData }) => {
                closeModifier={() => {
                   setShowModifierPopup(false)
                }}
+               productData={productData}
             />
          </Modal>
       </View>
