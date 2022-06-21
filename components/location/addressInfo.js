@@ -7,9 +7,15 @@ export const AddressInfo = props => {
       <View style={styles.addressContainer}>
          <LocationIcon fill={'#A2A2A2'} />
          <View style={{ flexShrink: 1 }}>
-            <Text style={styles.addressText}>{address.mainText}</Text>
             <Text style={styles.addressText}>
-               {address.secondaryText} {address.zipcode}
+               {address.mainText || address.line1}
+            </Text>
+            <Text style={styles.addressText}>
+               {address.secondaryText ||
+                  `${address?.city || ''} ${address?.state || ''} ${
+                     address?.country || ''
+                  }`}{' '}
+               {address.zipcode}
             </Text>
          </View>
       </View>

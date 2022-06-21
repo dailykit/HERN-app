@@ -8,6 +8,8 @@ import { useCart } from '../../context'
 import { isEmpty } from 'lodash'
 import { CartItemList } from './cartItemList'
 import { CartBillingDetails } from './cartBillingDetails'
+import { Address } from './address'
+
 const CartScreen = () => {
    const navigation = useNavigation()
    const { cartState, combinedCartItems, isFinalCartLoading, storedCartId } =
@@ -49,6 +51,7 @@ const CartScreen = () => {
    return (
       <View style={{ height: '100%' }}>
          <CartHeader />
+         <Address />
          <CartItemList />
          <CartBillingDetails
             cart={cartState.cart}
