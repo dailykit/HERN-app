@@ -25,13 +25,13 @@ export const ProductList = ({ productsList }) => {
       return [...nonNullData, ...nullData]
    }, [productsList])
 
-   const [currentGroupProducts, setCurrentGroupedProduct] = useState(
-      groupedByType[0].products
-   )
+   const [currentGroupProducts, setCurrentGroupedProduct] = useState([])
 
    useEffect(() => {
-      setCurrentGroupedProduct(groupedByType[0].products)
-   }, [productsList])
+      if (groupedByType.length > 0) {
+         setCurrentGroupedProduct(groupedByType[0].products)
+      }
+   }, [groupedByType])
    return (
       <ScrollView
          contentContainerStyle={{
