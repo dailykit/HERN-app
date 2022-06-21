@@ -225,9 +225,12 @@ const RefineLocation = () => {
       })
       try {
          await AsyncStorage.setItem('orderTab', navFulfillmentType)
+         const storeLocationIdInLocal = await AsyncStorage.getItem(
+            'storeLocationId'
+         )
          if (
-            (await AsyncStorage.getItem('storeLocationId')) !=
-            selectedStore.location.id
+            storeLocationIdInLocal &&
+            storeLocationIdInLocal != selectedStore.location.id
          ) {
             const lastStoreLocationId = await AsyncStorage.getItem(
                'storeLocationId'
