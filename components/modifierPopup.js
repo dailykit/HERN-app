@@ -1,5 +1,5 @@
 import { chain, isEmpty } from 'lodash'
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
    StyleSheet,
    Text,
@@ -608,78 +608,76 @@ export const ModifierPopup = ({
    )
 }
 
-const AdditionalModifiers = forwardRef(
-   ({
-      eachAdditionalModifier,
-      selectedOptions,
-      setSelectedOptions,
-      errorCategories,
-      nestedSelectedModifierOptions,
-      nestedSetSelectedModifierOptions,
-      nestedErrorCategories,
-   }) => {
-      const additionalModifiersType = React.useMemo(
-         () => eachAdditionalModifier.type == 'hidden',
-         [eachAdditionalModifier]
-      )
-      const [showCustomize, setShowCustomize] = useState(
-         !Boolean(additionalModifiersType)
-      )
+const AdditionalModifiers = ({
+   eachAdditionalModifier,
+   selectedOptions,
+   setSelectedOptions,
+   errorCategories,
+   nestedSelectedModifierOptions,
+   nestedSetSelectedModifierOptions,
+   nestedErrorCategories,
+}) => {
+   const additionalModifiersType = React.useMemo(
+      () => eachAdditionalModifier.type == 'hidden',
+      [eachAdditionalModifier]
+   )
+   const [showCustomize, setShowCustomize] = useState(
+      !Boolean(additionalModifiersType)
+   )
 
-      return (
-         <>
-            <View style={{ marginVertical: 6 }}>
-               <TouchableWithoutFeedback
-                  onPress={() => setShowCustomize(prev => !prev)}
+   return (
+      <>
+         <View style={{ marginVertical: 6 }}>
+            <TouchableWithoutFeedback
+               onPress={() => setShowCustomize(prev => !prev)}
+            >
+               <View
+                  className=""
+                  style={{
+                     display: 'flex',
+                     justifyContent: 'space-between',
+                     alignItems: 'center',
+                     cursor: 'pointer',
+                     flexDirection: 'row',
+                  }}
                >
-                  <View
-                     className=""
-                     style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        cursor: 'pointer',
-                        flexDirection: 'row',
-                     }}
-                  >
-                     <Text style={{ fontWeight: '600' }}>
-                        {eachAdditionalModifier.label}
-                     </Text>
+                  <Text style={{ fontWeight: '600' }}>
+                     {eachAdditionalModifier.label}
+                  </Text>
 
-                     {showCustomize ? (
-                        <UpVector size={18} />
-                     ) : (
-                        <DownVector size={18} />
-                     )}
-                  </View>
-               </TouchableWithoutFeedback>
-               {showCustomize &&
-                  eachAdditionalModifier.modifier &&
-                  eachAdditionalModifier.modifier.categories.map(
-                     (eachModifierCategory, index) => {
-                        return (
-                           <ModifierCategory
-                              key={eachModifierCategory.id}
-                              eachCategory={eachModifierCategory}
-                              selectedOptions={selectedOptions}
-                              setSelectedOptions={setSelectedOptions}
-                              errorCategories={errorCategories}
-                              nestedSelectedModifierOptions={
-                                 nestedSelectedModifierOptions
-                              }
-                              nestedSetSelectedModifierOptions={
-                                 nestedSetSelectedModifierOptions
-                              }
-                              nestedErrorCategories={nestedErrorCategories}
-                           />
-                        )
-                     }
+                  {showCustomize ? (
+                     <UpVector size={18} />
+                  ) : (
+                     <DownVector size={18} />
                   )}
-            </View>
-         </>
-      )
-   }
-)
+               </View>
+            </TouchableWithoutFeedback>
+            {showCustomize &&
+               eachAdditionalModifier.modifier &&
+               eachAdditionalModifier.modifier.categories.map(
+                  (eachModifierCategory, index) => {
+                     return (
+                        <ModifierCategory
+                           key={eachModifierCategory.id}
+                           eachCategory={eachModifierCategory}
+                           selectedOptions={selectedOptions}
+                           setSelectedOptions={setSelectedOptions}
+                           errorCategories={errorCategories}
+                           nestedSelectedModifierOptions={
+                              nestedSelectedModifierOptions
+                           }
+                           nestedSetSelectedModifierOptions={
+                              nestedSetSelectedModifierOptions
+                           }
+                           nestedErrorCategories={nestedErrorCategories}
+                        />
+                     )
+                  }
+               )}
+         </View>
+      </>
+   )
+}
 
 const styles = StyleSheet.create({
    modifierPopupContainer: {
