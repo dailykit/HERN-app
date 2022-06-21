@@ -16,6 +16,7 @@ import { Button } from '../../components/button'
 import appConfig from '../../brandConfig.json'
 import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems } = useCart()
@@ -43,17 +44,19 @@ export const CartItemList = () => {
                <Text style={styles.clearCartText}>Clear Cart</Text>
             </TouchableOpacity>
          </View>
-         {combinedCartItems.map((product, index) => {
-            return (
-               <CartCard
-                  key={product.productId}
-                  productData={product}
-                  quantity={product?.ids?.length}
-                  index={index}
-                  //   removeCartItems={removeCartItems}
-               />
-            )
-         })}
+         <ScrollView>
+            {combinedCartItems.map((product, index) => {
+               return (
+                  <CartCard
+                     key={`${product.productId}-${index}`}
+                     productData={product}
+                     quantity={product?.ids?.length}
+                     index={index}
+                     //   removeCartItems={removeCartItems}
+                  />
+               )
+            })}
+         </ScrollView>
       </View>
    )
 }

@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useCart } from '../../context'
 import { isEmpty } from 'lodash'
 import { CartItemList } from './cartItemList'
+import { CartBillingDetails } from './cartBillingDetails'
 const CartScreen = () => {
    const navigation = useNavigation()
    const { cartState, combinedCartItems, isFinalCartLoading, storedCartId } =
@@ -49,6 +50,10 @@ const CartScreen = () => {
       <View style={{ height: '100%' }}>
          <CartHeader />
          <CartItemList />
+         <CartBillingDetails
+            cart={cartState.cart}
+            billing={cartState.cart.cartOwnerBilling}
+         />
       </View>
    )
 }
