@@ -138,7 +138,7 @@ export const getStoresWithValidations = async props => {
       locationId
          ? finalBrandLocations
          : await getSortedStoresByAerialDistance(finalBrandLocations, address)
-
+   console.log('check1')
    const sortedStoresByAerialDistanceWithValidation = []
 
    for (let i = 0; i < sortedStoresByAerialDistance.length; i++) {

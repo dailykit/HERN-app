@@ -9,6 +9,7 @@ import { isEmpty } from 'lodash'
 import { CartItemList } from './cartItemList'
 import { CartBillingDetails } from './cartBillingDetails'
 import { Address } from './address'
+import { FulfillmentSection } from './fulfillmentSection'
 
 const CartScreen = () => {
    const navigation = useNavigation()
@@ -52,6 +53,7 @@ const CartScreen = () => {
       <View style={{ height: '100%' }}>
          <CartHeader />
          <Address />
+         <FulfillmentSection />
          <CartItemList />
          <CartBillingDetails
             cart={cartState.cart}

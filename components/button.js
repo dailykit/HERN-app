@@ -13,6 +13,7 @@ export const Button = ({
    showRadio = false,
    radioSize = 16,
    disabled = false,
+   radioStyle,
 }) => {
    const { buttonSettings } = appConfig.brandSettings
    const containerStyleByVariant = variant => {
@@ -60,9 +61,12 @@ export const Button = ({
       >
          {showRadio ? (
             <View
-               style={{
-                  paddingLeft: 12,
-               }}
+               style={[
+                  {
+                     paddingLeft: 12,
+                  },
+                  radioStyle ? radioStyle : {},
+               ]}
             >
                <RadioIcon
                   checked={isActive}
