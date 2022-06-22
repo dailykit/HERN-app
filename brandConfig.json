@@ -336,7 +336,7 @@
          "backgroundColor": {
             "id": "bg-color",
             "label": "Background Color",
-            "value": "#555555",
+            "value": "#000",
             "default": "#555555",
             "dataType": "color",
             "userInsertType": "colorPicker"

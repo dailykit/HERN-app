@@ -68,7 +68,9 @@ const HomeScreen = () => {
                      <ProductCategory
                         key={`${eachCategory.name}-${index}`}
                         onCategoryClick={() => {
-                           console.log('==> ', eachCategory.name)
+                           navigation.navigate('Menu', {
+                              categoryName: eachCategory.name,
+                           })
                         }}
                         eachCategory={eachCategory}
                         textColor={
@@ -148,7 +150,9 @@ const HomeScreen = () => {
                         <ProductCategory
                            key={`${eachCategory.name}-${index}`}
                            onCategoryClick={() => {
-                              console.log('==> ', eachCategory.name)
+                              navigation.navigate('Menu', {
+                                 categoryName: eachCategory.name,
+                              })
                            }}
                            eachCategory={eachCategory}
                            textColor={'#000'}

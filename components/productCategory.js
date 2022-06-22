@@ -64,6 +64,9 @@ export const ProductCategory = ({
             <Text
                style={[
                   { ...categoryStyles.categoryText, color: textColor },
+                  viewStyle === categoryViewStyles.cardView
+                     ? { marginVertical: 8 }
+                     : { marginTop: 8 },
                   isActiveCategory ? categoryStyles.selectedText : null,
                ]}
             >
@@ -90,6 +93,8 @@ const categoryStyles = StyleSheet.create({
    },
    selectedCategory: {
       backgroundColor: '#EF5266',
+      paddingHorizontal: 8,
+      paddingVertical: 5,
    },
    image: {
       borderRadius: 10,
@@ -101,7 +106,6 @@ const categoryStyles = StyleSheet.create({
       textTransform: 'capitalize',
       fontWeight: '500',
       textAlign: 'center',
-      marginVertical: 8,
    },
    selectedText: {
       color: '#FFFFFF',
