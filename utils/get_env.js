@@ -26,6 +26,7 @@ import {
    DATA_HUB_HTTPS,
    ALLOW_POSIST_PUSH_ORDER,
    COUNTRY,
+   BASE_BRAND_DEV_URL,
 } from '@env'
 
 var globalEnvs = {
@@ -56,6 +57,7 @@ var globalEnvs = {
    DATA_HUB_HTTPS,
    ALLOW_POSIST_PUSH_ORDER,
    COUNTRY,
+   BASE_BRAND_DEV_URL,
 }
 
 export const get_env = title => {

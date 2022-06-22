@@ -24,6 +24,88 @@
          "isRequired": true,
          "description": "This sets menu page promotion images",
          "userInsertType": "multipleImagesUpload"
+      },
+      "topPromotionImages": {
+         "label": "Top Promotion Banner Images",
+         "value": {
+            "url": [
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/21991-13720e664639e430ff61635333cd41ec.png",
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/21991-13720e664639e430ff61635333cd41ec.png"
+            ]
+         },
+         "default": {
+            "url": []
+         },
+         "dataType": "multipleImagesUpload",
+         "showModal": true,
+         "isRequired": true,
+         "description": "This sets menu page promotion images",
+         "userInsertType": "multipleImagesUpload"
+      },
+      "mid1PromotionImages": {
+         "label": "Mid Promotion Banner Images",
+         "value": {
+            "url": [
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/66686-b82ef521141dc66125259ce844a7a8ed.jpg",
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/66686-b82ef521141dc66125259ce844a7a8ed.jpg"
+            ]
+         },
+         "default": {
+            "url": []
+         },
+         "dataType": "multipleImagesUpload",
+         "showModal": true,
+         "isRequired": true,
+         "description": "This sets menu page promotion images",
+         "userInsertType": "multipleImagesUpload"
+      },
+      "bottomPromotionImages": {
+         "label": "Bottom Promotion Banner Images",
+         "value": {
+            "url": [
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/68626-98ef4c7a7872336c2a1ecd6524cdcf86.png",
+               "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/68626-98ef4c7a7872336c2a1ecd6524cdcf86.png"
+            ]
+         },
+         "default": {
+            "url": []
+         },
+         "dataType": "multipleImagesUpload",
+         "showModal": true,
+         "isRequired": true,
+         "description": "This sets menu page promotion images",
+         "userInsertType": "multipleImagesUpload"
+      },
+      "trendingProducts": {
+         "id": "trending-products",
+         "label": "Trending Products",
+         "value": [3131, 3132, 3133, 3134],
+         "default": [],
+         "dataType": "select",
+         "userInsertType": "productSelector"
+      },
+      "orderNow": {
+         "image": {
+            "label": "Order Now Block Image",
+            "value": "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/48983-ac91d26f46fd055d0ae0ec1894e27540.png",
+            "default": "",
+            "dataType": "imageUpload",
+            "userInsertType": "imageUpload"
+         },
+         "heading": {
+            "label": "Order Now Block Heading",
+            "value": "Home of SLAY X- India's Strongest Coffee",
+            "default": "",
+            "dataType": "text",
+            "userInsertType": "textField"
+         },
+         "subHeading": {
+            "label": "Order Now Block Sub Heading",
+            "value": "Developed in our Innovation Labs, SLAY-X is the pefect answer for a high caffeine yet smooth tasting coffee. Brew it yourself at home, order from any one of our Cloud Cafes or pick up from your closest SLAY Coffee Bar",
+            "default": "",
+            "dataType": "text",
+            "userInsertType": "textField"
+         }
       }
    },
    "brandSettings": {
@@ -256,6 +338,42 @@
             "dataType": "text",
             "description": "Custom Empty Cart Message",
             "userInsertType": "textField"
+         }
+      },
+      "homeSettings": {
+         "backgroundColor": {
+            "id": "bg-color",
+            "label": "Background Color",
+            "value": "#000",
+            "default": "#555555",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "textColor": {
+            "id": "text-color",
+            "label": "Text Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         }
+      },
+      "orderNow": {
+         "backgroundColor": {
+            "id": "bg-color",
+            "label": "Background Color",
+            "value": "#ffffff",
+            "default": "#ffffff",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
+         },
+         "btnColor": {
+            "id": "btn-color",
+            "label": "Button Color",
+            "value": "#EF5266",
+            "default": "#EF5266",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
          }
       }
    }

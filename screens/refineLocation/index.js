@@ -140,7 +140,7 @@ const RefineLocation = () => {
    }
 
    const SERVER_URL = React.useMemo(() => {
-      return __DEV__ ? 'http://192.168.43.137:4000' : get_env('BASE_BRAND_URL')
+      return __DEV__ ? get_env('BASE_BRAND_DEV_URL') : get_env('BASE_BRAND_URL')
    }, [])
 
    const formatAddress = async input => {

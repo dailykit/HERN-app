@@ -10,16 +10,16 @@ import {
 } from 'react-native'
 import { Divider } from '../../components/divider'
 import { ProductList } from '../../components/product'
-import { ProductCategory } from './productCategory'
+import { ProductCategory } from '../../components/productCategory'
 import appConfig from '../../brandConfig.json'
-import { MenuPromotionCarousel } from './menuPromotionCarousel'
 import { Header } from '../../components/header'
 import { onDemandMenuContext } from '../../context'
 import { useConfig } from '../../lib/config'
 import { useSubscription } from '@apollo/client'
 import { PRODUCTS } from '../../graphql'
+import { PromotionCarousel } from '../home/promotionCarousel'
 
-const MenuScreen = () => {
+const MenuScreen = ({ route, navigation }) => {
    // context
    const { brand, locationId, brandLocation } = useConfig()
    const {
@@ -41,8 +41,10 @@ const MenuScreen = () => {
    )
 
    const [selectedCategoryName, setSelectedCategoryName] = React.useState(
-      hydratedMenu.find(x => x.isCategoryPublished && x.isCategoryAvailable)
-         ?.name || ''
+      route?.params?.categoryName ||
+         hydratedMenu.find(x => x.isCategoryPublished && x.isCategoryAvailable)
+            ?.name ||
+         ''
    )
    const selectedCategoryWithCompleteData = React.useMemo(() => {
       return hydratedMenu.find(x => x.name === selectedCategoryName)
@@ -98,12 +100,13 @@ const MenuScreen = () => {
    React.useEffect(() => {
       if (hydratedMenu.length) {
          setSelectedCategoryName(
-            hydratedMenu.find(
-               x => x.isCategoryPublished && x.isCategoryAvailable
-            )?.name
+            route?.params?.categoryName ||
+               hydratedMenu.find(
+                  x => x.isCategoryPublished && x.isCategoryAvailable
+               )?.name
          )
       }
-   }, [hydratedMenu])
+   }, [hydratedMenu, route?.params?.categoryName])
 
    return (
       <View style={{ backgroundColor: '#ffffff' }}>
@@ -139,10 +142,15 @@ const MenuScreen = () => {
                <ScrollView>
                   {appConfig.data.showPromotionImageOnMenuPage.value &&
                   appConfig.data.menuPagePromotionImage.value.url.length > 0 ? (
-                     <MenuPromotionCarousel />
+                     <PromotionCarousel
+                        data={appConfig.data.menuPagePromotionImage.value}
+                     />
                   ) : null}
                   {hydratedMenu.map((eachCategory, index) => {
-                     if (!eachCategory.isCategoryPublished) {
+                     if (
+                        !eachCategory.isCategoryPublished ||
+                        eachCategory.products.length === 0
+                     ) {
                         return null
                      }
                      return (

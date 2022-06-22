@@ -10,7 +10,16 @@ import { ModifierPopup } from './modifierPopup'
 import Modal from 'react-native-modal'
 import { useCart } from '../context'
 
-export const ProductList = ({ productsList }) => {
+const productViewStyles = {
+   verticalCard: 'verticalCard',
+   horizontalCard: 'horizontalCard',
+}
+
+export const ProductList = ({
+   productsList,
+   heading,
+   viewStyle = 'horizontalCard',
+}) => {
    // group the product list by product type
    const groupedByType = React.useMemo(() => {
       const data = chain(productsList)
@@ -33,30 +42,35 @@ export const ProductList = ({ productsList }) => {
       }
    }, [groupedByType])
    return (
-      <ScrollView
-         contentContainerStyle={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-         }}
-      >
-         {currentGroupProducts.map(eachProduct => {
-            const publishedProductOptions =
-               eachProduct.productOptions.length > 0 &&
-               eachProduct.productOptions.filter(option => option.isPublished)
-                  .length == 0
-            if (!eachProduct.isPublished || publishedProductOptions) {
-               return null
-            }
-            return (
-               <ProductCard key={eachProduct.id} productData={eachProduct} />
-            )
-         })}
-      </ScrollView>
+      <View>
+         {heading && <Text style={styles.productListHeading}>{heading}</Text>}
+         <ScrollView
+            contentContainerStyle={{ display: 'flex' }}
+            horizontal={viewStyle !== productViewStyles.horizontalCard}
+         >
+            {currentGroupProducts.map(eachProduct => {
+               const publishedProductOptions =
+                  eachProduct.productOptions.length > 0 &&
+                  eachProduct.productOptions.filter(
+                     option => option.isPublished
+                  ).length == 0
+               if (!eachProduct.isPublished || publishedProductOptions) {
+                  return null
+               }
+               return (
+                  <ProductCard
+                     key={eachProduct.id}
+                     productData={eachProduct}
+                     viewStyle={viewStyle}
+                  />
+               )
+            })}
+         </ScrollView>
+      </View>
    )
 }
 
-export const ProductCard = ({ productData }) => {
+export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
    const isStoreAvailable = true
    const [showModifierPopup, setShowModifierPopup] = useState(false)
@@ -136,34 +150,77 @@ export const ProductCard = ({ productData }) => {
    }
 
    return (
-      <View style={styles.productContainer}>
-         <View style={styles.productFloatContainer}>
+      <View
+         style={{
+            ...styles.productContainer,
+            width: viewStyle === productViewStyles.verticalCard ? 156 : 'auto',
+            height: viewStyle === productViewStyles.verticalCard ? 200 : 'auto',
+         }}
+      >
+         <View
+            style={{
+               ...styles.productFloatContainer,
+               flexDirection:
+                  viewStyle === productViewStyles.horizontalCard
+                     ? 'row'
+                     : 'column',
+            }}
+         >
             <Image
                source={{
                   uri:
                      productData.assets.images[0] ||
                      appConfig.brandSettings.productSettings.defaultImage.value,
-                  width: 156,
-                  height: 100,
                }}
-               style={styles.floatingImage}
+               style={{
+                  ...styles.floatingImage,
+                  ...(viewStyle === productViewStyles.horizontalCard
+                     ? {
+                          borderRadius: 4,
+                          width: '40%',
+                          height: '100%',
+                       }
+                     : {
+                          borderTopLeftRadius: 4,
+                          borderTopRightRadius: 4,
+                          width: '100%',
+                          height: 115,
+                       }),
+               }}
             />
             <View
                style={{
-                  width: '100%',
-                  top: -17,
-                  bottom: 0,
-                  //   backgroundColor: 'red',
+                  ...(viewStyle === productViewStyles.horizontalCard
+                     ? {
+                          paddingVertical: 8,
+                          width: '60%',
+                          marginBottom: 0,
+                       }
+                     : {
+                          width: '100%',
+                          marginVertical: 10,
+                       }),
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  height: '46%',
+                  paddingHorizontal: 10,
                }}
             >
                <View>
-                  <Text style={styles.productName}>{productData.name}</Text>
-                  <Text style={styles.additionalText}>
-                     {productData.additionalText || ''}
+                  <Text
+                     style={styles.productName}
+                     numberOfLines={
+                        viewStyle === productViewStyles.verticalCard ? 1 : 0
+                     }
+                  >
+                     {productData.name}
+                  </Text>
+                  <Text
+                     style={styles.additionalText}
+                     numberOfLines={
+                        viewStyle === productViewStyles.verticalCard ? 1 : 0
+                     }
+                  >
+                     {productData.additionalText || ' '}
                   </Text>
                </View>
                <View style={styles.footer}>
@@ -224,31 +281,34 @@ export const ProductCard = ({ productData }) => {
 }
 
 const styles = StyleSheet.create({
+   productListHeading: {
+      fontSize: 20,
+      lineHeight: 20,
+      fontWeight: '500',
+      color: '#fff',
+      paddingLeft: 12,
+      marginTop: 12,
+      marginBottom: 5,
+      textTransform: 'uppercase',
+   },
    productContainer: {
-      width: 176,
-      height: 206,
       position: 'relative',
-      margin: 10,
+      marginHorizontal: 10,
+      marginVertical: 10,
    },
    productFloatContainer: {
-      width: 176,
-      height: 176,
-      position: 'absolute',
-      bottom: 0,
+      width: '100%',
       borderRadius: 6,
       shadowColor: 'rgba(0, 0, 0, 0.08)',
+      backgroundColor: '#fff',
       shadowOffset: { width: 0, height: 1 },
       shadowRadius: 12,
       elevation: 3,
-      paddingHorizontal: 10,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
    },
-   floatingImage: {
-      borderRadius: 4,
-      top: -30,
-   },
+   floatingImage: {},
    productName: {
       fontSize: 12,
       fontWeight: '500',
@@ -262,7 +322,6 @@ const styles = StyleSheet.create({
    },
    footer: {
       bottom: 0,
-      //   backgroundColor: 'yellow',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
