@@ -15,6 +15,8 @@ import moment from 'moment'
 import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
+import appConfig from '../../../brandConfig.json'
+
 export const Delivery = () => {
    const { orderTabs, selectedOrderTab, brand, lastStoreLocationId, dispatch } =
       useConfig()
@@ -557,6 +559,10 @@ export const Delivery = () => {
                            }))
                         }
                         setShowSlots(true)
+                     }}
+                     textStyle={{
+                        color: appConfig.brandSettings.buttonSettings
+                           .activeTextColor.value,
                      }}
                   >
                      {'Change'}

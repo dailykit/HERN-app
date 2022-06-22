@@ -10,6 +10,7 @@ export const isStoreOnDemandPickupAvailable = finalRecurrences => {
       const isValidDay = isDateValidInRRule(
          finalRecurrences[rec].recurrence.rrule
       )
+      const finalRecurrencesClone = JSON.parse(JSON.stringify(finalRecurrences))
       if (isValidDay) {
          if (finalRecurrences[rec].recurrence.timeSlots.length) {
             const sortedTimeSlots = sortBy(
@@ -41,15 +42,14 @@ export const isStoreOnDemandPickupAvailable = finalRecurrences => {
                   now.getTime() > fromTimeStamp.getTime() &&
                   now.getTime() < toTimeStamp.getTime()
                ) {
-                  finalRecurrences[rec].recurrence.validTimeSlots =
-                     validTimeSlots
-                  if (rec == finalRecurrences.length - 1) {
-                     return {
-                        status: true,
-                        rec: [finalRecurrences[rec]],
-                        timeSlotInfo: timeslot,
-                        message: 'Store available for pickup.',
-                     }
+                  finalRecurrencesClone[rec].recurrence.validTimeSlots = [
+                     timeslot,
+                  ]
+                  return {
+                     status: true,
+                     rec: [finalRecurrencesClone[rec]],
+                     timeSlotInfo: timeslot,
+                     message: 'Store available for pickup.',
                   }
                } else {
                   if (rec == finalRecurrences.length - 1) {

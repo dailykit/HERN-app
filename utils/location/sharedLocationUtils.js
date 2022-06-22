@@ -138,12 +138,15 @@ export const getStoresWithValidations = async props => {
       locationId
          ? finalBrandLocations
          : await getSortedStoresByAerialDistance(finalBrandLocations, address)
-   console.log('check1')
+
    const sortedStoresByAerialDistanceWithValidation = []
 
    for (let i = 0; i < sortedStoresByAerialDistance.length; i++) {
+      const sortedStoresByAerialDistanceClone = JSON.parse(
+         JSON.stringify(sortedStoresByAerialDistance[i])
+      )
       const storeLocationRecurrences = brandRecurrences.filter(
-         x => x.brandLocationId === sortedStoresByAerialDistance[i].id
+         x => x.brandLocationId === sortedStoresByAerialDistanceClone.id
       )
       // getting brand recurrence by location [consist different brandLocation ids]
 
@@ -164,16 +167,16 @@ export const getStoresWithValidations = async props => {
                      message:
                         'Sorry, there is no store available for delivery.',
                   }
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      deliveryStatus
                } else {
                   const deliveryStatus = await isStoreOnDemandDeliveryAvailable(
                      finalRecurrences,
-                     sortedStoresByAerialDistance[i],
+                     sortedStoresByAerialDistanceClone,
                      address
                   )
 
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      deliveryStatus
                }
             }
@@ -186,15 +189,15 @@ export const getStoresWithValidations = async props => {
                      message:
                         'Sorry, there is no store available for pre order delivery.',
                   }
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      deliveryStatus
                } else {
                   const deliveryStatus = await isStorePreOrderDeliveryAvailable(
                      finalRecurrences,
-                     sortedStoresByAerialDistance[i],
+                     sortedStoresByAerialDistanceClone,
                      address
                   )
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      deliveryStatus
                }
             }
@@ -206,14 +209,14 @@ export const getStoresWithValidations = async props => {
                      status: false,
                      message: 'Sorry, there is no store available for pickup.',
                   }
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      pickupStatus
                } else {
                   const pickupStatus = isStoreOnDemandPickupAvailable(
                      finalRecurrences,
-                     sortedStoresByAerialDistance[i]
+                     sortedStoresByAerialDistanceClone
                   )
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      pickupStatus
                }
             }
@@ -225,14 +228,14 @@ export const getStoresWithValidations = async props => {
                      status: false,
                      message: 'Sorry, there is no store available for pickup.',
                   }
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      pickupStatus
                } else {
                   const pickupStatus = isStorePreOrderPickupAvailable(
                      finalRecurrences,
-                     sortedStoresByAerialDistance[i]
+                     sortedStoresByAerialDistanceClone
                   )
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      pickupStatus
                }
             }
@@ -244,14 +247,14 @@ export const getStoresWithValidations = async props => {
                      status: false,
                      message: 'Sorry, there is no store available for dine in.',
                   }
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      dineInStatus
                } else {
                   const dineInStatus = isStoreOnDemandDineInAvailable(
                      finalRecurrences,
-                     sortedStoresByAerialDistance[i]
+                     sortedStoresByAerialDistanceClone
                   )
-                  sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+                  sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                      dineInStatus
                }
             }
@@ -262,35 +265,35 @@ export const getStoresWithValidations = async props => {
                   status: false,
                   message: 'Sorry, there is no store available for dine in.',
                }
-               sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+               sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                   dineInStatus
             } else {
                const dineInStatus = isStorePreOrderDineInAvailable(
                   finalRecurrences,
-                  sortedStoresByAerialDistance[i]
+                  sortedStoresByAerialDistanceClone
                )
-               sortedStoresByAerialDistance[i]['fulfillmentStatus'] =
+               sortedStoresByAerialDistanceClone['fulfillmentStatus'] =
                   dineInStatus
             }
          }
       }
       // when auto select true, check if there any store which available for consumer then return only that store as an array
       if (autoSelect && !includeInvalidStore) {
-         if (sortedStoresByAerialDistance[i]['fulfillmentStatus'].status) {
+         if (sortedStoresByAerialDistanceClone['fulfillmentStatus'].status) {
             sortedStoresByAerialDistanceWithValidation.push(
-               sortedStoresByAerialDistance[i]
+               sortedStoresByAerialDistanceClone
             )
             break
          }
       } else {
-         if (sortedStoresByAerialDistance[i]['fulfillmentStatus'].status) {
+         if (sortedStoresByAerialDistanceClone['fulfillmentStatus'].status) {
             sortedStoresByAerialDistanceWithValidation.push(
-               sortedStoresByAerialDistance[i]
+               sortedStoresByAerialDistanceClone
             )
          } else {
             if (includeInvalidStore) {
                sortedStoresByAerialDistanceWithValidation.push(
-                  sortedStoresByAerialDistance[i]
+                  sortedStoresByAerialDistanceClone
                )
             }
          }

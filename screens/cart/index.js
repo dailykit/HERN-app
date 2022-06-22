@@ -50,7 +50,7 @@ const CartScreen = () => {
    }
 
    return (
-      <View style={{ height: '100%' }}>
+      <View style={{ height: '100%', backgroundColor: '#ffffff' }}>
          <CartHeader />
          <Address />
          <FulfillmentSection />
