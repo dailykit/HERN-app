@@ -157,6 +157,14 @@
             "default": "#EF526633",
             "dataType": "color",
             "userInsertType": "colorPicker"
+         },
+         "activeTextColor": {
+            "id": "button-col",
+            "label": "Button active text Color",
+            "value": "#EF5266",
+            "default": "#EF5266",
+            "dataType": "color",
+            "userInsertType": "colorPicker"
          }
       },
       "menuSettings": {

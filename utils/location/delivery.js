@@ -18,6 +18,7 @@ export const isStoreOnDemandDeliveryAvailable = async (
    address
 ) => {
    let fulfilledRecurrences = []
+   let finalRecurrencesClone = JSON.parse(JSON.stringify(finalRecurrences))
    for (let rec in finalRecurrences) {
       const now = new Date() // now
       const drivableDistanceBetweenStoreAndCustomer =
@@ -37,6 +38,8 @@ export const isStoreOnDemandDeliveryAvailable = async (
             )
             let validTimeSlots = []
             for (let timeslot of sortedTimeSlots) {
+               const timeSlotClone = JSON.parse(JSON.stringify(timeslot))
+
                if (timeslot.mileRanges.length) {
                   const timeslotFromArr = timeslot.from.split(':')
                   const timeslotToArr = timeslot.to.split(':')
@@ -70,14 +73,14 @@ export const isStoreOnDemandDeliveryAvailable = async (
                         distanceDeliveryStatus.result
                      const status = isDistanceValid && zipcode && geoBoundary
                      if (status) {
-                        timeslot.validMileRange =
+                        timeSlotClone.validMileRange =
                            distanceDeliveryStatus.mileRangeInfo
-                        validTimeSlots.push(timeslot)
-                        finalRecurrences[rec].recurrence.validTimeSlots =
+                        validTimeSlots.push(timeSlotClone)
+                        finalRecurrencesClone[rec].recurrence.validTimeSlots =
                            validTimeSlots
                         fulfilledRecurrences = [
                            ...fulfilledRecurrences,
-                           finalRecurrences[rec],
+                           finalRecurrencesClone[rec],
                         ]
                      }
                      // const timeslotIndex = sortedTimeSlots.indexOf(timeslot)
@@ -89,7 +92,7 @@ export const isStoreOnDemandDeliveryAvailable = async (
                            result: distanceDeliveryStatus.result,
                            rec: fulfilledRecurrences,
                            mileRangeInfo: distanceDeliveryStatus.mileRangeInfo,
-                           timeSlotInfo: timeslot,
+                           timeSlotInfo: timeSlotClone,
                            message:
                               validTimeSlots.length > 0
                                  ? 'Delivery available in your location'
@@ -149,6 +152,7 @@ export const isStorePreOrderDeliveryAvailable = async (
    const drivableDistanceBetweenStoreAndCustomer =
       drivableDistanceBetweenStoreAndCustomerFn()
    let fulfilledRecurrences = []
+   let finalRecurrencesClone = JSON.parse(JSON.stringify(finalRecurrences))
    for (let rec in finalRecurrences) {
       if (finalRecurrences[rec].recurrence.timeSlots.length) {
          const sortedTimeSlots = sortBy(
@@ -161,6 +165,7 @@ export const isStorePreOrderDeliveryAvailable = async (
          )
          let validTimeSlots = []
          for (let timeslot of sortedTimeSlots) {
+            const timeSlotClone = JSON.parse(JSON.stringify(timeslot))
             if (timeslot.mileRanges.length) {
                const distanceDeliveryStatus =
                   await isStoreDeliveryAvailableByDistance(
@@ -175,18 +180,19 @@ export const isStorePreOrderDeliveryAvailable = async (
                const status = isDistanceValid && zipcode && geoBoundary
                // console.log('statusMile', status, distanceDeliveryStatus.result)
                if (status) {
-                  timeslot.validMileRange = distanceDeliveryStatus.mileRangeInfo
-                  validTimeSlots.push(timeslot)
+                  timeSlotClone.validMileRange =
+                     distanceDeliveryStatus.mileRangeInfo
+                  validTimeSlots.push(timeSlotClone)
                }
                const timeslotIndex = sortedTimeSlots.indexOf(timeslot)
                const timesSlotsLength = sortedTimeSlots.length
                // console.log('statusMile', timeslotIndex, timesSlotsLength)
                if (timeslotIndex == timesSlotsLength - 1) {
-                  finalRecurrences[rec].recurrence.validTimeSlots =
+                  finalRecurrencesClone[rec].recurrence.validTimeSlots =
                      validTimeSlots
                   fulfilledRecurrences = [
                      ...fulfilledRecurrences,
-                     finalRecurrences[rec],
+                     finalRecurrencesClone[rec],
                   ]
                }
                if (
@@ -199,7 +205,7 @@ export const isStorePreOrderDeliveryAvailable = async (
                      result: distanceDeliveryStatus.result,
                      rec: fulfilledRecurrences,
                      mileRangeInfo: distanceDeliveryStatus.mileRangeInfo,
-                     timeSlotInfo: timeslot,
+                     timeSlotInfo: timeSlotClone,
                      message:
                         validTimeSlots.length > 0
                            ? 'Pre Order Delivery available in your location'

@@ -22,10 +22,12 @@ import { useConfig } from '../../lib/config'
 import SearchIcon from '../../assets/searchIcon'
 import { GooglePlacesAutocompleteWrapper } from '../../components/location/googlePlaceAutoComplete'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useCart } from '../../context'
 
 const RefineLocation = () => {
    const navigation = useNavigation()
    const route = useRoute()
+   const { methods, storedCartId } = useCart()
 
    const navAddress = route.params.address
    const navFulfillmentType = route.params.fulfillmentType
@@ -49,8 +51,8 @@ const RefineLocation = () => {
       })
    const [defaultProps, setDefaultProps] = useState({
       center: {
-         latitude: +navAddress.latitude,
-         longitude: +navAddress.longitude,
+         latitude: +navAddress.latitude || +navAddress.lat,
+         longitude: +navAddress.longitude || +navAddress.lng,
       },
       pitch: 1,
       heading: 1,
@@ -202,7 +204,23 @@ const RefineLocation = () => {
          landmark: additionalAddressInfo?.landmark || '',
          searched: searchedLocation,
       }
-
+      const cartIdInLocal = await AsyncStorage.getItem('cart-id')
+      if (cartIdInLocal || storedCartId) {
+         const finalCartId = cartIdInLocal
+            ? JSON.parse(cartIdInLocal)
+            : storedCartId
+         methods.cart.update({
+            variables: {
+               id: finalCartId,
+               _set: {
+                  address: customerAddress,
+                  locationId: selectedStore.location.id,
+                  orderTabId: selectedOrderTab.id,
+                  fulfillmentInfo: null,
+               },
+            },
+         })
+      }
       dispatch({
          type: 'SET_LOCATION_ID',
          payload: selectedStore.location.id,
@@ -225,9 +243,12 @@ const RefineLocation = () => {
       })
       try {
          await AsyncStorage.setItem('orderTab', navFulfillmentType)
+         const storeLocationIdInLocal = await AsyncStorage.getItem(
+            'storeLocationId'
+         )
          if (
-            (await AsyncStorage.getItem('storeLocationId')) !=
-            selectedStore.location.id
+            storeLocationIdInLocal &&
+            storeLocationIdInLocal != selectedStore.location.id
          ) {
             const lastStoreLocationId = await AsyncStorage.getItem(
                'storeLocationId'

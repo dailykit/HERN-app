@@ -63,7 +63,7 @@ export const Header = () => {
             }
          })()
       }
-   }, [orderTabs])
+   }, [orderTabs, selectedOrderTab])
 
    const label = React.useMemo(() => {
       if (selectedOrderTab?.orderFulfillmentTypeLabel) {
