@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { Divider } from '../../components/divider'
 import { ProductList } from '../../components/product'
-import { ProductCategory } from './productCategory'
+import { ProductCategory } from '../../components/productCategory'
 import appConfig from '../../brandConfig.json'
 import { MenuPromotionCarousel } from './menuPromotionCarousel'
 import { Header } from '../../components/header'
@@ -142,7 +142,10 @@ const MenuScreen = () => {
                      <MenuPromotionCarousel />
                   ) : null}
                   {hydratedMenu.map((eachCategory, index) => {
-                     if (!eachCategory.isCategoryPublished) {
+                     if (
+                        !eachCategory.isCategoryPublished ||
+                        eachCategory.products.length === 0
+                     ) {
                         return null
                      }
                      return (
