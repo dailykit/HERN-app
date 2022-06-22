@@ -19,7 +19,18 @@ import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
 
 export const CartItemList = () => {
-   const { cartState, combinedCartItems } = useCart()
+   const { cartState, combinedCartItems, methods } = useCart()
+   const removeCartItems = cartItemIds => {
+      methods.cartItems.delete({
+         variables: {
+            where: {
+               id: {
+                  _in: cartItemIds,
+               },
+            },
+         },
+      })
+   }
    return (
       <View style={{ marginHorizontal: 10 }}>
          <View
@@ -39,6 +50,12 @@ export const CartItemList = () => {
                style={{
                   paddingVertical: 8,
                   paddingLeft: 16,
+               }}
+               onPress={() => {
+                  const cartItemsIds = combinedCartItems
+                     .map(each => each.ids)
+                     .flat()
+                  removeCartItems(cartItemsIds)
                }}
             >
                <Text style={styles.clearCartText}>Clear Cart</Text>
