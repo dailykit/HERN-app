@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import { Button } from '../../../components/button'
 import { useCart } from '../../../context'
 import { useConfig } from '../../../lib/config'
@@ -70,6 +70,15 @@ export const Pickup = () => {
       cartState.cart?.address?.latitude,
       cartState.cart?.address?.longitude,
    ])
+   const alertMessage = message => {
+      Alert.alert(message, null, [
+         {
+            text: 'OK',
+            onPress: () => console.log('OK Pressed'),
+            style: 'cancel',
+         },
+      ])
+   }
 
    // valid time slot used to get lead time
    const timeSlotInfo = React.useMemo(() => {
@@ -125,6 +134,7 @@ export const Pickup = () => {
                   orderTabId: null,
                   locationId: null,
                })
+               alertMessage('This time slot is not available now')
                //    Modal.warning({
                //       title: `This time slot is not available now.`,
                //       maskClosable: true,
@@ -156,6 +166,7 @@ export const Pickup = () => {
                   orderTabId: null,
                   locationId: null,
                })
+               alertMessage('This time slot expired.')
                //    Modal.warning({
                //       title: `This time slot expired.`,
                //       maskClosable: true,
@@ -183,6 +194,9 @@ export const Pickup = () => {
                locationId: null,
             }))
             setStores(null)
+            alertMessage(
+               'This time slot is not available now. Please select new time.'
+            )
             // Modal.warning({
             //    title: `This time slot is not available now. Please select new time.`,
             //    maskClosable: true,
@@ -385,6 +399,7 @@ export const Pickup = () => {
                      orderTabId: null,
                      locationId: null,
                   })
+                  alertMessage('This time slot is not available now.')
                   // Modal.warning({
                   //    title: `This time slot is not available now.`,
                   //    maskClosable: true,
@@ -416,6 +431,7 @@ export const Pickup = () => {
                      orderTabId: null,
                      locationId: null,
                   })
+                  alertMessage('This time slot expired.')
                   // Modal.warning({
                   //    title: `This time slot expired.`,
                   //    maskClosable: true,
