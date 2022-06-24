@@ -248,7 +248,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                                       .activeTextColor.value,
                         }}
                         onPress={() => {
-                           setAmount(eachAmount.value)
+                           setAmount(eachAmount.value.toString())
                         }}
                      >
                         {formatCurrency(eachAmount.label)}
