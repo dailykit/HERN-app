@@ -38,7 +38,11 @@ const AccountScreen = () => {
                   <Text style={styles.accountTileText}>Wallet</Text>
                </Tile>
                <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
-               <Tile>
+               <Tile
+                  onPress={() => {
+                     navigation.navigate('LoyaltyPoints')
+                  }}
+               >
                   <LoyaltyPointIcon />
                   <Text style={styles.accountTileText}>Loyalty Points</Text>
                </Tile>
