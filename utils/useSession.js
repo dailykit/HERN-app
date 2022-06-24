@@ -41,6 +41,18 @@ export const useSession = () => {
          }
       })()
    }, [])
-
-   return { isLoading, session }
+   const logout = React.useCallback(async () => {
+      try {
+         await AsyncStorage.removeItem('accessToken')
+         setSession({
+            status: false,
+         })
+      } catch (err) {
+         console.error('logoutErr', err)
+         setSession({
+            status: false,
+         })
+      }
+   }, [])
+   return { isLoading, session, logout }
 }
