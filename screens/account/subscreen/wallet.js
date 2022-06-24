@@ -13,6 +13,7 @@ import { formatCurrency } from '../../../utils/formatCurrency'
 import { SubScreenHeader } from './header'
 import appConfig from '../../../brandConfig.json'
 import { Button } from '../../../components/button'
+import { NoDataIcon } from '../../../assets/noDataIcon'
 
 const WalletScreen = () => {
    const { isLoading } = useUser()
@@ -51,7 +52,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             }}
          >
             <Text style={styles.balance}>
-               Available Balance : {formatCurrency(user.wallet.amount)}
+               Available Balance : {formatCurrency(user.wallet?.amount || 0)}
             </Text>
             <TouchableWithoutFeedback
                onPress={() => {
@@ -74,55 +75,83 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             <Text style={{ fontSize: 18, fontWeight: '500', marginBottom: 10 }}>
                Transaction History
             </Text>
-            <View style={styles.transactionHeader}>
-               <Text
-                  style={[styles.headingText, { flex: 2, textAlign: 'left' }]}
+            {user.wallet.walletTransactions.length == 0 ? (
+               <View
+                  style={{
+                     flexDirection: 'column',
+                     alignItems: 'center',
+                     justifyContent: 'center',
+                     height: '50%',
+                  }}
                >
-                  Transaction Date
-               </Text>
-               <Text
-                  style={[styles.headingText, { flex: 1, textAlign: 'right' }]}
-               >
-                  Balance
-               </Text>
-            </View>
-            <ScrollView>
-               {user.wallet.walletTransactions.map(eachTransaction => {
-                  return (
-                     <View
-                        key={eachTransaction.id}
+                  <NoDataIcon />
+                  <Text style={styles.noTransactionMessage}>
+                     Oops! No transaction history is available yet
+                  </Text>
+               </View>
+            ) : (
+               <>
+                  <View style={styles.transactionHeader}>
+                     <Text
                         style={[
-                           styles.transactionStyle,
-                           {
-                              borderBottomColor: '#00000010',
-                              borderBottomWidth: 1,
-                           },
+                           styles.headingText,
+                           { flex: 2, textAlign: 'left' },
                         ]}
                      >
-                        <Text style={styles.transactionDate}>
-                           {moment(eachTransaction.created_at).format(
-                              'DD MMM YY HH:mm'
-                           )}
-                        </Text>
-                        <Text
-                           style={[
-                              styles.transactionAmount,
-                              {
-                                 color:
-                                    eachTransaction.type === 'CREDIT'
-                                       ? '#61D836'
-                                       : '#FF0000',
-                              },
-                           ]}
-                        >
-                           {eachTransaction.type === 'CREDIT'
-                              ? `+${formatCurrency(eachTransaction.amount)}`
-                              : `+${formatCurrency(eachTransaction.amount)}`}
-                        </Text>
-                     </View>
-                  )
-               })}
-            </ScrollView>
+                        Transaction Date
+                     </Text>
+                     <Text
+                        style={[
+                           styles.headingText,
+                           { flex: 1, textAlign: 'right' },
+                        ]}
+                     >
+                        Balance
+                     </Text>
+                  </View>
+                  <ScrollView>
+                     {user.wallet.walletTransactions.map(eachTransaction => {
+                        return (
+                           <View
+                              key={eachTransaction.id}
+                              style={[
+                                 styles.transactionStyle,
+                                 {
+                                    borderBottomColor: '#00000010',
+                                    borderBottomWidth: 1,
+                                 },
+                              ]}
+                           >
+                              <Text style={styles.transactionDate}>
+                                 {moment(eachTransaction.created_at).format(
+                                    'DD MMM YY HH:mm'
+                                 )}
+                              </Text>
+                              <Text
+                                 style={[
+                                    styles.transactionAmount,
+                                    {
+                                       color:
+                                          eachTransaction.type === 'CREDIT'
+                                             ? '#61D836'
+                                             : '#FF0000',
+                                    },
+                                 ]}
+                              >
+                                 {eachTransaction.type === 'CREDIT'
+                                    ? `+${formatCurrency(
+                                         eachTransaction.amount
+                                      )}`
+                                    : `+${formatCurrency(
+                                         eachTransaction.amount
+                                      )}`}
+                              </Text>
+                           </View>
+                        )
+                     })}
+                  </ScrollView>
+               </>
+            )}
          </View>
       </View>
    )
@@ -220,7 +249,6 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                         }}
                         onPress={() => {
                            setAmount(eachAmount.value)
-                           walletAmountRef.current.value = eachAmount.value
                         }}
                      >
                         {formatCurrency(eachAmount.label)}
@@ -256,6 +284,11 @@ const styles = StyleSheet.create({
       borderBottomColor: '#00000010',
       borderBottomWidth: 1,
       height: 40,
+   },
+   noTransactionMessage: {
+      fontWeight: '600',
+      fontSize: 16,
+      marginVertical: 10,
    },
    transactionId: {
       fontSize: 16,
