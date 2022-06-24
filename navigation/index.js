@@ -9,6 +9,7 @@ import RefineLocation from '../screens/refineLocation'
 import CartScreen from '../screens/cart'
 import BottomNavbar from './bottomNavbar'
 import LoginScreen from '../screens/login'
+import WalletScreen from '../screens/account/subscreen/wallet'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -36,6 +37,7 @@ const Navigator = () => {
          <Stack.Screen name="RefineLocation" component={RefineLocation} />
          <Stack.Screen name="Cart" component={CartScreen} />
          <Stack.Screen name="Login" component={LoginScreen} />
+         <Stack.Screen name="Wallet" component={WalletScreen} />
       </Stack.Navigator>
    )
 }
