@@ -111,7 +111,7 @@
    "brandSettings": {
       "brandLogo": {
          "label": "brand Logo",
-         "value": "",
+         "value": "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/54929-slayLogo.png",
          "dataType": "imageUpload",
          "description": "Logo for brand.",
          "defaultValue": "https://dailykit-133-test.s3.us-east-2.amazonaws.com/images/32397-taco_bell_logo.png",

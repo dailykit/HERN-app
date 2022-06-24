@@ -299,3 +299,197 @@ export const PRODUCTS_QUERY = gql`
       }
    }
 `
+export const PLATFORM_CUSTOMERS = gql`
+   query customers($where: platform_customer_bool_exp = {}) {
+      customers: platform_customer(where: $where) {
+         email
+         password
+         fullName
+         id: keycloakId
+      }
+   }
+`
+export const CUSTOMER = {
+   DETAILS: gql`
+      subscription customer($keycloakId: String!, $brandId: Int!) {
+         customer(keycloakId: $keycloakId) {
+            id
+            keycloakId
+            isSubscriber
+            isTest
+            carts(
+               where: {
+                  source: { _eq: "subscription" }
+                  brandId: { _eq: $brandId }
+               }
+            ) {
+               id
+               paymentStatus
+               subscriptionOccurence {
+                  fulfillmentDate
+               }
+            }
+            brandCustomers(where: { brandId: { _eq: $brandId } }) {
+               id
+               isDemo
+               brandId
+               keycloakId
+               isSubscriber
+               isSubscriptionCancelled
+               pausePeriod
+               subscriptionId
+               subscriptionAddressId
+               subscriptionPaymentMethodId
+               subscriptionOnboardStatus
+               subscription {
+                  recipes: subscriptionItemCount {
+                     count
+                     price
+                     tax
+                     isTaxIncluded
+                     servingId: subscriptionServingId
+                     serving: subscriptionServing {
+                        size: servingSize
+                     }
+                  }
+               }
+            }
+            platform_customer: platform_customer {
+               email
+               firstName
+               lastName
+               keycloakId
+               phoneNumber
+               paymentCustomerId
+               defaultPaymentMethodId
+               fullName
+               addresses: customerAddresses(order_by: { created_at: desc }) {
+                  id
+                  lat
+                  lng
+                  line1
+                  line2
+                  city
+                  state
+                  country
+                  zipcode
+                  label
+                  notes
+               }
+               paymentMethods: customerPaymentMethods {
+                  brand
+                  last4
+                  country
+                  expMonth
+                  expYear
+                  funding
+                  keycloakId
+                  cardHolderName
+                  paymentMethodId
+                  paymentCustomerId
+                  supportedPaymentOptionId
+               }
+            }
+         }
+      }
+   `,
+   DETAILS_QUERY: gql`
+      query customer($keycloakId: String!, $brandId: Int!) {
+         customer(keycloakId: $keycloakId) {
+            id
+            keycloakId
+            isSubscriber
+            isTest
+            carts {
+               id
+               paymentStatus
+               subscriptionOccurence {
+                  fulfillmentDate
+               }
+            }
+            brandCustomers(where: { brandId: { _eq: $brandId } }) {
+               id
+               isDemo
+               brandId
+               keycloakId
+               isSubscriber
+               isSubscriptionCancelled
+               pausePeriod
+               subscriptionId
+               subscriptionAddressId
+               subscriptionPaymentMethodId
+               subscriptionOnboardStatus
+               subscription {
+                  recipes: subscriptionItemCount {
+                     count
+                     price
+                     tax
+                     isTaxIncluded
+                     servingId: subscriptionServingId
+                     serving: subscriptionServing {
+                        size: servingSize
+                     }
+                  }
+               }
+            }
+            platform_customer: platform_customer {
+               email
+               firstName
+               lastName
+               keycloakId
+               phoneNumber
+               paymentCustomerId
+               addresses: customerAddresses(order_by: { created_at: desc }) {
+                  id
+                  lat
+                  lng
+                  line1
+                  line2
+                  city
+                  state
+                  country
+                  zipcode
+                  label
+                  notes
+               }
+               paymentMethods: customerPaymentMethods {
+                  brand
+                  last4
+                  country
+                  expMonth
+                  expYear
+                  funding
+                  keycloakId
+                  cardHolderName
+                  paymentMethodId
+               }
+            }
+         }
+      }
+   `,
+   WITH_BRAND: gql`
+      query customers(
+         $where: crm_customer_bool_exp = {}
+         $brandId: Int_comparison_exp = {}
+      ) {
+         customers(where: $where) {
+            id
+            brandCustomers(where: { brandId: $brandId }) {
+               id
+               subscriptionOnboardStatus
+            }
+         }
+      }
+   `,
+}
+export const CUSTOMER_REFERRALS = gql`
+   subscription CustomerReferrals($brandId: Int!, $keycloakId: String!) {
+      customerReferrals(
+         where: { brandId: { _eq: $brandId }, keycloakId: { _eq: $keycloakId } }
+      ) {
+         id
+         referralCode
+         referredByCode
+      }
+   }
+`

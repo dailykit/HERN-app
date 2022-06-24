@@ -8,6 +8,7 @@ import LocationSelectorScreen from '../screens/locationSelector'
 import RefineLocation from '../screens/refineLocation'
 import CartScreen from '../screens/cart'
 import BottomNavbar from './bottomNavbar'
+import LoginScreen from '../screens/login'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -34,6 +35,7 @@ const Navigator = () => {
          />
          <Stack.Screen name="RefineLocation" component={RefineLocation} />
          <Stack.Screen name="Cart" component={CartScreen} />
+         <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
    )
 }

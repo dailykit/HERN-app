@@ -188,3 +188,50 @@ export const GET_CART_ITEMS_BY_CART = gql`
       }
    }
 `
+export const WALLETS = gql`
+   subscription Wallets($brandId: Int!, $keycloakId: String!) {
+      wallets(
+         where: { brandId: { _eq: $brandId }, keycloakId: { _eq: $keycloakId } }
+      ) {
+         id
+         amount
+         walletTransactions(order_by: { created_at: desc_nulls_last }) {
+            id
+            type
+            amount
+            created_at
+         }
+      }
+   }
+`
+
+export const LOYALTY_POINTS = gql`
+   subscription LoyaltyPoints($brandId: Int!, $keycloakId: String!) {
+      loyaltyPoints(
+         where: { brandId: { _eq: $brandId }, keycloakId: { _eq: $keycloakId } }
+      ) {
+         points
+         loyaltyPointTransactions(order_by: { created_at: desc_nulls_last }) {
+            id
+            points
+            type
+            created_at
+         }
+      }
+   }
+`
+export const OTPS = gql`
+   subscription otps($where: platform_otp_transaction_bool_exp = {}) {
+      otps: platform_otp_transaction(
+         where: $where
+         order_by: { created_at: desc }
+      ) {
+         id
+         code
+         isValid
+         validTill
+         resendAttempts
+         isResendAllowed
+      }
+   }
+`
