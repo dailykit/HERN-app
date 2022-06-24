@@ -8,6 +8,7 @@ import { ApolloProvider } from './lib/apollo'
 import { ConfigProvider } from './lib/config'
 import { OnDemandMenuProvider } from './context'
 import { CartProvider } from './context/cart'
+import { UserProvider } from './context/user'
 const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
 export default function App() {
@@ -15,13 +16,15 @@ export default function App() {
       <SafeAreaProvider style={{ paddingTop: paddingTop }}>
          <ApolloProvider>
             <ConfigProvider>
-               <OnDemandMenuProvider>
-                  <CartProvider>
-                     <NavigationContainer>
-                        <Navigation />
-                     </NavigationContainer>
-                  </CartProvider>
-               </OnDemandMenuProvider>
+               <UserProvider>
+                  <OnDemandMenuProvider>
+                     <CartProvider>
+                        <NavigationContainer>
+                           <Navigation />
+                        </NavigationContainer>
+                     </CartProvider>
+                  </OnDemandMenuProvider>
+               </UserProvider>
             </ConfigProvider>
          </ApolloProvider>
       </SafeAreaProvider>
