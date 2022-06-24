@@ -200,7 +200,7 @@ export const UserProvider = ({ children }) => {
          if (keycloakId && !loading && customer?.id) {
             const user = processUser(customer)
             // fb pixel initialization when user is logged in
-            const pixelId = isClient && get_env('PIXEL_ID')
+            // const pixelId = isClient && get_env('PIXEL_ID')
             const advancedMatching = {
                em: user?.platform_customer?.email,
                ph: user?.platform_customer?.phoneNumber,
@@ -212,7 +212,7 @@ export const UserProvider = ({ children }) => {
                autoConfig: true,
                debug: true,
             }
-            ReactPixel.init(pixelId, advancedMatching, options)
+            // ReactPixel.init(pixelId, advancedMatching, options)
             if (Array.isArray(user?.carts) && user?.carts?.length > 0) {
                const index = user.carts.findIndex(
                   node => node.paymentStatus === 'SUCCEEDED'
