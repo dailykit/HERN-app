@@ -115,6 +115,11 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: '500',
    },
+   headingText: {
+      fontSize: 16,
+      fontWeight: '500',
+      color: '#A2A2A2',
+   },
    noTransactionMessage: {
       fontWeight: '600',
       fontSize: 16,
@@ -127,6 +132,12 @@ const styles = StyleSheet.create({
       borderBottomColor: '#00000010',
       borderBottomWidth: 1,
       height: 40,
+   },
+   transactionStyle: {
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+      height: 40,
+      alignItems: 'center',
    },
    transactionId: {
       fontSize: 16,
