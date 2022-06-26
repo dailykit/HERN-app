@@ -12,6 +12,7 @@
    "dependencies": {
       "@apollo/client": "^3.6.7",
       "@expo-google-fonts/dev": "^0.2.2",
+      "@gorhom/bottom-sheet": "^4",
       "@react-native-async-storage/async-storage": "^1.17.6",
       "@react-native-community/clipboard": "^1.5.1",
       "@react-native-community/geolocation": "^2.1.0",
@@ -47,6 +48,8 @@
       "react-native-maps-directions": "^1.8.0",
       "react-native-modal": "^13.0.1",
       "react-native-phone-number-input": "^2.1.0",
+      "react-native-razorpay-expokit": "^2.1.1",
+      "react-native-reanimated": "~2.8.0",
       "react-native-safe-area-context": "4.2.4",
       "react-native-safe-area-view": "^1.1.1",
       "react-native-screens": "~3.11.1",

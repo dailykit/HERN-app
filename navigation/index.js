@@ -7,6 +7,7 @@ import AccountScreen from '../screens/account'
 import LocationSelectorScreen from '../screens/locationSelector'
 import RefineLocation from '../screens/refineLocation'
 import CartScreen from '../screens/cart'
+import PaymentOptionsScreen from '../screens/paymentOptions'
 import BottomNavbar from './bottomNavbar'
 import LoginScreen from '../screens/login'
 import WalletScreen from '../screens/account/subscreen/wallet'
@@ -41,6 +42,7 @@ const Navigator = () => {
          />
          <Stack.Screen name="RefineLocation" component={RefineLocation} />
          <Stack.Screen name="Cart" component={CartScreen} />
+         <Stack.Screen name="PaymentOptions" component={PaymentOptionsScreen} />
          <Stack.Screen name="Login" component={LoginScreen} />
          <Stack.Screen name="Wallet" component={WalletScreen} />
          <Stack.Screen name="LoyaltyPoints" component={LoyaltyPointsScreen} />

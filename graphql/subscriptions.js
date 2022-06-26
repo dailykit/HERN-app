@@ -205,6 +205,43 @@ export const WALLETS = gql`
    }
 `
 
+export const GET_PAYMENT_OPTIONS = gql`
+   subscription cart($id: Int!) {
+      cart(id: $id) {
+         id
+         cartOwnerBilling
+         isCartValid
+         availablePaymentOptionToCart(
+            where: { isActive: { _eq: true } }
+            order_by: { position: desc_nulls_last }
+         ) {
+            id
+            isActive
+            isDown
+            isRecommended
+            isValid
+            label
+            description
+            position
+            publicCreds
+            showCompanyName
+            supportedPaymentOption {
+               id
+               country
+               supportedPaymentCompanyId
+               paymentOptionLabel
+               isLoginRequired
+               canShowWhileLoggedIn
+               supportedPaymentCompany {
+                  id
+                  label
+               }
+            }
+         }
+      }
+   }
+`
+
 export const LOYALTY_POINTS = gql`
    subscription LoyaltyPoints($brandId: Int!, $keycloakId: String!) {
       loyaltyPoints(
@@ -216,6 +253,44 @@ export const LOYALTY_POINTS = gql`
             points
             type
             created_at
+         }
+      }
+   }
+`
+export const GET_CART_PAYMENT_INFO = gql`
+   subscription GET_CART_PAYMENT_INFO($where: order_cartPayment_bool_exp!) {
+      cartPayments(where: $where, limit: 1, order_by: { updated_at: desc }) {
+         id
+         amount
+         cancelAttempt
+         cartId
+         cart {
+            customerInfo
+            source
+         }
+         isTest
+         paymentStatus
+         paymentType
+         metaData
+         transactionRemark
+         isResultShown
+         stripeInvoiceId
+         transactionId
+         actionUrl
+         actionRequired
+         availablePaymentOption {
+            id
+            label
+            supportedPaymentOption {
+               paymentOptionLabel
+               id
+               isRequestClientBased
+               isWebhookClientBased
+               supportedPaymentCompany {
+                  label
+                  id
+               }
+            }
          }
       }
    }
@@ -368,6 +443,37 @@ export const GET_ORDER_DETAIL_ONE_SUBS = gql`
                }
             }
             productId
+         }
+      }
+   }
+`
+export const GET_AVAILABLE_PAYMENT_OPTIONS = gql`
+   subscription availablePaymentOptions($ids: [Int!]) {
+      availablePaymentOptions: brands_availablePaymentOption(
+         where: { isActive: { _eq: true }, id: { _in: $ids } }
+         order_by: { position: desc_nulls_last }
+      ) {
+         id
+         isActive
+         isDown
+         isRecommended
+         isValid
+         label
+         description
+         position
+         publicCreds
+         showCompanyName
+         supportedPaymentOption {
+            id
+            country
+            supportedPaymentCompanyId
+            paymentOptionLabel
+            isLoginRequired
+            canShowWhileLoggedIn
+            supportedPaymentCompany {
+               id
+               label
+            }
          }
       }
    }

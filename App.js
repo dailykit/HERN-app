@@ -9,24 +9,30 @@ import { ConfigProvider } from './lib/config'
 import { OnDemandMenuProvider } from './context'
 import { CartProvider } from './context/cart'
 import { UserProvider } from './context/user'
+import { PaymentProvider } from './lib/payment'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
 export default function App() {
    return (
       <SafeAreaProvider style={{ paddingTop: paddingTop }}>
-         <ApolloProvider>
-            <ConfigProvider>
-               <UserProvider>
-                  <OnDemandMenuProvider>
-                     <CartProvider>
-                        <NavigationContainer>
-                           <Navigation />
-                        </NavigationContainer>
-                     </CartProvider>
-                  </OnDemandMenuProvider>
-               </UserProvider>
-            </ConfigProvider>
-         </ApolloProvider>
+         <GestureHandlerRootView style={{ flex: 1 }}>
+            <ApolloProvider>
+               <ConfigProvider>
+                  <UserProvider>
+                     <OnDemandMenuProvider>
+                        <CartProvider>
+                           <PaymentProvider>
+                              <NavigationContainer>
+                                 <Navigation />
+                              </NavigationContainer>
+                           </PaymentProvider>
+                        </CartProvider>
+                     </OnDemandMenuProvider>
+                  </UserProvider>
+               </ConfigProvider>
+            </ApolloProvider>
+         </GestureHandlerRootView>
       </SafeAreaProvider>
    )
 }
