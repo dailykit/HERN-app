@@ -24,7 +24,11 @@ const AccountScreen = () => {
          <View style={{ marginHorizontal: 12 }}>
             <UserInfo />
             <View>
-               <Tile>
+               <Tile
+                  onPress={() => {
+                     navigation.navigate('Offers')
+                  }}
+               >
                   <OfferIcon />
                   <Text style={styles.accountTileText}>Check Offers</Text>
                </Tile>

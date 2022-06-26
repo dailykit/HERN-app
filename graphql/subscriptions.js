@@ -235,3 +235,28 @@ export const OTPS = gql`
       }
    }
 `
+export const COUPONS = gql`
+   subscription Coupons($params: jsonb, $brandId: Int!) {
+      coupons(
+         where: {
+            isActive: { _eq: true }
+            isArchived: { _eq: false }
+            brands: { brandId: { _eq: $brandId }, isActive: { _eq: true } }
+         }
+      ) {
+         id
+         code
+         isRewardMulti
+         rewards(order_by: { position: desc_nulls_last }) {
+            id
+            condition {
+               isValid(args: { params: $params })
+            }
+         }
+         metaDetails
+         visibilityCondition {
+            isValid(args: { params: $params })
+         }
+      }
+   }
+`

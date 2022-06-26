@@ -11,6 +11,7 @@ import BottomNavbar from './bottomNavbar'
 import LoginScreen from '../screens/login'
 import WalletScreen from '../screens/account/subscreen/wallet'
 import LoyaltyPointsScreen from '../screens/account/subscreen/loyaltyScreen'
+import OffersScreen from '../screens/account/subscreen/offers'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -40,6 +41,7 @@ const Navigator = () => {
          <Stack.Screen name="Login" component={LoginScreen} />
          <Stack.Screen name="Wallet" component={WalletScreen} />
          <Stack.Screen name="LoyaltyPoints" component={LoyaltyPointsScreen} />
+         <Stack.Screen name="Offers" component={OffersScreen} />
       </Stack.Navigator>
    )
 }
