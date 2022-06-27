@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
-import { LeftArrow } from '../../assets/arrowIcon'
 import appConfig from '../../brandConfig.json'
 
 export const AccountHeader = () => {
@@ -16,22 +15,6 @@ export const AccountHeader = () => {
             },
          ]}
       >
-         <TouchableOpacity
-            onPress={() => {
-               navigation.goBack()
-            }}
-            style={{
-               padding: 10,
-            }}
-         >
-            <LeftArrow
-               size={26}
-               fill={
-                  appConfig.brandSettings.headerSettings?.textColor?.value ||
-                  '#000000'
-               }
-            />
-         </TouchableOpacity>
          <Text
             style={[
                {
@@ -52,6 +35,7 @@ const styles = StyleSheet.create({
       height: 64,
       flexDirection: 'row',
       alignItems: 'center',
+      paddingHorizontal: 10,
    },
    headerTextStyle: {
       fontSize: 16,
