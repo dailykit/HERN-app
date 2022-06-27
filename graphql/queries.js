@@ -493,3 +493,72 @@ export const CUSTOMER_REFERRALS = gql`
       }
    }
 `
+export const GET_ORDER_DETAIL_ONE = gql`
+   query GET_ORDER_DETAIL_ONE($where: order_cart_bool_exp!) {
+      carts(where: $where, order_by: { order: { created_at: desc } }) {
+         id
+         status
+         paymentStatus
+         fulfillmentInfo
+         billingDetails
+         cartOwnerBilling
+         address
+         customerInfo
+         order {
+            created_at
+            deliveryInfo
+         }
+         cartPayments {
+            id
+            amount
+            transactionRemark
+         }
+         availablePaymentOption {
+            label
+            supportedPaymentOption {
+               id
+               paymentOptionLabel
+            }
+         }
+         cartItems(where: { level: { _eq: 1 } }) {
+            cartItemId: id
+            parentCartItemId
+            addOnLabel
+            addOnPrice
+            created_at
+            price: unitPrice
+            discount
+            name: displayName
+            image: displayImage
+            childs {
+               price: unitPrice
+               name: displayName
+               discount
+               productOption {
+                  id
+                  label
+               }
+               childs {
+                  displayName
+                  price: unitPrice
+                  discount
+                  modifierOption {
+                     id
+                     name
+                  }
+                  childs {
+                     displayName
+                     price: unitPrice
+                     discount
+                     modifierOption {
+                        id
+                        name
+                     }
+                  }
+               }
+            }
+            productId
+         }
+      }
+   }
+`

@@ -260,3 +260,44 @@ export const COUPONS = gql`
       }
    }
 `
+export const GET_ORDER_DETAILS = gql`
+   subscription GET_ORDER_DETAILS($where: order_cart_bool_exp!) {
+      carts(where: $where, order_by: { order: { created_at: desc } }) {
+         id
+         status
+         paymentStatus
+         fulfillmentInfo
+         billingDetails
+         cartOwnerBilling
+         address
+         order {
+            created_at
+            deliveryInfo
+         }
+         cartPayments {
+            id
+            amount
+            transactionRemark
+         }
+         availablePaymentOption {
+            label
+            supportedPaymentOption {
+               id
+               paymentOptionLabel
+            }
+         }
+         cartItems(where: { level: { _eq: 1 } }) {
+            cartItemId: id
+            parentCartItemId
+            addOnLabel
+            addOnPrice
+            created_at
+            price: unitPrice
+            discount
+            name: displayName
+            image: displayImage
+            productId
+         }
+      }
+   }
+`
