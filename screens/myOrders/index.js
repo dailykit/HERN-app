@@ -99,6 +99,7 @@ const getTitle = type => {
 }
 const OrderCard = ({ order }) => {
    const navigation = useNavigation()
+
    return (
       <TouchableWithoutFeedback
          onPress={() => {
@@ -107,9 +108,18 @@ const OrderCard = ({ order }) => {
                   cartId: order.id,
                })
             } else {
-               navigation.navigate('OrderTracking', {
-                  cartId: order.id,
-               })
+               if (
+                  order.fulfillmentInfo.type === 'PREORDER_DELIVERY' ||
+                  order.fulfillmentInfo.type === 'ONDEMAND_DELIVERY'
+               ) {
+                  navigation.navigate('OrderTracking', {
+                     cartId: order.id,
+                  })
+               } else {
+                  navigation.navigate('OrderDetail', {
+                     cartId: order.id,
+                  })
+               }
             }
          }}
       >

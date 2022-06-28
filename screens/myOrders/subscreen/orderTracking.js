@@ -1,6 +1,6 @@
 import { useQuery, useSubscription } from '@apollo/client'
 import { useRoute } from '@react-navigation/native'
-import React from 'react'
+import React, { useState } from 'react'
 import {
    ActivityIndicator,
    StyleSheet,
@@ -8,24 +8,20 @@ import {
    View,
    ScrollView,
    SafeAreaView,
+   Image,
 } from 'react-native'
 import { GET_ORDER_DETAIL_ONE_SUBS } from '../../../graphql'
 import { SubScreenHeader } from './component/header'
 import appConfig from '../../../brandConfig.json'
 import { isEmpty, isNull } from 'lodash'
-import StepIndicator from 'react-native-step-indicator'
-import LocationIcon from '../../../assets/locationIcon'
-import { PickupIcon } from '../../../assets/pickup'
-import { DropOffIcon } from '../../../assets/dropoff'
-import { DeliveredIcon } from '../../../assets/deliveredIcon'
-import { PendingIcon } from '../../../assets/pendingIcon'
-import { UnderProcessingIcon } from '../../../assets/underProcessingIcon'
-import { DispatchIcon } from '../../../assets/dispatchIcon'
 import moment from 'moment'
-import { TimeIcon } from '../../../assets/timeIcon'
-import { PhoneIcon } from '../../../assets/phoneIcon'
 import { ProfileIcon } from '../../../assets/profileIcon'
 import { MapTracking } from './component/deliveryTrackingOnMap'
+import { CardsIcon } from '../../../assets/cardsIcon'
+import { formatCurrency } from '../../../utils/formatCurrency'
+import { combineCartItems } from '../../../utils'
+import { BillingDetails } from './component/billingDetails'
+import { DeliveryProgressBar } from './component/deliveryProgressBar'
 
 const OrderTrackingScreen = () => {
    const route = useRoute()
@@ -46,19 +42,21 @@ const OrderTrackingScreen = () => {
    })
    const cart = React.useMemo(() => carts[0], [carts])
 
-   console.log('data123', cart, error)
    return (
-      <SafeAreaView>
+      <SafeAreaView style={{ paddingBottom: 64 }}>
          <SubScreenHeader title={`Order ${cartId}`} />
          <ScrollView>
-            <View style={{ padding: 8, flex: 1 }}>
+            <View style={{ padding: 8, backgroundColor: '#ffffff' }}>
                {loading ? (
                   <Text>Loading</Text>
                ) : error ? (
                   <Text> Something went wrong</Text>
                ) : isNull(cart.order.isAccepted) &&
                  isNull(cart.order.isRejected) ? (
-                  <AcceptingOrder />
+                  <View>
+                     <AcceptingOrder />
+                     <OrderDetail cart={cart} />
+                  </View>
                ) : cart.order.isAccepted ? (
                   <View>
                      <MapTracking />
@@ -66,9 +64,13 @@ const OrderTrackingScreen = () => {
                         orderStatus={cart.status}
                         deliveryInfo={cart.order.deliveryInfo || {}}
                      />
+                     <OrderDetail cart={cart} />
                   </View>
                ) : (
-                  <RejectedOrder />
+                  <View>
+                     <RejectedOrder />
+                     <OrderDetail cart={cart} />
+                  </View>
                )}
             </View>
          </ScrollView>
@@ -98,239 +100,265 @@ const RejectedOrder = () => {
    )
 }
 
-const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
-   const customStyles = React.useMemo(
-      () => ({
-         stepIndicatorSize: 30,
-         currentStepIndicatorSize: 35,
-         separatorStrokeWidth: 2,
-         currentStepStrokeWidth: 0,
-         stepStrokeCurrentColor: appConfig.brandSettings.brandColor.value,
-         stepStrokeWidth: 0,
-         stepStrokeFinishedColor: appConfig.brandSettings.brandColor.value,
-         stepStrokeUnFinishedColor: '#aaaaaa',
-         separatorFinishedColor: appConfig.brandSettings.brandColor.value,
-         separatorUnFinishedColor: '#aaaaaa',
-         stepIndicatorFinishedColor: appConfig.brandSettings.brandColor.value,
-         stepIndicatorUnFinishedColor: '#a2a2a2',
-         stepIndicatorCurrentColor: '#a2a2a2',
-         stepIndicatorLabelFontSize: 13,
-         currentStepIndicatorLabelFontSize: 13,
-         stepIndicatorLabelCurrentColor:
-            appConfig.brandSettings.brandColor.value,
-         stepIndicatorLabelFinishedColor: '#ffffff',
-         stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-         labelColor: '#999999',
-         labelSize: 13,
-         currentStepLabelColor: appConfig.brandSettings.brandColor.value,
-         labelAlign: 'flex-start',
-      }),
-      []
-   )
+const OrderDetail = ({ cart }) => {
+   const [componentStatus, setComponentStatus] = useState('loading')
+   const [cartItems, setCartItems] = useState()
 
-   const orderStatusArr = React.useMemo(
-      () => [
-         {
-            id: 1,
-            label: 'Order Pending',
-            step: 'ORDER_PENDING',
-            icon: PendingIcon,
-            showDetails: false,
-         },
-         {
-            id: 2,
-            label: 'Order Under Processing',
-            step: 'ORDER_UNDER_PROCESSING',
-            icon: UnderProcessingIcon,
-            showDetails: false,
-         },
-         {
-            id: 3,
-            label: 'Order Ready To Dispatch',
-            step: 'ORDER_READY_TO_DISPATCH',
-            icon: DispatchIcon,
-            showDetails: false,
-         },
-         {
-            id: 4,
-            label: 'Order Pickup',
-            step: 'order-picked-up',
-            icon: PickupIcon,
-            showDetails: true,
-            status: deliveryInfo.pickup?.status?.value,
-            time: deliveryInfo.pickup?.status?.timeStamp,
-            details: {
-               name: deliveryInfo.pickup?.pickupInfo?.organizationName,
-               phone: deliveryInfo.pickup?.pickupInfo?.organizationPhone,
-               assignedName: `${
-                  deliveryInfo.assigned?.driverInfo?.driverFirstName
-               } ${deliveryInfo.assigned?.driverInfo?.driverLastName || ''}`,
-               assignedPhone: deliveryInfo.assigned?.driverInfo?.driverPhone,
-            },
-            address: deliveryInfo.pickup?.pickupInfo?.organizationAddress, //define the address of the pickup location or store
-            tailHeight: 120,
-         },
-         {
-            id: 5,
-            label: 'Order Drop Off',
-            step: 'order-drop-off',
-            icon: DropOffIcon,
-            showDetails: true,
-            status: deliveryInfo.dropoff?.status?.value,
-            time: deliveryInfo.dropoff?.status?.timeStamp,
-            details: {
-               name:
-                  deliveryInfo.dropoff?.dropoffInfo?.customerFirstName +
-                  ' ' +
-                  deliveryInfo.dropoff?.dropoffInfo?.customerLastName,
-               phone: deliveryInfo.dropoff?.dropoffInfo?.customerPhone,
-            },
-            address: deliveryInfo.dropoff?.dropoffInfo?.customerAddress, // define customer address
-            tailHeight: 120,
-         },
-         {
-            id: 6,
-            label: 'Order Delivered',
-            step: 'order-delivered',
-            icon: DeliveredIcon,
-            showDetails: true,
-            status: deliveryInfo.dropoff?.status?.value,
-            time: deliveryInfo.dropoff?.status?.timeStamp,
-            tail: false,
-            tailHeight: 0,
-            details: {
-               name: 'Order has been delivered',
-            },
-         },
-      ],
-      [deliveryInfo]
-   )
+   React.useEffect(() => {
+      setCartItems(combineCartItems(cart.cartItems))
+      setComponentStatus('success')
+   }, [cart])
 
-   const currentPosition = React.useMemo(() => {
-      if (!isEmpty(deliveryInfo)) {
-         if (deliveryInfo.pickup.status.value !== 'SUCCEEDED') {
-            return 4
-         } else if (deliveryInfo.dropoff.status.value === 'WAITING') {
-            return 5
-         } else if (deliveryInfo.dropoff.status.value === 'SUCCEEDED') {
-            return 6
+   const label = React.useMemo(() => {
+      if (cart?.fulfillmentInfo?.type) {
+         const fulfillmentType = cart?.fulfillmentInfo?.type
+         switch (fulfillmentType) {
+            case 'ONDEMAND_DELIVERY':
+               return 'Delivery At'
+            case 'PREORDER_DELIVERY':
+               return 'Delivery At'
+            case 'PREORDER_PICKUP':
+               return 'Pickup From'
+            case 'ONDEMAND_PICKUP':
+               return 'Pickup From'
+            case 'PREORDER_DINEIN':
+               return 'Dine In At'
+            case 'ONDEMAND_DINEIN':
+               return 'Dine In At'
          }
       } else {
-         switch (orderStatus) {
-            case 'ORDER_PENDING':
-               return 1
-            case 'ORDER_UNDER_PROCESSING':
-               return 2
-            case 'ORDER_READY_TO_DISPATCH':
-               return 3
-            default:
-               return 3
-         }
+         return null
       }
-   }, [orderStatus, deliveryInfo])
+   }, [cart?.fulfillmentInfo?.type])
 
+   const getTitle = type => {
+      switch (type) {
+         case 'ONDEMAND_DELIVERY':
+            return 'Delivery'
+         case 'PREORDER_DELIVERY':
+            return 'Schedule Delivery'
+         case 'PREORDER_PICKUP':
+            return 'Schedule Pickup'
+         case 'ONDEMAND_PICKUP':
+            return 'Pickup'
+      }
+   }
+   if (componentStatus === 'loading') {
+      return <Text>Loading</Text>
+   }
    return (
-      <View style={{ flex: 1 }}>
-         <View style={{ height: 330 }}>
-            <StepIndicator
-               customStyles={customStyles}
-               currentPosition={currentPosition}
-               labels={orderStatusArr.map((eachOrderStatus, index) => {
-                  return (
-                     <StepLabel
-                        eachOrderStatus={eachOrderStatus}
-                        isActive={index < currentPosition}
-                        deliveryInfo={deliveryInfo}
-                     />
-                  )
-               })}
-               direction="vertical"
-               stepCount={6}
-               renderStepIndicator={({ position }) => {
-                  const { icon: Icon } = orderStatusArr[position]
-                  return <Icon />
-               }}
-            />
+      <View
+         style={{
+            paddingTop: 12,
+            height: '100%',
+            backgroundColor: '#ffffff',
+         }}
+      >
+         <View style={styles.userInfo}>
+            <Text style={{ fontWeight: '500' }}>
+               <ProfileIcon /> {'  '}
+               {cart.customerInfo.customerFirstName}{' '}
+               {cart.customerInfo.customerLastName}
+            </Text>
+            <Text style={{ marginLeft: 20 }}>
+               {cart.customerInfo.customerPhone}
+            </Text>
          </View>
-      </View>
-   )
-}
-const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
-   return (
-      <View key={eachOrderStatus.step}>
-         <Text>{eachOrderStatus.label}</Text>
-         {!isEmpty(deliveryInfo) &&
-         eachOrderStatus.step == 'ORDER_READY_TO_DISPATCH' ? (
-            <View
-               style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-               }}
-            >
-               <TimeIcon />
-               <Text
-                  style={[
-                     styles.time,
-                     {
-                        color: isActive ? '#00000080' : '#00000025',
-                     },
-                  ]}
-               >
-                  {moment(deliveryInfo.deliveryRequest.status.timeStamp).format(
-                     'DD MMM YY hh:mm a'
-                  )}
-               </Text>
+         <View style={styles.addressContainer}>
+            <View style={{ flexDirection: 'row' }}>
+               <Text style={{ fontWeight: '500' }}>{label}</Text>
             </View>
-         ) : null}
-         {eachOrderStatus.showDetails && isActive ? (
-            <View>
-               <View
-                  style={{
-                     flexDirection: 'row',
-                     alignItems: 'center',
-                  }}
-               >
-                  <TimeIcon />
-                  <Text
-                     style={[
-                        styles.time,
-                        {
-                           color: '#00000080',
-                        },
-                     ]}
-                  >
-                     {moment(eachOrderStatus.time).format('DD MMM YY hh:mm a')}
-                  </Text>
-               </View>
-               {eachOrderStatus.step === 'order-picked-up' ? (
-                  <View style={{ flexDirection: 'row' }}>
+            {cart.address.label ? <Text>{cart.address.label}</Text> : null}
+            <Text>{`${cart.address?.line1}`}</Text>
+            <Text>
+               {`${cart.address?.city} ${cart.address?.state} ${cart.address?.country},${cart.address?.zipcode}`}
+            </Text>
+         </View>
+         <View style={styles.fulfillmentContainer}>
+            <Text style={styles.fulfillmentInfo}>
+               {getTitle(cart?.fulfillmentInfo?.type)}
+            </Text>
+            <Text style={styles.fulfillmentInfo}>
+               {' '}
+               on{' '}
+               {moment(cart?.fulfillmentInfo?.slot?.from).format('DD MMM YYYY')}
+               {' ('}
+               {moment(cart?.fulfillmentInfo?.slot?.from).format('HH:mm')}
+               {'-'}
+               {moment(cart?.fulfillmentInfo?.slot?.to).format('HH:mm')}
+               {')'}
+            </Text>
+         </View>
+         <View style={styles.paymentDetails}>
+            <CardsIcon />
+            <Text style={{ marginHorizontal: 6, fontWeight: '500' }}>
+               Payment Details:
+            </Text>
+            <Text>{cart.availablePaymentOption?.label || 'N/A'}</Text>
+         </View>
+         <View style={styles.cartItemHeader}>
+            <Text style={styles.itemCount}>Item(s)({cartItems.length})</Text>
+            <Text style={styles.orderDate}>
+               {moment(cart.order?.created_at).format('DD MMM YY hh:mm a')}
+            </Text>
+         </View>
+
+         {cartItems.map((product, index) => {
+            return (
+               <View key={`${product.id}-${index}`}>
+                  <View style={styles.productHeader}>
                      <View
                         style={{
                            flexDirection: 'row',
-                           alignItems: 'center',
+                           flexShrink: 1,
+                           marginRight: 10,
                         }}
                      >
-                        <ProfileIcon size={10} />
-                        <Text style={styles.assignedName}>
-                           {eachOrderStatus.details.assignedName}
-                        </Text>
+                        <View style={{ flexDirection: 'row' }}>
+                           <Image
+                              source={{
+                                 uri: product.image,
+                                 height: 80,
+                                 width: 80,
+                              }}
+                           />
+                           <Text>
+                              {product.name}{' '}
+                              {product.price > 0 ? (
+                                 product.discount !== 0 ? (
+                                    <>
+                                       <Text
+                                          style={{
+                                             textDecorationLine: 'line-through',
+                                             color: '#a2a2a2',
+                                             marginRight: 4,
+                                          }}
+                                       >
+                                          {formatCurrency(product.price)}
+                                       </Text>
+                                       <Text>
+                                          {formatCurrency(
+                                             product.price - product.discount
+                                          )}
+                                       </Text>
+                                    </>
+                                 ) : (
+                                    <Text>{formatCurrency(product.price)}</Text>
+                                 )
+                              ) : null}
+                           </Text>
+                        </View>
                      </View>
-                     <View
-                        style={{
-                           flexDirection: 'row',
-                           alignItems: 'center',
-                           marginLeft: 15,
-                        }}
-                     >
-                        <PhoneIcon fill={'#00000060'} />
-                        <Text style={styles.assignedPhone}>
-                           {eachOrderStatus.details.assignedPhone}
-                        </Text>
-                     </View>
+                     <Text>x{product.ids.length}</Text>
                   </View>
-               ) : null}
-            </View>
-         ) : null}
+                  {product.childs.length > 0 ? (
+                     <View style={{ marginLeft: 6 }}>
+                        <View style={styles.productOption}>
+                           <Text style={styles.productOptionText}>
+                              {product.childs[0].productOption.label}
+                           </Text>
+                           {product.childs[0].price !== 0 ? (
+                              <View
+                                 style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                 }}
+                              >
+                                 {product.childs[0].discount != 0 ? (
+                                    <Text
+                                       style={{
+                                          textDecorationLine: 'line-through',
+                                          color: '#a2a2a2',
+                                          marginRight: 4,
+                                       }}
+                                    >
+                                       {formatCurrency(product.childs[0].price)}
+                                    </Text>
+                                 ) : null}
+                                 <Text style={styles.productOptionText}>
+                                    {formatCurrency(
+                                       product.childs[0].price -
+                                          product.childs[0].discount
+                                    )}
+                                 </Text>
+                              </View>
+                           ) : null}
+                        </View>
+                        <View>
+                           {product.childs[0].childs.length > 0 ? (
+                              <View>
+                                 {product.childs[0].childs.map(
+                                    (eachModifier, index) => {
+                                       return (
+                                          <View
+                                             key={`${eachModifier.id}-${index}`}
+                                          >
+                                             <View>
+                                                <Text
+                                                   style={
+                                                      styles.modifierOptionText
+                                                   }
+                                                >
+                                                   {
+                                                      eachModifier
+                                                         .modifierOption.name
+                                                   }
+                                                </Text>
+                                                {eachModifier.price !== 0 ? (
+                                                   <View
+                                                      style={{
+                                                         flexDirection: 'row',
+                                                         alignItems: 'center',
+                                                      }}
+                                                   >
+                                                      {eachModifier.discount !=
+                                                      0 ? (
+                                                         <Text
+                                                            style={{
+                                                               textDecorationLine:
+                                                                  'line-through',
+                                                               color: '#a2a2a2',
+                                                               marginRight: 4,
+                                                            }}
+                                                         >
+                                                            {formatCurrency(
+                                                               eachModifier.price
+                                                            )}
+                                                         </Text>
+                                                      ) : null}
+                                                      <Text
+                                                         style={
+                                                            styles.modifierOptionText
+                                                         }
+                                                      >
+                                                         {formatCurrency(
+                                                            eachModifier.price -
+                                                               eachModifier.discount
+                                                         )}
+                                                      </Text>
+                                                   </View>
+                                                ) : null}
+                                             </View>
+                                          </View>
+                                       )
+                                    }
+                                 )}
+                              </View>
+                           ) : null}
+                        </View>
+                     </View>
+                  ) : null}
+               </View>
+            )
+         })}
+         <View
+            style={{
+               height: 1,
+               backgroundColor: '#a2a2a2',
+               marginVertical: 15,
+            }}
+         ></View>
+         <BillingDetails billing={cart.cartOwnerBilling} />
       </View>
    )
 }
@@ -348,6 +376,105 @@ const styles = StyleSheet.create({
       fontStyle: 'italic',
       fontSize: 10,
       marginLeft: 4,
+   },
+
+   headerContainer: {
+      height: 64,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 10,
+   },
+   orderCard: {
+      marginVertical: 6,
+      borderWidth: 1,
+      borderColor: '#00000010',
+      borderRadius: 6,
+      paddingHorizontal: 8,
+      paddingVertical: 6,
+   },
+   orderCardHeader: {
+      flexDirection: 'row',
+   },
+   productHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginVertical: 4,
+   },
+   productOption: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+   },
+   orderStatusInfo: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+   },
+   divider: {
+      height: 1,
+      backgroundColor: '#00000010',
+      marginVertical: 6,
+   },
+   fulfillmentInfo: {
+      color: '#000000',
+      fontWeight: '500',
+   },
+   itemCount: {
+      fontSize: 14,
+      fontWeight: '500',
+   },
+   productOptionText: {
+      marginVertical: 3,
+      color: '#00000080',
+   },
+   modifierOptionText: {
+      marginVertical: 3,
+      color: '#00000080',
+   },
+   cartItemHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+   },
+   orderDate: {
+      fontStyle: 'italic',
+   },
+   addressContainer: {
+      marginVertical: 10,
+      borderWidth: 1,
+      borderColor: '#00000020',
+      padding: 6,
+      borderRadius: 6,
+   },
+   address: {},
+   paymentDetails: {
+      marginVertical: 10,
+      borderWidth: 1,
+      borderColor: '#00000020',
+      padding: 6,
+      borderRadius: 6,
+      flexDirection: 'row',
+      height: 45,
+      alignItems: 'center',
+   },
+   fulfillmentContainer: {
+      marginVertical: 10,
+      borderWidth: 1,
+      borderColor: '#00000020',
+      padding: 6,
+      borderRadius: 6,
+      flexDirection: 'row',
+      height: 45,
+      alignItems: 'center',
+   },
+   userInfo: {
+      flexDirection: 'row',
+      marginBottom: 4,
+      borderWidth: 1,
+      borderColor: '#00000020',
+      borderRadius: 6,
+      padding: 6,
+      height: 45,
+      alignItems: 'center',
    },
 })
 export default OrderTrackingScreen
