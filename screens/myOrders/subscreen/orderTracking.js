@@ -1,7 +1,14 @@
 import { useQuery, useSubscription } from '@apollo/client'
 import { useRoute } from '@react-navigation/native'
 import React from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import {
+   ActivityIndicator,
+   StyleSheet,
+   Text,
+   View,
+   ScrollView,
+   SafeAreaView,
+} from 'react-native'
 import { GET_ORDER_DETAIL_ONE_SUBS } from '../../../graphql'
 import { SubScreenHeader } from './component/header'
 import appConfig from '../../../brandConfig.json'
@@ -18,6 +25,7 @@ import moment from 'moment'
 import { TimeIcon } from '../../../assets/timeIcon'
 import { PhoneIcon } from '../../../assets/phoneIcon'
 import { ProfileIcon } from '../../../assets/profileIcon'
+import { MapTracking } from './component/deliveryTrackingOnMap'
 
 const OrderTrackingScreen = () => {
    const route = useRoute()
@@ -40,26 +48,31 @@ const OrderTrackingScreen = () => {
 
    console.log('data123', cart, error)
    return (
-      <View>
+      <SafeAreaView>
          <SubScreenHeader title={`Order ${cartId}`} />
-         <View style={{ padding: 8 }}>
-            {loading ? (
-               <Text>Loading</Text>
-            ) : error ? (
-               <Text> Something went wrong</Text>
-            ) : isNull(cart.order.isAccepted) &&
-              isNull(cart.order.isRejected) ? (
-               <AcceptingOrder />
-            ) : cart.order.isAccepted ? (
-               <DeliveryProgressBar
-                  orderStatus={cart.status}
-                  deliveryInfo={cart.order.deliveryInfo || {}}
-               />
-            ) : (
-               <RejectedOrder />
-            )}
-         </View>
-      </View>
+         <ScrollView>
+            <View style={{ padding: 8, flex: 1 }}>
+               {loading ? (
+                  <Text>Loading</Text>
+               ) : error ? (
+                  <Text> Something went wrong</Text>
+               ) : isNull(cart.order.isAccepted) &&
+                 isNull(cart.order.isRejected) ? (
+                  <AcceptingOrder />
+               ) : cart.order.isAccepted ? (
+                  <View>
+                     <MapTracking />
+                     <DeliveryProgressBar
+                        orderStatus={cart.status}
+                        deliveryInfo={cart.order.deliveryInfo || {}}
+                     />
+                  </View>
+               ) : (
+                  <RejectedOrder />
+               )}
+            </View>
+         </ScrollView>
+      </SafeAreaView>
    )
 }
 
@@ -217,7 +230,7 @@ const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
    }, [orderStatus, deliveryInfo])
 
    return (
-      <View style={{ flex: 1, height: '100%' }}>
+      <View style={{ flex: 1 }}>
          <View style={{ height: 330 }}>
             <StepIndicator
                customStyles={customStyles}
