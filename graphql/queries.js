@@ -263,8 +263,8 @@ export const PRODUCT_ONE = gql`
    }
 `
 export const PRODUCTS_QUERY = gql`
-   query Products($ids: [Int!]!, $params: jsonb!) {
-      products(where: { isArchived: { _eq: false }, id: { _in: $ids } }) {
+   query Products($where: products_product_bool_exp!, $params: jsonb!) {
+      products(where: $where) {
          id
          name
          type
