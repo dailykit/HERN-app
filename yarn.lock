@@ -6233,6 +6233,11 @@ react-native-snap-carousel@^3.9.1:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
 
+react-native-step-indicator@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-step-indicator/-/react-native-step-indicator-1.0.3.tgz#d136ec88639485a338c8ce281035aefd9d169f8f"
+  integrity sha512-WwTb6lpJl0T7MV59sus1utoEQuqbuWHq6V0R0iDWmlPRFjM0qirhTNTS5on1+V9Qmc9dsUCT380/mRgDF+U6zw==
+
 react-native-svg@^12.3.0:
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-12.3.0.tgz#40f657c5d1ee366df23f3ec8dae76fd276b86248"

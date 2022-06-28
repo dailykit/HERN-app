@@ -106,6 +106,10 @@ const OrderCard = ({ order }) => {
                navigation.navigate('OrderDetail', {
                   cartId: order.id,
                })
+            } else {
+               navigation.navigate('OrderTracking', {
+                  cartId: order.id,
+               })
             }
          }}
       >
