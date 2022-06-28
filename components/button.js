@@ -30,6 +30,9 @@ export const Button = ({
                borderWidth: 1,
                backgroundColor: '#FFFFFF',
             }
+         case 'noOutline': {
+            return {}
+         }
       }
    }
    const textStyleByVariant = variant => {
@@ -40,6 +43,10 @@ export const Button = ({
             }
          case 'outline':
             return { color: '#000000' }
+         case 'noOutline':
+            return {
+               color: buttonSettings.activeTextColor.value || '#ffffff',
+            }
       }
    }
    return (

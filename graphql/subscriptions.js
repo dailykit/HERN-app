@@ -235,3 +235,140 @@ export const OTPS = gql`
       }
    }
 `
+export const COUPONS = gql`
+   subscription Coupons($params: jsonb, $brandId: Int!) {
+      coupons(
+         where: {
+            isActive: { _eq: true }
+            isArchived: { _eq: false }
+            brands: { brandId: { _eq: $brandId }, isActive: { _eq: true } }
+         }
+      ) {
+         id
+         code
+         isRewardMulti
+         rewards(order_by: { position: desc_nulls_last }) {
+            id
+            condition {
+               isValid(args: { params: $params })
+            }
+         }
+         metaDetails
+         visibilityCondition {
+            isValid(args: { params: $params })
+         }
+      }
+   }
+`
+export const GET_ORDER_DETAILS = gql`
+   subscription GET_ORDER_DETAILS($where: order_cart_bool_exp!) {
+      carts(where: $where, order_by: { order: { created_at: desc } }) {
+         id
+         status
+         paymentStatus
+         fulfillmentInfo
+         billingDetails
+         cartOwnerBilling
+         address
+         order {
+            created_at
+            deliveryInfo
+         }
+         cartPayments {
+            id
+            amount
+            transactionRemark
+         }
+         availablePaymentOption {
+            label
+            supportedPaymentOption {
+               id
+               paymentOptionLabel
+            }
+         }
+         cartItems(where: { level: { _eq: 1 } }) {
+            cartItemId: id
+            parentCartItemId
+            addOnLabel
+            addOnPrice
+            created_at
+            price: unitPrice
+            discount
+            name: displayName
+            image: displayImage
+            productId
+         }
+      }
+   }
+`
+export const GET_ORDER_DETAIL_ONE_SUBS = gql`
+   subscription GET_ORDER_DETAIL_ONE($where: order_cart_bool_exp!) {
+      carts(where: $where, order_by: { order: { created_at: desc } }) {
+         id
+         status
+         paymentStatus
+         fulfillmentInfo
+         billingDetails
+         cartOwnerBilling
+         address
+         customerInfo
+         order {
+            created_at
+            deliveryInfo
+            isAccepted
+            isRejected
+         }
+         cartPayments {
+            id
+            amount
+            transactionRemark
+         }
+         availablePaymentOption {
+            label
+            supportedPaymentOption {
+               id
+               paymentOptionLabel
+            }
+         }
+         cartItems(where: { level: { _eq: 1 } }) {
+            cartItemId: id
+            parentCartItemId
+            addOnLabel
+            addOnPrice
+            created_at
+            price: unitPrice
+            discount
+            name: displayName
+            image: displayImage
+            childs {
+               price: unitPrice
+               name: displayName
+               discount
+               productOption {
+                  id
+                  label
+               }
+               childs {
+                  displayName
+                  price: unitPrice
+                  discount
+                  modifierOption {
+                     id
+                     name
+                  }
+                  childs {
+                     displayName
+                     price: unitPrice
+                     discount
+                     modifierOption {
+                        id
+                        name
+                     }
+                  }
+               }
+            }
+            productId
+         }
+      }
+   }
+`
