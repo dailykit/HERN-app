@@ -15,6 +15,7 @@ import { formatCurrency } from '../../utils/formatCurrency'
 import { Button } from '../../components/button'
 import { CartItem } from './cartItem'
 import { useNavigation } from '@react-navigation/native'
+import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
 
 const MyOrdersScreen = () => {
    // context
@@ -72,7 +73,7 @@ const MyOrdersScreen = () => {
                </View>
             )
          ) : (
-            <PleaseLogIn />
+            <LoginScreenForAuthScreen />
          )}
          {user?.keycloakId ? <View></View> : null}
       </View>
