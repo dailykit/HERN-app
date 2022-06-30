@@ -14,6 +14,7 @@ import LoyaltyPointsScreen from '../screens/account/subscreen/loyaltyScreen'
 import OffersScreen from '../screens/account/subscreen/offers'
 import OrderDetailScreen from '../screens/myOrders/subscreen/orderDetail'
 import OrderTrackingScreen from '../screens/myOrders/subscreen/orderTracking'
+import ProductSearchScreen from '../screens/productSearch'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -46,6 +47,7 @@ const Navigator = () => {
          <Stack.Screen name="Offers" component={OffersScreen} />
          <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
          <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
+         <Stack.Screen name="ProductSearch" component={ProductSearchScreen} />
       </Stack.Navigator>
    )
 }

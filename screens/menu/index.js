@@ -18,14 +18,16 @@ import { useConfig } from '../../lib/config'
 import { useSubscription } from '@apollo/client'
 import { PRODUCTS } from '../../graphql'
 import { PromotionCarousel } from '../home/promotionCarousel'
+import SearchIcon from '../../assets/searchIcon'
+import { useNavigation } from '@react-navigation/native'
 
-const MenuScreen = ({ route, navigation }) => {
+const MenuScreen = ({ route }) => {
    // context
    const { brand, locationId, brandLocation } = useConfig()
    const {
       onDemandMenu: { isMenuLoading, allProductIds, categories },
    } = React.useContext(onDemandMenuContext)
-
+   const navigation = useNavigation()
    // state
    const [status, setStatus] = useState('loading')
    const [productsList, setProductsList] = React.useState([])
@@ -139,6 +141,18 @@ const MenuScreen = ({ route, navigation }) => {
                      })}
                   </ScrollView>
                </View>
+               <TouchableWithoutFeedback
+                  onPress={() => {
+                     navigation.navigate('ProductSearch')
+                  }}
+               >
+                  <View style={styles.searchBar}>
+                     <SearchIcon size={14} />
+                     <Text style={styles.searchBarText}>
+                        Search for item...
+                     </Text>
+                  </View>
+               </TouchableWithoutFeedback>
                <ScrollView>
                   {appConfig.data.showPromotionImageOnMenuPage.value &&
                   appConfig.data.menuPagePromotionImage.value.url.length > 0 ? (
@@ -183,6 +197,28 @@ const styles = StyleSheet.create({
       lineHeight: 36,
       fontWeight: '600',
       marginHorizontal: 12,
+   },
+   searchBar: {
+      flexDirection: 'row',
+      height: 46,
+      marginHorizontal: 12,
+      marginVertical: 6,
+      alignItems: 'center',
+      paddingHorizontal: 10,
+      shadowColor: 'rgba(0, 0, 0, 0.08)',
+      backgroundColor: '#fff',
+      shadowOffset: { width: 0, height: 1 },
+      shadowRadius: 12,
+      elevation: 4,
+      borderWidth: 0.5,
+      borderColor: '#00000008',
+      borderRadius: 6,
+   },
+   searchBarText: {
+      fontWeight: '500',
+      fontSize: 14,
+      color: '#00000060',
+      marginLeft: 10,
    },
 })
 export default MenuScreen

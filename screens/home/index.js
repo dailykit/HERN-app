@@ -43,7 +43,10 @@ const HomeScreen = () => {
       error,
    } = useQuery(PRODUCTS_QUERY, {
       variables: {
-         ids: appConfig?.data?.trendingProducts?.value || [],
+         where: {
+            isArchived: { _eq: false },
+            id: { _in: appConfig?.data?.trendingProducts?.value || [] },
+         },
          params: argsForByLocation,
       },
    })
