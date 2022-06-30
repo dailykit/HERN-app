@@ -27,21 +27,21 @@ export default function App() {
    return (
       <SafeAreaProvider style={{ paddingTop: paddingTop }}>
          <GestureHandlerRootView style={{ flex: 1 }}>
-            <ApolloProvider>
-               <ConfigProvider>
-                  <UserProvider>
-                     <OnDemandMenuProvider>
-                        <CartProvider>
-                           <NavigationContainer>
+            <NavigationContainer>
+               <ApolloProvider>
+                  <ConfigProvider>
+                     <UserProvider>
+                        <OnDemandMenuProvider>
+                           <CartProvider>
                               <PaymentProvider>
                                  <Navigation />
                               </PaymentProvider>
-                           </NavigationContainer>
-                        </CartProvider>
-                     </OnDemandMenuProvider>
-                  </UserProvider>
-               </ConfigProvider>
-            </ApolloProvider>
+                           </CartProvider>
+                        </OnDemandMenuProvider>
+                     </UserProvider>
+                  </ConfigProvider>
+               </ApolloProvider>
+            </NavigationContainer>
          </GestureHandlerRootView>
       </SafeAreaProvider>
    )
