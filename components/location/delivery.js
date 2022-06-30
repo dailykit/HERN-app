@@ -264,11 +264,11 @@ export const Delivery = () => {
          />
          <View style={{ zIndex: -10 }}>
             {locationSearching.loading ? (
-               <Text style={{ fontStyle: 'italic' }}>
+               <Text style={{ fontStyle: 'italic', fontFamily: 'Metropolis' }}>
                   Getting your location
                </Text>
             ) : locationSearching.error ? (
-               <Text style={{ color: 'red' }}>
+               <Text style={{ color: 'red', fontFamily: 'Metropolis' }}>
                   {locationSearching.errorType === 'blockByPermission'
                      ? locationSearching.errorType === 'zipcodeNotFound'
                         ? 'Please select precise location'
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
    searchingStoreStyle: { marginVertical: 15, alignItems: 'center' },
    findingTextStyle: {
       fontSize: 18,
+      fontFamily: 'Metropolis',
       fontWeight: '500',
       color: 'rgba(0, 0, 0, 0.8)',
       marginBottom: 16,
@@ -332,10 +333,12 @@ const styles = StyleSheet.create({
    },
    noStoreText1: {
       fontSize: 16,
+      fontFamily: 'Metropolis',
       fontWeight: '600',
       marginVertical: 4,
    },
    noStoreText2: {
+      fontFamily: 'Metropolis',
       color: '#A2A2A2',
       fontSize: 12,
       marginVertical: 4,

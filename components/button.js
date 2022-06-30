@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
       paddingVertical: 6,
       fontSize: 12,
+      fontFamily: 'Metropolis',
    },
 })

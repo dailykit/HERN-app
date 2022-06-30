@@ -385,7 +385,11 @@ const RefineLocation = () => {
          <Button
             style={{ flex: 1 }}
             buttonStyle={{ height: 40, margin: 12, marginVertical: 6 }}
-            textStyle={{ fontSize: 18, fontWeight: '500' }}
+            textStyle={{
+               fontSize: 18,
+               fontWeight: '500',
+               fontFamily: 'Metropolis',
+            }}
             disabled={
                !isStoreAvailableOnAddress ||
                !additionalAddressInfo?.line1 ||
@@ -507,11 +511,13 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    refineLocationText: {
+      fontFamily: 'Metropolis',
       fontWeight: '600',
       fontSize: 16,
       lineHeight: 16,
    },
    formLabel: {
+      fontFamily: 'Metropolis',
       fontSize: 12,
       fontWeight: '600',
       color: '#A2A2A2',

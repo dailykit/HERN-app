@@ -104,10 +104,12 @@ const styles = StyleSheet.create({
       flex: 1,
    },
    modifierOptionName: {
+      fontFamily: 'Metropolis',
       fontWeight: '500',
    },
    modifierOptionOriginalValue: {
       textDecorationLine: 'line-through',
+      fontFamily: 'Metropolis',
       fontWeight: '500',
       fontSize: 12,
       lineHeight: 12,
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
       marginRight: 5,
    },
    modifierOptionPrice: {
+      fontFamily: 'Metropolis',
       fontWeight: '500',
       fontSize: 12,
       lineHeight: 12,
@@ -127,6 +130,7 @@ const styles = StyleSheet.create({
       bottom: 0,
    },
    customizeText: {
+      fontFamily: 'Metropolis',
       fontWeight: '400',
       lineHeight: 8,
       fontSize: 9,

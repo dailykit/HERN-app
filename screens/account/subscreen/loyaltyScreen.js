@@ -25,7 +25,12 @@ const LoyaltyPointsScreen = () => {
             </View>
             <View style={{ flex: 11 }}>
                <Text
-                  style={{ fontSize: 18, fontWeight: '500', marginBottom: 10 }}
+                  style={{
+                     fontSize: 18,
+                     fontWeight: '500',
+                     marginBottom: 10,
+                     fontFamily: 'Metropolis',
+                  }}
                >
                   Transaction History
                </Text>
@@ -112,15 +117,18 @@ const LoyaltyPointsScreen = () => {
 }
 const styles = StyleSheet.create({
    loyaltyText: {
+      fontFamily: 'Metropolis',
       fontSize: 18,
       fontWeight: '500',
    },
    headingText: {
+      fontFamily: 'Metropolis',
       fontSize: 16,
       fontWeight: '500',
       color: '#A2A2A2',
    },
    noTransactionMessage: {
+      fontFamily: 'Metropolis',
       fontWeight: '600',
       fontSize: 16,
       marginVertical: 10,
@@ -146,12 +154,14 @@ const styles = StyleSheet.create({
       textAlign: 'center',
    },
    transactionDate: {
+      fontFamily: 'Metropolis',
       fontSize: 16,
       fontWeight: '500',
       flex: 2,
       textAlign: 'left',
    },
    transactionAmount: {
+      fontFamily: 'Metropolis',
       fontSize: 16,
       fontWeight: '500',
       flex: 1,

@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    headerTextStyle: {
+      fontFamily: 'Metropolis',
       fontSize: 16,
       fontWeight: '500',
    },

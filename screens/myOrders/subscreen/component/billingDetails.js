@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
       marginVertical: 3,
    },
    textCommonStyle: {
+      fontFamily: 'Metropolis',
       fontSize: 14,
       // fontWeight: '500',
    },

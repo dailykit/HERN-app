@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
    },
    accountTileText: {
       color: '#00000080',
+      fontFamily: 'Metropolis',
       fontSize: 18,
       fontWeight: '400',
       marginLeft: 18,

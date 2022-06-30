@@ -641,7 +641,7 @@ const AdditionalModifiers = ({
                      flexDirection: 'row',
                   }}
                >
-                  <Text style={{ fontWeight: '600' }}>
+                  <Text style={{ fontWeight: '600', fontFamily: 'Metropolis' }}>
                      {eachAdditionalModifier.label}
                   </Text>
 
@@ -694,6 +694,7 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    customizationText: {
+      fontFamily: 'Metropolis',
       fontWeight: '600',
       fontSize: 16,
       lineHeight: 16,
@@ -704,6 +705,7 @@ const styles = StyleSheet.create({
       marginVertical: 10,
    },
    productName: {
+      fontFamily: 'Metropolis',
       fontWeight: '500',
       fontSize: 14,
       lineHeight: 14,
@@ -711,6 +713,7 @@ const styles = StyleSheet.create({
       marginHorizontal: 4,
    },
    description: {
+      fontFamily: 'Metropolis',
       fontWeight: '500',
       fontSize: 10,
       lineHeight: 12,
@@ -724,6 +727,7 @@ const styles = StyleSheet.create({
       paddingVertical: 6,
       color: '#000',
       fontSize: 14,
+      fontFamily: 'Metropolis',
       fontWeight: '500',
    },
    footer: {

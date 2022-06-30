@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    locationText: {
+      fontFamily: 'Metropolis',
       fontWeight: '600',
       fontSize: 16,
       lineHeight: 16,

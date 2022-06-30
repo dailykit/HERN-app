@@ -44,17 +44,20 @@ const styles = StyleSheet.create({
       marginTop: 12,
    },
    userName: {
+      fontFamily: 'Metropolis',
       fontSize: 18,
       fontWeight: '500',
       marginBottom: 8,
    },
    userPhoneNumber: {
+      fontFamily: 'Metropolis',
       fontSize: 14,
       fontWeight: '400',
       marginLeft: 6,
       color: '#00000095',
    },
    userEmail: {
+      fontFamily: 'Metropolis',
       fontSize: 14,
       fontWeight: '400',
       marginLeft: 8,
