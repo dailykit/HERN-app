@@ -25,8 +25,11 @@ import {
    useNavigation,
 } from '@react-navigation/native'
 import { OTPS } from '../../../graphql/subscriptions'
+import { useUser } from '../../../context/user'
 
 export const OtpLogin = () => {
+   const { login } = useUser()
+
    const navigation = useNavigation()
    const phoneInput = React.useRef(null)
    const [currentScreen, setCurrentScreen] = useState('phoneNumber')
@@ -225,6 +228,7 @@ export const OtpLogin = () => {
                   'accessToken',
                   JSON.stringify(data.token)
                )
+               await login()
                redirect()
             }
          } else {
