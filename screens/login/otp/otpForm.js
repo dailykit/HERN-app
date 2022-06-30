@@ -116,7 +116,6 @@ export const OTPform = ({
                onPress={submit}
                disabled={loading || resending}
             >
-               {console.log('thisisotp', otp)}
                {resending
                   ? 'Resending OTP'
                   : loading

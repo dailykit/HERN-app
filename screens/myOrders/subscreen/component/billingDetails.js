@@ -14,7 +14,6 @@ export const BillingDetails = ({ billing }) => {
    const loyaltyPointsConversionRate = parseInt(
       loyaltyPointsUsage?.ConversionRate?.value
    )
-   console.log('billing', billing)
    return (
       <View style={styles.cartDetailContainer}>
          <Text style={[styles.textCommonStyle]}>{'Bill Details'}</Text>

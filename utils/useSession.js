@@ -43,7 +43,6 @@ export const useSession = () => {
    React.useEffect(() => {
       ;(async function () {
          const token = await AsyncStorage.getItem('accessToken')
-         console.log('this is token', token)
          if (token !== null) {
             try {
                const decode = JWT.decode(

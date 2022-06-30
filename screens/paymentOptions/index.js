@@ -6,7 +6,6 @@ import isEmpty from 'lodash/isEmpty'
 
 const PaymentOptions = () => {
    const { cartState } = useCart()
-   console.log('==> P Screen: ', cartState?.cart)
    if (!isEmpty(cartState?.cart)) {
       return (
          <>

@@ -6,7 +6,6 @@ import { useUser } from '../../context/user'
 
 export const UserInfo = () => {
    const { user } = useUser()
-   console.log('user', user)
    return (
       <View style={styles.userInfoContainer}>
          {user.platform_customer?.firstName ? (
