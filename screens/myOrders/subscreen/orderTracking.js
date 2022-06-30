@@ -374,6 +374,7 @@ const styles = StyleSheet.create({
    },
    time: {
       fontStyle: 'italic',
+      fontFamily: 'Metropolis',
       fontSize: 10,
       marginLeft: 4,
    },

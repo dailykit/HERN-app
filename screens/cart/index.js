@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
       borderRadius: 8,
    },
    orderNowTextStyle: {
+      fontFamily: 'Metropolis',
       fontSize: 18,
       fontWeight: '500',
    },
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
    },
    buttonText: {
       textAlign: 'center',
+      fontFamily: 'Metropolis',
       fontSize: 15,
    },
    loginPopUp: {

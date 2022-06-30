@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    headerTextStyle: {
+      fontFamily: 'Metropolis',
       fontSize: 12,
       fontWeight: '500',
       lineHeight: 12,

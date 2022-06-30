@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
    categoryListName: {
+      fontFamily: 'Metropolis',
       fontSize: 24,
       lineHeight: 36,
       fontWeight: '600',
@@ -216,6 +217,7 @@ const styles = StyleSheet.create({
    },
    searchBarText: {
       fontWeight: '500',
+      fontFamily: 'Metropolis',
       fontSize: 14,
       color: '#00000060',
       marginLeft: 10,

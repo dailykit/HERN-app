@@ -60,11 +60,13 @@ const styles = StyleSheet.create({
       paddingVertical: 4,
       paddingHorizontal: 8,
       borderRadius: 4,
+      fontFamily: 'Metropolis',
       fontSize: 14,
       lineHeight: 20,
    },
    hernHelperBar__title: {
       textAlign: 'center',
+      fontFamily: 'Metropolis',
       fontSize: 15,
       lineHeight: 18,
    },

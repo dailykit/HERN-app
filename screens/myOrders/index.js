@@ -166,7 +166,11 @@ const OrderCard = ({ order }) => {
                <OrderStatus order={order} />
                <Button
                   variant="noOutline"
-                  textStyle={{ fontWeight: '600', fontSize: 12 }}
+                  textStyle={{
+                     fontWeight: '600',
+                     fontSize: 12,
+                     fontFamily: 'Metropolis',
+                  }}
                >
                   {order.status === 'ORDER_DELIVERED'
                      ? 'View Details'
@@ -227,6 +231,7 @@ const Header = () => {
                   '#000000',
                fontSize: 16,
                fontWeight: '500',
+               fontFamily: 'Metropolis',
             }}
          >
             My Orders
@@ -273,10 +278,12 @@ const styles = StyleSheet.create({
       marginVertical: 6,
    },
    fulfillmentInfo: {
+      fontFamily: 'Metropolis',
       color: '#00000080',
       fontWeight: '500',
    },
    orderFulfillmentStatus: {
+      fontFamily: 'Metropolis',
       fontWeight: '500',
    },
 })
