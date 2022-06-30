@@ -114,9 +114,8 @@ export const OTPform = ({
                buttonStyle={{ marginTop: 20, width: 183, height: 43 }}
                textStyle={{ fontSize: 18 }}
                onPress={submit}
-               disabled={loading || resending || !otp?.isResendAllowed}
+               disabled={loading || resending}
             >
-               {console.log('thisisotp', otp)}
                {resending
                   ? 'Resending OTP'
                   : loading

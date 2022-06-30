@@ -16,7 +16,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
    const route = useRoute()
    const [componentStatus, setComponentStatus] = React.useState('loading')
    const [cartItems, setCartItems] = React.useState([])
-   console.log('cartID', route.params.cartId)
+   // console.log('cartID', route.params.cartId)
    const {
       loading,
       error,
@@ -62,7 +62,6 @@ const OrderDetailScreen = ({ products, createdAt }) => {
          return null
       }
    }, [carts[0]?.fulfillmentInfo?.type])
-   console.log('data', carts, error)
    const getTitle = type => {
       switch (type) {
          case 'ONDEMAND_DELIVERY':

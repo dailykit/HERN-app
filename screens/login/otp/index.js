@@ -54,7 +54,6 @@ export const OtpLogin = () => {
    const redirect = () => {
       const state = navigation.getState()
       const { routes } = state
-      console.log('route', routes)
       if (routes.length === 1) {
          navigation.navigate('TabMenu', {
             screen: 'Home',
@@ -144,7 +143,6 @@ export const OtpLogin = () => {
    const [insertOtpTransaction] = useMutation(INSERT_OTP_TRANSACTION, {
       onCompleted: async ({ insertOtp = {} } = {}) => {
          if (insertOtp?.id) {
-            console.log('otpid', insertOtp?.id)
             setOtpId(insertOtp?.id)
             setHasOtpSent(true)
             setSendingOtp(false)
@@ -222,7 +220,6 @@ export const OtpLogin = () => {
             const decode = JWT.decode(data.token, get_env('ADMIN_SECRET'), {
                timeSkew: 30,
             })
-            console.log('decode', decode)
             if (decode) {
                await AsyncStorage.setItem(
                   'accessToken',
@@ -258,7 +255,6 @@ export const OtpLogin = () => {
                padding: 8,
             }}
             onPress={() => {
-               console.log('hello')
                redirect()
             }}
          >

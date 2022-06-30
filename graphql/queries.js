@@ -481,6 +481,18 @@ export const CUSTOMER = {
          }
       }
    `,
+   PROFILE_INFO: gql`
+      query customer($keycloakId: String!) {
+         customer(keycloakId: $keycloakId) {
+            platform_customer: platform_customer {
+               customerEmail: email
+               customerFirstName: firstName
+               customerLastName: lastName
+               customerPhone: phoneNumber
+            }
+         }
+      }
+   `,
 }
 export const CUSTOMER_REFERRALS = gql`
    subscription CustomerReferrals($brandId: Int!, $keycloakId: String!) {

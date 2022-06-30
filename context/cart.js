@@ -231,7 +231,6 @@ export const CartProvider = ({ children }) => {
    useEffect(() => {
       if (cartItemsData?.cartItems) {
          const combinedCartItems = combineCartItems(cartItemsData?.cartItems)
-         console.log('combinedCartItems', combinedCartItems)
          setCombinedCartData(combinedCartItems)
       } else {
          ;(async function () {
@@ -417,7 +416,6 @@ export const CartProvider = ({ children }) => {
          //without login
 
          if (isEmpty(cartData?.carts)) {
-            console.log('cartData check for empty', cartData)
             //new cart
 
             // finding terminal payment method option id for setting as default
@@ -530,7 +528,6 @@ export const CartProvider = ({ children }) => {
          skip: !(brand?.id && user?.keycloakId && orderTabs.length > 0),
          fetchPolicy: 'no-cache',
          onSubscriptionData: async ({ subscriptionData }) => {
-            console.log('subscriptionData', subscriptionData)
             // pending cart available
             ;(async () => {
                if (
