@@ -1,4 +1,4 @@
-import React, { createRef, useRef, useState } from 'react'
+import React, { createRef, useEffect, useRef, useState } from 'react'
 import { get_env } from '../utils'
 import { UserIcon } from '../assets/userIcon'
 import CloseIcon from '../assets/closeIcon'
@@ -26,43 +26,35 @@ import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import appConfig from '../brandConfig.json'
 
 export const UserInfo = props => {
-   const [settingCartinfo, setSettingCartinfo] = useState(false)
+   const [settingCartInfo, setSettingCartInfo] = useState(true)
    const UserInfoFormRef = useRef()
 
-   const handleEdit = () => {
-      UserInfoFormRef.current.dismiss()
-   }
    const handleClose = () => {
       UserInfoFormRef.current.dismiss()
    }
-
    return (
       <>
          <UserDetails
-            settingCartinfo={settingCartinfo}
             handleOpen={() => UserInfoFormRef.current.present()}
-            handleEdit={handleEdit}
-            setSettingCartinfo={setSettingCartinfo}
             cart={props.cart}
+            settingCartInfo={settingCartInfo}
+            setSettingCartInfo={setSettingCartInfo}
          />
          <BottomSheetModal
             ref={UserInfoFormRef}
             snapPoints={[375]}
-            index={0}
             handleComponent={() => null}
             enablePanDownToClose={true}
+            settingCartInfo={settingCartInfo}
+            setSettingCartInfo={setSettingCartInfo}
          >
-            <UserInfoForm
-               handleClose={handleClose}
-               cart={props.cart}
-               setSettingCartinfo={setSettingCartinfo}
-            />
+            <UserInfoForm handleClose={handleClose} cart={props.cart} />
          </BottomSheetModal>
       </>
    )
 }
 const UserInfoForm = props => {
-   const { handleClose, settingCartinfo, setSettingCartinfo, cart } = props
+   const { handleClose, cart, settingCartInfo, setSettingCartInfo } = props
    const { methods } = React.useContext(CartContext)
    const { user } = useUser()
 
@@ -89,6 +81,12 @@ const UserInfoForm = props => {
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
       onCompleted: () => {
          console.log('==> Platform Customer Updated!')
+         setSavingUserInfo(false)
+         if (cart?.customerInfo === null) {
+            setSettingCartInfo(true)
+         } else {
+            handleClose()
+         }
       },
       onError: error => {
          console.error('==>Error in Platform Customer Update', error)
@@ -123,12 +121,6 @@ const UserInfoForm = props => {
             },
          })
       }
-      setSavingUserInfo(false)
-      if (cart?.customerInfo === null) {
-         setSettingCartinfo(true)
-      } else {
-         handleClose()
-      }
    }
 
    let isValid =
@@ -137,7 +129,7 @@ const UserInfoForm = props => {
       namePattern.test(lastName)
 
    React.useEffect(() => {
-      if (cart?.customerInfo !== null && settingCartinfo) {
+      if (cart?.customerInfo !== null) {
          handleClose()
       }
    }, [cart])
@@ -205,26 +197,88 @@ const UserInfoForm = props => {
 }
 
 const UserDetails = ({
-   handleEdit,
    handleOpen,
-   settingCartinfo,
-   setSettingCartinfo,
    cart,
+   settingCartInfo,
+   setSettingCartInfo,
 }) => {
-   const hasUserInfo =
+   const { user } = useUser()
+   const { methods } = React.useContext(CartContext)
+   const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
+      onCompleted: () => {
+         console.log('==> Platform Customer Updated!')
+      },
+      onError: error => {
+         console.error('==>Error in Platform Customer Update', error)
+      },
+   })
+
+   const hasUserInfoInCart =
       cart?.customerInfo?.customerFirstName?.length ||
       cart?.customerInfo?.customerLastName?.length ||
       cart?.customerInfo?.customerPhone?.length
 
+   const hasUserInfo =
+      user?.platform_customer?.firstName?.length ||
+      user?.platform_customer?.lastName?.length ||
+      user?.platform_customer?.phoneNumber?.length
+
+   const handleSave = async data => {
+      if (data) {
+         var { firstName, lastName, mobileNumber } = data
+      }
+      await methods.cart.update({
+         variables: {
+            id: cart.id,
+            _set: {
+               customerInfo: {
+                  customerFirstName: firstName,
+                  customerLastName: lastName,
+                  customerPhone: mobileNumber,
+                  customerEmail:
+                     cart?.customerInfo?.customerEmail ||
+                     user.platform_customer?.email,
+               },
+            },
+         },
+      })
+      if (user?.keycloakId) {
+         await updateCustomer({
+            variables: {
+               keycloakId: user.keycloakId,
+               _set: {
+                  firstName: firstName,
+                  lastName: lastName,
+               },
+            },
+         })
+      }
+   }
+
+   useEffect(() => {
+      if (hasUserInfoInCart) {
+         setSettingCartInfo(false)
+      }
+   }, [hasUserInfoInCart])
+
    React.useEffect(() => {
-      if (!hasUserInfo && !settingCartinfo) {
-         handleOpen()
+      if (!hasUserInfoInCart) {
+         if (!hasUserInfo) {
+            handleOpen()
+         } else {
+            setSettingCartInfo(true)
+            handleSave({
+               firstName: user?.platform_customer?.firstName,
+               lastName: user?.platform_customer?.lastName,
+               mobileNumber: user?.platform_customer?.phoneNumber,
+            })
+         }
       }
    }, [])
 
    return (
       <View style={styles.userInfoContainer}>
-         {hasUserInfo ? (
+         {hasUserInfoInCart ? (
             <>
                <View style={styles.row}>
                   <UserIcon size={16} />
@@ -252,14 +306,18 @@ const UserDetails = ({
          ) : (
             <>
                <UserIcon size={16} />
-               <Button
-                  onPress={() => {
-                     handleOpen()
-                  }}
-                  buttonStyle={styles.addUserInfoBtn}
-               >
-                  Add User Info
-               </Button>
+               {!settingCartInfo ? (
+                  <Button
+                     onPress={() => {
+                        handleOpen()
+                     }}
+                     buttonStyle={styles.addUserInfoBtn}
+                  >
+                     Add User Info
+                  </Button>
+               ) : (
+                  <ActivityIndicator size="small" color={'#000'} />
+               )}
             </>
          )}
       </View>

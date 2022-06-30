@@ -1,4 +1,4 @@
-import React, { createRef, useRef } from 'react'
+import React, { createRef, useEffect, useRef } from 'react'
 import {
    ScrollView,
    StyleSheet,
@@ -28,6 +28,12 @@ const CartScreen = () => {
    const { isAuthenticated } = useUser()
    const { cartState, combinedCartItems, isFinalCartLoading, storedCartId } =
       useCart()
+
+   useEffect(() => {
+      if (isAuthenticated) {
+         loginPopUp?.current?.dismiss()
+      }
+   }, [isAuthenticated])
 
    const loginPopUp = createRef()
 
@@ -80,9 +86,13 @@ const CartScreen = () => {
                   cart={cartState.cart}
                   billing={cartState.cart.cartOwnerBilling}
                />
-               <UserInfo cart={cartState.cart} />
-               <Address />
-               <FulfillmentSection />
+               {isAuthenticated && (
+                  <>
+                     <UserInfo cart={cartState.cart} />
+                     <Address />
+                     <FulfillmentSection />
+                  </>
+               )}
             </ScrollView>
             <View style={styles.buttonContainer}>
                <Button

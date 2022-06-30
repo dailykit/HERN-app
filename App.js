@@ -22,11 +22,11 @@ export default function App() {
                   <UserProvider>
                      <OnDemandMenuProvider>
                         <CartProvider>
-                           <PaymentProvider>
-                              <NavigationContainer>
+                           <NavigationContainer>
+                              <PaymentProvider>
                                  <Navigation />
-                              </NavigationContainer>
-                           </PaymentProvider>
+                              </PaymentProvider>
+                           </NavigationContainer>
                         </CartProvider>
                      </OnDemandMenuProvider>
                   </UserProvider>

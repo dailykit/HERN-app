@@ -16,7 +16,7 @@ import * as Icon from '../assets/paymentIcons'
 import RadioIcon from '../assets/radioIcon'
 import { HelperBar } from '../components/helperBar'
 import PayButton from '../components/payButton'
-// import { useUser } from '../context/user'
+import { useUser } from '../context/user'
 import * as QUERIES from '../graphql'
 import { formatCurrency, get_env } from '../utils'
 import appConfig from '../brandConfig.json'
@@ -31,12 +31,8 @@ export default function PaymentOptionsRenderer({
    onPaymentCancel,
 }) {
    const { setPaymentInfo, paymentInfo, updatePaymentState } = usePayment()
-   // const { user } = useUser()
-   const { configOf } = useConfig()
-   // const { addToast } = useToasts()
-   const theme = configOf('theme-color', 'Visual')
+   const { user } = useUser()
    const [isLoading, setIsLoading] = React.useState(true)
-   const [isUpdating, setIsUpdating] = React.useState(false)
 
    // Setting onSuccess and onCancel callbacks in Payment provider state
    useEffect(() => {
@@ -270,7 +266,7 @@ export default function PaymentOptionsRenderer({
                         />
                      ))
                   ) : (
-                     <Main style={{ minHeight: 'unset' }}>
+                     <View style={styles.Main}>
                         <div tw="pt-4 w-full">
                            <HelperBar type="info">
                               <HelperBar.Title>
@@ -278,7 +274,7 @@ export default function PaymentOptionsRenderer({
                               </HelperBar.Title>
                            </HelperBar>
                         </div>
-                     </Main>
+                     </View>
                   )}
                </ScrollView>
                {paymentInfo?.selectedAvailablePaymentOption
