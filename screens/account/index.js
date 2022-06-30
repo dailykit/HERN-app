@@ -20,7 +20,7 @@ import { UserInfo } from './userInfo'
 
 const AccountScreen = () => {
    const navigation = useNavigation()
-   const { user, isAuthenticated, isLoading } = useUser()
+   const { user, isAuthenticated, isLoading, logout } = useUser()
    return (
       <View>
          <AccountHeader />
@@ -90,7 +90,11 @@ const AccountScreen = () => {
                   <View
                      style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
                   ></View>
-                  <Tile>
+                  <Tile
+                     onPress={async () => {
+                        await logout()
+                     }}
+                  >
                      <LogoutIcon />
                      <Text style={styles.accountTileText}>Sign Out</Text>
                   </Tile>
