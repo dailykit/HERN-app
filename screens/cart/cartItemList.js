@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
    },
    productName: {
+      fontFamily: 'Metropolis',
       fontSize: 14,
       fontWeight: '500',
    },

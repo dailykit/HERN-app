@@ -247,17 +247,20 @@ const styles = StyleSheet.create({
       marginBottom: 3,
    },
    categoryName: {
+      fontFamily: 'Metropolis',
       fontWeight: '600',
       fontSize: 18,
       lineHeight: 18,
    },
    categoryMessageText: {
+      fontFamily: 'Metropolis',
       fontWeight: '400',
       lineHeight: 10,
       fontSize: 10,
       marginHorizontal: 8,
    },
    categoryError: {
+      fontFamily: 'Metropolis',
       fontStyle: 'italic',
       fontSize: 11,
       color: 'red',

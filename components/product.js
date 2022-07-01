@@ -16,6 +16,7 @@ import appConfig from '../brandConfig.json'
 import { ModifierPopup } from './modifierPopup'
 import Modal from 'react-native-modal'
 import { useCart } from '../context'
+import { useConfig } from '../lib/config'
 import { useNavigation } from '@react-navigation/native'
 
 const productViewStyles = {
@@ -56,7 +57,7 @@ export const ProductList = ({
             contentContainerStyle={{ display: 'flex' }}
             horizontal={viewStyle !== productViewStyles.horizontalCard}
          >
-            {currentGroupProducts.map(eachProduct => {
+            {currentGroupProducts.map((eachProduct, index) => {
                const publishedProductOptions =
                   eachProduct.productOptions.length > 0 &&
                   eachProduct.productOptions.filter(
@@ -67,7 +68,7 @@ export const ProductList = ({
                }
                return (
                   <ProductCard
-                     key={eachProduct.id}
+                     key={`${eachProduct.id}-${eachProduct.type}-${index}`}
                      productData={eachProduct}
                      viewStyle={viewStyle}
                   />
@@ -79,8 +80,9 @@ export const ProductList = ({
 }
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
-   const navigation = useNavigation()
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
+   const { locationId } = useConfig()
+   const navigation = useNavigation()
    const isStoreAvailable = true
    const [showModifierPopup, setShowModifierPopup] = useState(false)
    const defaultProductOption = React.useMemo(() => {
@@ -138,6 +140,10 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
 
    const handelAddToCartClick = () => {
       // product availability
+      if (!locationId) {
+         navigation.navigate('LocationSelector')
+         return
+      }
       if (productData.isAvailable) {
          if (showAddToCartButton) {
             if (

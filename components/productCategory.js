@@ -100,7 +100,7 @@ const categoryStyles = StyleSheet.create({
       borderRadius: 10,
    },
    categoryText: {
-      // fontFamily: 'Metropolis',
+      fontFamily: 'Metropolis',
       fontSize: 12,
       lineHeight: 14,
       textTransform: 'capitalize',

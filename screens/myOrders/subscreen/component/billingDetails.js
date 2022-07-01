@@ -14,7 +14,6 @@ export const BillingDetails = ({ billing }) => {
    const loyaltyPointsConversionRate = parseInt(
       loyaltyPointsUsage?.ConversionRate?.value
    )
-   console.log('billing', billing)
    return (
       <View style={styles.cartDetailContainer}>
          <Text style={[styles.textCommonStyle]}>{'Bill Details'}</Text>
@@ -131,6 +130,7 @@ const styles = StyleSheet.create({
       marginVertical: 3,
    },
    textCommonStyle: {
+      fontFamily: 'Metropolis',
       fontSize: 14,
       // fontWeight: '500',
    },

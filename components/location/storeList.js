@@ -16,7 +16,15 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
    }, [orderTabs])
    return (
       <View style={{ marginVertical: 8 }}>
-         <Text style={{ fontWeight: '600', fontSize: 16 }}>Select Store</Text>
+         <Text
+            style={{
+               fontWeight: '600',
+               fontSize: 16,
+               fontFamily: 'Metropolis',
+            }}
+         >
+            Select Store
+         </Text>
          <ScrollView>
             {stores.map(eachStore => {
                const {
@@ -152,5 +160,10 @@ const styles = StyleSheet.create({
    storeCard: {
       marginVertical: 8,
    },
-   mileText: { marginLeft: 4, color: 'rgba(0, 0, 0, 0.6)', fontSize: 12 },
+   mileText: {
+      marginLeft: 4,
+      color: 'rgba(0, 0, 0, 0.6)',
+      fontSize: 12,
+      fontFamily: 'Metropolis',
+   },
 })

@@ -25,8 +25,11 @@ import {
    useNavigation,
 } from '@react-navigation/native'
 import { OTPS } from '../../../graphql/subscriptions'
+import { useUser } from '../../../context/user'
 
 export const OtpLogin = () => {
+   const { login } = useUser()
+
    const navigation = useNavigation()
    const phoneInput = React.useRef(null)
    const [currentScreen, setCurrentScreen] = useState('phoneNumber')
@@ -51,7 +54,6 @@ export const OtpLogin = () => {
    const redirect = () => {
       const state = navigation.getState()
       const { routes } = state
-      console.log('route', routes)
       if (routes.length === 1) {
          navigation.navigate('TabMenu', {
             screen: 'Home',
@@ -141,7 +143,6 @@ export const OtpLogin = () => {
    const [insertOtpTransaction] = useMutation(INSERT_OTP_TRANSACTION, {
       onCompleted: async ({ insertOtp = {} } = {}) => {
          if (insertOtp?.id) {
-            console.log('otpid', insertOtp?.id)
             setOtpId(insertOtp?.id)
             setHasOtpSent(true)
             setSendingOtp(false)
@@ -219,12 +220,12 @@ export const OtpLogin = () => {
             const decode = JWT.decode(data.token, get_env('ADMIN_SECRET'), {
                timeSkew: 30,
             })
-            console.log('decode', decode)
             if (decode) {
                await AsyncStorage.setItem(
                   'accessToken',
                   JSON.stringify(data.token)
                )
+               await login()
                redirect()
             }
          } else {
@@ -254,7 +255,6 @@ export const OtpLogin = () => {
                padding: 8,
             }}
             onPress={() => {
-               console.log('hello')
                redirect()
             }}
          >

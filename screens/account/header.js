@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
    },
    headerTextStyle: {
+      fontFamily: 'Metropolis',
       fontSize: 16,
       fontWeight: '500',
    },

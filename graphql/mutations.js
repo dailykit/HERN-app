@@ -144,3 +144,88 @@ export const RESEND_OTP = gql`
       }
    }
 `
+export const UPDATE_CART = gql`
+   mutation updateCart(
+      $id: Int!
+      $_set: order_cart_set_input!
+      $_inc: order_cart_inc_input = {}
+   ) {
+      updateCart(pk_columns: { id: $id }, _set: $_set, _inc: $_inc) {
+         id
+         paymentMethodId
+         itemTotal
+         tax
+         deliveryPrice
+         discount
+         totalPrice
+      }
+   }
+`
+export const UPDATE_CART_PAYMENTS = gql`
+   mutation UPDATE_CART_PAYMENTS(
+      $where: order_cartPayment_bool_exp!
+      $_set: order_cartPayment_set_input!
+   ) {
+      updateCartPayments(where: $where, _set: $_set) {
+         returning {
+            id
+         }
+      }
+   }
+`
+export const CREATE_PRINT_JOB = gql`
+   mutation CREATE_PRINT_JOB(
+      $contentType: String!
+      $printerId: Int!
+      $source: String!
+      $title: String!
+      $url: String!
+   ) {
+      createPrintJob(
+         contentType: $contentType
+         printerId: $printerId
+         source: $source
+         title: $title
+         url: $url
+      ) {
+         message
+         success
+      }
+   }
+`
+export const UPDATE_CART_PAYMENT = gql`
+   mutation UPDATE_CART_PAYMENT(
+      $id: Int!
+      $_inc: order_cartPayment_inc_input = {}
+      $_set: order_cartPayment_set_input!
+   ) {
+      updateCartPayment(pk_columns: { id: $id }, _inc: $_inc, _set: $_set) {
+         cartId
+         paymentStatus
+         id
+      }
+   }
+`
+export const CREATE_CART_PAYMENT = gql`
+   mutation CREATE_CART_PAYMENT($object: order_cartPayment_insert_input!) {
+      createCartPayment(object: $object) {
+         id
+         cartId
+         paymentStatus
+      }
+   }
+`
+export const UPDATE_PLATFORM_CUSTOMER = gql`
+   mutation updateCustomers(
+      $keycloakId: String!
+      $_set: platform_customer_set_input!
+   ) {
+      platform_updateCustomer: update_platform_customer_by_pk(
+         pk_columns: { keycloakId: $keycloakId }
+         _set: $_set
+      ) {
+         keycloakId
+         defaultPaymentMethodId
+      }
+   }
+`

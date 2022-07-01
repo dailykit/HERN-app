@@ -66,7 +66,7 @@ export const UserProvider = ({ children }) => {
    const { brand } = useConfig()
    const [isLoading, setIsLoading] = React.useState(true)
    const [keycloakId, setKeycloakId] = React.useState('')
-   const { isLoading: isSessionLoading, session } = useSession()
+   const { isLoading: isSessionLoading, session, login, logout } = useSession()
    // console.log('session from userprovider', session)
 
    const [createCustomer] = useMutation(MUTATIONS.CUSTOMER.CREATE, {
@@ -133,7 +133,6 @@ export const UserProvider = ({ children }) => {
       },
       onSubscriptionData: data => {
          const { loyaltyPoints } = data.subscriptionData.data
-         console.log(loyaltyPoints)
          if (loyaltyPoints?.length) {
             dispatch({
                type: 'SET_USER',
@@ -278,6 +277,8 @@ export const UserProvider = ({ children }) => {
             userType: state.userType,
             dispatch,
             isLoading,
+            login,
+            logout,
          }}
       >
          {children}

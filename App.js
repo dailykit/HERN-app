@@ -9,24 +9,40 @@ import { ConfigProvider } from './lib/config'
 import { OnDemandMenuProvider } from './context'
 import { CartProvider } from './context/cart'
 import { UserProvider } from './context/user'
+import { PaymentProvider } from './lib/payment'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { useFonts } from 'expo-font'
+
 const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
 export default function App() {
+   const [fontLoaded] = useFonts({
+      Metropolis: require('./assets/fonts/Metropolis-Regular.otf'),
+   })
+
+   if (!fontLoaded) {
+      return null
+   }
+
    return (
       <SafeAreaProvider style={{ paddingTop: paddingTop }}>
-         <ApolloProvider>
-            <ConfigProvider>
-               <UserProvider>
-                  <OnDemandMenuProvider>
-                     <CartProvider>
-                        <NavigationContainer>
-                           <Navigation />
-                        </NavigationContainer>
-                     </CartProvider>
-                  </OnDemandMenuProvider>
-               </UserProvider>
-            </ConfigProvider>
-         </ApolloProvider>
+         <GestureHandlerRootView style={{ flex: 1 }}>
+            <NavigationContainer>
+               <ApolloProvider>
+                  <ConfigProvider>
+                     <UserProvider>
+                        <OnDemandMenuProvider>
+                           <CartProvider>
+                              <PaymentProvider>
+                                 <Navigation />
+                              </PaymentProvider>
+                           </CartProvider>
+                        </OnDemandMenuProvider>
+                     </UserProvider>
+                  </ConfigProvider>
+               </ApolloProvider>
+            </NavigationContainer>
+         </GestureHandlerRootView>
       </SafeAreaProvider>
    )
 }

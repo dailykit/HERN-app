@@ -1,5 +1,5 @@
 import { FascinateInline_400Regular } from '@expo-google-fonts/dev'
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
+import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
 import RadioIcon from '../assets/radioIcon'
 import appConfig from '../brandConfig.json'
 
@@ -50,54 +50,54 @@ export const Button = ({
       }
    }
    return (
-      <TouchableOpacity
-         onPress={onPress}
-         disabled={disabled}
-         style={[
-            styles.buttonContainerStyle,
-            containerStyleByVariant(variant),
-            buttonStyle ? buttonStyle : null,
-            {
-               display: 'flex',
-               justifyContent: 'center',
-               alignItems: 'center',
-               flexDirection: 'row',
-            },
-            disabled ? { opacity: 0.5 } : null,
-         ]}
-      >
-         {showRadio ? (
-            <View
-               style={[
-                  {
-                     paddingLeft: 12,
-                  },
-                  radioStyle ? radioStyle : {},
-               ]}
-            >
-               <RadioIcon
-                  checked={isActive}
-                  size={radioSize}
-                  stroke={
-                     isActive
-                        ? appConfig.brandSettings.checkIconSettings
-                             .checkIconFillColor.value
-                        : appConfig.brandSettings.checkIconSettings
-                             .boundaryColor.value
-                  }
-               />
-            </View>
-         ) : null}
-         <Text
+      <TouchableWithoutFeedback onPress={onPress} disabled={disabled}>
+         <View
             style={[
-               styles.buttonTextStyle,
-               textStyleByVariant(variant),
-               textStyle ? textStyle : null,
+               styles.buttonContainerStyle,
+               containerStyleByVariant(variant),
+               buttonStyle ? buttonStyle : null,
+               {
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+               },
+               disabled ? { opacity: 0.5 } : null,
             ]}
          >
-            {children}
-         </Text>
-      </TouchableOpacity>
+            {showRadio ? (
+               <View
+                  style={[
+                     {
+                        paddingLeft: 12,
+                     },
+                     radioStyle ? radioStyle : {},
+                  ]}
+               >
+                  <RadioIcon
+                     checked={isActive}
+                     size={radioSize}
+                     stroke={
+                        isActive
+                           ? appConfig.brandSettings.checkIconSettings
+                                .checkIconFillColor.value
+                           : appConfig.brandSettings.checkIconSettings
+                                .boundaryColor.value
+                     }
+                  />
+               </View>
+            ) : null}
+            <Text
+               style={[
+                  styles.buttonTextStyle,
+                  textStyleByVariant(variant),
+                  textStyle ? textStyle : null,
+               ]}
+            >
+               {children}
+            </Text>
+         </View>
+      </TouchableWithoutFeedback>
    )
 }
 
@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
       paddingVertical: 6,
       fontSize: 12,
+      fontFamily: 'Metropolis',
    },
 })

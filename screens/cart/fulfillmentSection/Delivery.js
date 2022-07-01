@@ -641,7 +641,7 @@ export const Delivery = () => {
                <Text>Loading</Text>
             </View>
          ) : stores.length === 0 ? (
-            <Text>{t('No store available')}</Text>
+            <Text>No store available</Text>
          ) : fulfillmentType === 'PREORDER_DELIVERY' ? (
             <TimeSlots
                onFulfillmentTimeClick={onFulfillmentTimeClick}

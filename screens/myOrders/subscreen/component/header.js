@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
    },
    headerTextStyle: {
       fontWeight: '500',
+      fontFamily: 'Metropolis',
       fontSize: 18,
    },
 })
