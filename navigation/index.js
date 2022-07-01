@@ -16,6 +16,7 @@ import OffersScreen from '../screens/account/subscreen/offers'
 import OrderDetailScreen from '../screens/myOrders/subscreen/orderDetail'
 import OrderTrackingScreen from '../screens/myOrders/subscreen/orderTracking'
 import ProductSearchScreen from '../screens/productSearch'
+import ProductScreen from '../screens/product'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -50,6 +51,7 @@ const Navigator = () => {
          <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
          <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
          <Stack.Screen name="ProductSearch" component={ProductSearchScreen} />
+         <Stack.Screen name="ProductScreen" component={ProductScreen} />
       </Stack.Navigator>
    )
 }
