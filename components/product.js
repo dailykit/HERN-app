@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, StyleSheet, View, Image } from 'react-native'
+import {
+   ScrollView,
+   Text,
+   StyleSheet,
+   View,
+   Image,
+   TouchableWithoutFeedback,
+} from 'react-native'
 import { chain } from 'lodash'
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
@@ -9,6 +16,7 @@ import appConfig from '../brandConfig.json'
 import { ModifierPopup } from './modifierPopup'
 import Modal from 'react-native-modal'
 import { useCart } from '../context'
+import { useNavigation } from '@react-navigation/native'
 
 const productViewStyles = {
    verticalCard: 'verticalCard',
@@ -71,6 +79,7 @@ export const ProductList = ({
 }
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
+   const navigation = useNavigation()
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
    const isStoreAvailable = true
    const [showModifierPopup, setShowModifierPopup] = useState(false)
@@ -150,133 +159,144 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    }
 
    return (
-      <View
-         style={{
-            ...styles.productContainer,
-            width: viewStyle === productViewStyles.verticalCard ? 156 : 'auto',
-            height: viewStyle === productViewStyles.verticalCard ? 200 : 'auto',
+      <TouchableWithoutFeedback
+         onPress={() => {
+            navigation.navigate('ProductScreen', {
+               productId: productData.id,
+            })
          }}
       >
          <View
             style={{
-               ...styles.productFloatContainer,
-               flexDirection:
-                  viewStyle === productViewStyles.horizontalCard
-                     ? 'row'
-                     : 'column',
+               ...styles.productContainer,
+               width:
+                  viewStyle === productViewStyles.verticalCard ? 156 : 'auto',
+               height:
+                  viewStyle === productViewStyles.verticalCard ? 200 : 'auto',
             }}
          >
-            <Image
-               source={{
-                  uri:
-                     productData.assets.images[0] ||
-                     appConfig.brandSettings.productSettings.defaultImage.value,
-               }}
-               style={{
-                  ...styles.floatingImage,
-                  ...(viewStyle === productViewStyles.horizontalCard
-                     ? {
-                          borderRadius: 4,
-                          width: '40%',
-                          height: '100%',
-                       }
-                     : {
-                          borderTopLeftRadius: 4,
-                          borderTopRightRadius: 4,
-                          width: '100%',
-                          height: 115,
-                       }),
-               }}
-            />
             <View
                style={{
-                  ...(viewStyle === productViewStyles.horizontalCard
-                     ? {
-                          paddingVertical: 8,
-                          width: '60%',
-                          marginBottom: 0,
-                       }
-                     : {
-                          width: '100%',
-                          marginVertical: 10,
-                       }),
-                  display: 'flex',
-                  flexDirection: 'column',
-                  paddingHorizontal: 10,
+                  ...styles.productFloatContainer,
+                  flexDirection:
+                     viewStyle === productViewStyles.horizontalCard
+                        ? 'row'
+                        : 'column',
                }}
             >
-               <View>
-                  <Text
-                     style={styles.productName}
-                     numberOfLines={
-                        viewStyle === productViewStyles.verticalCard ? 1 : 0
-                     }
-                  >
-                     {productData.name}
-                  </Text>
-                  <Text
-                     style={styles.additionalText}
-                     numberOfLines={
-                        viewStyle === productViewStyles.verticalCard ? 1 : 0
-                     }
-                  >
-                     {productData.additionalText || ' '}
-                  </Text>
-               </View>
-               <View style={styles.footer}>
-                  <View style={styles.footerLeft}>
-                     <VegNonVegIcon size={12} fill={'#61D836'} />
-                     <View style={styles.priceContainer}>
-                        <Text style={styles.productDiscountValue}>
-                           {formatCurrency(
-                              getPriceWithDiscount(
-                                 productData.price,
-                                 productData.discount
-                              ) +
-                                 getPriceWithDiscount(
-                                    defaultProductOption?.price || 0,
-                                    defaultProductOption?.discount || 0
-                                 )
-                           )}
-                        </Text>
-                        {
-                           <>
-                              {(productData.discount ||
-                                 defaultProductOption?.discount) &&
-                              productData.price > 0 ? (
-                                 <Text style={styles.productOriginalValue}>
-                                    {formatCurrency(
-                                       productData.price +
-                                          defaultProductOption.price
-                                    )}
-                                 </Text>
-                              ) : null}
-                           </>
-                        }
-                     </View>
-                  </View>
+               <Image
+                  source={{
+                     uri:
+                        productData.assets.images[0] ||
+                        appConfig.brandSettings.productSettings.defaultImage
+                           .value,
+                  }}
+                  style={{
+                     ...styles.floatingImage,
+                     ...(viewStyle === productViewStyles.horizontalCard
+                        ? {
+                             borderRadius: 4,
+                             width: '40%',
+                             height: '100%',
+                          }
+                        : {
+                             borderTopLeftRadius: 4,
+                             borderTopRightRadius: 4,
+                             width: '100%',
+                             height: 115,
+                          }),
+                  }}
+               />
+               <View
+                  style={{
+                     ...(viewStyle === productViewStyles.horizontalCard
+                        ? {
+                             paddingVertical: 8,
+                             width: '60%',
+                             marginBottom: 0,
+                          }
+                        : {
+                             width: '100%',
+                             marginVertical: 10,
+                          }),
+                     display: 'flex',
+                     flexDirection: 'column',
+                     paddingHorizontal: 10,
+                  }}
+               >
                   <View>
-                     <Button
-                        onPress={() => {
-                           handelAddToCartClick()
-                        }}
+                     <Text
+                        style={styles.productName}
+                        numberOfLines={
+                           viewStyle === productViewStyles.verticalCard ? 1 : 0
+                        }
                      >
-                        +ADD
-                     </Button>
+                        {productData.name}
+                     </Text>
+                     <Text
+                        style={styles.additionalText}
+                        numberOfLines={
+                           viewStyle === productViewStyles.verticalCard ? 1 : 0
+                        }
+                     >
+                        {productData.additionalText || ' '}
+                     </Text>
+                  </View>
+                  <View style={styles.footer}>
+                     <View style={styles.footerLeft}>
+                        <VegNonVegIcon size={12} fill={'#61D836'} />
+                        <View style={styles.priceContainer}>
+                           <Text style={styles.productDiscountValue}>
+                              {formatCurrency(
+                                 getPriceWithDiscount(
+                                    productData.price,
+                                    productData.discount
+                                 ) +
+                                    getPriceWithDiscount(
+                                       defaultProductOption?.price || 0,
+                                       defaultProductOption?.discount || 0
+                                    )
+                              )}
+                           </Text>
+                           {
+                              <>
+                                 {(productData.discount ||
+                                    defaultProductOption?.discount) &&
+                                 productData.price > 0 ? (
+                                    <Text style={styles.productOriginalValue}>
+                                       {formatCurrency(
+                                          productData.price +
+                                             defaultProductOption.price
+                                       )}
+                                    </Text>
+                                 ) : null}
+                              </>
+                           }
+                        </View>
+                     </View>
+                     <View>
+                        <Button
+                           onPress={() => {
+                              handelAddToCartClick()
+                           }}
+                        >
+                           +ADD
+                        </Button>
+                     </View>
                   </View>
                </View>
             </View>
+            {/* {showModifierPopup && <ModifierPopup />} */}
+            <Modal isVisible={showModifierPopup}>
+               <ModifierPopup
+                  closeModifier={() => {
+                     setShowModifierPopup(false)
+                  }}
+                  productData={productData}
+               />
+            </Modal>
          </View>
-         {/* {showModifierPopup && <ModifierPopup />} */}
-         <Modal isVisible={showModifierPopup}>
-            <ModifierPopup
-               closeModifier={() => {
-                  setShowModifierPopup(false)
-               }}
-               productData={productData}
-            />
-         </Modal>
-      </View>
+      </TouchableWithoutFeedback>
    )
 }
 
