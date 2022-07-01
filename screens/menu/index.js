@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
    View,
    Text,
    StyleSheet,
    Image,
+   FlatList,
    ScrollView,
    TouchableOpacity,
    TouchableWithoutFeedback,
@@ -32,6 +33,7 @@ const MenuScreen = ({ route }) => {
    const [status, setStatus] = useState('loading')
    const [productsList, setProductsList] = React.useState([])
    const [hydratedMenu, setHydratedMenu] = React.useState([])
+   const categoryScroller = useRef()
 
    const argsForByLocation = React.useMemo(
       () => ({
@@ -48,6 +50,15 @@ const MenuScreen = ({ route }) => {
             ?.name ||
          ''
    )
+
+   useEffect(() => {
+      categoryScroller.current?.scrollToIndex({
+         index: hydratedMenu.findIndex(x => x.name == selectedCategoryName),
+         animated: true,
+         viewPosition: 0,
+      })
+   }, [selectedCategoryName])
+
    const selectedCategoryWithCompleteData = React.useMemo(() => {
       return hydratedMenu.find(x => x.name === selectedCategoryName)
    }, [selectedCategoryName])
@@ -153,14 +164,19 @@ const MenuScreen = ({ route }) => {
                      </Text>
                   </View>
                </TouchableWithoutFeedback>
-               <ScrollView>
-                  {appConfig.data.showPromotionImageOnMenuPage.value &&
-                  appConfig.data.menuPagePromotionImage.value.url.length > 0 ? (
-                     <PromotionCarousel
-                        data={appConfig.data.menuPagePromotionImage.value}
-                     />
-                  ) : null}
-                  {hydratedMenu.map((eachCategory, index) => {
+               {appConfig.data.showPromotionImageOnMenuPage.value &&
+               appConfig.data.menuPagePromotionImage.value.url.length > 0 ? (
+                  <PromotionCarousel
+                     data={appConfig.data.menuPagePromotionImage.value}
+                  />
+               ) : null}
+               <FlatList
+                  ref={categoryScroller}
+                  initialScrollIndex={hydratedMenu.findIndex(
+                     x => x.name == selectedCategoryName
+                  )}
+                  data={hydratedMenu}
+                  renderItem={({ item: eachCategory, index: fIndex }) => {
                      if (
                         !eachCategory.isCategoryPublished ||
                         eachCategory.products.length === 0
@@ -168,7 +184,7 @@ const MenuScreen = ({ route }) => {
                         return null
                      }
                      return (
-                        <View key={eachCategory.name + '--' + index}>
+                        <View key={eachCategory.name + '--' + fIndex}>
                            <Text style={styles.categoryListName}>
                               {eachCategory.name}
                            </Text>
@@ -176,8 +192,8 @@ const MenuScreen = ({ route }) => {
                            <Divider />
                         </View>
                      )
-                  })}
-               </ScrollView>
+                  }}
+               />
             </>
          ) : null}
       </View>
