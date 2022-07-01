@@ -105,6 +105,13 @@
             "default": "",
             "dataType": "text",
             "userInsertType": "textField"
+         },
+         "btnRoute": {
+            "label": "Order Now Button Redirect To",
+            "value": "https://slay.coffee/collections",
+            "default": "",
+            "dataType": "text",
+            "userInsertType": "textField"
          }
       }
    },

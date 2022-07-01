@@ -265,18 +265,20 @@ const UserDetails = ({
 
    React.useEffect(() => {
       if (!hasUserInfoInCart) {
-         if (!hasUserInfo) {
-            handleOpen()
-         } else {
-            setSettingCartInfo(true)
-            handleSave({
-               firstName: user?.platform_customer?.firstName,
-               lastName: user?.platform_customer?.lastName,
-               mobileNumber: user?.platform_customer?.phoneNumber,
-            })
+         if (user?.platform_customer) {
+            if (!hasUserInfo) {
+               handleOpen()
+            } else {
+               setSettingCartInfo(true)
+               handleSave({
+                  firstName: user?.platform_customer?.firstName,
+                  lastName: user?.platform_customer?.lastName,
+                  mobileNumber: user?.platform_customer?.phoneNumber,
+               })
+            }
          }
       }
-   }, [])
+   }, [user])
 
    return (
       <View style={styles.userInfoContainer}>

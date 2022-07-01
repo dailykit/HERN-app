@@ -121,7 +121,13 @@ const HomeScreen = () => {
                   <Text style={styles.orderNowSubHeading}>
                      {appConfig?.data?.orderNow?.subHeading?.value || ''}
                   </Text>
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity
+                     onPress={async () => {
+                        let url = appConfig?.data?.orderNow?.btnRoute?.value
+                        await Linking.canOpenURL(url)
+                        Linking.openURL(url)
+                     }}
+                  >
                      <Text
                         style={{
                            ...styles.orderNowBtn,
