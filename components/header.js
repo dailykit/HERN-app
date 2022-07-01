@@ -5,13 +5,19 @@ import appConfig from '../brandConfig.json'
 import { useNavigation } from '@react-navigation/native'
 import { useConfig } from '../lib/config'
 import { useCart } from '../context/cart'
-import React from 'react'
+import React, { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Header = () => {
    const navigation = useNavigation()
-   const { dispatch, orderTabs, selectedOrderTab, userLocation, storeStatus } =
-      useConfig()
+   const {
+      dispatch,
+      orderTabs,
+      selectedOrderTab,
+      userLocation,
+      storeStatus,
+      locationId,
+   } = useConfig()
    const { cartState } = useCart()
    React.useEffect(() => {
       if (orderTabs?.length > 0) {
@@ -52,14 +58,16 @@ export const Header = () => {
                   },
                })
             } else {
-               dispatch({
-                  type: 'SET_STORE_STATUS',
-                  payload: {
-                     status: false,
-                     message: 'Select your location',
-                     loading: false,
-                  },
-               })
+               if (!locationId) {
+                  dispatch({
+                     type: 'SET_STORE_STATUS',
+                     payload: {
+                        status: false,
+                        message: 'Select your location',
+                        loading: false,
+                     },
+                  })
+               }
             }
          })()
       }

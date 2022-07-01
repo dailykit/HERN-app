@@ -48,6 +48,7 @@ export const FulfillmentSection = () => {
 const styles = StyleSheet.create({
    fulfillmentContainer: {
       marginHorizontal: 17,
+      marginBottom: 10,
       padding: 6,
       borderRadius: 5,
       borderWidth: 1,

@@ -17,6 +17,10 @@ import OrderDetailScreen from '../screens/myOrders/subscreen/orderDetail'
 import OrderTrackingScreen from '../screens/myOrders/subscreen/orderTracking'
 import ProductSearchScreen from '../screens/productSearch'
 import ProductScreen from '../screens/product'
+import FulfillmentScreen from '../screens/fulfillment'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -34,8 +38,23 @@ const TabNavigator = () => (
 )
 
 const Navigator = () => {
+   const navigation = useNavigation()
+
+   AsyncStorage.getItem('preferredOrderTab').then(preferredOrderTab => {
+      console.log('==> Preferred Order Tab: ', preferredOrderTab)
+      if (!preferredOrderTab) {
+         navigation.reset({
+            routes: [{ name: 'Fulfillment' }],
+         })
+      }
+   })
+
    return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+         screenOptions={{ headerShown: false }}
+         initialRouteName={'TabMenu'}
+      >
+         <Stack.Screen name="Fulfillment" component={FulfillmentScreen} />
          <Stack.Screen name="TabMenu" component={TabNavigator} />
          <Stack.Screen
             name="LocationSelector"

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useState, useEffect } from 'react'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { Button } from '../../../components/button'
 import { useCart } from '../../../context'
 import { useConfig } from '../../../lib/config'
@@ -22,7 +22,9 @@ export const Delivery = () => {
       useConfig()
    const { cartState, methods } = useCart()
 
-   const [fulfillmentType, setFulfillmentType] = useState(null)
+   const [fulfillmentType, setFulfillmentType] = useState(
+      selectedOrderTab?.orderFulfillmentTypeLabel || null
+   )
    const [fulfillmentTabInfo, setFulfillmentTabInfo] = useState({
       orderTabId: null,
       locationId: null,
@@ -567,7 +569,6 @@ export const Delivery = () => {
                      isActive={true}
                      onPress={() => {
                         if (deliveryRadioOptions.length > 1) {
-                           setFulfillmentType(null)
                            setFulfillmentTabInfo(prev => ({
                               ...prev,
                               orderTabId: null,
@@ -591,12 +592,14 @@ export const Delivery = () => {
       <View>
          <View
             style={{
-               flexDirection: 'row',
+               flexDirection: 'column',
                justifyContent: 'space-between',
                alignItems: 'center',
             }}
          >
-            <Text>When would you like to order?</Text>
+            <Text style={{ alignSelf: 'flex-start', marginBottom: 5 }}>
+               When would you like to order?
+            </Text>
             <View style={styles.fulfillmentButtonGroup}>
                {deliveryRadioOptions.map((eachOption, index) => (
                   <Button
@@ -637,11 +640,15 @@ export const Delivery = () => {
             </View>
          </View>
          {!fulfillmentType ? null : isGetStoresLoading ? (
-            <View>
-               <Text>Loading</Text>
-            </View>
+            <ActivityIndicator
+               size={'small'}
+               color={appConfig?.brandSettings?.brandColor?.value || '#000000'}
+               style={{ marginVertical: 6 }}
+            />
          ) : stores.length === 0 ? (
-            <Text>No store available</Text>
+            <Text style={{ textAlign: 'center', marginVertical: 8 }}>
+               No store available
+            </Text>
          ) : fulfillmentType === 'PREORDER_DELIVERY' ? (
             <TimeSlots
                onFulfillmentTimeClick={onFulfillmentTimeClick}

@@ -6,6 +6,7 @@ import { useConfig } from '../../lib/config'
 import { Button } from '../button'
 import { Delivery } from './delivery'
 import { Pickup } from './pickup'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const LocationSelector = () => {
    const navigation = useNavigation()
@@ -20,9 +21,20 @@ export const LocationSelector = () => {
       [orderTabs]
    )
 
-   const [fulfillmentType, setFulfillmentType] = useState(
-      orderTabFulfillmentType[0]?.split('_')[1]
-   )
+   const [fulfillmentType, setFulfillmentType] = useState()
+
+   // Setting Preferred Fulfillment Type
+   useEffect(() => {
+      AsyncStorage.getItem('preferredOrderTab').then(preferredOrderTab => {
+         if (preferredOrderTab) {
+            preferredOrderTab &&
+               setFulfillmentType(preferredOrderTab?.split('_')[1])
+         } else {
+            setFulfillmentType(orderTabFulfillmentType[0]?.split('_')[1])
+         }
+      })
+   }, [])
+
    if (!orderTabFulfillmentType) {
       return <Text>Loading</Text>
    }

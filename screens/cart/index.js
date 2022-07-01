@@ -98,6 +98,12 @@ const CartScreen = () => {
                <Button
                   buttonStyle={styles.button}
                   textStyle={styles.buttonText}
+                  disabled={
+                     isAuthenticated &&
+                     (!cartState?.cart?.fulfillmentInfo ||
+                        !cartState?.cart?.customerInfo ||
+                        !cartState?.cart?.address)
+                  }
                   onPress={() => {
                      if (isAuthenticated) {
                         navigation.navigate('PaymentOptions')
@@ -111,7 +117,7 @@ const CartScreen = () => {
             </View>
             <BottomSheetModal
                ref={loginPopUp}
-               snapPoints={[250]}
+               snapPoints={[200]}
                index={0}
                enablePanDownToClose={true}
                handleComponent={() => null}
@@ -202,16 +208,6 @@ const LoginPopUp = ({ navigation }) => {
             buttonStyle={styles.loginPopUpButton}
          >
             Login
-         </Button>
-         <Text style={[styles.loginPopUpDescription, { marginVertical: 8 }]}>
-            or
-         </Text>
-         <Button
-            onPress={() => navigation.navigate('Login')}
-            buttonStyle={styles.loginPopUpButton}
-            variant={'outline'}
-         >
-            SignUp
          </Button>
       </View>
    )
