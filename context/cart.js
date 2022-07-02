@@ -16,7 +16,7 @@ import { useConfig } from '../lib/config'
 import { combineCartItems } from '../utils'
 import { indexOf } from 'lodash'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import { useUser } from '../context/user'
 export const CartContext = React.createContext()
 
 const initialState = {
@@ -35,11 +35,6 @@ const reducer = (state, { type, payload }) => {
    }
 }
 
-const { isAuthenticated, user, isLoading } = {
-   isAuthenticated: false,
-   isLoading: false,
-   user: {},
-}
 export const CartProvider = ({ children }) => {
    const {
       brand,
@@ -53,6 +48,8 @@ export const CartProvider = ({ children }) => {
    const oiType = React.useMemo(() => {
       return 'App Ordering'
    }, [])
+   const { isAuthenticated, user, isLoading } = useUser()
+
    const [isFinalCartLoading, setIsFinalCartLoading] = React.useState(true)
 
    const [cartState, cartReducer] = React.useReducer(reducer, initialState)
@@ -540,9 +537,12 @@ export const CartProvider = ({ children }) => {
                   subscriptionData.data.carts &&
                   subscriptionData.data.carts.length > 0
                ) {
-                  const guestCartId = JSON.parse(
-                     await AsyncStorage.getItem('cart-id')
+                  const unParsedGuestCartId = await AsyncStorage.getItem(
+                     'cart-id'
                   )
+                  const guestCartId = unParsedGuestCartId
+                     ? JSON.parse(unParsedGuestCartId)
+                     : unParsedGuestCartId
                   if (guestCartId) {
                      // delete pending cart and assign guest cart to the user
                      await updateCart({
