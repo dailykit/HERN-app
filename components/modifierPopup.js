@@ -132,6 +132,7 @@ export const ModifierPopup = ({
 
    useEffect(() => {
       if (!isEmpty(completeProductData) && (forNewItem || edit)) {
+         console.log('productCartDetail', productCartDetail.childs[0])
          const productOptionId = productCartDetail.childs[0].productOption.id
          const selectedProductOption = completeProductData.productOptions.find(
             x => x.id == productOptionId

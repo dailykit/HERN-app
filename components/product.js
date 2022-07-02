@@ -18,6 +18,10 @@ import Modal from 'react-native-modal'
 import { useCart } from '../context'
 import { useConfig } from '../lib/config'
 import { useNavigation } from '@react-navigation/native'
+import { PRODUCT_ONE } from '../graphql'
+import { CounterButton } from './counterButton'
+import { client } from '../lib/apollo'
+import { getCartItemWithModifiers } from '../utils'
 
 const productViewStyles = {
    verticalCard: 'verticalCard',
@@ -81,10 +85,14 @@ export const ProductList = ({
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
-   const { locationId } = useConfig()
+   const { brand, locationId, brandLocation } = useConfig()
+
    const navigation = useNavigation()
    const isStoreAvailable = true
    const [showModifierPopup, setShowModifierPopup] = useState(false)
+   const [availableQuantityInCart, setAvailableQuantityInCart] = useState(0)
+   const [showChooseIncreaseType, setShowChooseIncreaseType] = useState(false) // show I'll choose or repeat last one popup
+
    const defaultProductOption = React.useMemo(() => {
       if (productData.productOptions.length === 0) {
          return {}
@@ -138,6 +146,28 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
       return true
    }, [productData])
 
+   React.useEffect(() => {
+      if (combinedCartItems) {
+         const allCartItemsIdsForThisProducts = combinedCartItems
+            .filter(x => x.productId === productData.id)
+            .map(x => x.ids)
+            .flat().length
+         setAvailableQuantityInCart(allCartItemsIdsForThisProducts)
+      }
+   }, [combinedCartItems])
+
+   const removeCartItems = cartItemIds => {
+      methods.cartItems.delete({
+         variables: {
+            where: {
+               id: {
+                  _in: cartItemIds,
+               },
+            },
+         },
+      })
+   }
+
    const handelAddToCartClick = () => {
       // product availability
       if (!locationId) {
@@ -162,6 +192,229 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
             }
          }
       }
+   }
+   const argsForByLocation = React.useMemo(
+      () => ({
+         brandId: brand?.id,
+         locationId: locationId,
+         brand_locationId: brandLocation?.id,
+      }),
+      [brand, locationId, brandLocation?.id]
+   )
+
+   const repeatLastOne = async productData => {
+      const { data: { product: productCompleteData = {} } = {} } =
+         await client.query({
+            query: PRODUCT_ONE,
+            variables: {
+               id: productData.id,
+               params: argsForByLocation,
+            },
+         })
+
+      const cartDetailSelectedProduct = cartState.cartItems
+         .filter(x => x.productId === productData.id)
+         .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+         .pop()
+
+      if (cartDetailSelectedProduct.childs.length === 0) {
+         addToCart(productData.defaultCartItem, 1)
+         setShowChooseIncreaseType(false)
+         return
+      }
+
+      const productOptionId =
+         cartDetailSelectedProduct.childs[0].productOption.id
+      const modifierCategoryOptionsIds =
+         cartDetailSelectedProduct.childs[0].childs.map(
+            x => x?.modifierOption?.id
+         )
+
+      //selected product option
+      const selectedProductOption = productCompleteData.productOptions?.find(
+         x => x.id == productOptionId
+      )
+
+      // select all modifier option id which has modifier option ( parent modifier option id)
+      const modifierOptionsConsistAdditionalModifiers =
+         cartDetailSelectedProduct.childs[0].childs
+            .map(eachModifierOption => {
+               if (eachModifierOption.childs.length > 0) {
+                  return {
+                     parentModifierOptionId:
+                        eachModifierOption.modifierOption.id,
+                     selectedModifierOptionIds: eachModifierOption.childs.map(
+                        x => x.modifierOption.id
+                     ),
+                  }
+               } else {
+                  return null
+               }
+            })
+            .filter(eachId => eachId !== null)
+
+      //selected modifiers
+      let singleModifier = []
+      let multipleModifier = []
+      let singleAdditionalModifier = []
+      let multipleAdditionalModifier = []
+      if (selectedProductOption.modifier) {
+         selectedProductOption.modifier.categories.forEach(category => {
+            category.options.forEach(option => {
+               const selectedOption = {
+                  modifierCategoryID: category.id,
+                  modifierCategoryOptionsID: option.id,
+                  modifierCategoryOptionsPrice: option.price,
+                  cartItem: option.cartItem,
+               }
+               if (category.type === 'single') {
+                  if (modifierCategoryOptionsIds.includes(option.id)) {
+                     singleModifier = singleModifier.concat(selectedOption)
+                  }
+               }
+               if (category.type === 'multiple') {
+                  if (modifierCategoryOptionsIds.includes(option.id)) {
+                     multipleModifier = multipleModifier.concat(selectedOption)
+                  }
+               }
+            })
+         })
+      }
+
+      const allSelectedOptions = [...singleModifier, ...multipleModifier]
+
+      if (selectedProductOption.additionalModifiers) {
+         selectedProductOption.additionalModifiers.forEach(option => {
+            option.modifier.categories.forEach(category => {
+               category.options.forEach(option => {
+                  const selectedOption = {
+                     modifierCategoryID: category.id,
+                     modifierCategoryOptionsID: option.id,
+                     modifierCategoryOptionsPrice: option.price,
+                     cartItem: option.cartItem,
+                  }
+                  if (category.type === 'single') {
+                     if (modifierCategoryOptionsIds.includes(option.id)) {
+                        singleAdditionalModifier =
+                           singleAdditionalModifier.concat(selectedOption)
+                     }
+                  }
+                  if (category.type === 'multiple') {
+                     if (modifierCategoryOptionsIds.includes(option.id)) {
+                        multipleAdditionalModifier =
+                           multipleAdditionalModifier.concat(selectedOption)
+                     }
+                  }
+               })
+            })
+         })
+         const modifierOptionsConsistAdditionalModifiersWithData =
+            modifierOptionsConsistAdditionalModifiers.map(
+               eachModifierOptionsConsistAdditionalModifiers => {
+                  let additionalModifierOptions = []
+                  selectedProductOption.additionalModifiers.forEach(
+                     additionalModifier => {
+                        if (additionalModifier.modifier) {
+                           additionalModifier.modifier.categories.forEach(
+                              eachCategory => {
+                                 eachCategory.options.forEach(eachOption => {
+                                    if (eachOption.additionalModifierTemplate) {
+                                       eachOption.additionalModifierTemplate.categories.forEach(
+                                          eachCategory => {
+                                             additionalModifierOptions.push(
+                                                ...eachCategory.options.map(
+                                                   eachOptionTemp => ({
+                                                      ...eachOptionTemp,
+                                                      categoryId:
+                                                         eachCategory.id,
+                                                   })
+                                                )
+                                             )
+                                          }
+                                       )
+                                    }
+                                 })
+                              }
+                           )
+                        }
+                     }
+                  )
+                  // for single modifiers
+                  if (selectedProductOption.modifier) {
+                     selectedProductOption.modifier.categories.forEach(
+                        eachCategory => {
+                           eachCategory.options.forEach(eachOption => {
+                              if (eachOption.additionalModifierTemplateId) {
+                                 if (eachOption.additionalModifierTemplate) {
+                                    eachOption.additionalModifierTemplate.categories.forEach(
+                                       eachCategory => {
+                                          additionalModifierOptions.push(
+                                             ...eachCategory.options.map(
+                                                eachOptionTemp => ({
+                                                   ...eachOptionTemp,
+                                                   categoryId: eachCategory.id,
+                                                })
+                                             )
+                                          )
+                                       }
+                                    )
+                                 }
+                              }
+                           })
+                        }
+                     )
+                  }
+
+                  const mapedModifierOptions =
+                     eachModifierOptionsConsistAdditionalModifiers.selectedModifierOptionIds.map(
+                        eachId => {
+                           const additionalModifierOption =
+                              additionalModifierOptions.find(
+                                 x => x.id === eachId
+                              )
+                           const selectedOption = {
+                              modifierCategoryID:
+                                 additionalModifierOption.categoryId,
+                              modifierCategoryOptionsID:
+                                 additionalModifierOption.id,
+                              modifierCategoryOptionsPrice:
+                                 additionalModifierOption.price,
+                              cartItem: additionalModifierOption.cartItem,
+                           }
+                           return selectedOption
+                        }
+                     )
+                  return {
+                     ...eachModifierOptionsConsistAdditionalModifiers,
+                     data: mapedModifierOptions,
+                  }
+               }
+            )
+
+         // root modifiers options + additional modifier's modifier options
+         const resultSelectedModifier = [
+            ...allSelectedOptions,
+            ...singleAdditionalModifier,
+            ...multipleAdditionalModifier,
+         ]
+         const cartItem = getCartItemWithModifiers(
+            selectedProductOption.cartItem,
+            resultSelectedModifier.map(x => x.cartItem),
+            modifierOptionsConsistAdditionalModifiersWithData
+         )
+
+         addToCart(cartItem, 1)
+         setShowChooseIncreaseType(false)
+         return
+      }
+
+      const cartItem = getCartItemWithModifiers(
+         selectedProductOption.cartItem,
+         allSelectedOptions.map(x => x.cartItem)
+      )
+
+      addToCart(cartItem, 1)
+      setShowChooseIncreaseType(false)
    }
 
    return (
@@ -281,13 +534,36 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         </View>
                      </View>
                      <View>
-                        <Button
-                           onPress={() => {
-                              handelAddToCartClick()
-                           }}
-                        >
-                           +ADD
-                        </Button>
+                        {availableQuantityInCart === 0 ? (
+                           <Button
+                              onPress={() => {
+                                 handelAddToCartClick()
+                              }}
+                           >
+                              +ADD
+                           </Button>
+                        ) : (
+                           <CounterButton
+                              count={availableQuantityInCart}
+                              onMinusClick={() => {
+                                 const idsAv = combinedCartItems
+                                    .filter(x => x.productId === productData.id)
+                                    .map(x => x.ids)
+                                    .flat()
+                                 removeCartItems([idsAv[idsAv.length - 1]])
+                              }}
+                              onPlusClick={() => {
+                                 if (
+                                    productData.productOptions.length > 0 &&
+                                    productData.isPopupAllowed
+                                 ) {
+                                    setShowChooseIncreaseType(true)
+                                 } else {
+                                    addToCart(productData.defaultCartItem, 1)
+                                 }
+                              }}
+                           />
+                        )}
                      </View>
                   </View>
                </View>
@@ -300,6 +576,51 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                   }}
                   productData={productData}
                />
+            </Modal>
+            <Modal
+               isVisible={showChooseIncreaseType}
+               onBackdropPress={() => {
+                  setShowChooseIncreaseType(false)
+               }}
+            >
+               <View style={{ backgroundColor: 'white', padding: 12 }}>
+                  <View style={{ marginBottom: 12 }}>
+                     <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                        Repeat last used customization?
+                     </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                     <Button
+                        variant="outline"
+                        isActive={true}
+                        textStyle={{
+                           color: appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value,
+                        }}
+                        buttonStyle={{
+                           flex: 1,
+                           marginRight: 20,
+                        }}
+                        onPress={() => {
+                           setShowChooseIncreaseType(false)
+                           setShowModifierPopup(true)
+                        }}
+                     >
+                        I'LL CHOOSE
+                     </Button>
+                     <Button
+                        buttonStyle={{
+                           flex: 1,
+                           marginLeft: 20,
+                        }}
+                        onPress={async () => {
+                           await repeatLastOne(productData)
+                        }}
+                     >
+                        REPEAT LAST ONE
+                     </Button>
+                  </View>
+               </View>
             </Modal>
          </View>
       </TouchableWithoutFeedback>
