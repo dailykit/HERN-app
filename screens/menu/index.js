@@ -123,7 +123,7 @@ const MenuScreen = ({ route }) => {
    }, [hydratedMenu, route?.params?.categoryName])
 
    return (
-      <SafeAreaView style={{ backgroundColor: '#ffffff' }}>
+      <SafeAreaView style={{ backgroundColor: '#ffffff', flex: 1 }}>
          <Header />
          {status === 'loading' ? (
             <Text>Loading</Text>

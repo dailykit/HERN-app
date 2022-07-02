@@ -53,7 +53,7 @@ const CartScreen = () => {
       combinedCartItems?.length === 0
    ) {
       return (
-         <SafeAreaView style={{ height: '100%' }}>
+         <SafeAreaView>
             <CartHeader />
             <EmptyCart />
             <View style={{ bottom: 110, position: 'absolute', width: '100%' }}>
@@ -72,7 +72,7 @@ const CartScreen = () => {
    }
 
    return (
-      <View
+      <SafeAreaView
          style={{
             position: 'relative',
             height: '100%',
@@ -126,7 +126,7 @@ const CartScreen = () => {
                <LoginPopUp navigation={navigation} />
             </BottomSheetModal>
          </BottomSheetModalProvider>
-      </View>
+      </SafeAreaView>
    )
 }
 

@@ -23,7 +23,7 @@ const AccountScreen = () => {
    const navigation = useNavigation()
    const { user, isAuthenticated, isLoading, logout } = useUser()
    return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
          <AccountHeader />
          {isLoading ? (
             <Text>Loading</Text>

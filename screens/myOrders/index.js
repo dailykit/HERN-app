@@ -49,7 +49,7 @@ const MyOrdersScreen = () => {
    }, [orderHistoryLoading])
 
    return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
          <Header />
          {userLoading ? (
             <Text>Loading</Text>

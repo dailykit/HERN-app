@@ -429,14 +429,6 @@ export const CartProvider = ({ children }) => {
                address: customerAddress,
                locationTableId: dineInTableInfo?.id || null,
             }
-            console.log('dataToBeSend', {
-               usedOrderInterface: oiType,
-               orderTabId: selectedOrderTab?.id || null,
-               locationId: locationId || null,
-               brandId: brand?.id,
-               address: customerAddress,
-               locationTableId: dineInTableInfo?.id || null,
-            })
             // console.log('object new cart', object)
             await createCart({
                variables: {
@@ -506,13 +498,7 @@ export const CartProvider = ({ children }) => {
          }
       }
    }
-   console.log(
-      'userCrtData',
-      brand?.id,
-      user?.keycloakId,
-      orderTabs,
-      brand?.id && user?.keycloakId && orderTabs.length > 0
-   )
+
    // get user pending cart when logging in
    const { loading: existingCartLoading, error: existingCartError } =
       useSubscription(GET_CARTS, {
