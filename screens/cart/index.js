@@ -22,6 +22,7 @@ import { Address } from './address'
 import { FulfillmentSection } from './fulfillmentSection'
 import { UserInfo } from '../../components/userInfo'
 import { useUser } from '../../context/user'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const CartScreen = () => {
    const navigation = useNavigation()
@@ -52,7 +53,7 @@ const CartScreen = () => {
       combinedCartItems?.length === 0
    ) {
       return (
-         <View style={{ height: '100%' }}>
+         <SafeAreaView style={{ height: '100%' }}>
             <CartHeader />
             <EmptyCart />
             <View style={{ bottom: 110, position: 'absolute', width: '100%' }}>
@@ -66,7 +67,7 @@ const CartScreen = () => {
                   Order Now
                </Button>
             </View>
-         </View>
+         </SafeAreaView>
       )
    }
 

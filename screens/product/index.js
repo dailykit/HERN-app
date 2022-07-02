@@ -21,6 +21,7 @@ import { Button } from '../../components/button'
 import { useCart } from '../../context'
 import { ModifierPopup } from '../../components/modifierPopup'
 import Modal from 'react-native-modal'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -163,7 +164,7 @@ const ProductScreen = () => {
    }
 
    return (
-      <View style={styles.productScreen}>
+      <SafeAreaView style={styles.productScreen}>
          <View style={{ flex: 10 }}>
             <ScrollView>
                <View style={styles.imageContainer}>
@@ -299,7 +300,7 @@ const ProductScreen = () => {
                productData={products[0]}
             />
          </Modal>
-      </View>
+      </SafeAreaView>
    )
 }
 

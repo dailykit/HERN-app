@@ -19,6 +19,7 @@ import { PromotionCarousel } from './promotionCarousel'
 import { onDemandMenuContext } from '../../context'
 import { PRODUCTS_QUERY } from '../../graphql'
 import { useQuery } from '@apollo/client'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const HomeScreen = () => {
    const { brand, locationId, brandLocation } = useConfig()
@@ -52,7 +53,7 @@ const HomeScreen = () => {
    })
 
    return (
-      <View>
+      <SafeAreaView>
          <Header />
 
          <ScrollView
@@ -178,7 +179,7 @@ const HomeScreen = () => {
                height={204}
             />
          </ScrollView>
-      </View>
+      </SafeAreaView>
    )
 }
 

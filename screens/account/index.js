@@ -6,6 +6,7 @@ import {
    View,
    Animated,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { CardsIcon } from '../../assets/cardsIcon'
 import LocationIcon from '../../assets/locationIcon'
 import { LogoutIcon } from '../../assets/logoutIcon'
@@ -22,7 +23,7 @@ const AccountScreen = () => {
    const navigation = useNavigation()
    const { user, isAuthenticated, isLoading, logout } = useUser()
    return (
-      <View>
+      <SafeAreaView>
          <AccountHeader />
          {isLoading ? (
             <Text>Loading</Text>
@@ -103,7 +104,7 @@ const AccountScreen = () => {
          ) : (
             <LoginScreenForAuthScreen />
          )}
-      </View>
+      </SafeAreaView>
    )
 }
 {

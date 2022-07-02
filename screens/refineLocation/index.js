@@ -6,7 +6,6 @@ import {
    TouchableOpacity,
    ScrollView,
    TextInput,
-   SafeAreaView,
 } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import React, { useState, useEffect } from 'react'
@@ -23,6 +22,7 @@ import SearchIcon from '../../assets/searchIcon'
 import { GooglePlacesAutocompleteWrapper } from '../../components/location/googlePlaceAutoComplete'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useCart } from '../../context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const RefineLocation = () => {
    const navigation = useNavigation()
@@ -289,7 +289,7 @@ const RefineLocation = () => {
    }
 
    return (
-      <View style={{ backgroundColor: '#fff', flex: 1 }}>
+      <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
          <View style={[styles.refineLocationSelectorHeader, { flex: 1 }]}>
             <Text style={styles.refineLocationText}>Refine Location</Text>
             <TouchableOpacity
@@ -403,7 +403,7 @@ const RefineLocation = () => {
                ? 'Save & Proceed'
                : 'No store available'}
          </Button>
-      </View>
+      </SafeAreaView>
    )
 }
 

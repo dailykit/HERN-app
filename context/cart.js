@@ -509,7 +509,13 @@ export const CartProvider = ({ children }) => {
          }
       }
    }
-
+   console.log(
+      'userCrtData',
+      brand?.id,
+      user?.keycloakId,
+      orderTabs,
+      brand?.id && user?.keycloakId && orderTabs.length > 0
+   )
    // get user pending cart when logging in
    const { loading: existingCartLoading, error: existingCartError } =
       useSubscription(GET_CARTS, {

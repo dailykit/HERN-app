@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
 import React from 'react'
 import {
-   SafeAreaView,
    ScrollView,
    StyleSheet,
    Text,
@@ -11,6 +10,7 @@ import {
    TouchableWithoutFeedback,
    View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { LeftArrow } from '../../assets/arrowIcon'
 import { ProductList } from '../../components/product'
 import { onDemandMenuContext } from '../../context'

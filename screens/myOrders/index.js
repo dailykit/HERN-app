@@ -16,6 +16,7 @@ import { Button } from '../../components/button'
 import { CartItem } from './cartItem'
 import { useNavigation } from '@react-navigation/native'
 import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MyOrdersScreen = () => {
    // context
@@ -48,7 +49,7 @@ const MyOrdersScreen = () => {
    }, [orderHistoryLoading])
 
    return (
-      <View>
+      <SafeAreaView>
          <Header />
          {userLoading ? (
             <Text>Loading</Text>
@@ -76,7 +77,7 @@ const MyOrdersScreen = () => {
             <LoginScreenForAuthScreen />
          )}
          {user?.keycloakId ? <View></View> : null}
-      </View>
+      </SafeAreaView>
    )
 }
 const NoOrdersAvailable = () => {
