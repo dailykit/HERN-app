@@ -7,7 +7,6 @@ import {
    Text,
    View,
    ScrollView,
-   SafeAreaView,
    Image,
 } from 'react-native'
 import { GET_ORDER_DETAIL_ONE_SUBS } from '../../../graphql'
@@ -22,6 +21,8 @@ import { formatCurrency } from '../../../utils/formatCurrency'
 import { combineCartItems } from '../../../utils'
 import { BillingDetails } from './component/billingDetails'
 import { DeliveryProgressBar } from './component/deliveryProgressBar'
+import { Spinner } from '../../../assets/loaders'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const OrderTrackingScreen = () => {
    const route = useRoute()
@@ -43,12 +44,12 @@ const OrderTrackingScreen = () => {
    const cart = React.useMemo(() => carts[0], [carts])
 
    return (
-      <SafeAreaView style={{ paddingBottom: 64 }}>
+      <SafeAreaView style={{ flex: 1 }}>
          <SubScreenHeader title={`Order ${cartId}`} />
          <ScrollView>
             <View style={{ padding: 8, backgroundColor: '#ffffff' }}>
                {loading ? (
-                  <Text>Loading</Text>
+                  <Spinner size={'large'} showText={true} />
                ) : error ? (
                   <Text> Something went wrong</Text>
                ) : isNull(cart.order.isAccepted) &&
@@ -144,7 +145,7 @@ const OrderDetail = ({ cart }) => {
       }
    }
    if (componentStatus === 'loading') {
-      return <Text>Loading</Text>
+      return <Spinner size={'large'} showText={true} />
    }
    return (
       <View

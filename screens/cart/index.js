@@ -23,6 +23,7 @@ import { FulfillmentSection } from './fulfillmentSection'
 import { UserInfo } from '../../components/userInfo'
 import { useUser } from '../../context/user'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Spinner } from '../../assets/loaders'
 
 const CartScreen = () => {
    const navigation = useNavigation()
@@ -42,7 +43,7 @@ const CartScreen = () => {
       return (
          <View style={{ height: '100%' }}>
             <CartHeader />
-            <Text>Loading</Text>
+            <Spinner size="large" showText={true} />
          </View>
       )
 
@@ -53,7 +54,7 @@ const CartScreen = () => {
       combinedCartItems?.length === 0
    ) {
       return (
-         <SafeAreaView>
+         <SafeAreaView style={{ flex: 1 }}>
             <CartHeader />
             <EmptyCart />
             <View style={{ bottom: 110, position: 'absolute', width: '100%' }}>

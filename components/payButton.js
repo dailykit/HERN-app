@@ -1,5 +1,12 @@
 import React, { useEffect, useState, memo } from 'react'
-import { View, StyleSheet, Button, Text, TouchableOpacity } from 'react-native'
+import {
+   View,
+   StyleSheet,
+   Button,
+   Text,
+   TouchableOpacity,
+   ActivityIndicator,
+} from 'react-native'
 import { useMutation, useSubscription } from '@apollo/client'
 import isEmpty from 'lodash/isEmpty'
 // import { useToasts } from 'react-toast-notifications'
@@ -8,6 +15,7 @@ import { usePayment } from '../lib/payment'
 import { useConfig } from '../lib/config'
 import { useUser } from '../context/user'
 import appConfig from '../brandConfig.json'
+import { Spinner } from '../assets/loaders'
 
 function PayButton({
    children,
@@ -136,8 +144,15 @@ function PayButton({
    return (
       <>
          {loading ? (
-            <View style={styles.disabledPaymentButton}>
-               <Text style={styles.disabledPaymentButton.text}>Loading...</Text>
+            <View
+               style={{
+                  ...styles.disabledPaymentButton,
+                  marginTop: props?.style?.marginTop || 'auto',
+               }}
+            >
+               <Text style={styles.disabledPaymentButton.text}>
+                  <Spinner color={'#ffffff'} />
+               </Text>
             </View>
          ) : (
             <TouchableOpacity
@@ -159,7 +174,7 @@ const styles = StyleSheet.create({
       borderRadius: 8,
       paddingVertical: 10,
       backgroundColor:
-         appConfig?.brandSettings?.buttonSettings?.buttonBGColor?.value ||
+         `${appConfig?.brandSettings?.buttonSettings?.buttonBGColor?.value}AA` ||
          '#222222',
       text: {
          textAlign: 'center',

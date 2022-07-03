@@ -41,7 +41,6 @@ const Navigator = () => {
    const navigation = useNavigation()
 
    AsyncStorage.getItem('preferredOrderTab').then(preferredOrderTab => {
-      console.log('==> Preferred Order Tab: ', preferredOrderTab)
       if (!preferredOrderTab) {
          navigation.reset({
             routes: [{ name: 'Fulfillment' }],

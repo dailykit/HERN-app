@@ -7,6 +7,8 @@ import { useUser } from '../../../context/user'
 import { COUPONS } from '../../../graphql'
 import { useConfig } from '../../../lib/config'
 import { SubScreenHeader } from './header'
+import { Spinner } from '../../../assets/loaders'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const OffersScreen = () => {
    // context
@@ -35,16 +37,18 @@ const OffersScreen = () => {
       },
    })
 
+   console.log('==> Offers: ', availableCoupons)
+
    return (
-      <View>
+      <SafeAreaView style={{ flex: 1 }}>
          <SubScreenHeader title={'Check Offers'} />
          <View style={{ backgroundColor: '#fff', height: '100%', padding: 12 }}>
             <Text style={styles.couponTextStyle}>Coupons</Text>
             {isCouponsLoading ? (
-               <Text>Loading</Text>
+               <Spinner size={'large'} showText={true} />
             ) : error ? (
                <Text>Something went wrong</Text>
-            ) : availableCoupons.length !== 0 ? (
+            ) : availableCoupons.length === 0 ? (
                <View
                   style={{
                      flexDirection: 'column',
@@ -69,7 +73,7 @@ const OffersScreen = () => {
                </View>
             )}
          </View>
-      </View>
+      </SafeAreaView>
    )
 }
 const CouponCard = ({ coupon }) => {

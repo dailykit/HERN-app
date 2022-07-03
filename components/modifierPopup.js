@@ -25,6 +25,7 @@ import { useQuery } from '@apollo/client'
 import { PRODUCT_ONE } from '../graphql'
 import { useCart } from '../context'
 import { getCartItemWithModifiers } from '../utils'
+import { Spinner } from '../assets/loaders'
 
 export const ModifierPopup = ({
    closeModifier,
@@ -562,7 +563,7 @@ export const ModifierPopup = ({
                      : null}
                </View>
             ) : (
-               <Text>Loading</Text>
+               <Spinner size="large" />
             )}
          </ScrollView>
          <View
