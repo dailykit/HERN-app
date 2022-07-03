@@ -12,6 +12,7 @@ import { BillingDetails } from './component/billingDetails'
 import { CardsIcon } from '../../../assets/cardsIcon'
 import { ProfileIcon } from '../../../assets/profileIcon'
 import { Spinner } from '../../../assets/loaders'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const OrderDetailScreen = ({ products, createdAt }) => {
    const route = useRoute()
@@ -77,7 +78,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
    }
 
    return (
-      <View style={{ backgroundColor: '#ffffff' }}>
+      <SafeAreaView style={{ backgroundColor: '#ffffff', flex: 1 }}>
          <SubScreenHeader title={'Order Detail'} />
          {componentStatus === 'loading' ? (
             <Spinner size={'large'} showText={true} />
@@ -327,7 +328,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                </View>
             </ScrollView>
          )}
-      </View>
+      </SafeAreaView>
    )
 }
 

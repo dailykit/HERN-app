@@ -337,7 +337,10 @@ export const COUPONS = gql`
 `
 export const GET_ORDER_DETAILS = gql`
    subscription GET_ORDER_DETAILS($where: order_cart_bool_exp!) {
-      carts(where: $where, order_by: { order: { created_at: desc } }) {
+      carts(
+         where: $where
+         order_by: { order: { created_at: desc_nulls_last } }
+      ) {
          id
          status
          paymentStatus
