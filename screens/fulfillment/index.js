@@ -24,6 +24,33 @@ const Fulfillment = () => {
    const [isDeliveryPressed, setDeliveryPressed] = useState(false)
    const [isPickupPressed, setPickupPressed] = useState(false)
 
+   const handleSubmit = async fulfillmentType => {
+      if (fulfillmentType === 'DELIVERY') {
+         setDeliveryPressed(true)
+      } else {
+         setPickupPressed(true)
+      }
+      let preferredOrderTab
+      let orderTabLabels = new Set(
+         orderTabs.map(t => t.orderFulfillmentTypeLabel)
+      )
+      if (
+         orderTabLabels.has(`ONDEMAND_${fulfillmentType}`) &&
+         orderTabLabels.has(`PREORDER_${fulfillmentType}`)
+      ) {
+         preferredOrderTab = `ONDEMAND_${fulfillmentType}`
+      } else if (orderTabLabels.has(`ONDEMAND_${fulfillmentType}`)) {
+         preferredOrderTab = `ONDEMAND_${fulfillmentType}`
+      } else if (orderTabLabels.has(`PREORDER_${fulfillmentType}`)) {
+         preferredOrderTab = `PREORDER_${fulfillmentType}`
+      }
+      preferredOrderTab &&
+         (await AsyncStorage.setItem('preferredOrderTab', preferredOrderTab))
+      navigation.reset({
+         routes: [{ name: 'TabMenu' }],
+      })
+   }
+
    return (
       <View style={styles.container}>
          <Image
@@ -46,31 +73,7 @@ const Fulfillment = () => {
                      )
                   ) != -1 ? (
                      <TouchableWithoutFeedback
-                        onPress={async () => {
-                           setDeliveryPressed(true)
-                           let preferredOrderTab
-                           let orderTabLabels = new Set(
-                              orderTabs.map(t => t.orderFulfillmentTypeLabel)
-                           )
-                           if (
-                              orderTabLabels.has('ONDEMAND_DELIVERY') &&
-                              orderTabLabels.has('PREORDER_DELIVERY')
-                           ) {
-                              preferredOrderTab = 'ONDEMAND_DELIVERY'
-                           } else if (orderTabLabels.has('ONDEMAND_DELIVERY')) {
-                              preferredOrderTab = 'ONDEMAND_DELIVERY'
-                           } else if (orderTabLabels.has('PREORDER_DELIVERY')) {
-                              preferredOrderTab = 'PREORDER_DELIVERY'
-                           }
-                           preferredOrderTab &&
-                              (await AsyncStorage.setItem(
-                                 'preferredOrderTab',
-                                 preferredOrderTab
-                              ))
-                           navigation.reset({
-                              routes: [{ name: 'TabMenu' }],
-                           })
-                        }}
+                        onPress={() => handleSubmit('DELIVERY')}
                         disabled={isDeliveryPressed || isPickupPressed}
                      >
                         <View
@@ -97,46 +100,27 @@ const Fulfillment = () => {
                                  },
                               ]}
                            >
-                              Delivery
+                              {orderTabs.find(
+                                 t =>
+                                    'ONDEMAND_DELIVERY' ===
+                                    t.orderFulfillmentTypeLabel
+                              )?.label ||
+                                 orderTabs.find(
+                                    t =>
+                                       'PREORDER_DELIVERY' ===
+                                       t.orderFulfillmentTypeLabel
+                                 )?.label}
                            </Text>
                         </View>
                      </TouchableWithoutFeedback>
                   ) : null}
                   {orderTabs.findIndex(t =>
-                     ['ONDEMAND_DELIVERY', 'PREORDER_DELIVERY'].includes(
+                     ['ONDEMAND_PICKUP', 'PREORDER_PICKUP'].includes(
                         t.orderFulfillmentTypeLabel
                      )
                   ) != -1 ? (
                      <TouchableWithoutFeedback
-                        onPress={async () => {
-                           setPickupPressed(true)
-                           let preferredOrderTab
-                           let orderTabLabels = new Set(
-                              orderTabs.map(t => t.orderFulfillmentTypeLabel)
-                           )
-                           if (
-                              orderTabLabels.has('ONDEMAND_PICKUP') &&
-                              orderTabLabels.has('PREORDER_PICKUP')
-                           ) {
-                              preferredOrderTab = 'ONDEMAND_PICKUP'
-                           } else if (orderTabLabels.has('ONDEMAND_PICKUP')) {
-                              preferredOrderTab = 'ONDEMAND_PICKUP'
-                           } else if (orderTabLabels.has('PREORDER_PICKUP')) {
-                              preferredOrderTab = 'PREORDER_PICKUP'
-                           }
-                           preferredOrderTab &&
-                              (await AsyncStorage.setItem(
-                                 'preferredOrderTab',
-                                 preferredOrderTab
-                              ))
-                           console.log(
-                              '==> Selected preferredOrderTab: ',
-                              preferredOrderTab
-                           )
-                           navigation.reset({
-                              routes: [{ name: 'TabMenu' }],
-                           })
-                        }}
+                        onPress={() => handleSubmit('PICKUP')}
                         disabled={isDeliveryPressed || isDeliveryPressed}
                      >
                         <View
@@ -163,7 +147,16 @@ const Fulfillment = () => {
                                  },
                               ]}
                            >
-                              Pickup
+                              {orderTabs.find(
+                                 t =>
+                                    'ONDEMAND_PICKUP' ===
+                                    t.orderFulfillmentTypeLabel
+                              )?.label ||
+                                 orderTabs.find(
+                                    t =>
+                                       'PREORDER_PICKUP' ===
+                                       t.orderFulfillmentTypeLabel
+                                 )?.label}
                            </Text>
                         </View>
                      </TouchableWithoutFeedback>
