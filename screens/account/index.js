@@ -18,6 +18,7 @@ import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
 import { useUser } from '../../context/user'
 import { AccountHeader } from './header'
 import { UserInfo } from './userInfo'
+import { Spinner } from '../../assets/loaders'
 
 const AccountScreen = () => {
    const navigation = useNavigation()
@@ -26,7 +27,7 @@ const AccountScreen = () => {
       <SafeAreaView style={{ flex: 1 }}>
          <AccountHeader />
          {isLoading ? (
-            <Text>Loading</Text>
+            <Spinner size={'large'} showText={true} />
          ) : isAuthenticated ? (
             <View style={{ marginHorizontal: 12 }}>
                <UserInfo />

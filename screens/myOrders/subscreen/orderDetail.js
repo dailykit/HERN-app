@@ -11,6 +11,7 @@ import { SubScreenHeader } from './component/header'
 import { BillingDetails } from './component/billingDetails'
 import { CardsIcon } from '../../../assets/cardsIcon'
 import { ProfileIcon } from '../../../assets/profileIcon'
+import { Spinner } from '../../../assets/loaders'
 
 const OrderDetailScreen = ({ products, createdAt }) => {
    const route = useRoute()
@@ -79,7 +80,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
       <View style={{ backgroundColor: '#ffffff' }}>
          <SubScreenHeader title={'Order Detail'} />
          {componentStatus === 'loading' ? (
-            <Text>Loading</Text>
+            <Spinner size={'large'} showText={true} />
          ) : componentStatus === 'error' ? (
             <Text>Something went wrong</Text>
          ) : (

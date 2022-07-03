@@ -8,6 +8,7 @@ import { Delivery } from './delivery'
 import { Pickup } from './pickup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Spinner } from '../../assets/loaders'
 
 export const LocationSelector = () => {
    const navigation = useNavigation()
@@ -37,7 +38,7 @@ export const LocationSelector = () => {
    }, [])
 
    if (!orderTabFulfillmentType) {
-      return <Text>Loading</Text>
+      return <Spinner size={'large'} showText={true} />
    }
 
    return (

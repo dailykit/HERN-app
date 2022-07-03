@@ -14,22 +14,24 @@ import { SubScreenHeader } from './header'
 import appConfig from '../../../brandConfig.json'
 import { Button } from '../../../components/button'
 import { NoDataIcon } from '../../../assets/noDataIcon'
+import { Spinner } from '../../../assets/loaders'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const WalletScreen = () => {
    const { isLoading } = useUser()
    const [showTopUpTab, setShowTopUpTab] = useState(false)
    if (isLoading) {
-      return <Text>Loading</Text>
+      return <Spinner size={'large'} showText={true} />
    }
    return (
-      <View>
+      <SafeAreaView style={{ flex: 1 }}>
          <SubScreenHeader title={'Wallet'} />
          {showTopUpTab ? (
             <AddWalletAmount setShowTopUpTab={setShowTopUpTab} />
          ) : (
             <WalletDetails setShowTopUpTab={setShowTopUpTab} />
          )}
-      </View>
+      </SafeAreaView>
    )
 }
 

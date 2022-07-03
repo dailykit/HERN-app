@@ -389,6 +389,7 @@ const styles = StyleSheet.create({
             appConfig?.brandSettings?.buttonSettings?.textColor?.value ||
             '#ffffff',
       },
+      marginTop: 15,
    },
    heading: {
       textAlign: 'center',

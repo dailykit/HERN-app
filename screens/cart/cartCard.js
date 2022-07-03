@@ -726,6 +726,7 @@ const styles = StyleSheet.create({
       width: 95,
       height: 95,
       resizeMode: 'cover',
+      borderRadius: 6,
    },
    productName: {
       fontSize: 14,

@@ -61,23 +61,29 @@ export const ProductList = ({
             contentContainerStyle={{ display: 'flex' }}
             horizontal={viewStyle !== productViewStyles.horizontalCard}
          >
-            {currentGroupProducts.map((eachProduct, index) => {
-               const publishedProductOptions =
-                  eachProduct.productOptions.length > 0 &&
-                  eachProduct.productOptions.filter(
-                     option => option.isPublished
-                  ).length == 0
-               if (!eachProduct.isPublished || publishedProductOptions) {
-                  return null
-               }
-               return (
-                  <ProductCard
-                     key={`${eachProduct.id}-${eachProduct.type}-${index}`}
-                     productData={eachProduct}
-                     viewStyle={viewStyle}
-                  />
-               )
-            })}
+            {currentGroupProducts.length > 0 ? (
+               currentGroupProducts.map((eachProduct, index) => {
+                  const publishedProductOptions =
+                     eachProduct.productOptions.length > 0 &&
+                     eachProduct.productOptions.filter(
+                        option => option.isPublished
+                     ).length == 0
+                  if (!eachProduct.isPublished || publishedProductOptions) {
+                     return null
+                  }
+                  return (
+                     <ProductCard
+                        key={`${eachProduct.id}-${eachProduct.type}-${index}`}
+                        productData={eachProduct}
+                        viewStyle={viewStyle}
+                     />
+                  )
+               })
+            ) : (
+               <View style={styles.noProductsMsgContainer}>
+                  <Text>No Products Found</Text>
+               </View>
+            )}
          </ScrollView>
       </View>
    )
@@ -694,5 +700,11 @@ const styles = StyleSheet.create({
       color: '#181818',
       fontSize: 12,
       fontWeight: '800',
+   },
+   noProductsMsgContainer: {
+      display: 'flex',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
    },
 })

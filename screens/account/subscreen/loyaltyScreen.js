@@ -4,14 +4,16 @@ import { useUser } from '../../../context/user'
 import { SubScreenHeader } from './header'
 import moment from 'moment'
 import { NoDataIcon } from '../../../assets/noDataIcon'
+import { Spinner } from '../../../assets/loaders'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const LoyaltyPointsScreen = () => {
    const { user, isLoading } = useUser()
    if (isLoading) {
-      return <Text>Loading</Text>
+      return <Spinner size={'large'} showText={true} />
    }
    return (
-      <View>
+      <SafeAreaView style={{ flex: 1 }}>
          <SubScreenHeader title={'Loyalty Points'} />
          <View style={{ height: '100%', backgroundColor: '#fff', padding: 12 }}>
             <View
@@ -112,7 +114,7 @@ const LoyaltyPointsScreen = () => {
                )}
             </View>
          </View>
-      </View>
+      </SafeAreaView>
    )
 }
 const styles = StyleSheet.create({

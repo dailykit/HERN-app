@@ -8,6 +8,7 @@ import {
    ScrollView,
    TouchableOpacity,
    TouchableWithoutFeedback,
+   ActivityIndicator,
 } from 'react-native'
 import { Divider } from '../../components/divider'
 import { ProductList } from '../../components/product'
@@ -22,6 +23,7 @@ import { PromotionCarousel } from '../home/promotionCarousel'
 import SearchIcon from '../../assets/searchIcon'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Spinner } from '../../assets/loaders'
 
 const MenuScreen = ({ route }) => {
    // context
@@ -126,7 +128,7 @@ const MenuScreen = ({ route }) => {
       <SafeAreaView style={{ backgroundColor: '#ffffff', flex: 1 }}>
          <Header />
          {status === 'loading' ? (
-            <Text>Loading</Text>
+            <Spinner size="large" showText={true} />
          ) : status === 'error' ? (
             <Text>Error</Text>
          ) : null}

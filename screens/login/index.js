@@ -5,7 +5,7 @@ import { OtpLogin } from './otp'
 const LoginScreen = () => {
    const navigation = useNavigation()
    return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
          <OtpLogin />
       </SafeAreaView>
    )

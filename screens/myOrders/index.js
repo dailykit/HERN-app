@@ -17,6 +17,7 @@ import { CartItem } from './cartItem'
 import { useNavigation } from '@react-navigation/native'
 import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Spinner } from '../../assets/loaders'
 
 const MyOrdersScreen = () => {
    // context
@@ -52,10 +53,10 @@ const MyOrdersScreen = () => {
       <SafeAreaView style={{ flex: 1 }}>
          <Header />
          {userLoading ? (
-            <Text>Loading</Text>
+            <Spinner size="large" showText={true} />
          ) : user?.keycloakId ? (
             orderHistoryLoading || componentStatus === 'loading' ? (
-               <Text>Loading</Text>
+               <Spinner size="large" showText={true} />
             ) : error ? (
                <Text>Something went wrong</Text>
             ) : (

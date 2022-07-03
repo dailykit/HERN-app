@@ -22,6 +22,7 @@ import { useCart } from '../../context'
 import { ModifierPopup } from '../../components/modifierPopup'
 import Modal from 'react-native-modal'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Spinner } from '../../assets/loaders'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -151,7 +152,7 @@ const ProductScreen = () => {
    if (productLoading) {
       return (
          <View>
-            <Text>Loading</Text>
+            <Spinner size={'large'} showText={true} />
          </View>
       )
    }
