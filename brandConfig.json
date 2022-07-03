@@ -8,6 +8,14 @@
          "userInsertType": "toggle",
          "value": true
       },
+      "showLoginSkipButton": {
+         "label": "Show Skip button on Login Page",
+         "description": "Show Skip button on Login Page",
+         "value": false,
+         "default": true,
+         "dataType": "boolean",
+         "userInsertType": "toggle"
+      },
       "menuPagePromotionImage": {
          "label": "Menu Page Promotion Image",
          "value": {

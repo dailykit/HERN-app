@@ -247,27 +247,31 @@ export const OtpLogin = () => {
             backgroundColor: '#000000',
          }}
       >
-         <TouchableOpacity
-            style={{
-               position: 'absolute',
-               right: 20,
-               top: 20,
-               padding: 8,
-            }}
-            onPress={() => {
-               redirect()
-            }}
-         >
-            <Text
+         {(appConfig?.data?.showLoginSkipButton?.value ||
+            (appConfig?.data?.showLoginSkipButton?.value === undefined &&
+               appConfig?.data?.showLoginSkipButton?.default)) && (
+            <TouchableOpacity
                style={{
-                  color: appConfig.brandSettings.buttonSettings.activeTextColor
-                     .value,
-                  fontWeight: '500',
+                  position: 'absolute',
+                  right: 20,
+                  top: 20,
+                  padding: 8,
+               }}
+               onPress={() => {
+                  redirect()
                }}
             >
-               Skip
-            </Text>
-         </TouchableOpacity>
+               <Text
+                  style={{
+                     color: appConfig.brandSettings.buttonSettings
+                        .activeTextColor.value,
+                     fontWeight: '500',
+                  }}
+               >
+                  Skip
+               </Text>
+            </TouchableOpacity>
+         )}
          <View style={{ flex: 1, justifyContent: 'center' }}>
             <Image
                source={{
