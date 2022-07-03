@@ -7,6 +7,7 @@ import { Button } from '../button'
 import { Delivery } from './delivery'
 import { Pickup } from './pickup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const LocationSelector = () => {
    const navigation = useNavigation()
@@ -40,7 +41,7 @@ export const LocationSelector = () => {
    }
 
    return (
-      <View style={styles.locationSelectorContainer}>
+      <SafeAreaView style={styles.locationSelectorContainer}>
          <View style={styles.locationSelectorHeader}>
             <Text style={styles.locationText}>Location</Text>
             <TouchableOpacity
@@ -114,7 +115,7 @@ export const LocationSelector = () => {
             {fulfillmentType === 'PICKUP' && <Pickup />}
             {fulfillmentType === 'DINEIN' && <DineIn />}
          </View>
-      </View>
+      </SafeAreaView>
    )
 }
 

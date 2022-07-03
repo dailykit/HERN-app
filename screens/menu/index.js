@@ -21,6 +21,7 @@ import { PRODUCTS } from '../../graphql'
 import { PromotionCarousel } from '../home/promotionCarousel'
 import SearchIcon from '../../assets/searchIcon'
 import { useNavigation } from '@react-navigation/native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MenuScreen = ({ route }) => {
    // context
@@ -122,7 +123,7 @@ const MenuScreen = ({ route }) => {
    }, [hydratedMenu, route?.params?.categoryName])
 
    return (
-      <View style={{ backgroundColor: '#ffffff' }}>
+      <SafeAreaView style={{ backgroundColor: '#ffffff', flex: 1 }}>
          <Header />
          {status === 'loading' ? (
             <Text>Loading</Text>
@@ -196,7 +197,7 @@ const MenuScreen = ({ route }) => {
                />
             </>
          ) : null}
-      </View>
+      </SafeAreaView>
    )
 }
 

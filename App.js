@@ -25,7 +25,7 @@ export default function App() {
    }
 
    return (
-      <SafeAreaProvider style={{ paddingTop: paddingTop }}>
+      <SafeAreaProvider>
          <GestureHandlerRootView style={{ flex: 1 }}>
             <NavigationContainer>
                <ApolloProvider>

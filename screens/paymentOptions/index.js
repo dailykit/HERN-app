@@ -3,12 +3,13 @@ import { useCart } from '../../context/cart'
 import { PaymentOptionsHeader } from './paymentOptionsHeader'
 import { View, Text } from 'react-native'
 import isEmpty from 'lodash/isEmpty'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const PaymentOptions = () => {
    const { cartState } = useCart()
    if (!isEmpty(cartState?.cart)) {
       return (
-         <>
+         <SafeAreaView>
             <PaymentOptionsHeader
                totalToPay={cartState?.cart?.cartOwnerBilling?.totalToPay}
             />
@@ -16,13 +17,13 @@ const PaymentOptions = () => {
                cartId={cartState?.cart?.id}
                amount={cartState?.cart?.cartOwnerBilling?.totalToPay}
             />
-         </>
+         </SafeAreaView>
       )
    } else {
       return (
-         <View>
+         <SafeAreaView>
             <Text>Redirect to Order Tracking Screen</Text>
-         </View>
+         </SafeAreaView>
       )
    }
 }
