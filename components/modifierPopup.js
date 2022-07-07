@@ -18,7 +18,6 @@ import { useModifier } from '../utils/useModifier'
 import { Button } from './button'
 import { CounterButton } from './counterButton'
 import { ModifierCategory } from './modifierCategory'
-import appConfig from '../brandConfig.json'
 import { DownVector, UpVector } from '../assets/vector'
 import { useConfig } from '../lib/config'
 import { useQuery } from '@apollo/client'
@@ -36,7 +35,7 @@ export const ModifierPopup = ({
    productData,
 }) => {
    // context
-   const { brand, locationId, brandLocation } = useConfig()
+   const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { addToCart, methods } = useCart()
 
    const [isModifiersLoading, setIsModifiersLoading] = useState(true)
@@ -165,9 +164,7 @@ export const ModifierPopup = ({
          // const objects = new Array(quantity).fill({ ...cartItem })
          // console.log('cartItem', objects)
          await addToCart(cartItem, quantity)
-         addToast(t('Added to the Cart!'), {
-            appearance: 'success',
-         })
+         console.log('==> Added to Cart!')
          if (edit) {
             methods.cartItems.delete({
                variables: {

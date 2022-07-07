@@ -3,10 +3,11 @@ import { Image, View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import { get_env } from '../../../../utils/get_env'
-import appConfig from '../../../../brandConfig.json'
 import { isEmpty, isNull } from 'lodash'
+import { useConfig } from '../../../../lib/config'
 
 export const MapTracking = ({ deliveryInfo }) => {
+   const { appConfig } = useConfig()
    if (isNull(deliveryInfo) || isEmpty(deliveryInfo)) {
       return null
    }

@@ -16,7 +16,6 @@ import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { LeftArrow } from '../../assets/arrowIcon'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { getPriceWithDiscount } from '../../utils/getPriceWithDiscount'
-import appConfig from '../../brandConfig.json'
 import { Button } from '../../components/button'
 import { useCart } from '../../context'
 import { ModifierPopup } from '../../components/modifierPopup'
@@ -27,10 +26,9 @@ import { Spinner } from '../../assets/loaders'
 const windowWidth = Dimensions.get('window').width
 
 const ProductScreen = () => {
+   const { brand, locationId, brandLocation, appConfig } = useConfig()
    const navigation = useNavigation()
-
    const { params: { productId } = {} } = useRoute()
-   const { brand, locationId, brandLocation } = useConfig()
    const { addToCart } = useCart()
 
    // ref

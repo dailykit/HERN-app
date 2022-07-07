@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/native'
 import { Header } from '../../components/header'
 import { ProductList } from '../../components/product'
 import { ProductCategory } from '../../components/productCategory'
-import appConfig from '../../brandConfig.json'
 import { useConfig } from '../../lib/config'
 import { PromotionCarousel } from './promotionCarousel'
 import { onDemandMenuContext } from '../../context'
@@ -22,7 +21,7 @@ import { useQuery } from '@apollo/client'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const HomeScreen = () => {
-   const { brand, locationId, brandLocation } = useConfig()
+   const { brand, locationId, brandLocation, appConfig } = useConfig()
    const navigation = useNavigation()
    const {
       onDemandMenu: { isMenuLoading, allProductIds, categories },
@@ -36,7 +35,6 @@ const HomeScreen = () => {
       }),
       [brand, locationId, brandLocation?.id]
    )
-
    // Trending Products Subscription
    const {
       data: { products: trendingProducts } = {},
@@ -46,7 +44,12 @@ const HomeScreen = () => {
       variables: {
          where: {
             isArchived: { _eq: false },
-            id: { _in: appConfig?.data?.trendingProducts?.value || [] },
+            id: {
+               _in:
+                  appConfig?.data?.trendingProducts?.value.map(val =>
+                     parseInt(val.id)
+                  ) || [],
+            },
          },
          params: argsForByLocation,
       },
@@ -59,7 +62,8 @@ const HomeScreen = () => {
          <ScrollView
             style={{
                backgroundColor:
-                  appConfig.brandSettings.homeSettings.backgroundColor.value,
+                  appConfig?.brandSettings.homeSettings.backgroundColor.value ||
+                  '#ffffff',
             }}
          >
             {/* Catagories List */}
@@ -78,7 +82,8 @@ const HomeScreen = () => {
                         }}
                         eachCategory={eachCategory}
                         textColor={
-                           appConfig.brandSettings.homeSettings.textColor.value
+                           appConfig?.brandSettings.homeSettings.textColor
+                              .value || '#000000'
                         }
                      />
                   )
@@ -86,10 +91,12 @@ const HomeScreen = () => {
             </ScrollView>
 
             {/* Promotion Carousal */}
-            <PromotionCarousel
-               data={appConfig.data.topPromotionImages.value}
-               height={204}
-            />
+            {appConfig?.data.topPromotionImages.value && (
+               <PromotionCarousel
+                  data={appConfig?.data.topPromotionImages.value}
+                  height={204}
+               />
+            )}
 
             {/* Trending Products */}
             {trendingProducts && trendingProducts.length && !loading ? (
@@ -144,10 +151,11 @@ const HomeScreen = () => {
             </View>
 
             {/* Promotion Carousal */}
-            <PromotionCarousel
-               data={appConfig.data.mid1PromotionImages.value}
-            />
-
+            {appConfig?.data.mid1PromotionImages.value && (
+               <PromotionCarousel
+                  data={appConfig?.data.mid1PromotionImages.value || []}
+               />
+            )}
             {/* Shop By Collection Block */}
             <View style={styles.showByCollectionContainer}>
                <Text style={styles.trendingNowHeading}>Shop By Collection</Text>
@@ -174,10 +182,12 @@ const HomeScreen = () => {
             </View>
 
             {/* Promotion Carousal */}
-            <PromotionCarousel
-               data={appConfig.data.bottomPromotionImages.value}
-               height={204}
-            />
+            {appConfig?.data.bottomPromotionImages.value && (
+               <PromotionCarousel
+                  data={appConfig?.data.bottomPromotionImages.value || []}
+                  height={204}
+               />
+            )}
          </ScrollView>
       </SafeAreaView>
    )

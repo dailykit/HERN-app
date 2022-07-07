@@ -41,10 +41,10 @@ const CartScreen = () => {
 
    if (isFinalCartLoading)
       return (
-         <View style={{ height: '100%' }}>
+         <SafeAreaView style={{ flex: 1 }}>
             <CartHeader />
             <Spinner size="large" showText={true} />
-         </View>
+         </SafeAreaView>
       )
 
    if (

@@ -7,9 +7,9 @@ import {
    TouchableWithoutFeedback,
    TouchableOpacity,
 } from 'react-native'
-import appConfig from '../brandConfig.json'
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
+import { useConfig } from '../lib/config'
 
 export const ModifierOptionCard = ({
    modifierOption,
@@ -18,6 +18,7 @@ export const ModifierOptionCard = ({
    showCustomize = true,
    onCustomizeClick = () => {},
 }) => {
+   const { appConfig } = useConfig()
    return (
       <TouchableWithoutFeedback onPress={onCardClick}>
          <View
@@ -30,7 +31,9 @@ export const ModifierOptionCard = ({
                source={{
                   uri:
                      modifierOption.image ||
-                     appConfig.brandSettings.productSettings.defaultImage.value,
+                     appConfig?.brandSettings.productSettings.defaultImage
+                        .value ||
+                     '',
                   height: 36,
                   width: 36,
                }}

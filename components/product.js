@@ -12,7 +12,6 @@ import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { Button } from './button'
 import { VegNonVegIcon } from '../assets/vegNonVegIcon'
-import appConfig from '../brandConfig.json'
 import { ModifierPopup } from './modifierPopup'
 import Modal from 'react-native-modal'
 import { useCart } from '../context'
@@ -91,7 +90,7 @@ export const ProductList = ({
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
-   const { brand, locationId, brandLocation } = useConfig()
+   const { brand, locationId, brandLocation, appConfig } = useConfig()
 
    const navigation = useNavigation()
    const isStoreAvailable = true

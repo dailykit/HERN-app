@@ -19,7 +19,6 @@ import PayButton from '../components/payButton'
 import { useUser } from '../context/user'
 import * as QUERIES from '../graphql'
 import { formatCurrency, get_env } from '../utils'
-import appConfig from '../brandConfig.json'
 import { CardsLoader } from '../assets/loaders'
 
 export default function PaymentOptionsRenderer({
@@ -30,6 +29,7 @@ export default function PaymentOptionsRenderer({
    onPaymentSuccess,
    onPaymentCancel,
 }) {
+   const { appConfig } = useConfig()
    const { setPaymentInfo, paymentInfo, updatePaymentState } = usePayment()
    const { user } = useUser()
    const [isLoading, setIsLoading] = React.useState(true)
@@ -80,7 +80,6 @@ export default function PaymentOptionsRenderer({
    const [updateCart] = useMutation(QUERIES.UPDATE_CART, {
       onError: error => {
          console.log(error)
-         addToast(error.message, { appearance: 'error' })
       },
    })
 
@@ -88,7 +87,6 @@ export default function PaymentOptionsRenderer({
    const [updateCartPayments] = useMutation(QUERIES.UPDATE_CART_PAYMENTS, {
       onError: error => {
          console.log(error)
-         addToast(error.message, { appearance: 'error' })
       },
    })
 
@@ -284,9 +282,23 @@ export default function PaymentOptionsRenderer({
                      cartId={cartId}
                      balanceToPay={cart?.cartOwnerBilling?.balanceToPay}
                      metaData={metaData}
-                     style={styles.payButton}
+                     style={{
+                        ...styles.payButton,
+                        backgroundColor:
+                           appConfig?.brandSettings?.buttonSettings
+                              ?.buttonBGColor?.value || '#222222',
+                     }}
                   >
-                     <Text style={styles.payButton.text}>Pay Now</Text>
+                     <Text
+                        style={{
+                           ...styles.payButton.text,
+                           color:
+                              appConfig?.brandSettings?.buttonSettings
+                                 ?.textColor?.value || '#ffffff',
+                        }}
+                     >
+                        Pay Now
+                     </Text>
                   </PayButton>
                )}
                {paymentInfo?.selectedAvailablePaymentOption
@@ -317,6 +329,7 @@ const PaymentOptionCard = ({
    setPaymentTunnelOpen,
    metaData = {},
 }) => {
+   const { appConfig } = useConfig()
    const { isAuthenticated } = true
    const { setPaymentInfo, paymentInfo } = usePayment()
 
@@ -344,10 +357,10 @@ const PaymentOptionCard = ({
                   checked={isSelected}
                   stroke={
                      isSelected
-                        ? appConfig.brandSettings.checkIconSettings
-                             .checkIconFillColor.value
-                        : appConfig.brandSettings.checkIconSettings
-                             .boundaryColor.value
+                        ? appConfig?.brandSettings?.checkIconSettings
+                             ?.checkIconFillColor?.value
+                        : appConfig?.brandSettings?.checkIconSettings
+                             ?.boundaryColor?.value
                   }
                />
             </View>
@@ -380,14 +393,8 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       width: '80%',
       borderRadius: 8,
-      backgroundColor:
-         appConfig?.brandSettings?.buttonSettings?.buttonBGColor?.value ||
-         '#222222',
       text: {
          textAlign: 'center',
-         color:
-            appConfig?.brandSettings?.buttonSettings?.textColor?.value ||
-            '#ffffff',
       },
       marginTop: 15,
    },

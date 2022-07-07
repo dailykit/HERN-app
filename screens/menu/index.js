@@ -13,7 +13,6 @@ import {
 import { Divider } from '../../components/divider'
 import { ProductList } from '../../components/product'
 import { ProductCategory } from '../../components/productCategory'
-import appConfig from '../../brandConfig.json'
 import { Header } from '../../components/header'
 import { onDemandMenuContext } from '../../context'
 import { useConfig } from '../../lib/config'
@@ -27,7 +26,7 @@ import { Spinner } from '../../assets/loaders'
 
 const MenuScreen = ({ route }) => {
    // context
-   const { brand, locationId, brandLocation } = useConfig()
+   const { brand, locationId, brandLocation, appConfig } = useConfig()
    const {
       onDemandMenu: { isMenuLoading, allProductIds, categories },
    } = React.useContext(onDemandMenuContext)

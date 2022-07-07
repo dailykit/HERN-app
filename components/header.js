@@ -1,7 +1,6 @@
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import CartIcon from '../assets/cartIcon'
 import LocationIcon from '../assets/locationIcon'
-import appConfig from '../brandConfig.json'
 import { useNavigation } from '@react-navigation/native'
 import { useConfig } from '../lib/config'
 import { useCart } from '../context/cart'
@@ -17,6 +16,7 @@ export const Header = () => {
       userLocation,
       storeStatus,
       locationId,
+      appConfig,
    } = useConfig()
    const { cartState } = useCart()
    React.useEffect(() => {
@@ -101,7 +101,7 @@ export const Header = () => {
             styles.headerContainer,
             {
                backgroundColor:
-                  appConfig.brandSettings.headerSettings?.backgroundColor
+                  appConfig?.brandSettings.headerSettings?.backgroundColor
                      ?.value || '#ffffff',
             },
          ]}
@@ -118,7 +118,7 @@ export const Header = () => {
                   <Text
                      style={{
                         color:
-                           appConfig.brandSettings.headerSettings?.textColor
+                           appConfig?.brandSettings.headerSettings?.textColor
                               ?.value || '#000000',
                         fontStyle: 'italic',
                      }}
@@ -130,7 +130,7 @@ export const Header = () => {
                      <Text
                         style={{
                            color:
-                              appConfig.brandSettings.headerSettings?.textColor
+                              appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
                         }}
                      >
@@ -139,7 +139,7 @@ export const Header = () => {
                      <Text
                         style={{
                            color:
-                              appConfig.brandSettings.headerSettings?.textColor
+                              appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
                         }}
                      >
@@ -154,7 +154,7 @@ export const Header = () => {
                         styles.headerTextStyle,
                         {
                            color:
-                              appConfig.brandSettings.headerSettings?.textColor
+                              appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
                         },
                      ]}
@@ -175,9 +175,9 @@ export const Header = () => {
                      styles.cartItemCount,
                      {
                         backgroundColor:
-                           appConfig.brandSettings.headerSettings
+                           appConfig?.brandSettings.headerSettings
                               ?.cartItemCountBackgroundColor?.value,
-                        color: appConfig.brandSettings.headerSettings
+                        color: appConfig?.brandSettings.headerSettings
                            ?.cartItemCountTextColor?.value,
                      },
                   ]}
@@ -188,7 +188,8 @@ export const Header = () => {
             <CartIcon
                size={30}
                fill={
-                  appConfig.brandSettings.headerSettings?.cartIconColor?.value
+                  appConfig?.brandSettings.headerSettings?.cartIconColor
+                     ?.value || '#ffffff'
                }
             />
          </TouchableOpacity>

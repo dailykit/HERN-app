@@ -15,7 +15,6 @@ import moment from 'moment'
 import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
-import appConfig from '../../../brandConfig.json'
 
 export const Pickup = () => {
    const {
@@ -25,6 +24,7 @@ export const Pickup = () => {
       lastStoreLocationId,
       dispatch,
       locationId,
+      appConfig,
    } = useConfig()
    const { cartState, methods } = useCart()
 

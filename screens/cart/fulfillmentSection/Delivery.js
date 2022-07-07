@@ -15,11 +15,16 @@ import moment from 'moment'
 import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
-import appConfig from '../../../brandConfig.json'
 
 export const Delivery = () => {
-   const { orderTabs, selectedOrderTab, brand, lastStoreLocationId, dispatch } =
-      useConfig()
+   const {
+      orderTabs,
+      selectedOrderTab,
+      brand,
+      lastStoreLocationId,
+      dispatch,
+      appConfig,
+   } = useConfig()
    const { cartState, methods } = useCart()
 
    const [fulfillmentType, setFulfillmentType] = useState(

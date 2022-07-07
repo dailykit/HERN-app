@@ -481,3 +481,18 @@ export const GET_AVAILABLE_PAYMENT_OPTIONS = gql`
       }
    }
 `
+export const SETTINGS_QUERY = gql`
+   subscription settings($domain: String) {
+      settings: brands_brand_brandSetting(
+         where: { brand: { _or: [{ domain: { _eq: $domain } }] } }
+      ) {
+         value
+         brandId
+         meta: brandSetting {
+            id
+            type
+            identifier
+         }
+      }
+   }
+`

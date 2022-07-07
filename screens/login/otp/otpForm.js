@@ -7,14 +7,15 @@ import {
 } from 'react-native'
 import { Button } from '../../../components/button'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
-import appConfig from '../../../brandConfig.json'
 
 import CountDown from 'react-native-countdown-component'
 import React, { useEffect } from 'react'
+import { useConfig } from '../../../lib/config'
 
 // TODO: countdown for resend button
 
 export const OTPform = ({
+   form,
    setForm,
    clearState,
    setCurrentScreen,
@@ -26,6 +27,7 @@ export const OTPform = ({
    time,
    otp,
 }) => {
+   const { appConfig } = useConfig()
    const [showResendBtn, setShowResendBtn] = React.useState(false)
 
    const ResentBtn = () => {
@@ -65,8 +67,11 @@ export const OTPform = ({
                   alignItems: 'center',
                }}
             >
-               <Text style={{ color: '#fff', fontSize: 14, fontWeight: '600' }}>
-                  An OTP has been sent to{' '}
+               <Text style={{ color: '#fff', fontSize: 13, fontWeight: '600' }}>
+                  An OTP has been sent to
+                  <Text style={{ fontSize: 11.5 }}>{`  ${
+                     form?.phoneNumber || ''
+                  }`}</Text>
                </Text>
                <TouchableOpacity
                   onPress={() => {

@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { Button } from '../../../components/button'
-import appConfig from '../../../brandConfig.json'
+import { useConfig } from '../../../lib/config'
 
 export const MobileNumberForm = ({
    setForm,
@@ -17,6 +17,7 @@ export const MobileNumberForm = ({
    form,
    error,
 }) => {
+   const { appConfig } = useConfig()
    const phoneInput = React.useRef(null)
 
    return (

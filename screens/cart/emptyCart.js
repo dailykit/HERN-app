@@ -1,8 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import EmptyCartIcon from '../../assets/emptyCart'
-import appConfig from '../../brandConfig.json'
+import { useConfig } from '../../lib/config'
 export const EmptyCart = () => {
+   const { appConfig } = useConfig()
    return (
       <View style={styles.emptyCartContainer}>
          <View style={styles.messages}>
@@ -10,7 +11,10 @@ export const EmptyCart = () => {
                Oops! Your cart is empty.
             </Text>
             <Text style={styles.emptyCartCustomMessage}>
-               {appConfig.brandSettings.cartSettings?.customEmptyMessage?.value}
+               {
+                  appConfig?.brandSettings?.cartSettings?.customEmptyMessage
+                     ?.value
+               }
             </Text>
          </View>
          <EmptyCartIcon />

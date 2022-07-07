@@ -1,5 +1,5 @@
 import { Text, View, ActivityIndicator } from 'react-native'
-import appConfig from '../../brandConfig.json'
+import { useConfig } from '../../lib/config'
 
 export const Spinner = ({
    size = 'small',
@@ -8,6 +8,7 @@ export const Spinner = ({
    showText = false,
    style,
 }) => {
+   const { appConfig } = useConfig()
    return (
       <View
          style={{

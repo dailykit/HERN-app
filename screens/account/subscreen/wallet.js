@@ -11,11 +11,11 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useUser } from '../../../context/user'
 import { formatCurrency } from '../../../utils/formatCurrency'
 import { SubScreenHeader } from './header'
-import appConfig from '../../../brandConfig.json'
 import { Button } from '../../../components/button'
 import { NoDataIcon } from '../../../assets/noDataIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useConfig } from '../../../lib/config'
 
 const WalletScreen = () => {
    const { isLoading } = useUser()
@@ -36,6 +36,7 @@ const WalletScreen = () => {
 }
 
 const WalletDetails = ({ setShowTopUpTab }) => {
+   const { appConfig } = useConfig()
    const { user } = useUser()
 
    return (
@@ -160,6 +161,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
 }
 
 const AddWalletAmount = ({ setShowTopUpTab }) => {
+   const { appConfig } = useConfig()
    const [amount, setAmount] = useState(0)
    const predefinedAmount = React.useMemo(() => {
       return [

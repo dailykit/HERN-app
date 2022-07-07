@@ -6,7 +6,6 @@ import {
    View,
 } from 'react-native'
 import { useUser } from '../../context/user'
-import appConfig from '../../brandConfig.json'
 import { GET_ORDER_DETAILS } from '../../graphql'
 import { useSubscription } from '@apollo/client'
 import React, { useState } from 'react'
@@ -18,6 +17,7 @@ import { useNavigation } from '@react-navigation/native'
 import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
+import { useConfig } from '../../lib/config'
 
 const MyOrdersScreen = () => {
    // context
@@ -215,6 +215,7 @@ const PleaseLogIn = () => {
 }
 
 const Header = () => {
+   const { appConfig } = useConfig()
    return (
       <View
          style={[

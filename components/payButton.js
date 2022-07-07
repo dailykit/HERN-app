@@ -14,7 +14,6 @@ import * as QUERIES from '../graphql'
 import { usePayment } from '../lib/payment'
 import { useConfig } from '../lib/config'
 import { useUser } from '../context/user'
-import appConfig from '../brandConfig.json'
 import { Spinner } from '../assets/loaders'
 
 function PayButton({
@@ -35,8 +34,7 @@ function PayButton({
       setPaymentInfo,
    } = usePayment()
    const { user } = useUser()
-   //    const { addToast } = useToasts()
-   const { brand } = useConfig()
+   const { brand, appConfig } = useConfig()
    const [cartValidity, setCartValidity] = useState(null)
 
    // query for fetching available payment options
@@ -57,7 +55,6 @@ function PayButton({
    const [updateCart] = useMutation(QUERIES.UPDATE_CART, {
       onError: error => {
          console.log(error)
-         addToast(error.message, { appearance: 'error' })
       },
    })
 
@@ -65,7 +62,6 @@ function PayButton({
    const [createCartPayment] = useMutation(QUERIES.CREATE_CART_PAYMENT, {
       onError: error => {
          console.log(error)
-         addToast(error.message, { appearance: 'error' })
       },
       onCompleted: data => {
          initializePayment(null, data.createCartPayment.id)
@@ -148,9 +144,19 @@ function PayButton({
                style={{
                   ...styles.disabledPaymentButton,
                   marginTop: props?.style?.marginTop || 'auto',
+                  backgroundColor:
+                     `${appConfig?.brandSettings?.buttonSettings?.buttonBGColor?.value}AA` ||
+                     '#222222',
                }}
             >
-               <Text style={styles.disabledPaymentButton.text}>
+               <Text
+                  style={{
+                     ...styles.disabledPaymentButton.text,
+                     color:
+                        appConfig?.brandSettings?.buttonSettings?.textColor
+                           ?.value || '#ffffff',
+                  }}
+               >
                   <Spinner color={'#ffffff'} />
                </Text>
             </View>
@@ -173,14 +179,8 @@ const styles = StyleSheet.create({
       width: '80%',
       borderRadius: 8,
       paddingVertical: 10,
-      backgroundColor:
-         `${appConfig?.brandSettings?.buttonSettings?.buttonBGColor?.value}AA` ||
-         '#222222',
       text: {
          textAlign: 'center',
-         color:
-            appConfig?.brandSettings?.buttonSettings?.textColor?.value ||
-            '#ffffff',
       },
    },
 })
