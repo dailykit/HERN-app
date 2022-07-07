@@ -1,3 +1,4 @@
+import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
    StyleSheet,
@@ -19,10 +20,26 @@ import { useUser } from '../../context/user'
 import { AccountHeader } from './header'
 import { UserInfo } from './userInfo'
 import { Spinner } from '../../assets/loaders'
+import { useConfig } from '../../lib/config'
 
 const AccountScreen = () => {
    const navigation = useNavigation()
+   const { configOf } = useConfig()
    const { user, isAuthenticated, isLoading, logout } = useUser()
+   const walletConfig = configOf('Wallet', 'rewards')
+   const isWalletAvailable = React.useMemo(() => {
+      return walletConfig?.Wallet?.isWalletAvailable?.value
+   }, [walletConfig])
+   const loyaltyPointConfig = configOf('Loyalty Points', 'rewards')
+   const isLoyaltyPointsAvailable = React.useMemo(() => {
+      return loyaltyPointConfig?.['Loyalty Points']?.IsLoyaltyPointsAvailable
+         ?.value
+   }, [loyaltyPointConfig])
+   const referralsConfig = configOf('Referral', 'rewards')
+   const isReferralAvailable = React.useMemo(() => {
+      return referralsConfig?.['Referral']?.IsReferralAvailable?.value
+   }, [referralsConfig])
+
    return (
       <SafeAreaView style={{ flex: 1 }}>
          <AccountHeader />
@@ -43,28 +60,41 @@ const AccountScreen = () => {
                   <View
                      style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
                   ></View>
-                  <Tile
-                     onPress={() => {
-                        navigation.navigate('Wallet')
-                     }}
-                  >
-                     <WalletIcon />
-                     <Text style={styles.accountTileText}>Wallet</Text>
-                  </Tile>
-                  <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
-                  ></View>
-                  <Tile
-                     onPress={() => {
-                        navigation.navigate('LoyaltyPoints')
-                     }}
-                  >
-                     <LoyaltyPointIcon />
-                     <Text style={styles.accountTileText}>Loyalty Points</Text>
-                  </Tile>
-                  <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
-                  ></View>
+                  {isWalletAvailable ? (
+                     <>
+                        <Tile
+                           onPress={() => {
+                              navigation.navigate('Wallet')
+                           }}
+                        >
+                           <WalletIcon />
+                           <Text style={styles.accountTileText}>Wallet</Text>
+                        </Tile>
+                        <View
+                           style={{
+                              height: 0.5,
+                              backgroundColor: '#A2A2A2',
+                           }}
+                        ></View>
+                     </>
+                  ) : null}
+                  {isLoyaltyPointsAvailable ? (
+                     <>
+                        <Tile
+                           onPress={() => {
+                              navigation.navigate('LoyaltyPoints')
+                           }}
+                        >
+                           <LoyaltyPointIcon />
+                           <Text style={styles.accountTileText}>
+                              Loyalty Points
+                           </Text>
+                        </Tile>
+                        <View
+                           style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                        ></View>
+                     </>
+                  ) : null}
                   <Tile>
                      <LocationIcon fill="#00000080" size={20} />
                      <Text style={styles.accountTileText}>
@@ -74,15 +104,19 @@ const AccountScreen = () => {
                   <View
                      style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
                   ></View>
-                  <Tile>
-                     <ReferIcon />
-                     <Text style={styles.accountTileText}>
-                        Refer your friends
-                     </Text>
-                  </Tile>
-                  <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
-                  ></View>
+                  {isReferralAvailable ? (
+                     <>
+                        <Tile>
+                           <ReferIcon />
+                           <Text style={styles.accountTileText}>
+                              Refer your friends
+                           </Text>
+                        </Tile>
+                        <View
+                           style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                        ></View>
+                     </>
+                  ) : null}
                   <Tile>
                      <CardsIcon />
                      <Text style={styles.accountTileText}>
