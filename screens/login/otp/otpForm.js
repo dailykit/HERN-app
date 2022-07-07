@@ -7,10 +7,10 @@ import {
 } from 'react-native'
 import { Button } from '../../../components/button'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
-import appConfig from '../../../brandConfig.json'
 
 import CountDown from 'react-native-countdown-component'
 import React, { useEffect } from 'react'
+import { useConfig } from '../../../lib/config'
 
 // TODO: countdown for resend button
 
@@ -26,6 +26,7 @@ export const OTPform = ({
    time,
    otp,
 }) => {
+   const { appConfig } = useConfig()
    const [showResendBtn, setShowResendBtn] = React.useState(false)
 
    const ResentBtn = () => {

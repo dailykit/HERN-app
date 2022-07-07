@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { ModifierOptionCard } from './modifierOption'
-import appConfig from '../brandConfig.json'
 import RadioIcon from '../assets/radioIcon'
 import CheckIcon from '../assets/checkIcon'
 import UncheckIcon from '../assets/uncheckIcon'
+import { useConfig } from '../lib/config'
 
 export const ModifierCategory = props => {
    const {
@@ -18,7 +18,6 @@ export const ModifierCategory = props => {
       nestedErrorCategories,
       parentModifierOptionId = null,
    } = props
-
    const renderConditionText = category => {
       if (category.type === 'single') {
          return 'CHOOSE ONE*'
@@ -168,6 +167,7 @@ const ModifierOption = ({
    nestedSetSelectedModifierOptions,
    nestedErrorCategories,
 }) => {
+   const { appConfig } = useConfig()
    const [showAdditionalModifierOptions, setShowAdditionalModifierOptions] =
       useState(false)
    const onCustomizeClick = () => {

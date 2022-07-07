@@ -30,25 +30,6 @@ export const ORDER_TAB = gql`
       }
    }
 `
-export const SETTINGS_QUERY = gql`
-   query settings($domain: String) {
-      settings: brands_brand_brandSetting(
-         where: {
-            brand: {
-               _or: [{ domain: { _eq: $domain } }, { isDefault: { _eq: true } }]
-            }
-         }
-      ) {
-         value
-         brandId
-         meta: brandSetting {
-            id
-            type
-            identifier
-         }
-      }
-   }
-`
 export const GET_ALL_RECURRENCES = gql`
    query GET_ALL_RECURRENCES($where: fulfilment_brand_recurrence_bool_exp!) {
       brandRecurrences(where: $where) {

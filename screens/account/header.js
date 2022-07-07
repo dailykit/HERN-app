@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
-import appConfig from '../../brandConfig.json'
+import { useConfig } from '../../lib/config'
 
 export const AccountHeader = () => {
+   const { appConfig } = useConfig()
    const navigation = useNavigation()
    return (
       <View
@@ -10,7 +11,7 @@ export const AccountHeader = () => {
             styles.cartHeader,
             {
                backgroundColor:
-                  appConfig.brandSettings.headerSettings?.backgroundColor
+                  appConfig?.brandSettings.headerSettings?.backgroundColor
                      ?.value || '#ffffff',
             },
          ]}
@@ -19,8 +20,8 @@ export const AccountHeader = () => {
             style={[
                {
                   color:
-                     appConfig.brandSettings.headerSettings?.textColor?.value ||
-                     '#000000',
+                     appConfig?.brandSettings.headerSettings?.textColor
+                        ?.value || '#000000',
                },
                styles.headerTextStyle,
             ]}

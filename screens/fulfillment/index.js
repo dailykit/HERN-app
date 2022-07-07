@@ -11,15 +11,14 @@ import {
    ActivityIndicator,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import appConfig from '../../brandConfig.json'
-const { brandSettings } = appConfig
 import DeliveryIcon from '../../assets/deliveryIcon'
 import PickupIcon from '../../assets/pickupIcon'
 import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Fulfillment = () => {
-   const { orderTabs } = useConfig()
+   const { orderTabs, appConfig } = useConfig()
+   const { brandSettings } = appConfig
    const navigation = useNavigation()
    const [isDeliveryPressed, setDeliveryPressed] = useState(false)
    const [isPickupPressed, setPickupPressed] = useState(false)
@@ -79,7 +78,15 @@ const Fulfillment = () => {
                         <View
                            style={[
                               styles.col,
-                              isDeliveryPressed ? styles.pressedBtn : null,
+                              isDeliveryPressed
+                                 ? {
+                                      ...styles.pressedBtn,
+                                      backgroundColor: `${
+                                         brandSettings?.brandColor?.value ||
+                                         '#fff'
+                                      }33`,
+                                   }
+                                 : null,
                            ]}
                         >
                            <DeliveryIcon
@@ -126,7 +133,15 @@ const Fulfillment = () => {
                         <View
                            style={[
                               styles.col,
-                              isPickupPressed ? styles.pressedBtn : null,
+                              isPickupPressed
+                                 ? {
+                                      ...styles.pressedBtn,
+                                      backgroundColor: `${
+                                         brandSettings?.brandColor?.value ||
+                                         '#fff'
+                                      }33`,
+                                   }
+                                 : null,
                            ]}
                         >
                            <PickupIcon
@@ -228,7 +243,6 @@ const styles = StyleSheet.create({
       color: '#fff',
    },
    pressedBtn: {
-      backgroundColor: `${brandSettings?.brandColor?.value || '#fff'}33`,
       padding: 30,
       borderRadius: 100,
    },

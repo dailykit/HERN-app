@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { GooglePlacesAutocompleteWrapper } from './googlePlaceAutoComplete'
 import { get_env } from '../../utils/get_env'
 import { useConfig } from '../../lib/config'
-import appConfig from '../../brandConfig.json'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import LocationIcon from '../../assets/locationIcon'
 import { getStoresWithValidations } from '../../utils/location/sharedLocationUtils'
@@ -15,7 +14,7 @@ import { Button } from '../button'
 
 export const Delivery = () => {
    const navigation = useNavigation()
-   const { orderTabs, brand } = useConfig()
+   const { orderTabs, brand, appConfig } = useConfig()
 
    const [userCoordinate, setUserCoordinate] = useState({
       latitude: null,

@@ -1,8 +1,10 @@
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
-import appConfig from '../brandConfig.json'
+import { useConfig } from '../lib/config'
+
 export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
+   const { appConfig } = useConfig()
    const { backgroundColor, iconColor, countBackgroundColor, countColor } =
-      appConfig.brandSettings.counterButtonSettings
+      appConfig?.brandSettings.counterButtonSettings || {}
    return (
       <View
          style={[

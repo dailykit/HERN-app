@@ -23,7 +23,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import { TextInput } from 'react-native-gesture-handler'
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
-import appConfig from '../brandConfig.json'
+import { useConfig } from '../lib/config'
 
 export const UserInfo = props => {
    const [settingCartInfo, setSettingCartInfo] = useState(true)
@@ -203,6 +203,7 @@ const UserDetails = ({
    settingCartInfo,
    setSettingCartInfo,
 }) => {
+   const { appConfig } = useConfig()
    const { user } = useUser()
    const { methods } = React.useContext(CartContext)
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
@@ -300,8 +301,8 @@ const UserDetails = ({
                <TouchableOpacity onPress={handleOpen}>
                   <EditIcon
                      fill={
-                        appConfig.brandSettings.buttonSettings.buttonBGColor
-                           .value
+                        appConfig?.brandSettings.buttonSettings.buttonBGColor
+                           .value || '#000000'
                      }
                      size={18}
                   />

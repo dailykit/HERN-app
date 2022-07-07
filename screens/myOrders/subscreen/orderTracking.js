@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import { GET_ORDER_DETAIL_ONE_SUBS } from '../../../graphql'
 import { SubScreenHeader } from './component/header'
-import appConfig from '../../../brandConfig.json'
 import { isEmpty, isNull } from 'lodash'
 import moment from 'moment'
 import { ProfileIcon } from '../../../assets/profileIcon'
@@ -23,6 +22,7 @@ import { BillingDetails } from './component/billingDetails'
 import { DeliveryProgressBar } from './component/deliveryProgressBar'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useConfig } from '../../../lib/config'
 
 const OrderTrackingScreen = () => {
    const route = useRoute()
@@ -80,6 +80,7 @@ const OrderTrackingScreen = () => {
 }
 
 const AcceptingOrder = () => {
+   const { appConfig } = useConfig()
    return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
          <ActivityIndicator

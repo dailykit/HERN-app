@@ -6,15 +6,16 @@ import { View, Text, StyleSheet, ScrollView, Image } from 'react-native'
 import { GET_ORDER_DETAIL_ONE } from '../../../graphql'
 import { combineCartItems } from '../../../utils'
 import { formatCurrency } from '../../../utils/formatCurrency'
-import appConfig from '../../../brandConfig.json'
 import { SubScreenHeader } from './component/header'
 import { BillingDetails } from './component/billingDetails'
 import { CardsIcon } from '../../../assets/cardsIcon'
 import { ProfileIcon } from '../../../assets/profileIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useConfig } from '../../../lib/config'
 
 const OrderDetailScreen = ({ products, createdAt }) => {
+   const { appConfig } = useConfig()
    const route = useRoute()
    const [componentStatus, setComponentStatus] = React.useState('loading')
    const [cartItems, setCartItems] = React.useState([])

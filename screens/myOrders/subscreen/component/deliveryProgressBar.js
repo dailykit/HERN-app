@@ -7,13 +7,14 @@ import { DeliveredIcon } from '../../../../assets/deliveredIcon'
 import { PendingIcon } from '../../../../assets/pendingIcon'
 import { UnderProcessingIcon } from '../../../../assets/underProcessingIcon'
 import { DispatchIcon } from '../../../../assets/dispatchIcon'
-import appConfig from '../../../../brandConfig.json'
 import { isEmpty } from 'lodash'
 import { PhoneIcon } from '../../../../assets/phoneIcon'
 import { ProfileIcon } from '../../../../assets/profileIcon'
 import moment from 'moment'
+import { useConfig } from '../../../../lib/config'
 
 export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
+   const { appConfig } = useConfig()
    const customStyles = React.useMemo(
       () => ({
          stepIndicatorSize: 30,

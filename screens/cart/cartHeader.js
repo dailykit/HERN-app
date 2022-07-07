@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LeftArrow } from '../../assets/arrowIcon'
-import appConfig from '../../brandConfig.json'
+import { useConfig } from '../../lib/config'
 
 export const CartHeader = () => {
+   const { appConfig } = useConfig()
    const navigation = useNavigation()
    return (
       <View
@@ -11,7 +12,7 @@ export const CartHeader = () => {
             styles.cartHeader,
             {
                backgroundColor:
-                  appConfig.brandSettings.headerSettings?.backgroundColor
+                  appConfig?.brandSettings.headerSettings?.backgroundColor
                      ?.value || '#ffffff',
             },
          ]}
@@ -27,7 +28,7 @@ export const CartHeader = () => {
             <LeftArrow
                size={26}
                fill={
-                  appConfig.brandSettings.headerSettings?.textColor?.value ||
+                  appConfig?.brandSettings.headerSettings?.textColor?.value ||
                   '#000000'
                }
             />
@@ -36,8 +37,8 @@ export const CartHeader = () => {
             style={[
                {
                   color:
-                     appConfig.brandSettings.headerSettings?.textColor?.value ||
-                     '#000000',
+                     appConfig?.brandSettings.headerSettings?.textColor
+                        ?.value || '#000000',
                },
                styles.headerTextStyle,
             ]}

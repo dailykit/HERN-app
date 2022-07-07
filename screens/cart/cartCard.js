@@ -13,12 +13,11 @@ import { useConfig } from '../../lib/config'
 import { useQuery } from '@apollo/client'
 import Modal from 'react-native-modal'
 import { Button } from '../../components/button'
-import appConfig from '../../brandConfig.json'
 import { getCartItemWithModifiers } from '../../utils'
 
 export const CartCard = ({ productData, quantity }) => {
    // context
-   const { brand, locationId, brandLocation } = useConfig()
+   const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { addToCart, methods } = useCart()
 
    const [modifyProductId, setModifyProductId] = useState(null)

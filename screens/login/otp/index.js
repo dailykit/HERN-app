@@ -13,7 +13,6 @@ import { Button } from '../../../components/button'
 import { INSERT_OTP_TRANSACTION, RESEND_OTP } from '../../../graphql/mutations'
 import { PLATFORM_CUSTOMERS } from '../../../graphql/queries'
 import { get_env } from '../../../utils/get_env'
-import appConfig from '../../../brandConfig.json'
 import axios from 'axios'
 import JWT from 'expo-jwt'
 import { OTPform } from './otpForm'
@@ -26,10 +25,11 @@ import {
 } from '@react-navigation/native'
 import { OTPS } from '../../../graphql/subscriptions'
 import { useUser } from '../../../context/user'
+import { useConfig } from '../../../lib/config'
 
 export const OtpLogin = () => {
+   const { appConfig } = useConfig()
    const { login } = useUser()
-
    const navigation = useNavigation()
    const phoneInput = React.useRef(null)
    const [currentScreen, setCurrentScreen] = useState('phoneNumber')

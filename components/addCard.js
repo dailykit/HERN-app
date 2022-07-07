@@ -47,9 +47,6 @@ export const AddCard = ({ cartId, balanceToPay = 0, metaData = {} }) => {
          },
          onError: error => {
             console.log('updatePlatformCustomer -> error -> ', error)
-            addToast(t('Something went wrong!'), {
-               appearance: 'error',
-            })
          },
       }
    )

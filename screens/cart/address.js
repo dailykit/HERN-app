@@ -4,14 +4,12 @@ import { EditIcon } from '../../assets/editIcon'
 import LocationIcon from '../../assets/locationIcon'
 import { useCart } from '../../context'
 import { useConfig } from '../../lib/config'
-import appConfig from '../../brandConfig.json'
 import { DownVector } from '../../assets/vector'
 import { useNavigation } from '@react-navigation/native'
 
 export const Address = () => {
+   const { orderTabs, selectedOrderTab, appConfig } = useConfig()
    const navigation = useNavigation()
-
-   const { orderTabs, selectedOrderTab } = useConfig()
    const { cartState: { cart } = {} } = useCart()
    const [numberOfLines, setNumberOfLines] = React.useState(1)
    const selectedFulfillment = React.useMemo(
