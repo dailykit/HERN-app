@@ -99,7 +99,6 @@ const UserInfoForm = props => {
          variables: {
             id: cart.id,
             _set: {
-               customerKeycloakId: user.keycloakId,
                customerInfo: {
                   customerFirstName: firstName,
                   customerLastName: lastName,
@@ -233,7 +232,6 @@ const UserDetails = ({
          variables: {
             id: cart.id,
             _set: {
-               customerKeycloakId: user.keycloakId,
                customerInfo: {
                   customerFirstName: firstName,
                   customerLastName: lastName,

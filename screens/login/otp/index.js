@@ -293,6 +293,7 @@ export const OtpLogin = () => {
          ) : null}
          {currentScreen === 'OTPSubmit' ? (
             <OTPform
+               form={form}
                setForm={setForm}
                setCurrentScreen={setCurrentScreen}
                clearState={clearState}

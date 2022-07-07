@@ -15,6 +15,7 @@ import { useConfig } from '../../../lib/config'
 // TODO: countdown for resend button
 
 export const OTPform = ({
+   form,
    setForm,
    clearState,
    setCurrentScreen,
@@ -66,8 +67,11 @@ export const OTPform = ({
                   alignItems: 'center',
                }}
             >
-               <Text style={{ color: '#fff', fontSize: 14, fontWeight: '600' }}>
-                  An OTP has been sent to{' '}
+               <Text style={{ color: '#fff', fontSize: 13, fontWeight: '600' }}>
+                  An OTP has been sent to
+                  <Text style={{ fontSize: 11.5 }}>{`  ${
+                     form?.phoneNumber || ''
+                  }`}</Text>
                </Text>
                <TouchableOpacity
                   onPress={() => {

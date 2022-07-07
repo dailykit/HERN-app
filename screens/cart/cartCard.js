@@ -498,27 +498,29 @@ const AdditionalDetails = ({ productData }) => {
       React.useState(false)
    return (
       <View style={{ marginTop: 12 }}>
-         <TouchableOpacity
-            onPress={() => {
-               setShowAdditionalDetailsOnCard(prev => !prev)
-            }}
-            style={{
-               flexDirection: 'row',
-               alignItems: 'center',
-               justifyContent: 'space-between',
-               height: 36,
-               backgroundColor: 'rgba(0, 0, 0, 0.05)',
-               borderRadius: 4,
-               paddingHorizontal: 12,
-            }}
-         >
-            <Text style={{ fontWeight: '500' }}>Customizable</Text>
-            {showAdditionalDetailsOnCard ? (
-               <UpVector size={18} />
-            ) : (
-               <DownVector size={18} />
-            )}
-         </TouchableOpacity>
+         {productData.childs.length > 0 && (
+            <TouchableOpacity
+               onPress={() => {
+                  setShowAdditionalDetailsOnCard(prev => !prev)
+               }}
+               style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  height: 36,
+                  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                  borderRadius: 4,
+                  paddingHorizontal: 12,
+               }}
+            >
+               <Text style={{ fontWeight: '500' }}>Customizable</Text>
+               {showAdditionalDetailsOnCard ? (
+                  <UpVector size={18} />
+               ) : (
+                  <DownVector size={18} />
+               )}
+            </TouchableOpacity>
+         )}
          {showAdditionalDetailsOnCard ? (
             <View
                style={{
