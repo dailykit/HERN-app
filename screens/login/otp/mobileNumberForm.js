@@ -9,6 +9,7 @@ import {
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { Button } from '../../../components/button'
 import { useConfig } from '../../../lib/config'
+import { Spinner } from '../../../assets/loaders'
 
 export const MobileNumberForm = ({
    setForm,
@@ -90,10 +91,25 @@ export const MobileNumberForm = ({
             <Button
                onPress={sendOTP}
                buttonStyle={{ width: 155, height: 43, marginTop: 30 }}
-               textStyle={{ fontSize: 18 }}
+               textStyle={{ fontSize: 16 }}
                disabled={sendingOtp || !form.isPhoneNumberValid}
             >
-               Submit
+               {sendingOtp ? (
+                  <Spinner
+                     text={'Sending OTP'}
+                     showText={true}
+                     color={'#ffffff'}
+                     style={{ flexDirection: 'row' }}
+                     textStyle={{
+                        marginLeft: 8,
+                        marginTop: 0,
+                        fontSize: 14,
+                        color: '#ffffff',
+                     }}
+                  />
+               ) : (
+                  'Submit'
+               )}
             </Button>
          </View>
          <View style={{ flex: 1 }}></View>

@@ -11,7 +11,7 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 import CountDown from 'react-native-countdown-component'
 import React, { useEffect } from 'react'
 import { useConfig } from '../../../lib/config'
-
+import { Spinner } from '../../../assets/loaders'
 // TODO: countdown for resend button
 
 export const OTPform = ({
@@ -22,6 +22,7 @@ export const OTPform = ({
    submit,
    loading,
    error,
+   setError,
    resend,
    resending,
    time,
@@ -97,7 +98,10 @@ export const OTPform = ({
                style={{ width: '100%', height: 100 }}
                pinCount={6}
                // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-               onCodeChanged={code => setForm(prev => ({ ...prev, otp: code }))}
+               onCodeChanged={code => {
+                  setError('')
+                  setForm(prev => ({ ...prev, otp: code }))
+               }}
                autoFocusOnLoad
                codeInputFieldStyle={styles.underlineStyleBase}
                codeInputHighlightStyle={styles.underlineStyleHighLighted}
@@ -117,15 +121,26 @@ export const OTPform = ({
             ) : null}
             <Button
                buttonStyle={{ marginTop: 20, width: 183, height: 43 }}
-               textStyle={{ fontSize: 18 }}
+               textStyle={{ fontSize: 16 }}
                onPress={submit}
                disabled={loading || resending}
             >
-               {resending
-                  ? 'Resending OTP'
-                  : loading
-                  ? 'Verifying'
-                  : 'Verify OTP'}
+               {resending || loading ? (
+                  <Spinner
+                     text={resending ? 'Resending OTP' : 'Verifying'}
+                     showText={true}
+                     color={'#ffffff'}
+                     style={{ flexDirection: 'row' }}
+                     textStyle={{
+                        marginLeft: 8,
+                        marginTop: 0,
+                        fontSize: 14,
+                        color: '#ffffff',
+                     }}
+                  />
+               ) : (
+                  'Verify OTP'
+               )}
             </Button>
          </View>
          <View style={{ flex: 3 }}></View>
