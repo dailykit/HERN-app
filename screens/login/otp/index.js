@@ -234,8 +234,12 @@ export const OtpLogin = () => {
          }
       } catch (error) {
          setLoading(false)
-         console.error(error)
-         setError('Failed to log in, please try again!')
+         if (error.response.status === 400) {
+            setError('Entered OTP is incorrect, please try again!')
+         } else {
+            console.log(error)
+            setError('Failed to log in, please try again!')
+         }
       }
    }
 
@@ -289,6 +293,7 @@ export const OtpLogin = () => {
                sendingOtp={sendingOtp}
                form={form}
                error={error}
+               setError={setError}
             />
          ) : null}
          {currentScreen === 'OTPSubmit' ? (
@@ -300,6 +305,7 @@ export const OtpLogin = () => {
                submit={submit}
                loading={loading}
                error={error}
+               setError={setError}
                time={time}
                resend={resend}
                resending={resending}

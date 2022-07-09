@@ -6,7 +6,8 @@ export const Spinner = ({
    text,
    color,
    showText = false,
-   style,
+   style = {},
+   textStyle = {},
 }) => {
    const { appConfig } = useConfig()
    return (
@@ -26,7 +27,9 @@ export const Spinner = ({
             }
          />
          {showText && (
-            <Text style={{ marginTop: 8 }}>{text || 'Loading...'}</Text>
+            <Text style={{ marginTop: 8, ...textStyle }}>
+               {text || 'Loading...'}
+            </Text>
          )}
       </View>
    )
