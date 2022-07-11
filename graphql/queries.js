@@ -555,3 +555,18 @@ export const GET_ORDER_DETAIL_ONE = gql`
       }
    }
 `
+export const SETTINGS_QUERY = gql`
+   query settings($domain: String) {
+      settings: brands_brand_brandSetting(
+         where: { brand: { domain: { _eq: $domain } } }
+      ) {
+         value
+         brandId
+         meta: brandSetting {
+            id
+            type
+            identifier
+         }
+      }
+   }
+`

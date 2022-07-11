@@ -27,6 +27,7 @@ import {
    ALLOW_POSIST_PUSH_ORDER,
    COUNTRY,
    BASE_BRAND_DEV_URL,
+   DOMAIN,
 } from '@env'
 
 var globalEnvs = {
@@ -58,6 +59,7 @@ var globalEnvs = {
    ALLOW_POSIST_PUSH_ORDER,
    COUNTRY,
    BASE_BRAND_DEV_URL,
+   DOMAIN,
 }
 
 export const get_env = title => {
