@@ -23,6 +23,7 @@ import SearchIcon from '../../assets/searchIcon'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
+import { FloatingMenu } from '../../components/floatingMenu'
 
 const MenuScreen = ({ route }) => {
    // context
@@ -133,27 +134,40 @@ const MenuScreen = ({ route }) => {
          ) : null}
          {status === 'success' ? (
             <>
-               <View>
-                  <ScrollView style={styles.container} horizontal={true}>
-                     {hydratedMenu.map((eachCategory, index) => {
-                        if (!eachCategory.isCategoryPublished) {
-                           return null
-                        }
-                        const isActiveCategory =
-                           selectedCategoryName === eachCategory.name
-                        return (
-                           <ProductCategory
-                              key={`${eachCategory.name}-${index}`}
-                              onCategoryClick={() => {
-                                 setSelectedCategoryName(eachCategory.name)
-                              }}
-                              isActiveCategory={isActiveCategory}
-                              eachCategory={eachCategory}
-                           />
-                        )
-                     })}
-                  </ScrollView>
-               </View>
+               {appConfig.brandSettings.menuSettings.productCategoryView.value
+                  .value === 'NAVBAR' ? (
+                  <View>
+                     <ScrollView style={styles.container} horizontal={true}>
+                        {hydratedMenu.map((eachCategory, index) => {
+                           if (!eachCategory.isCategoryPublished) {
+                              return null
+                           }
+                           const isActiveCategory =
+                              selectedCategoryName === eachCategory.name
+                           return (
+                              <ProductCategory
+                                 key={`${eachCategory.name}-${index}`}
+                                 onCategoryClick={() => {
+                                    setSelectedCategoryName(eachCategory.name)
+                                 }}
+                                 isActiveCategory={isActiveCategory}
+                                 eachCategory={eachCategory}
+                              />
+                           )
+                        })}
+                     </ScrollView>
+                  </View>
+               ) : (
+                  <View style={styles.floatingMenuContainer}>
+                     <FloatingMenu
+                        hydratedMenu={hydratedMenu}
+                        selectedCategoryName={selectedCategoryName}
+                        onCategoryClick={name => {
+                           setSelectedCategoryName(name)
+                        }}
+                     />
+                  </View>
+               )}
                <TouchableWithoutFeedback
                   onPress={() => {
                      navigation.navigate('ProductSearch')
@@ -195,6 +209,7 @@ const MenuScreen = ({ route }) => {
                         </View>
                      )
                   }}
+                  contentContainerStyle={{ paddingBottom: 60 }}
                />
             </>
          ) : null}
@@ -239,6 +254,13 @@ const styles = StyleSheet.create({
       fontSize: 14,
       color: '#00000060',
       marginLeft: 10,
+   },
+   floatingMenuContainer: {
+      position: 'absolute',
+      bottom: 10,
+      zIndex: 10000000,
+      width: '100%',
+      alignItems: 'center',
    },
 })
 export default MenuScreen
