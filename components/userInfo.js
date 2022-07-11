@@ -24,6 +24,7 @@ import {
 import { TextInput } from 'react-native-gesture-handler'
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { useConfig } from '../lib/config'
+import CustomBackdrop from './modalBackdrop'
 
 export const UserInfo = props => {
    const [settingCartInfo, setSettingCartInfo] = useState(true)
@@ -47,6 +48,7 @@ export const UserInfo = props => {
             enablePanDownToClose={true}
             settingCartInfo={settingCartInfo}
             setSettingCartInfo={setSettingCartInfo}
+            backdropComponent={CustomBackdrop}
          >
             <UserInfoForm handleClose={handleClose} cart={props.cart} />
          </BottomSheetModal>

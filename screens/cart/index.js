@@ -24,6 +24,7 @@ import { UserInfo } from '../../components/userInfo'
 import { useUser } from '../../context/user'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
+import CustomBackdrop from '../../components/modalBackdrop'
 
 const CartScreen = () => {
    const navigation = useNavigation()
@@ -80,53 +81,52 @@ const CartScreen = () => {
             backgroundColor: '#ffffff',
          }}
       >
-         <BottomSheetModalProvider>
-            <CartHeader />
-            <ScrollView>
-               <CartItemList />
-               <CartBillingDetails
-                  cart={cartState.cart}
-                  billing={cartState.cart.cartOwnerBilling}
-               />
-               {isAuthenticated && (
-                  <>
-                     <UserInfo cart={cartState.cart} />
-                     <Address />
-                     <FulfillmentSection />
-                  </>
-               )}
-            </ScrollView>
-            <View style={styles.buttonContainer}>
-               <Button
-                  buttonStyle={styles.button}
-                  textStyle={styles.buttonText}
-                  disabled={
-                     isAuthenticated &&
-                     (!cartState?.cart?.fulfillmentInfo ||
-                        !cartState?.cart?.customerInfo ||
-                        !cartState?.cart?.address)
+         <CartHeader />
+         <ScrollView>
+            <CartItemList />
+            <CartBillingDetails
+               cart={cartState.cart}
+               billing={cartState.cart.cartOwnerBilling}
+            />
+            {isAuthenticated && (
+               <>
+                  <UserInfo cart={cartState.cart} />
+                  <Address />
+                  <FulfillmentSection />
+               </>
+            )}
+         </ScrollView>
+         <View style={styles.buttonContainer}>
+            <Button
+               buttonStyle={styles.button}
+               textStyle={styles.buttonText}
+               disabled={
+                  isAuthenticated &&
+                  (!cartState?.cart?.fulfillmentInfo ||
+                     !cartState?.cart?.customerInfo ||
+                     !cartState?.cart?.address)
+               }
+               onPress={() => {
+                  if (isAuthenticated) {
+                     navigation.navigate('PaymentOptions')
+                  } else {
+                     loginPopUp.current.present()
                   }
-                  onPress={() => {
-                     if (isAuthenticated) {
-                        navigation.navigate('PaymentOptions')
-                     } else {
-                        loginPopUp.current.present()
-                     }
-                  }}
-               >
-                  Checkout
-               </Button>
-            </View>
-            <BottomSheetModal
-               ref={loginPopUp}
-               snapPoints={[200]}
-               index={0}
-               enablePanDownToClose={true}
-               handleComponent={() => null}
+               }}
             >
-               <LoginPopUp navigation={navigation} />
-            </BottomSheetModal>
-         </BottomSheetModalProvider>
+               Checkout
+            </Button>
+         </View>
+         <BottomSheetModal
+            ref={loginPopUp}
+            snapPoints={[200]}
+            index={0}
+            enablePanDownToClose={true}
+            handleComponent={() => null}
+            backdropComponent={CustomBackdrop}
+         >
+            <LoginPopUp navigation={navigation} />
+         </BottomSheetModal>
       </SafeAreaView>
    )
 }

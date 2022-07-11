@@ -6,6 +6,7 @@ import {
    View,
    Image,
    TouchableWithoutFeedback,
+   Dimensions,
 } from 'react-native'
 import { chain } from 'lodash'
 import { formatCurrency } from '../utils/formatCurrency'
@@ -21,6 +22,10 @@ import { PRODUCT_ONE } from '../graphql'
 import { CounterButton } from './counterButton'
 import { client } from '../lib/apollo'
 import { getCartItemWithModifiers } from '../utils'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import CustomBackdrop from './modalBackdrop'
+
+const windowHeight = Dimensions.get('window').height
 
 const productViewStyles = {
    verticalCard: 'verticalCard',
@@ -91,6 +96,10 @@ export const ProductList = ({
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
    const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const bottomSheetModalRef = React.useRef(null)
+
+   // variables
+   const snapPoints = React.useMemo(() => ['90%'], [])
 
    const navigation = useNavigation()
    const isStoreAvailable = true
@@ -190,7 +199,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      option => option.isAvailable && option.isPublished
                   ).length
                if (availableProductOptions > 0) {
-                  setShowModifierPopup(true)
+                  // setShowModifierPopup(true)
+                  bottomSheetModalRef.current?.present()
                }
             } else {
                addToCart(productData.defaultCartItem, 1)
@@ -421,6 +431,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
       addToCart(cartItem, 1)
       setShowChooseIncreaseType(false)
    }
+   const handlePresentModalPress = React.useCallback(() => {
+      bottomSheetModalRef.current?.present()
+   }, [])
+   const handleSheetChanges = React.useCallback(index => {
+      console.log('handleSheetChanges', index)
+   }, [])
 
    return (
       <TouchableWithoutFeedback
@@ -574,6 +590,22 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                </View>
             </View>
             {/* {showModifierPopup && <ModifierPopup />} */}
+            <BottomSheetModal
+               ref={bottomSheetModalRef}
+               snapPoints={snapPoints}
+               index={0}
+               enablePanDownToClose={true}
+               handleComponent={() => null}
+               backdropComponent={CustomBackdrop}
+            >
+               <ModifierPopup
+                  closeModifier={() => {
+                     // setShowModifierPopup(false)
+                     bottomSheetModalRef.current?.dismiss()
+                  }}
+                  productData={productData}
+               />
+            </BottomSheetModal>
             <Modal isVisible={showModifierPopup}>
                <ModifierPopup
                   closeModifier={() => {
