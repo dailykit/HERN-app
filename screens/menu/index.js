@@ -180,12 +180,6 @@ const MenuScreen = ({ route }) => {
                      </Text>
                   </View>
                </TouchableWithoutFeedback>
-               {appConfig.data.showPromotionImageOnMenuPage.value &&
-               appConfig.data.menuPagePromotionImage.value.url.length > 0 ? (
-                  <PromotionCarousel
-                     data={appConfig.data.menuPagePromotionImage.value}
-                  />
-               ) : null}
                <FlatList
                   ref={categoryScroller}
                   initialScrollIndex={hydratedMenu.findIndex(
@@ -210,6 +204,22 @@ const MenuScreen = ({ route }) => {
                      )
                   }}
                   contentContainerStyle={{ paddingBottom: 60 }}
+                  ListHeaderComponent={() => {
+                     return (
+                        <>
+                           {appConfig.data.showPromotionImageOnMenuPage.value &&
+                           appConfig.data.menuPagePromotionImage.value.url
+                              .length > 0 ? (
+                              <PromotionCarousel
+                                 data={
+                                    appConfig.data.menuPagePromotionImage.value
+                                 }
+                              />
+                           ) : null}
+                        </>
+                     )
+                  }}
+                  nestedScrollEnabled={true}
                />
             </>
          ) : null}
