@@ -14,6 +14,7 @@ export const Button = ({
    radioSize = 16,
    disabled = false,
    radioStyle,
+   additionalIcon: AdditionalIcon = null,
 }) => {
    const { appConfig } = useConfig()
    const { buttonSettings } = appConfig.brandSettings
@@ -66,6 +67,7 @@ export const Button = ({
                disabled ? { opacity: 0.5 } : null,
             ]}
          >
+            {AdditionalIcon ? <AdditionalIcon /> : null}
             {showRadio ? (
                <View
                   style={[
