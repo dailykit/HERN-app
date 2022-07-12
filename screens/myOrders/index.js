@@ -102,30 +102,28 @@ const getTitle = type => {
 }
 const OrderCard = ({ order }) => {
    const navigation = useNavigation()
-
+   const handleCardOnPress = () => {
+      if (order.status === 'ORDER_DELIVERED') {
+         navigation.navigate('OrderDetail', {
+            cartId: order.id,
+         })
+      } else {
+         if (
+            order.fulfillmentInfo.type === 'PREORDER_DELIVERY' ||
+            order.fulfillmentInfo.type === 'ONDEMAND_DELIVERY'
+         ) {
+            navigation.navigate('OrderTracking', {
+               cartId: order.id,
+            })
+         } else {
+            navigation.navigate('OrderDetail', {
+               cartId: order.id,
+            })
+         }
+      }
+   }
    return (
-      <TouchableWithoutFeedback
-         onPress={() => {
-            if (order.status === 'ORDER_DELIVERED') {
-               navigation.navigate('OrderDetail', {
-                  cartId: order.id,
-               })
-            } else {
-               if (
-                  order.fulfillmentInfo.type === 'PREORDER_DELIVERY' ||
-                  order.fulfillmentInfo.type === 'ONDEMAND_DELIVERY'
-               ) {
-                  navigation.navigate('OrderTracking', {
-                     cartId: order.id,
-                  })
-               } else {
-                  navigation.navigate('OrderDetail', {
-                     cartId: order.id,
-                  })
-               }
-            }
-         }}
-      >
+      <TouchableWithoutFeedback onPress={handleCardOnPress}>
          <View style={styles.orderCard}>
             <View style={styles.orderCardHeader}></View>
             <CartItem
@@ -173,6 +171,7 @@ const OrderCard = ({ order }) => {
                      fontSize: 12,
                      fontFamily: 'Metropolis',
                   }}
+                  onPress={handleCardOnPress}
                >
                   {order.status === 'ORDER_DELIVERED'
                      ? 'View Details'

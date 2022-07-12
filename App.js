@@ -12,6 +12,7 @@ import { UserProvider } from './context/user'
 import { PaymentProvider } from './lib/payment'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useFonts } from 'expo-font'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
@@ -34,7 +35,9 @@ export default function App() {
                         <OnDemandMenuProvider>
                            <CartProvider>
                               <PaymentProvider>
-                                 <Navigation />
+                                 <BottomSheetModalProvider>
+                                    <Navigation />
+                                 </BottomSheetModalProvider>
                               </PaymentProvider>
                            </CartProvider>
                         </OnDemandMenuProvider>

@@ -393,6 +393,7 @@ const RefineLocation = () => {
             disabled={
                !isStoreAvailableOnAddress ||
                !additionalAddressInfo?.line1 ||
+               !additionalAddressInfo?.label ||
                isGetStoresLoading
             }
             onPress={handleSubmit}
@@ -411,6 +412,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
    const [addressWarnings, setAddressWarnings] = React.useState({
       line1: false,
    })
+   const [showOtherLabelField, setShowOtherLabelField] = React.useState(false)
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View>
@@ -452,18 +454,69 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             />
          </View>
          <View>
-            <Text style={styles.formLabel}>Label</Text>
-            <TextInput
-               style={styles.inputField}
-               placeholder="Enter label for this address"
-               value={additionalAddressInfo.label}
-               onChangeText={text =>
-                  setAdditionalAddressInfo(prev => ({
-                     ...prev,
-                     label: text,
-                  }))
-               }
-            />
+            <Text style={styles.formLabel}>Label*</Text>
+            <View
+               style={{
+                  flexDirection: 'row',
+                  marginVertical: 8,
+               }}
+            >
+               <Button
+                  variant="outline"
+                  buttonStyle={{ marginRight: 13 }}
+                  onPress={() => {
+                     setShowOtherLabelField(false)
+                     setAdditionalAddressInfo(prev => ({
+                        ...prev,
+                        label: 'Home',
+                     }))
+                  }}
+                  isActive={additionalAddressInfo.label === 'Home'}
+               >
+                  Home
+               </Button>
+               <Button
+                  variant="outline"
+                  buttonStyle={{ marginRight: 13 }}
+                  onPress={() => {
+                     setShowOtherLabelField(false)
+                     setAdditionalAddressInfo(prev => ({
+                        ...prev,
+                        label: 'Office',
+                     }))
+                  }}
+                  isActive={additionalAddressInfo.label === 'Office'}
+               >
+                  Office
+               </Button>
+               <Button
+                  variant="outline"
+                  buttonStyle={{ marginRight: 13 }}
+                  onPress={() => {
+                     setShowOtherLabelField(true)
+                     setAdditionalAddressInfo(prev => ({
+                        ...prev,
+                        label: '',
+                     }))
+                  }}
+                  isActive={showOtherLabelField}
+               >
+                  Other
+               </Button>
+            </View>
+            {showOtherLabelField ? (
+               <TextInput
+                  style={styles.inputField}
+                  placeholder="Enter label for this address"
+                  value={additionalAddressInfo.label}
+                  onChangeText={text =>
+                     setAdditionalAddressInfo(prev => ({
+                        ...prev,
+                        label: text,
+                     }))
+                  }
+               />
+            ) : null}
          </View>
          <View>
             <Text style={styles.formLabel}>Dropoff Instructions</Text>

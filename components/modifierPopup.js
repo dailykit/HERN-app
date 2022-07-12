@@ -6,7 +6,6 @@ import {
    TouchableOpacity,
    View,
    Image,
-   ScrollView,
    TouchableWithoutFeedback,
 } from 'react-native'
 import CloseIcon from '../assets/closeIcon'
@@ -25,6 +24,7 @@ import { PRODUCT_ONE } from '../graphql'
 import { useCart } from '../context'
 import { getCartItemWithModifiers } from '../utils'
 import { Spinner } from '../assets/loaders'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export const ModifierPopup = ({
    closeModifier,
