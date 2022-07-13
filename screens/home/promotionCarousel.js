@@ -1,6 +1,7 @@
 import React from 'react'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { Image, Text, Dimensions, View, StyleSheet } from 'react-native'
+import { Video } from 'expo-av'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -9,15 +10,28 @@ export const PromotionCarousel = ({ data, height = 128, showDots = true }) => {
    const [activeIndex, setActiveIndex] = React.useState(0)
    const _renderItem = ({ item, index }) => {
       return (
-         <View style={styles.carouselItem} key={item}>
-            <Image
-               source={{
-                  uri: item,
-                  width: windowWidth - 20,
-                  height: height,
-               }}
-               style={styles.image}
-            />
+         <View style={styles.carouselItem} key={item.value}>
+            {item?.type === 'imageUpload' && (
+               <Image
+                  source={{
+                     uri: item?.value,
+                     width: windowWidth - 20,
+                     height: height,
+                  }}
+                  style={styles.image}
+               />
+            )}
+            {item?.type === 'videoUpload' && (
+               <Video
+                  style={{ ...styles.image, height: height }}
+                  source={{ uri: item?.value }}
+                  shouldPlay={true}
+                  resizeMode={'stretch'}
+                  isMuted={true}
+                  useNativeControls={false}
+                  isLooping
+               />
+            )}
          </View>
       )
    }
@@ -25,7 +39,12 @@ export const PromotionCarousel = ({ data, height = 128, showDots = true }) => {
       <View>
          <Carousel
             ref={_carousel}
-            data={data.url}
+            data={data.map(asset => {
+               return {
+                  type: asset[0]?.value?.userInsertType,
+                  value: asset[0]?.value?.value,
+               }
+            })}
             renderItem={_renderItem}
             sliderWidth={windowWidth - 10}
             itemWidth={windowWidth}
@@ -34,7 +53,7 @@ export const PromotionCarousel = ({ data, height = 128, showDots = true }) => {
          />
          {showDots && (
             <Pagination
-               dotsLength={data.url.length}
+               dotsLength={data.length}
                activeDotIndex={activeIndex}
                carouselRef={_carousel}
                dotStyle={{

@@ -207,12 +207,14 @@ const MenuScreen = ({ route }) => {
                   ListHeaderComponent={() => {
                      return (
                         <>
-                           {appConfig.data.showPromotionImageOnMenuPage.value &&
-                           appConfig.data.menuPagePromotionImage.value.url
-                              .length > 0 ? (
+                           {appConfig?.data?.showPromotionImageOnMenuPage
+                              ?.value &&
+                           appConfig?.data?.menuPagePromotionAssets?.value
+                              ?.length > 0 ? (
                               <PromotionCarousel
                                  data={
-                                    appConfig.data.menuPagePromotionImage.value
+                                    appConfig?.data?.menuPagePromotionAssets
+                                       ?.value
                                  }
                               />
                            ) : null}
