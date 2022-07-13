@@ -91,9 +91,9 @@ const HomeScreen = () => {
             </ScrollView>
 
             {/* Promotion Carousal */}
-            {appConfig?.data.topPromotionImages.value && (
+            {appConfig?.data?.topPromotionAssets?.value?.length > 0 && (
                <PromotionCarousel
-                  data={appConfig?.data.topPromotionImages.value}
+                  data={appConfig?.data?.topPromotionAssets?.value || []}
                   height={204}
                />
             )}
@@ -151,9 +151,9 @@ const HomeScreen = () => {
             </View>
 
             {/* Promotion Carousal */}
-            {appConfig?.data.mid1PromotionImages.value && (
+            {appConfig?.data?.mid1PromotionAssets?.value?.length > 0 && (
                <PromotionCarousel
-                  data={appConfig?.data.mid1PromotionImages.value || []}
+                  data={appConfig?.data?.mid1PromotionAssets?.value || []}
                />
             )}
             {/* Shop By Collection Block */}
@@ -182,9 +182,9 @@ const HomeScreen = () => {
             </View>
 
             {/* Promotion Carousal */}
-            {appConfig?.data.bottomPromotionImages.value && (
+            {appConfig?.data?.bottomPromotionAssets?.value?.length > 0 && (
                <PromotionCarousel
-                  data={appConfig?.data.bottomPromotionImages.value || []}
+                  data={appConfig?.data?.bottomPromotionAssets?.value || []}
                   height={204}
                />
             )}
