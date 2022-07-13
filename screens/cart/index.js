@@ -125,7 +125,7 @@ const CartScreen = () => {
             handleComponent={() => null}
             backdropComponent={CustomBackdrop}
          >
-            <LoginPopUp navigation={navigation} />
+            <LoginPopUp navigation={navigation} loginPopUp={loginPopUp} />
          </BottomSheetModal>
       </SafeAreaView>
    )
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
    },
 })
 
-const LoginPopUp = ({ navigation }) => {
+const LoginPopUp = ({ navigation, loginPopUp }) => {
    return (
       <View style={styles.loginPopUp}>
          <Text style={styles.loginPopUpHeading}>Almost There</Text>
@@ -206,7 +206,10 @@ const LoginPopUp = ({ navigation }) => {
             Login to place your Order
          </Text>
          <Button
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => {
+               loginPopUp?.current?.dismiss()
+               navigation.navigate('Login')
+            }}
             buttonStyle={styles.loginPopUpButton}
          >
             Login
