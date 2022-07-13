@@ -576,6 +576,7 @@ const styles = StyleSheet.create({
       color: '#A2A2A2',
    },
    inputField: {
+      fontFamily: 'Metropolis',
       height: 40,
       backgroundColor: '#ffffff',
       borderRadius: 6,

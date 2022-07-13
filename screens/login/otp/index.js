@@ -269,7 +269,7 @@ export const OtpLogin = () => {
                   style={{
                      color: appConfig.brandSettings.buttonSettings
                         .activeTextColor.value,
-                     fontWeight: '500',
+                     fontFamily: 'Metropolis',
                   }}
                >
                   Skip

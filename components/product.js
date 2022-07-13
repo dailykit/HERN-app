@@ -85,7 +85,9 @@ export const ProductList = ({
                })
             ) : (
                <View style={styles.noProductsMsgContainer}>
-                  <Text>No Products Found</Text>
+                  <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                     No Products Found
+                  </Text>
                </View>
             )}
          </ScrollView>
@@ -622,7 +624,9 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
             >
                <View style={{ backgroundColor: 'white', padding: 12 }}>
                   <View style={{ marginBottom: 12 }}>
-                     <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                     <Text
+                        style={{ fontSize: 16, fontFamily: 'MetropolisMedium' }}
+                     >
                         Repeat last used customization?
                      </Text>
                   </View>
@@ -666,6 +670,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
 
 const styles = StyleSheet.create({
    productListHeading: {
+      fontFamily: 'MetropolisSemiBold',
       fontSize: 20,
       lineHeight: 20,
       fontWeight: '500',
@@ -694,6 +699,7 @@ const styles = StyleSheet.create({
    },
    floatingImage: {},
    productName: {
+      fontFamily: 'Metropolis',
       fontSize: 12,
       fontWeight: '500',
    },
@@ -724,15 +730,16 @@ const styles = StyleSheet.create({
       color: 'rgba(24, 24, 24, 0.28)',
       textDecorationLine: 'line-through',
       textDecorationStyle: 'solid',
-      fontWeight: '800',
+      fontFamily: 'Metropolis',
       fontSize: 10,
    },
    productDiscountValue: {
       color: '#181818',
       fontSize: 12,
-      fontWeight: '800',
+      fontFamily: 'MetropolisSemiBold',
    },
    noProductsMsgContainer: {
+      fontFamily: 'Metropolis',
       display: 'flex',
       height: '100%',
       justifyContent: 'center',

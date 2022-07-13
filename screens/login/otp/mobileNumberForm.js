@@ -24,7 +24,15 @@ export const MobileNumberForm = ({
    return (
       <View style={styles.phoneNumberContainer}>
          <View style={{ flex: 1 }}>
-            <Text style={{ color: '#ffffff', fontSize: 24 }}>LOGIN</Text>
+            <Text
+               style={{
+                  color: '#ffffff',
+                  fontSize: 24,
+                  fontFamily: 'MetropolisMedium',
+               }}
+            >
+               LOGIN
+            </Text>
          </View>
          <View style={{ width: '100%', flex: 1 }}>
             <View style={styles.phoneNumberWrapper}>
@@ -54,7 +62,13 @@ export const MobileNumberForm = ({
                />
             </View>
             <View style={styles.infoLine}>
-               <Text style={{ color: '#fff', fontSize: 12 }}>
+               <Text
+                  style={{
+                     color: '#fff',
+                     fontSize: 12,
+                     fontFamily: 'Metropolis',
+                  }}
+               >
                   By continuing, I agree to the{' '}
                </Text>
                <TouchableOpacity style={{ alignItems: 'center' }}>
@@ -62,18 +76,28 @@ export const MobileNumberForm = ({
                      style={{
                         color: appConfig.brandSettings.buttonSettings
                            .activeTextColor.value,
+                        fontFamily: 'Metropolis',
                      }}
                   >
                      Terms of Use{' '}
                   </Text>
                </TouchableOpacity>
-               <Text style={{ color: '#fff', fontSize: 12 }}>& </Text>
+               <Text
+                  style={{
+                     color: '#fff',
+                     fontSize: 12,
+                     fontFamily: 'Metropolis',
+                  }}
+               >
+                  &{' '}
+               </Text>
                <TouchableOpacity style={{ alignItems: 'center' }}>
                   <Text
                      style={{
                         color: appConfig.brandSettings.buttonSettings
                            .activeTextColor.value,
                         fontSize: 12,
+                        fontFamily: 'Metropolis',
                      }}
                   >
                      Privacy Policy
@@ -81,7 +105,12 @@ export const MobileNumberForm = ({
                </TouchableOpacity>
             </View>
             {error ? (
-               <Text style={{ color: 'red', fontStyle: 'italic' }}>
+               <Text
+                  style={{
+                     color: 'red',
+                     fontFamily: 'MetropolisRegularItalic',
+                  }}
+               >
                   {error}
                </Text>
             ) : null}

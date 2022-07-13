@@ -287,14 +287,16 @@ const UserDetails = ({
             <>
                <View style={styles.row}>
                   <UserIcon size={16} />
-                  <Text style={{ marginLeft: 9 }}>
+                  <Text
+                     style={{ fontFamily: 'MetropolisSemiBold', marginLeft: 9 }}
+                  >
                      {cart?.customerInfo?.customerFirstName}{' '}
                      {cart?.customerInfo?.customerLastName}
                   </Text>
                </View>
                <View style={styles.row}>
                   <PhoneIcon size={16} />
-                  <Text style={{ marginLeft: 9 }}>
+                  <Text style={{ fontFamily: 'Metropolis', marginLeft: 9 }}>
                      {cart?.customerInfo?.customerPhone}
                   </Text>
                </View>
@@ -367,18 +369,19 @@ const styles = StyleSheet.create({
    userInfoFormHeading: {
       fontSize: 18,
       lineHeight: 18,
-      fontWeight: '600',
+      fontFamily: 'MetropolisSemiBold',
       color: 'rgba(0, 0, 0, 0.8)',
    },
    formLabel: {
       fontSize: 12,
       lineHeight: 12,
-      fontWeight: '500',
+      fontFamily: 'MetropolisMedium',
       color: 'rgba(0, 0, 0, 0.6)',
       marginTop: 25,
       marginBottom: 8,
    },
    inputField: {
+      fontFamily: 'Metropolis',
       width: '100%',
       height: 40,
       borderRadius: 6,
@@ -386,6 +389,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
    },
    phoneInputTextInputStyle: {
+      fontFamily: 'Metropolis',
       color: '#000',
       fontSize: 14,
    },
@@ -399,7 +403,7 @@ const styles = StyleSheet.create({
       paddingVertical: 0,
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
    },
-   phoneInputCodeTextStyle: { fontSize: 14 },
+   phoneInputCodeTextStyle: { fontFamily: 'Metropolis', fontSize: 14 },
    saveInfoBtn: {
       marginTop: 25,
       marginBottom: 10,

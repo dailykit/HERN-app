@@ -561,7 +561,12 @@ export const Pickup = () => {
                <View style={{ flexDirection: 'row' }}>
                   <OrderTime size={20} />
                   {/* &nbsp;&nbsp; */}
-                  <Text style={{ marginLeft: 6, color: '#00000080' }}>
+                  <Text
+                     style={{
+                        marginLeft: 6,
+                        color: '#00000080',
+                     }}
+                  >
                      {title}
                      {cartState.cart?.fulfillmentInfo?.type ===
                         'PREORDER_PICKUP' ||
@@ -620,7 +625,13 @@ export const Pickup = () => {
                alignItems: 'center',
             }}
          >
-            <Text style={{ alignSelf: 'flex-start', marginBottom: 5 }}>
+            <Text
+               style={{
+                  fontFamily: 'MetropolisSemiBold',
+                  alignSelf: 'flex-start',
+                  marginBottom: 5,
+               }}
+            >
                When would you like to order?
             </Text>
             <View style={styles.fulfillmentButtonGroup}>

@@ -66,20 +66,26 @@ export const Address = () => {
                }}
             >
                <LocationIcon fill="#A2A2A2" />
-               <Text style={{ color: '#00000060', marginRight: 3 }}>
+               <Text
+                  style={{
+                     fontFamily: 'Metropolis',
+                     color: '#00000060',
+                     marginRight: 3,
+                  }}
+               >
                   {fulfillmentLabel}
                </Text>
                <DownVector size={12} stroke={'#00000060'} />
             </TouchableOpacity>
             <TouchableOpacity
-               style={{ flex: 6, flexShrink: 1, marginLeft: 10 }}
+               style={{ flex: 6, flexShrink: 1, marginLeft: 30 }}
                onPress={() => {
                   setNumberOfLines(prev => (prev == 1 ? 2 : 1))
                }}
             >
                <Text
                   numberOfLines={numberOfLines}
-                  style={{ fontWeight: '500', color: '#00000060' }}
+                  style={{ fontFamily: 'MetropolisMedium', color: '#00000060' }}
                >
                   {`${address?.line1} ${address?.city} ${address?.state} ${address?.country},${address?.zipcode}`}
                </Text>

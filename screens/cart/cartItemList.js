@@ -89,11 +89,11 @@ const styles = StyleSheet.create({
    clearCartText: {
       color: '#EF5266',
       fontSize: 12,
-      fontWeight: '600',
+      fontFamily: 'MetropolisMedium',
    },
    itemStyle: {
       fontSize: 14,
-      fontWeight: '500',
+      fontFamily: 'MetropolisSemiBold',
    },
    productMetaDetails: {
       flexDirection: 'row',

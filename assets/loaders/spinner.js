@@ -27,7 +27,9 @@ export const Spinner = ({
             }
          />
          {showText && (
-            <Text style={{ marginTop: 8, ...textStyle }}>
+            <Text
+               style={{ marginTop: 8, fontFamily: 'Metropolis', ...textStyle }}
+            >
                {text || 'Loading...'}
             </Text>
          )}
