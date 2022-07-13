@@ -60,7 +60,7 @@ const UserInfoForm = props => {
    const { methods } = React.useContext(CartContext)
    const { user } = useUser()
 
-   const namePattern = /^[a-zA-Z .]+$/
+   const namePattern = /^[a-zA-Z .]*$/
    const [savingUserInfo, setSavingUserInfo] = React.useState(false)
    const [firstName, setFirstName] = useState(
       cart?.customerInfo?.customerFirstName ||
@@ -144,7 +144,7 @@ const UserInfoForm = props => {
                <CloseIcon />
             </TouchableOpacity>
          </View>
-         <Text style={styles.formLabel}>Full Name</Text>
+         <Text style={styles.formLabel}>First Name</Text>
          <TextInput
             style={[
                styles.inputField,
