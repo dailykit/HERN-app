@@ -90,6 +90,7 @@ const categoryStyles = StyleSheet.create({
       shadowOffset: { width: 0, height: 1 },
       shadowRadius: 12,
       elevation: 3,
+      width: 80,
    },
    selectedCategory: {
       backgroundColor: '#EF5266',
