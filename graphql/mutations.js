@@ -229,3 +229,34 @@ export const UPDATE_PLATFORM_CUSTOMER = gql`
       }
    }
 `
+export const INSERT_DEVICE_INFO = gql`
+   mutation INSERT_DEVICE_INFO($object: deviceHub_mobileDevice_insert_input!) {
+      insert_deviceHub_mobileDevice_one(
+         object: $object
+         on_conflict: {
+            constraint: mobileDevice_notificationToken_key
+            update_columns: []
+         }
+      ) {
+         id
+      }
+   }
+`
+
+export const INSERT_BRAND_CUSTOMER_DEVICE_INFO = gql`
+   mutation INSERT_BRAND_CUSTOMER_DEVICE_INFO(
+      $object: crm_brand_customer_device_insert_input!
+   ) {
+      insert_crm_brand_customer_device_one(object: $object) {
+         mobileDeviceId
+         brandCustomerId
+      }
+   }
+`
+export const DELETE_BRAND_CUSTOMER_DEVICE = gql`
+   mutation DELETE_BRAND_CUSTOMER_DEVICE($mobileDeviceId: Int!) {
+      delete_crm_brand_customer_device_by_pk(mobileDeviceId: $mobileDeviceId) {
+         mobileDeviceId
+      }
+   }
+`
