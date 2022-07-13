@@ -26,12 +26,17 @@
             "foregroundImage": "./assets/adaptive-icon.png",
             "backgroundColor": "#FFFFFF"
          },
-         "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
+         "permissions": [
+            "ACCESS_COARSE_LOCATION",
+            "ACCESS_FINE_LOCATION",
+            "NOTIFICATIONS"
+         ],
          "config": {
             "googleMaps": {
                "apiKey": "AIzaSyAr0_xNXVux88WH3bK9cyke7J23SlXMRZ0"
             }
-         }
+         },
+         "useNextNotificationsApi": true
       },
       "web": {
          "favicon": "./assets/favicon.png"

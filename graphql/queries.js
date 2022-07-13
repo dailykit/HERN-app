@@ -570,3 +570,10 @@ export const SETTINGS_QUERY = gql`
       }
    }
 `
+export const GET_MOBILE_DEVICE_IDS = gql`
+   query GET_MOBILE_DEVICE_IDS($where: deviceHub_mobileDevice_bool_exp!) {
+      deviceHub_mobileDevice(where: $where) {
+         id
+      }
+   }
+`

@@ -26,9 +26,10 @@ import {
 import { OTPS } from '../../../graphql/subscriptions'
 import { useUser } from '../../../context/user'
 import { useConfig } from '../../../lib/config'
+import * as Notifications from 'expo-notifications'
 
 export const OtpLogin = () => {
-   const { appConfig } = useConfig()
+   const { appConfig, brand } = useConfig()
    const { login } = useUser()
    const navigation = useNavigation()
    const phoneInput = React.useRef(null)
@@ -200,13 +201,15 @@ export const OtpLogin = () => {
          }
 
          setError('')
-
+         const expoToken = await Notifications.getExpoPushTokenAsync()
          const authDetails = encodeURIComponent(
             JSON.stringify({
                authType: 'otp',
                phoneNumber: form.phoneNumber,
                otp: form.otp,
                email: form.email,
+               notificationToken: expoToken.data,
+               brandId: brand?.id,
             })
          )
          const SERVER_URL = __DEV__
