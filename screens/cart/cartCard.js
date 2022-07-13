@@ -395,7 +395,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={{
                            color: '#f33737',
-                           fontWeight: '500',
+                           fontFamily: 'MetropolisMedium',
                            fontSize: 13,
                         }}
                      >
@@ -513,7 +513,9 @@ const AdditionalDetails = ({ productData }) => {
                   paddingHorizontal: 12,
                }}
             >
-               <Text style={{ fontWeight: '500' }}>Customizable</Text>
+               <Text style={{ fontFamily: 'MetropolisSemiBold' }}>
+                  Customizable
+               </Text>
                {showAdditionalDetailsOnCard ? (
                   <UpVector size={18} />
                ) : (
@@ -731,7 +733,7 @@ const styles = StyleSheet.create({
    },
    productName: {
       fontSize: 14,
-      fontWeight: '500',
+      fontFamily: 'MetropolisSemiBold',
    },
    metaDetailsBottom: {
       flexDirection: 'row',
@@ -745,10 +747,11 @@ const styles = StyleSheet.create({
    originalPrice: {
       marginRight: 6,
       textDecorationLine: 'line-through',
+      fontFamily: 'Metropolis',
    },
    discountPrice: {
       fontSize: 18,
-      fontWeight: '500',
+      fontFamily: 'MetropolisSemiBold',
    },
    productOption: {
       flexDirection: 'row',

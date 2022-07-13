@@ -51,7 +51,10 @@ const OrderTrackingScreen = () => {
                {loading ? (
                   <Spinner size={'large'} showText={true} />
                ) : error ? (
-                  <Text> Something went wrong</Text>
+                  <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                     {' '}
+                     Something went wrong
+                  </Text>
                ) : isNull(cart.order.isAccepted) &&
                  isNull(cart.order.isRejected) ? (
                   <View>
@@ -87,7 +90,7 @@ const AcceptingOrder = () => {
             size="large"
             color={appConfig.brandSettings.brandColor.value}
          />
-         <Text style={{ fontStyle: 'italic', marginLeft: 8 }}>
+         <Text style={{ fontFamily: 'MetropolisRegularItalic', marginLeft: 8 }}>
             Waiting for Accepting Order
          </Text>
       </View>
@@ -97,7 +100,9 @@ const AcceptingOrder = () => {
 const RejectedOrder = () => {
    return (
       <View>
-         <Text>Your order has been Rejected.</Text>
+         <Text style={{ fontFamily: 'MetropolisMedium' }}>
+            Your order has been Rejected.
+         </Text>
       </View>
    )
 }
@@ -157,22 +162,35 @@ const OrderDetail = ({ cart }) => {
          }}
       >
          <View style={styles.userInfo}>
-            <Text style={{ fontWeight: '500' }}>
+            <Text style={{ fontFamily: 'MetropolisSemiBold' }}>
                <ProfileIcon /> {'  '}
                {cart.customerInfo.customerFirstName}{' '}
                {cart.customerInfo.customerLastName}
             </Text>
-            <Text style={{ marginLeft: 20 }}>
+            <Text style={{ fontFamily: 'Metropolis', marginLeft: 20 }}>
                {cart.customerInfo.customerPhone}
             </Text>
          </View>
          <View style={styles.addressContainer}>
             <View style={{ flexDirection: 'row' }}>
-               <Text style={{ fontWeight: '500' }}>{label}</Text>
+               <Text
+                  style={{
+                     fontFamily: 'MetropolisSemiBold',
+                     fontWeight: '500',
+                  }}
+               >
+                  {label}
+               </Text>
             </View>
-            {cart.address.label ? <Text>{cart.address.label}</Text> : null}
-            <Text>{`${cart.address?.line1}`}</Text>
-            <Text>
+            {cart.address.label ? (
+               <Text style={{ fontFamily: 'Metropolis' }}>
+                  {cart.address.label}
+               </Text>
+            ) : null}
+            <Text
+               style={{ fontFamily: 'Metropolis' }}
+            >{`${cart.address?.line1}`}</Text>
+            <Text style={{ fontFamily: 'Metropolis' }}>
                {`${cart.address?.city} ${cart.address?.state} ${cart.address?.country},${cart.address?.zipcode}`}
             </Text>
          </View>
@@ -193,10 +211,14 @@ const OrderDetail = ({ cart }) => {
          </View>
          <View style={styles.paymentDetails}>
             <CardsIcon />
-            <Text style={{ marginHorizontal: 6, fontWeight: '500' }}>
+            <Text
+               style={{ marginHorizontal: 6, fontFamily: 'MetropolisSemiBold' }}
+            >
                Payment Details:
             </Text>
-            <Text>{cart.availablePaymentOption?.label || 'N/A'}</Text>
+            <Text style={{ fontFamily: 'Metropolis' }}>
+               {cart.availablePaymentOption?.label || 'N/A'}
+            </Text>
          </View>
          <View style={styles.cartItemHeader}>
             <Text style={styles.itemCount}>Item(s)({cartItems.length})</Text>
@@ -224,13 +246,14 @@ const OrderDetail = ({ cart }) => {
                                  width: 80,
                               }}
                            />
-                           <Text>
+                           <Text style={{ fontFamily: 'MetropolisMedium' }}>
                               {product.name}{' '}
                               {product.price > 0 ? (
                                  product.discount !== 0 ? (
                                     <>
                                        <Text
                                           style={{
+                                             fontFamily: 'Metropolis',
                                              textDecorationLine: 'line-through',
                                              color: '#a2a2a2',
                                              marginRight: 4,
@@ -238,20 +261,26 @@ const OrderDetail = ({ cart }) => {
                                        >
                                           {formatCurrency(product.price)}
                                        </Text>
-                                       <Text>
+                                       <Text
+                                          style={{ fontFamily: 'Metropolis' }}
+                                       >
                                           {formatCurrency(
                                              product.price - product.discount
                                           )}
                                        </Text>
                                     </>
                                  ) : (
-                                    <Text>{formatCurrency(product.price)}</Text>
+                                    <Text style={{ fontFamily: 'Metropolis' }}>
+                                       {formatCurrency(product.price)}
+                                    </Text>
                                  )
                               ) : null}
                            </Text>
                         </View>
                      </View>
-                     <Text>x{product.ids.length}</Text>
+                     <Text style={{ fontFamily: 'Metropolis' }}>
+                        x{product.ids.length}
+                     </Text>
                   </View>
                   {product.childs.length > 0 ? (
                      <View style={{ marginLeft: 6 }}>
@@ -269,6 +298,7 @@ const OrderDetail = ({ cart }) => {
                                  {product.childs[0].discount != 0 ? (
                                     <Text
                                        style={{
+                                          fontFamily: 'Metropolis',
                                           textDecorationLine: 'line-through',
                                           color: '#a2a2a2',
                                           marginRight: 4,
@@ -317,6 +347,8 @@ const OrderDetail = ({ cart }) => {
                                                       0 ? (
                                                          <Text
                                                             style={{
+                                                               fontFamily:
+                                                                  'Metropolis',
                                                                textDecorationLine:
                                                                   'line-through',
                                                                color: '#a2a2a2',
@@ -420,17 +452,19 @@ const styles = StyleSheet.create({
    },
    fulfillmentInfo: {
       color: '#000000',
-      fontWeight: '500',
+      fontFamily: 'MetropolisSemiBold',
    },
    itemCount: {
       fontSize: 14,
-      fontWeight: '500',
+      fontFamily: 'MetropolisSemiBold',
    },
    productOptionText: {
+      fontFamily: 'Metropolis',
       marginVertical: 3,
       color: '#00000080',
    },
    modifierOptionText: {
+      fontFamily: 'Metropolis',
       marginVertical: 3,
       color: '#00000080',
    },
@@ -439,7 +473,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
    },
    orderDate: {
-      fontStyle: 'italic',
+      fontFamily: 'MetropolisRegularItalic',
    },
    addressContainer: {
       marginVertical: 10,

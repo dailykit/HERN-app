@@ -130,7 +130,7 @@ const MenuScreen = ({ route }) => {
          {status === 'loading' ? (
             <Spinner size="large" showText={true} />
          ) : status === 'error' ? (
-            <Text>Error</Text>
+            <Text style={{ fontFamily: 'MetropolisMedium' }}>Error</Text>
          ) : null}
          {status === 'success' ? (
             <>
@@ -207,12 +207,14 @@ const MenuScreen = ({ route }) => {
                   ListHeaderComponent={() => {
                      return (
                         <>
-                           {appConfig.data.showPromotionImageOnMenuPage.value &&
-                           appConfig.data.menuPagePromotionImage.value.url
-                              .length > 0 ? (
+                           {appConfig?.data?.showPromotionImageOnMenuPage
+                              ?.value &&
+                           appConfig?.data?.menuPagePromotionAssets?.value
+                              ?.length > 0 ? (
                               <PromotionCarousel
                                  data={
-                                    appConfig.data.menuPagePromotionImage.value
+                                    appConfig?.data?.menuPagePromotionAssets
+                                       ?.value
                                  }
                               />
                            ) : null}
@@ -236,10 +238,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
    categoryListName: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisMedium',
       fontSize: 24,
       lineHeight: 36,
-      fontWeight: '600',
       marginHorizontal: 12,
    },
    searchBar: {

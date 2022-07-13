@@ -35,7 +35,9 @@ export const FulfillmentSection = () => {
    return (
       <View style={styles.fulfillmentContainer}>
          <View>
-            <Text style={{ fontWeight: '500', color: '#00000080' }}>
+            <Text
+               style={{ fontFamily: 'MetropolisMedium', color: '#00000080' }}
+            >
                {fulfillmentLabel}
             </Text>
          </View>

@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
       marginBottom: 40,
    },
    emptyCartMessage: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisMedium',
       fontSize: 20,
       fontWeight: '600',
    },
    emptyCartCustomMessage: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisMedium',
       color: '#a2a2a2',
       fontSize: 14,
       fontWeight: '500',

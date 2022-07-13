@@ -91,9 +91,9 @@ const HomeScreen = () => {
             </ScrollView>
 
             {/* Promotion Carousal */}
-            {appConfig?.data.topPromotionImages.value && (
+            {appConfig?.data?.topPromotionAssets?.value?.length > 0 && (
                <PromotionCarousel
-                  data={appConfig?.data.topPromotionImages.value}
+                  data={appConfig?.data?.topPromotionAssets?.value || []}
                   height={204}
                />
             )}
@@ -151,9 +151,9 @@ const HomeScreen = () => {
             </View>
 
             {/* Promotion Carousal */}
-            {appConfig?.data.mid1PromotionImages.value && (
+            {appConfig?.data?.mid1PromotionAssets?.value?.length > 0 && (
                <PromotionCarousel
-                  data={appConfig?.data.mid1PromotionImages.value || []}
+                  data={appConfig?.data?.mid1PromotionAssets?.value || []}
                />
             )}
             {/* Shop By Collection Block */}
@@ -182,9 +182,9 @@ const HomeScreen = () => {
             </View>
 
             {/* Promotion Carousal */}
-            {appConfig?.data.bottomPromotionImages.value && (
+            {appConfig?.data?.bottomPromotionAssets?.value?.length > 0 && (
                <PromotionCarousel
-                  data={appConfig?.data.bottomPromotionImages.value || []}
+                  data={appConfig?.data?.bottomPromotionAssets?.value || []}
                   height={204}
                />
             )}
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
       marginHorizontal: 12,
    },
    trendingNowHeading: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisSemiBold',
       fontSize: 20,
       lineHeight: 20,
       fontWeight: '500',
@@ -233,8 +233,7 @@ const styles = StyleSheet.create({
       borderTopRightRadius: 16,
    },
    orderNowHeading: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: 'MetropolisSemiBold',
       fontSize: 13.5,
       lineHeight: 16,
       textAlign: 'center',
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
       marginBottom: 6,
    },
    orderNowSubHeading: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisMedium',
       fontWeight: '400',
       fontSize: 10,
       lineHeight: 12,
@@ -252,8 +251,7 @@ const styles = StyleSheet.create({
    },
    orderNowBtn: {
       textAlign: 'center',
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: 'MetropolisSemiBold',
       fontSize: 16,
       lineHeight: 16,
       textDecorationLine: 'underline',

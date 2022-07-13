@@ -30,7 +30,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   {billing.deliveryPrice === 0 ? (
                      <Text
                         style={{
-                           fontWeight: 'bold',
+                           fontFamily: 'MetropolisBold',
                         }}
                      >
                         {'Free'}
@@ -137,6 +137,5 @@ const styles = StyleSheet.create({
    textCommonStyle: {
       fontFamily: 'Metropolis',
       fontSize: 16,
-      fontWeight: '500',
    },
 })

@@ -44,7 +44,9 @@ export const OTPform = ({
                setShowResendBtn(true)
             }}
          >
-            <Text style={{ color: 'red' }}>Resend OTP</Text>
+            <Text style={{ color: 'red', fontFamily: 'Metropolis' }}>
+               Resend OTP
+            </Text>
          </TouchableOpacity>
       )
    }
@@ -58,7 +60,15 @@ export const OTPform = ({
          }}
       >
          <View style={{ flex: 1 }}>
-            <Text style={{ color: '#ffffff', fontSize: 24 }}>ENTER OTP</Text>
+            <Text
+               style={{
+                  color: '#ffffff',
+                  fontSize: 24,
+                  fontFamily: 'MetropolisMedium',
+               }}
+            >
+               ENTER OTP
+            </Text>
          </View>
          <View style={{ flex: 3, alignItems: 'center', width: '100%' }}>
             <View
@@ -68,11 +78,17 @@ export const OTPform = ({
                   alignItems: 'center',
                }}
             >
-               <Text style={{ color: '#fff', fontSize: 13, fontWeight: '600' }}>
+               <Text
+                  style={{
+                     color: '#fff',
+                     fontSize: 13,
+                     fontFamily: 'MetropolisMedium',
+                  }}
+               >
                   An OTP has been sent to
-                  <Text style={{ fontSize: 11.5 }}>{`  ${
-                     form?.phoneNumber || ''
-                  }`}</Text>
+                  <Text
+                     style={{ fontSize: 11.5, fontFamily: 'Metropolis' }}
+                  >{`  ${form?.phoneNumber || ''}`}</Text>
                </Text>
                <TouchableOpacity
                   onPress={() => {
@@ -86,7 +102,7 @@ export const OTPform = ({
                         color: appConfig.brandSettings.buttonSettings
                            .activeTextColor.value,
                         fontSize: 14,
-                        fontWeight: '600',
+                        fontFamily: 'MetropolisMedium',
                         marginLeft: 4,
                      }}
                   >
@@ -114,7 +130,11 @@ export const OTPform = ({
             </View>
             {error ? (
                <Text
-                  style={{ color: 'red', fontStyle: 'italic', width: '100%' }}
+                  style={{
+                     color: 'red',
+                     font: 'MetropolisRegularItalic',
+                     width: '100%',
+                  }}
                >
                   {error}
                </Text>

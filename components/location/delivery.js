@@ -236,7 +236,7 @@ export const Delivery = () => {
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View style={styles.deliveryTime}>
-            <Text>Delivery Time</Text>
+            <Text style={{ fontFamily: 'Metropolis' }}>Delivery Time</Text>
             <View style={{ flexDirection: 'row' }}>
                {deliveryRadioOptions.map((option, index) => (
                   <Button

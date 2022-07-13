@@ -394,6 +394,7 @@ const styles = StyleSheet.create({
       width: '80%',
       borderRadius: 8,
       text: {
+         fontFamily: 'Metropolis',
          textAlign: 'center',
       },
       marginTop: 15,
@@ -401,7 +402,7 @@ const styles = StyleSheet.create({
    heading: {
       textAlign: 'center',
       marginVertical: 24,
-      fontWeight: '500',
+      fontFamily: 'MetropolisBold',
       fontSize: 24,
       lineHeight: 24,
       color: '#000000',
@@ -422,12 +423,14 @@ const styles = StyleSheet.create({
       padding: 10,
    },
    paymentOptionCardHeader: {
+      fontFamily: 'MetropolisMedium',
       fontSize: 12,
       lineHeight: 14,
       color: 'rgba(0, 0, 0, 0.8)',
       margin: 2,
    },
    paymentOptionCardTitle: {
+      fontFamily: 'MetropolisMedium',
       fontSize: 16,
       lineHeight: 18,
       color: '#000',

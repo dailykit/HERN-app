@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
       marginBottom: 8,
    },
    modalSubtitle: {
+      fontFamily: 'Metropolis',
       fontSize: 11,
       lineHeight: 13,
       color: '#A2A2A2',

@@ -225,16 +225,14 @@ const styles = StyleSheet.create({
       marginBottom: 69,
    },
    headingText: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisSemiBold',
       fontSize: 28,
-      fontWeight: '600',
       lineHeight: 28,
    },
    subHeadingText: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisMedium',
       fontSize: 14,
       lineHeight: 18,
-      fontWeight: '500',
       width: '80%',
       textAlign: 'center',
       marginHorizontal: 'auto',

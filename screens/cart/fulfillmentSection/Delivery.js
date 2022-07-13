@@ -602,7 +602,13 @@ export const Delivery = () => {
                alignItems: 'center',
             }}
          >
-            <Text style={{ alignSelf: 'flex-start', marginBottom: 5 }}>
+            <Text
+               style={{
+                  fontFamily: 'MetropolisSemiBold',
+                  alignSelf: 'flex-start',
+                  marginBottom: 5,
+               }}
+            >
                When would you like to order?
             </Text>
             <View style={styles.fulfillmentButtonGroup}>
