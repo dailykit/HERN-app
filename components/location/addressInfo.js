@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
    },
    addressText: {
       color: 'rgba(0, 0, 0, 0.6)',
-      fontWeight: '500',
+      fontFamily: 'Metropolis',
       fontSize: 13,
    },
 })

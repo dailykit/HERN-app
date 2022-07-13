@@ -130,7 +130,7 @@ const MenuScreen = ({ route }) => {
          {status === 'loading' ? (
             <Spinner size="large" showText={true} />
          ) : status === 'error' ? (
-            <Text>Error</Text>
+            <Text style={{ fontFamily: 'MetropolisMedium' }}>Error</Text>
          ) : null}
          {status === 'success' ? (
             <>
@@ -238,10 +238,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
    categoryListName: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisMedium',
       fontSize: 24,
       lineHeight: 36,
-      fontWeight: '600',
       marginHorizontal: 12,
    },
    searchBar: {

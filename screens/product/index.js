@@ -157,7 +157,9 @@ const ProductScreen = () => {
    if (productError) {
       return (
          <View>
-            <Text>Something went wrong</Text>
+            <Text style={{ fontFamily: 'MetropolisMedium' }}>
+               Something went wrong
+            </Text>
          </View>
       )
    }

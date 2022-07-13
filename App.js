@@ -19,6 +19,11 @@ const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 export default function App() {
    const [fontLoaded] = useFonts({
       Metropolis: require('./assets/fonts/Metropolis-Regular.otf'),
+      MetropolisBold: require('./assets/fonts/Metropolis-Bold.otf'),
+      MetropolisMedium: require('./assets/fonts/Metropolis-Medium.otf'),
+      MetropolisSemiBold: require('./assets/fonts/Metropolis-SemiBold.otf'),
+      MetropolisRegularItalic: require('./assets/fonts/Metropolis-RegularItalic.otf'),
+      MetropolisMediumItalic: require('./assets/fonts/Metropolis-MediumItalic.otf'),
    })
 
    if (!fontLoaded) {

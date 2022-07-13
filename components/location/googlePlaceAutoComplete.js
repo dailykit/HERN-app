@@ -37,12 +37,14 @@ export const GooglePlacesAutocompleteWrapper = ({
             }}
             styles={{
                textInput: {
+                  fontFamily: 'MetropolisMedium',
                   shadowColor: '#000000',
                   elevation: 6,
                   paddingRight: 35,
                   borderRadius: 8,
                },
                listView: {
+                  fontFamily: 'MetropolisMedium',
                   zIndex: 10000,
                   position: 'absolute',
                   top: 50,

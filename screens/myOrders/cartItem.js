@@ -26,7 +26,9 @@ export const CartItem = ({ products, createdAt }) => {
                            marginRight: 10,
                         }}
                      >
-                        <Text>{product.name} </Text>
+                        <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                           {product.name}{' '}
+                        </Text>
                      </View>
                   </View>
                </View>
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
       fontWeight: '500',
    },
    itemCount: {
+      fontFamily: 'MetropolisSemiBold',
       fontSize: 14,
       fontWeight: '500',
    },
@@ -93,6 +96,6 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
    },
    orderDate: {
-      fontStyle: 'italic',
+      fontFamily: 'MetropolisRegularItalic',
    },
 })

@@ -174,7 +174,9 @@ export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
 const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
    return (
       <View key={eachOrderStatus.step}>
-         <Text>{eachOrderStatus.label}</Text>
+         <Text style={{ fontFamily: 'Metropolis' }}>
+            {eachOrderStatus.label}
+         </Text>
          {!isEmpty(deliveryInfo) &&
          eachOrderStatus.step == 'ORDER_READY_TO_DISPATCH' ? (
             <View

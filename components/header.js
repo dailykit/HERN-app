@@ -120,7 +120,7 @@ export const Header = () => {
                         color:
                            appConfig?.brandSettings.headerSettings?.textColor
                               ?.value || '#000000',
-                        fontStyle: 'italic',
+                        fontFamily: 'MetropolisRegularItalic',
                      }}
                   >
                      Getting your location
@@ -132,6 +132,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
+                           fontFamily: 'MetropolisSemiBold',
                         }}
                      >
                         {label}
@@ -141,6 +142,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
+                           fontFamily: 'Metropolis',
                         }}
                      >
                         {userLocation?.label
@@ -179,6 +181,7 @@ export const Header = () => {
                               ?.cartItemCountBackgroundColor?.value,
                         color: appConfig?.brandSettings.headerSettings
                            ?.cartItemCountTextColor?.value,
+                        fontFamily: 'Metropolis',
                      },
                   ]}
                >

@@ -103,6 +103,7 @@ export const TimeSlots = ({
 
 const styles = StyleSheet.create({
    headingStyle: {
+      fontFamily: 'MetropolisSemiBold',
       fontWeight: '500',
       color: '#00000060',
       marginVertical: 6,

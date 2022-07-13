@@ -47,7 +47,9 @@ const OffersScreen = () => {
             {isCouponsLoading ? (
                <Spinner size={'large'} showText={true} />
             ) : error ? (
-               <Text>Something went wrong</Text>
+               <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                  Something went wrong
+               </Text>
             ) : availableCoupons.length === 0 ? (
                <View
                   style={{

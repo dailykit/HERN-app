@@ -120,10 +120,14 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                         <View style={{ flex: 11 }}>
                            <Text style={styles.storeLabel}>{label}</Text>
                            <View>
-                              <Text>{line1}</Text>
-                              <Text>{line2}</Text>
+                              <Text style={{ fontFamily: 'Metropolis' }}>
+                                 {line1}
+                              </Text>
+                              <Text style={{ fontFamily: 'Metropolis' }}>
+                                 {line2}
+                              </Text>
                               <View>
-                                 <Text>
+                                 <Text style={{ fontFamily: 'Metropolis' }}>
                                     {city} {state} {country}
                                     {' ('}
                                     {zipcode}
@@ -154,7 +158,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
 
 const styles = StyleSheet.create({
    storeLabel: {
-      fontWeight: '500',
+      fontFamily: 'Metropolis',
       fontSize: 16,
    },
    storeCard: {

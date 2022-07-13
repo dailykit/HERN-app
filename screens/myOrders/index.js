@@ -58,7 +58,9 @@ const MyOrdersScreen = () => {
             orderHistoryLoading || componentStatus === 'loading' ? (
                <Spinner size="large" showText={true} />
             ) : error ? (
-               <Text>Something went wrong</Text>
+               <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                  Something went wrong
+               </Text>
             ) : (
                <View style={{ padding: 10 }}>
                   <ScrollView>
@@ -84,7 +86,9 @@ const MyOrdersScreen = () => {
 const NoOrdersAvailable = () => {
    return (
       <View>
-         <Text>No orders available</Text>
+         <Text style={{ fontFamily: 'MetropolisMedium' }}>
+            No orders available
+         </Text>
       </View>
    )
 }
@@ -208,7 +212,7 @@ const OrderStatus = ({ order }) => {
 const PleaseLogIn = () => {
    return (
       <View>
-         <Text>Please login</Text>
+         <Text style={{ fontFamily: 'MetropolisMedium' }}>Please login</Text>
       </View>
    )
 }
