@@ -16,6 +16,7 @@ import { NoDataIcon } from '../../../assets/noDataIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
+import PaymentOptionsRenderer from '../../../components/paymentOptionRenderer'
 
 const WalletScreen = () => {
    const { isLoading } = useUser()
@@ -162,6 +163,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
 
 const AddWalletAmount = ({ setShowTopUpTab }) => {
    const { appConfig } = useConfig()
+   const { user } = useUser()
    const [amount, setAmount] = useState(0)
    const predefinedAmount = React.useMemo(() => {
       return [
@@ -228,7 +230,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
             <TextInput
                style={styles.input}
                onChangeText={setAmount}
-               value={amount}
+               value={`${amount}`}
                placeholder="Enter amount..."
                keyboardType="numeric"
             />
@@ -261,7 +263,40 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                })}
             </View>
          </View>
-         <View style={{ flex: 8 }}></View>
+
+         <View style={{ flex: 8 }}>
+            {amount ? (
+               <PaymentOptionsRenderer
+                  amount={amount}
+                  availablePaymentOptionIds={
+                     appConfig?.data?.walletPaymentOptions?.value.map(op => {
+                        let optionId = parseInt(op[0]?.value?.id)
+                        return optionId
+                     }) || []
+                  }
+                  metaData={{
+                     paymentFor: 'walletTopUp',
+                     walletId: user.wallet.id,
+                     customerkeycloakId: user.keycloakId,
+                     amount: amount,
+                     walletAmount: amount,
+                  }}
+                  setPaymentTunnelOpen={() => {
+                     console.log('Payment Closed')
+                  }}
+                  onPaymentSuccess={() => {
+                     console.log(
+                        '===> Payment Success! [in functioned passed in paymentOptionRenderer]'
+                     )
+                  }}
+                  onPaymentCancel={() => {
+                     console.log(
+                        '===> Payment Canceled! [in functioned passed in paymentOptionRenderer]'
+                     )
+                  }}
+               />
+            ) : null}
+         </View>
       </View>
    )
 }

@@ -219,8 +219,16 @@ const PaymentProcessingModal = ({
    return (
       <Modal closeOnClickOutside={false} visible={isOpen} onClose={closeModal}>
          {ShowPaymentStatusInfo(cartPayment?.paymentStatus).icon}
-         {ShowPaymentStatusInfo(cartPayment?.paymentStatus).title}
-         {ShowPaymentStatusInfo(cartPayment?.paymentStatus).subtitle}
+         {cartPayment?.metaData?.paymentFor !== 'walletTopUp' ? (
+            <>
+               {ShowPaymentStatusInfo(cartPayment?.paymentStatus).title}
+               {ShowPaymentStatusInfo(cartPayment?.paymentStatus).subtitle}
+            </>
+         ) : (
+            <Text style={styles.modalTitle}>
+               Successfully top-up your wallet
+            </Text>
+         )}
          {ShowPaymentStatusInfo(cartPayment?.paymentStatus).extra}
          {!isEmpty(cartPayment) &&
             !['SUCCEEDED', 'FAILED', 'CANCELLED', 'QR_GENERATED'].includes(

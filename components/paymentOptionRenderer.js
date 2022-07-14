@@ -70,9 +70,7 @@ export default function PaymentOptionsRenderer({
          variables: {
             ids: availablePaymentOptionIds,
          },
-         onSubscriptionData: data => {
-            console.log('==> Payment option renderer: ', data)
-         },
+         onSubscriptionData: data => {},
       })
    }
 
@@ -239,7 +237,6 @@ export default function PaymentOptionsRenderer({
                      availablePaymentOptions.map(option => (
                         <PaymentOptionCard
                            key={option?.id}
-                           setPaymentTunnelOpen={setPaymentTunnelOpen}
                            title={
                               option?.label ||
                               option?.supportedPaymentOption?.paymentOptionLabel
@@ -265,50 +262,43 @@ export default function PaymentOptionsRenderer({
                      ))
                   ) : (
                      <View style={styles.Main}>
-                        <div tw="pt-4 w-full">
-                           <HelperBar type="info">
-                              <HelperBar.Title>
-                                 No payment options available.
-                              </HelperBar.Title>
-                           </HelperBar>
-                        </div>
+                        <HelperBar type="info">
+                           <HelperBar.Title>
+                              No payment options available.
+                           </HelperBar.Title>
+                        </HelperBar>
                      </View>
                   )}
                </ScrollView>
-               {paymentInfo?.selectedAvailablePaymentOption
-                  ?.supportedPaymentOption?.supportedPaymentCompany.label !==
-                  'stripe' && (
-                  <PayButton
-                     cartId={cartId}
-                     balanceToPay={cart?.cartOwnerBilling?.balanceToPay}
-                     metaData={metaData}
-                     style={{
-                        ...styles.payButton,
-                        backgroundColor:
-                           appConfig?.brandSettings?.buttonSettings
-                              ?.buttonBGColor?.value || '#222222',
-                     }}
-                  >
-                     <Text
+               {(cart?.availablePaymentOptionToCart?.length > 0 ||
+                  availablePaymentOptions.length > 0) &&
+                  paymentInfo?.selectedAvailablePaymentOption
+                     ?.supportedPaymentOption?.supportedPaymentCompany &&
+                  paymentInfo?.selectedAvailablePaymentOption
+                     ?.supportedPaymentOption?.supportedPaymentCompany.label !==
+                     'stripe' && (
+                     <PayButton
+                        cartId={cartId}
+                        balanceToPay={cart?.cartOwnerBilling?.balanceToPay}
+                        metaData={metaData}
                         style={{
-                           ...styles.payButton.text,
-                           color:
+                           ...styles.payButton,
+                           backgroundColor:
                               appConfig?.brandSettings?.buttonSettings
-                                 ?.textColor?.value || '#ffffff',
+                                 ?.buttonBGColor?.value || '#222222',
                         }}
                      >
-                        Pay Now
-                     </Text>
-                  </PayButton>
-               )}
-               {paymentInfo?.selectedAvailablePaymentOption
-                  ?.supportedPaymentOption?.supportedPaymentCompany.label ===
-                  'stripe' &&
-                  false &&
-                  user?.platform_customer?.paymentMethods.length > 0 && (
-                     <OutlineButton onClick={() => toggleTunnel(true)}>
-                        Add New Card
-                     </OutlineButton>
+                        <Text
+                           style={{
+                              ...styles.payButton.text,
+                              color:
+                                 appConfig?.brandSettings?.buttonSettings
+                                    ?.textColor?.value || '#ffffff',
+                           }}
+                        >
+                           Pay Now
+                        </Text>
+                     </PayButton>
                   )}
             </View>
          )}
