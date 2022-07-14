@@ -44,7 +44,7 @@ export const OTPform = ({
                setShowResendBtn(true)
             }}
          >
-            <Text style={{ color: 'red', fontFamily: 'Metropolis' }}>
+            <Text style={{ color: 'red', fontFamily: 'MetropolisMedium' }}>
                Resend OTP
             </Text>
          </TouchableOpacity>
@@ -87,7 +87,7 @@ export const OTPform = ({
                >
                   An OTP has been sent to
                   <Text
-                     style={{ fontSize: 11.5, fontFamily: 'Metropolis' }}
+                     style={{ fontSize: 11.5, fontFamily: 'MetropolisMedium' }}
                   >{`  ${form?.phoneNumber || ''}`}</Text>
                </Text>
                <TouchableOpacity
@@ -111,7 +111,10 @@ export const OTPform = ({
                </TouchableOpacity>
             </View>
             <OTPInputView
-               style={{ width: '100%', height: 100 }}
+               style={{
+                  width: '100%',
+                  height: 100,
+               }}
                pinCount={6}
                // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
                onCodeChanged={code => {
@@ -132,7 +135,7 @@ export const OTPform = ({
                <Text
                   style={{
                      color: 'red',
-                     font: 'MetropolisRegularItalic',
+                     fontFamily: 'MetropolisRegularItalic',
                      width: '100%',
                   }}
                >
@@ -248,6 +251,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#242424',
       borderRadius: 6,
       // borderBottomWidth: 1,
+      fontFamily: 'MetropolisMedium',
    },
 
    underlineStyleHighLighted: {

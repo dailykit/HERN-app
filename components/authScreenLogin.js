@@ -22,10 +22,14 @@ export const LoginScreenForAuthScreen = () => {
                alignItems: 'center',
             }}
          >
-            <Text style={{ fontWeight: '500', fontSize: 20 }}>
+            <Text style={{ fontFamily: 'MetropolisSemiBold', fontSize: 20 }}>
                Oops! You're not logged in yet
             </Text>
-            <Text style={{ color: '#00000060' }}>Login to continue</Text>
+            <Text
+               style={{ fontFamily: 'MetropolisMedium', color: '#00000060' }}
+            >
+               Login to continue
+            </Text>
          </View>
          <View
             style={{

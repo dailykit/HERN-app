@@ -76,6 +76,7 @@ export const MobileNumberForm = ({
                      style={{
                         color: appConfig.brandSettings.buttonSettings
                            .activeTextColor.value,
+                        fontSize: 12,
                         fontFamily: 'Metropolis',
                      }}
                   >
@@ -182,12 +183,14 @@ const styles = StyleSheet.create({
       borderRadius: 6,
    },
    textInputStyle: {
+      fontFamily: 'MetropolisMedium',
       borderLeftWidth: 4,
       fontSize: 16,
       lineHeight: 20,
       color: '#FFFFFF',
    },
    codeTextStyle: {
+      fontFamily: 'MetropolisMedium',
       color: '#FFFFFF',
    },
    termAndCond: {

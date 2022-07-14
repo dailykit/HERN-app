@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
    image: {},
    productName: {
       fontSize: 18,
-      fontWeight: '500',
+      fontFamily: 'MetropolisSemiBold',
    },
    productDetails: {
       paddingHorizontal: 21,
@@ -336,21 +336,22 @@ const styles = StyleSheet.create({
       marginBottom: 18,
    },
    productOriginalValue: {
+      fontFamily: 'MetropolisMedium',
       fontSize: 12,
       color: '#00000080',
    },
    discountPrice: {
       fontSize: 12,
-      fontWeight: '500',
+      fontFamily: 'MetropolisMedium',
       color: '#00000080',
    },
    additionalText: {
-      fontSize: '500',
+      fontFamily: 'MetropolisMedium',
       fontWeight: 14,
       color: '#00000040',
    },
    description: {
-      fontWeight: '500',
+      fontFamily: 'MetropolisMedium',
       fontSize: 14,
       color: '#A2A2A2',
    },

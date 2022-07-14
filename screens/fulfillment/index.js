@@ -238,6 +238,7 @@ const styles = StyleSheet.create({
       marginHorizontal: 'auto',
    },
    commonText: {
+      fontFamily: 'MetropolisMedium',
       color: '#fff',
    },
    pressedBtn: {
