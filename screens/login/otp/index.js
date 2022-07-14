@@ -7,6 +7,8 @@ import {
    TouchableOpacity,
    Dimensions,
    Image,
+   Platform,
+   KeyboardAvoidingView,
 } from 'react-native'
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { Button } from '../../../components/button'
@@ -247,74 +249,82 @@ export const OtpLogin = () => {
    }
 
    return (
-      <View
+      <KeyboardAvoidingView
+         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
          style={{
             flex: 1,
             alignItems: 'center',
             backgroundColor: '#000000',
          }}
       >
-         {(appConfig?.data?.showLoginSkipButton?.value ||
-            (appConfig?.data?.showLoginSkipButton?.value === undefined &&
-               appConfig?.data?.showLoginSkipButton?.default)) && (
-            <TouchableOpacity
-               style={{
-                  position: 'absolute',
-                  right: 20,
-                  top: 20,
-                  padding: 8,
-               }}
-               onPress={() => {
-                  redirect()
-               }}
-            >
-               <Text
+         <View
+            style={{
+               alignItems: 'center',
+            }}
+         >
+            {(appConfig?.data?.showLoginSkipButton?.value ||
+               (appConfig?.data?.showLoginSkipButton?.value === undefined &&
+                  appConfig?.data?.showLoginSkipButton?.default)) && (
+               <TouchableOpacity
                   style={{
-                     color: appConfig.brandSettings.buttonSettings
-                        .activeTextColor.value,
-                     fontFamily: 'Metropolis',
+                     position: 'absolute',
+                     right: 20,
+                     top: 20,
+                     padding: 8,
+                  }}
+                  onPress={() => {
+                     redirect()
                   }}
                >
-                  Skip
-               </Text>
-            </TouchableOpacity>
-         )}
-         <View style={{ flex: 1, justifyContent: 'center' }}>
-            <Image
-               source={{
-                  uri: appConfig.brandSettings.brandLogo.value,
-                  width: 120,
-                  height: 73,
-               }}
-            />
+                  <Text
+                     style={{
+                        color: appConfig.brandSettings.buttonSettings
+                           .activeTextColor.value,
+                        fontFamily: 'Metropolis',
+                     }}
+                  >
+                     Skip
+                  </Text>
+               </TouchableOpacity>
+            )}
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+               <Image
+                  source={{
+                     uri: appConfig.brandSettings.brandLogo.value,
+                     width: 120,
+                     height: 73,
+                  }}
+               />
+            </View>
+
+            {currentScreen === 'phoneNumber' ? (
+               <MobileNumberForm
+                  changeCurrentScreen={changeCurrentScreen}
+                  setForm={setForm}
+                  sendOTP={sendOTP}
+                  sendingOtp={sendingOtp}
+                  form={form}
+                  error={error}
+                  setError={setError}
+               />
+            ) : null}
+            {currentScreen === 'OTPSubmit' ? (
+               <OTPform
+                  form={form}
+                  setForm={setForm}
+                  setCurrentScreen={setCurrentScreen}
+                  clearState={clearState}
+                  submit={submit}
+                  loading={loading}
+                  error={error}
+                  setError={setError}
+                  time={time}
+                  resend={resend}
+                  resending={resending}
+                  otp={otp}
+               />
+            ) : null}
          </View>
-         {currentScreen === 'phoneNumber' ? (
-            <MobileNumberForm
-               changeCurrentScreen={changeCurrentScreen}
-               setForm={setForm}
-               sendOTP={sendOTP}
-               sendingOtp={sendingOtp}
-               form={form}
-               error={error}
-               setError={setError}
-            />
-         ) : null}
-         {currentScreen === 'OTPSubmit' ? (
-            <OTPform
-               form={form}
-               setForm={setForm}
-               setCurrentScreen={setCurrentScreen}
-               clearState={clearState}
-               submit={submit}
-               loading={loading}
-               error={error}
-               setError={setError}
-               time={time}
-               resend={resend}
-               resending={resending}
-               otp={otp}
-            />
-         ) : null}
-      </View>
+      </KeyboardAvoidingView>
    )
 }
