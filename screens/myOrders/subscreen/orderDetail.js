@@ -13,6 +13,7 @@ import { ProfileIcon } from '../../../assets/profileIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
+import global from '../../../globalStyles'
 
 const OrderDetailScreen = ({ products, createdAt }) => {
    const { appConfig } = useConfig()
@@ -84,7 +85,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
          {componentStatus === 'loading' ? (
             <Spinner size={'large'} showText={true} />
          ) : componentStatus === 'error' ? (
-            <Text style={{ fontFamily: 'MetropolisMedium' }}>
+            <Text style={{ fontFamily: global.medium }}>
                Something went wrong
             </Text>
          ) : (
@@ -97,30 +98,32 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                   }}
                >
                   <View style={styles.userInfo}>
-                     <Text style={{ fontFamily: 'MetropolisSemiBold' }}>
+                     <Text style={{ fontFamily: global.semibold }}>
                         <ProfileIcon /> {'  '}
                         {carts[0].customerInfo.customerFirstName}{' '}
                         {carts[0].customerInfo.customerLastName}
                      </Text>
-                     <Text style={{ fontFamily: 'Metropolis', marginLeft: 20 }}>
+                     <Text
+                        style={{ fontFamily: global.regular, marginLeft: 20 }}
+                     >
                         {carts[0].customerInfo.customerPhone}
                      </Text>
                   </View>
                   <View style={styles.addressContainer}>
                      <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontFamily: 'MetropolisSemiBold' }}>
+                        <Text style={{ fontFamily: global.semibold }}>
                            {label}
                         </Text>
                      </View>
                      {carts[0].address.label ? (
-                        <Text style={{ fontFamily: 'Metropolis' }}>
+                        <Text style={{ fontFamily: global.regular }}>
                            carts[0].address.label
                         </Text>
                      ) : null}
                      <Text
-                        style={{ fontFamily: 'Metropolis' }}
+                        style={{ fontFamily: global.regular }}
                      >{`${carts[0].address?.line1}`}</Text>
-                     <Text style={{ fontFamily: 'Metropolis' }}>
+                     <Text style={{ fontFamily: global.regular }}>
                         {`${carts[0].address?.city} ${carts[0].address?.state} ${carts[0].address?.country},${carts[0].address?.zipcode}`}
                      </Text>
                   </View>
@@ -150,12 +153,12 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                      <Text
                         style={{
                            marginHorizontal: 6,
-                           fontFamily: 'MetropolisSemiBold',
+                           fontFamily: global.semibold,
                         }}
                      >
                         Payment Details:
                      </Text>
-                     <Text style={{ fontFamily: 'Metropolis' }}>
+                     <Text style={{ fontFamily: global.regular }}>
                         {carts[0].availablePaymentOption?.label || 'N/A'}
                      </Text>
                   </View>
@@ -189,7 +192,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                     />
                                     <Text
                                        style={{
-                                          fontFamily: 'MetropolisMedium',
+                                          fontFamily: global.medium,
                                        }}
                                     >
                                        {product.name}{' '}
@@ -198,10 +201,11 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                              <>
                                                 <Text
                                                    style={{
-                                                      fontFamily: 'Metropolis',
+                                                      fontFamily:
+                                                         global.regular,
                                                       textDecorationLine:
                                                          'line-through',
-                                                      color: '#a2a2a2',
+                                                      color: global.greyColor,
                                                       marginRight: 4,
                                                    }}
                                                 >
@@ -211,7 +215,8 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                 </Text>
                                                 <Text
                                                    style={{
-                                                      fontFamily: 'Metropolis',
+                                                      fontFamily:
+                                                         global.regular,
                                                    }}
                                                 >
                                                    {formatCurrency(
@@ -223,7 +228,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                           ) : (
                                              <Text
                                                 style={{
-                                                   fontFamily: 'Metropolis',
+                                                   fontFamily: global.regular,
                                                 }}
                                              >
                                                 {formatCurrency(product.price)}
@@ -235,7 +240,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                               </View>
                               <Text
                                  style={{
-                                    fontFamily: 'Metropolis',
+                                    fontFamily: global.regular,
                                  }}
                               >
                                  x{product.ids.length}
@@ -259,8 +264,9 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                 style={{
                                                    textDecorationLine:
                                                       'line-through',
-                                                   color: '#a2a2a2',
+                                                   color: global.greyColor,
                                                    marginRight: 4,
+                                                   fontFamily: global.regular,
                                                 }}
                                              >
                                                 {formatCurrency(
@@ -316,7 +322,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                                      style={{
                                                                         textDecorationLine:
                                                                            'line-through',
-                                                                        color: '#a2a2a2',
+                                                                        color: global.greyColor,
                                                                         marginRight: 4,
                                                                      }}
                                                                   >
@@ -353,7 +359,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                   <View
                      style={{
                         height: 1,
-                        backgroundColor: '#a2a2a2',
+                        backgroundColor: global.greyColor,
                         marginVertical: 15,
                      }}
                   ></View>
@@ -404,20 +410,20 @@ const styles = StyleSheet.create({
       marginVertical: 6,
    },
    fulfillmentInfo: {
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       color: '#000000',
    },
    itemCount: {
       fontSize: 14,
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
    },
    productOptionText: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.medium,
       marginVertical: 3,
       color: '#00000080',
    },
    modifierOptionText: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.medium,
       marginVertical: 3,
       color: '#00000080',
    },
@@ -426,7 +432,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
    },
    orderDate: {
-      fontFamily: 'MetropolisRegularItalic',
+      fontFamily: global.italic,
    },
    addressContainer: {
       marginVertical: 10,

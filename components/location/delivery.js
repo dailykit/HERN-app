@@ -11,6 +11,7 @@ import { getFormattedAddress } from '../../utils/getFormattedAddress'
 import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
 import { Button } from '../button'
+import global from '../../globalStyles'
 
 export const Delivery = () => {
    const navigation = useNavigation()
@@ -236,7 +237,7 @@ export const Delivery = () => {
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View style={styles.deliveryTime}>
-            <Text style={{ fontFamily: 'Metropolis' }}>Delivery Time</Text>
+            <Text style={{ fontFamily: global.regular }}>Delivery Time</Text>
             <View style={{ flexDirection: 'row' }}>
                {deliveryRadioOptions.map((option, index) => (
                   <Button
@@ -263,11 +264,11 @@ export const Delivery = () => {
          />
          <View style={{ zIndex: -10 }}>
             {locationSearching.loading ? (
-               <Text style={{ fontStyle: 'italic', fontFamily: 'Metropolis' }}>
+               <Text style={{ fontFamily: global.italic }}>
                   Getting your location
                </Text>
             ) : locationSearching.error ? (
-               <Text style={{ color: 'red', fontFamily: 'Metropolis' }}>
+               <Text style={{ color: 'red', fontFamily: global.regular }}>
                   {locationSearching.errorType === 'blockByPermission'
                      ? locationSearching.errorType === 'zipcodeNotFound'
                         ? 'Please select precise location'
@@ -321,8 +322,7 @@ const styles = StyleSheet.create({
    searchingStoreStyle: { marginVertical: 15, alignItems: 'center' },
    findingTextStyle: {
       fontSize: 18,
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
       color: 'rgba(0, 0, 0, 0.8)',
       marginBottom: 16,
    },
@@ -332,13 +332,12 @@ const styles = StyleSheet.create({
    },
    noStoreText1: {
       fontSize: 16,
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: global.regular,
       marginVertical: 4,
    },
    noStoreText2: {
-      fontFamily: 'Metropolis',
-      color: '#A2A2A2',
+      fontFamily: global.regular,
+      color: global.greyColor,
       fontSize: 12,
       marginVertical: 4,
    },

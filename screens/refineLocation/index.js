@@ -23,6 +23,7 @@ import { GooglePlacesAutocompleteWrapper } from '../../components/location/googl
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useCart } from '../../context'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import global from '../../globalStyles'
 
 const RefineLocation = () => {
    const navigation = useNavigation()
@@ -345,7 +346,7 @@ const RefineLocation = () => {
                         style={{
                            marginHorizontal: 8,
                            color: 'red',
-                           fontStyle: 'italic',
+                           fontFamily: global.italic,
                         }}
                      >
                         {googlePlaceAutoCompleteError.message}
@@ -387,8 +388,7 @@ const RefineLocation = () => {
             buttonStyle={{ height: 40, margin: 12, marginVertical: 6 }}
             textStyle={{
                fontSize: 18,
-               fontWeight: '500',
-               fontFamily: 'Metropolis',
+               fontFamily: global.regular,
             }}
             disabled={
                !isStoreAvailableOnAddress ||
@@ -564,19 +564,17 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    refineLocationText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: global.regular,
       fontSize: 16,
       lineHeight: 16,
    },
    formLabel: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 12,
-      fontWeight: '600',
-      color: '#A2A2A2',
+      color: global.greyColor,
    },
    inputField: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       height: 40,
       backgroundColor: '#ffffff',
       borderRadius: 6,

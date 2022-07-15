@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LeftArrow } from '../../assets/arrowIcon'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
 
 export const CartHeader = () => {
    const { appConfig } = useConfig()
@@ -55,8 +56,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    headerTextStyle: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 16,
-      fontWeight: '500',
    },
 })

@@ -5,6 +5,7 @@ import { Button } from './button'
 import Modal from 'react-native-modal'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useConfig } from '../lib/config'
+import global from '../globalStyles'
 
 export const FloatingMenu = ({
    hydratedMenu,
@@ -97,7 +98,7 @@ export const FloatingMenu = ({
                fontSize: 16,
                paddingHorizontal: 8,
                color: '#000000',
-               fontWeight: '600',
+               fontFamily: global.medium,
             }}
             additionalIcon={Icon}
             onPress={() => {
@@ -126,9 +127,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    categoryText: {
-      fontWeight: '600',
       fontSize: 12,
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       color: '#00000085',
    },
 })

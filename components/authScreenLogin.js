@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, View } from 'react-native'
 import { LoginIcon } from '../assets/loginIcon'
 import { Button } from './button'
+import global from '../globalStyles'
 
 // this will render on screen where customer has to be authorize to access that screen
 export const LoginScreenForAuthScreen = () => {
@@ -22,12 +23,10 @@ export const LoginScreenForAuthScreen = () => {
                alignItems: 'center',
             }}
          >
-            <Text style={{ fontFamily: 'MetropolisSemiBold', fontSize: 20 }}>
+            <Text style={{ fontFamily: global.semibold, fontSize: 20 }}>
                Oops! You're not logged in yet
             </Text>
-            <Text
-               style={{ fontFamily: 'MetropolisMedium', color: '#00000060' }}
-            >
+            <Text style={{ fontFamily: global.medium, color: '#00000060' }}>
                Login to continue
             </Text>
          </View>

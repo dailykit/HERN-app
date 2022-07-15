@@ -3,6 +3,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { combineCartItems } from '../../utils'
 import { formatCurrency } from '../../utils/formatCurrency'
+import global from '../../globalStyles'
 
 export const CartItem = ({ products, createdAt }) => {
    const cartItems = React.useMemo(() => combineCartItems(products), [products])
@@ -26,7 +27,7 @@ export const CartItem = ({ products, createdAt }) => {
                            marginRight: 10,
                         }}
                      >
-                        <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                        <Text style={{ fontFamily: global.medium }}>
                            {product.name}{' '}
                         </Text>
                      </View>
@@ -78,12 +79,10 @@ const styles = StyleSheet.create({
    },
    fulfillmentInfo: {
       color: '#00000080',
-      fontWeight: '500',
    },
    itemCount: {
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 14,
-      fontWeight: '500',
    },
    productOptionText: {
       marginVertical: 3,
@@ -96,6 +95,6 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
    },
    orderDate: {
-      fontFamily: 'MetropolisRegularItalic',
+      fontFamily: global.italic,
    },
 })

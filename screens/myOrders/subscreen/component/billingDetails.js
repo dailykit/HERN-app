@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 // import { useTranslation, useUser } from '../context'
 import { formatCurrency } from '../../../../utils/formatCurrency'
 import { useConfig } from '../../../../lib/config'
+import global from '../../../../globalStyles'
 const user = {}
 export const BillingDetails = ({ billing }) => {
    //    const { user } = useUser()
@@ -30,7 +31,7 @@ export const BillingDetails = ({ billing }) => {
                   {billing.deliveryPrice === 0 ? (
                      <Text
                         style={{
-                           fontWeight: 'bold',
+                           fontFamily: global.bold,
                         }}
                      >
                         {'Free'}
@@ -107,10 +108,8 @@ export const BillingDetails = ({ billing }) => {
                )}
 
                <View style={[styles.rowCommonStyle]}>
-                  <Text style={[styles.textCommonStyle, { fontWeight: '500' }]}>
-                     {'Total'}
-                  </Text>
-                  <Text style={[styles.textCommonStyle, { fontWeight: '500' }]}>
+                  <Text style={styles.textCommonStyle}>{'Total'}</Text>
+                  <Text style={styles.textCommonStyle}>
                      {formatCurrency(billing.totalToPay || 0)}
                   </Text>
                </View>
@@ -130,8 +129,7 @@ const styles = StyleSheet.create({
       marginVertical: 3,
    },
    textCommonStyle: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 14,
-      // fontWeight: '500',
    },
 })

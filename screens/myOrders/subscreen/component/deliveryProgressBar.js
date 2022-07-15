@@ -12,6 +12,7 @@ import { PhoneIcon } from '../../../../assets/phoneIcon'
 import { ProfileIcon } from '../../../../assets/profileIcon'
 import moment from 'moment'
 import { useConfig } from '../../../../lib/config'
+import global from '../../../../globalStyles'
 
 export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
    const { appConfig } = useConfig()
@@ -28,8 +29,8 @@ export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
          separatorFinishedColor: appConfig.brandSettings.brandColor.value,
          separatorUnFinishedColor: '#aaaaaa',
          stepIndicatorFinishedColor: appConfig.brandSettings.brandColor.value,
-         stepIndicatorUnFinishedColor: '#a2a2a2',
-         stepIndicatorCurrentColor: '#a2a2a2',
+         stepIndicatorUnFinishedColor: global.greyColor,
+         stepIndicatorCurrentColor: global.greyColor,
          stepIndicatorLabelFontSize: 13,
          currentStepIndicatorLabelFontSize: 13,
          stepIndicatorLabelCurrentColor:
@@ -174,7 +175,7 @@ export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
 const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
    return (
       <View key={eachOrderStatus.step}>
-         <Text style={{ fontFamily: 'Metropolis' }}>
+         <Text style={{ fontFamily: global.regular }}>
             {eachOrderStatus.label}
          </Text>
          {!isEmpty(deliveryInfo) &&

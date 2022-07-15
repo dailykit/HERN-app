@@ -2,6 +2,7 @@ import { FascinateInline_400Regular } from '@expo-google-fonts/dev'
 import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
 import RadioIcon from '../assets/radioIcon'
 import { useConfig } from '../lib/config'
+import global from '../globalStyles'
 
 export const Button = ({
    children,
@@ -115,6 +116,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
       paddingVertical: 6,
       fontSize: 12,
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
    },
 })

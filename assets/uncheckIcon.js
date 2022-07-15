@@ -1,7 +1,12 @@
 import * as React from 'react'
 import Svg, { Rect } from 'react-native-svg'
+import global from '../globalStyles'
 
-const UncheckIcon = ({ size = 16, fill = '#ffffff', stroke = '#A2A2A2' }) => (
+const UncheckIcon = ({
+   size = 16,
+   fill = '#ffffff',
+   stroke = global.greyColor,
+}) => (
    <Svg
       width={size}
       height={size}

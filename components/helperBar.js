@@ -1,4 +1,6 @@
+import { GFSNeohellenic_700Bold_Italic } from '@expo-google-fonts/dev'
 import { Button, View, Text, StyleSheet } from 'react-native'
+import global from '../globalStyles'
 
 export const HelperBar = ({ type = 'info', children }) => {
    return (
@@ -60,17 +62,18 @@ const styles = StyleSheet.create({
       paddingVertical: 4,
       paddingHorizontal: 8,
       borderRadius: 4,
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 14,
       lineHeight: 20,
    },
    hernHelperBar__title: {
       textAlign: 'center',
-      fontFamily: 'Metropolis',
+      fontFamily: global.medium,
       fontSize: 15,
       lineHeight: 18,
    },
    hernHelperBar__subtitle: {
+      fontFamily: global.regular,
       textAlign: 'center',
    },
 })

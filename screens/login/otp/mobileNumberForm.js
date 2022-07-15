@@ -10,6 +10,7 @@ import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { Button } from '../../../components/button'
 import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
+import global from '../../../globalStyles'
 
 export const MobileNumberForm = ({
    setForm,
@@ -28,7 +29,7 @@ export const MobileNumberForm = ({
                style={{
                   color: '#ffffff',
                   fontSize: 24,
-                  fontFamily: 'MetropolisMedium',
+                  fontFamily: global.medium,
                }}
             >
                LOGIN
@@ -66,7 +67,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: 'Metropolis',
+                     fontFamily: global.regular,
                   }}
                >
                   By continuing, I agree to the{' '}
@@ -77,7 +78,7 @@ export const MobileNumberForm = ({
                         color: appConfig.brandSettings.buttonSettings
                            .activeTextColor.value,
                         fontSize: 12,
-                        fontFamily: 'Metropolis',
+                        fontFamily: global.regular,
                      }}
                   >
                      Terms of Use{' '}
@@ -87,7 +88,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: 'Metropolis',
+                     fontFamily: global.regular,
                   }}
                >
                   &{' '}
@@ -98,7 +99,7 @@ export const MobileNumberForm = ({
                         color: appConfig.brandSettings.buttonSettings
                            .activeTextColor.value,
                         fontSize: 12,
-                        fontFamily: 'Metropolis',
+                        fontFamily: global.regular,
                      }}
                   >
                      Privacy Policy
@@ -109,7 +110,7 @@ export const MobileNumberForm = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: 'MetropolisRegularItalic',
+                     fontFamily: global.italic,
                   }}
                >
                   {error}
@@ -176,21 +177,20 @@ const styles = StyleSheet.create({
       borderRadius: 6,
       height: 50,
       width: '100%',
-      fontWeight: 500,
    },
    textContainerStyle: {
       backgroundColor: '#242424',
       borderRadius: 6,
    },
    textInputStyle: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       borderLeftWidth: 4,
       fontSize: 16,
       lineHeight: 20,
       color: '#FFFFFF',
    },
    codeTextStyle: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       color: '#FFFFFF',
    },
    termAndCond: {

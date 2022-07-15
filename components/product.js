@@ -24,6 +24,7 @@ import { client } from '../lib/apollo'
 import { getCartItemWithModifiers } from '../utils'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from './modalBackdrop'
+import global from '../globalStyles'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -85,7 +86,7 @@ export const ProductList = ({
                })
             ) : (
                <View style={styles.noProductsMsgContainer}>
-                  <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                  <Text style={{ fontFamily: global.medium }}>
                      No Products Found
                   </Text>
                </View>
@@ -624,9 +625,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
             >
                <View style={{ backgroundColor: 'white', padding: 12 }}>
                   <View style={{ marginBottom: 12 }}>
-                     <Text
-                        style={{ fontSize: 16, fontFamily: 'MetropolisMedium' }}
-                     >
+                     <Text style={{ fontSize: 16, fontFamily: global.medium }}>
                         Repeat last used customization?
                      </Text>
                   </View>
@@ -670,10 +669,9 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
 
 const styles = StyleSheet.create({
    productListHeading: {
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 20,
       lineHeight: 20,
-      fontWeight: '500',
       color: '#fff',
       paddingLeft: 12,
       marginTop: 12,
@@ -699,12 +697,11 @@ const styles = StyleSheet.create({
    },
    floatingImage: {},
    productName: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 12,
-      fontWeight: '500',
    },
    additionalText: {
-      fontWeight: '500',
+      fontFamily: global.regular,
       fontSize: 10,
       lineHeight: 10,
       marginVertical: 3,
@@ -730,16 +727,16 @@ const styles = StyleSheet.create({
       color: 'rgba(24, 24, 24, 0.28)',
       textDecorationLine: 'line-through',
       textDecorationStyle: 'solid',
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 10,
    },
    productDiscountValue: {
       color: '#181818',
       fontSize: 12,
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
    },
    noProductsMsgContainer: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       display: 'flex',
       height: '100%',
       justifyContent: 'center',

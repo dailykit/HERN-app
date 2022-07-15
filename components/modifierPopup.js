@@ -25,6 +25,7 @@ import { useCart } from '../context'
 import { getCartItemWithModifiers } from '../utils'
 import { Spinner } from '../assets/loaders'
 import { ScrollView } from 'react-native-gesture-handler'
+import global from '../globalStyles'
 
 export const ModifierPopup = ({
    closeModifier,
@@ -421,12 +422,12 @@ export const ModifierPopup = ({
                                  textDecorationLine: 'line-through',
                                  marginRight: 5,
                                  fontSize: 12,
-                                 color: '#A2A2A2',
+                                 color: global.greyColor,
                               }}
                            >
                               {formatCurrency(productData.price)}
                            </Text>
-                           <Text style={{ fontWeight: '500' }}>
+                           <Text style={{ fontFamily: global.regular }}>
                               {formatCurrency(
                                  getPriceWithDiscount(
                                     productData.price,
@@ -436,7 +437,7 @@ export const ModifierPopup = ({
                            </Text>
                         </View>
                      ) : (
-                        <Text style={{ fontWeight: '500' }}>
+                        <Text style={{ fontFamily: global.regular }}>
                            {formatCurrency(productData.price)}
                         </Text>
                      )
@@ -661,7 +662,7 @@ const AdditionalModifiers = ({
                      flexDirection: 'row',
                   }}
                >
-                  <Text style={{ fontWeight: '600', fontFamily: 'Metropolis' }}>
+                  <Text style={{ fontFamily: global.regular }}>
                      {eachAdditionalModifier.label}
                   </Text>
 
@@ -714,8 +715,7 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    customizationText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: global.regular,
       fontSize: 16,
       lineHeight: 16,
    },
@@ -725,16 +725,14 @@ const styles = StyleSheet.create({
       marginVertical: 10,
    },
    productName: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
       fontSize: 14,
       lineHeight: 14,
       flexShrink: 1,
       marginHorizontal: 4,
    },
    description: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
       fontSize: 10,
       lineHeight: 12,
       color: 'rgba(0, 0, 0, 0.6)',
@@ -747,8 +745,7 @@ const styles = StyleSheet.create({
       paddingVertical: 6,
       color: '#000',
       fontSize: 14,
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
    },
    footer: {
       display: 'flex',

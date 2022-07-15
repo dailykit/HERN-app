@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { useConfig } from '../../../lib/config'
 import { Delivery } from './Delivery'
 import { Pickup } from './Pickup'
+import global from '../../../globalStyles'
 
 export const FulfillmentSection = () => {
    const { orderTabs, selectedOrderTab } = useConfig()
@@ -35,9 +36,7 @@ export const FulfillmentSection = () => {
    return (
       <View style={styles.fulfillmentContainer}>
          <View>
-            <Text
-               style={{ fontFamily: 'MetropolisMedium', color: '#00000080' }}
-            >
+            <Text style={{ fontFamily: global.medium, color: '#00000080' }}>
                {fulfillmentLabel}
             </Text>
          </View>

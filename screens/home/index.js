@@ -19,6 +19,7 @@ import { onDemandMenuContext } from '../../context'
 import { PRODUCTS_QUERY } from '../../graphql'
 import { useQuery } from '@apollo/client'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import global from '../../globalStyles'
 
 const HomeScreen = () => {
    const { brand, locationId, brandLocation, appConfig } = useConfig()
@@ -141,7 +142,7 @@ const HomeScreen = () => {
                            ...styles.orderNowBtn,
                            color:
                               appConfig?.brandSettings?.orderNow?.btnColor
-                                 ?.value || '#EF5266',
+                                 ?.value || global.primaryColor,
                         }}
                      >
                         Order Now
@@ -201,14 +202,12 @@ const styles = StyleSheet.create({
    categoryListName: {
       fontSize: 24,
       lineHeight: 36,
-      fontWeight: '600',
       marginHorizontal: 12,
    },
    trendingNowHeading: {
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 20,
       lineHeight: 20,
-      fontWeight: '500',
       color: '#fff',
       paddingLeft: 12,
       marginTop: 12,
@@ -233,7 +232,7 @@ const styles = StyleSheet.create({
       borderTopRightRadius: 16,
    },
    orderNowHeading: {
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 13.5,
       lineHeight: 16,
       textAlign: 'center',
@@ -241,8 +240,7 @@ const styles = StyleSheet.create({
       marginBottom: 6,
    },
    orderNowSubHeading: {
-      fontFamily: 'MetropolisMedium',
-      fontWeight: '400',
+      fontFamily: global.medium,
       fontSize: 10,
       lineHeight: 12,
       textAlign: 'center',
@@ -251,13 +249,13 @@ const styles = StyleSheet.create({
    },
    orderNowBtn: {
       textAlign: 'center',
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 16,
       lineHeight: 16,
       textDecorationLine: 'underline',
       marginTop: 6,
       marginBottom: 11,
-      color: '#EF5266',
+      color: global.primaryColor,
    },
    showByCollectionContainer: {
       marginTop: 12,

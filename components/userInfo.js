@@ -25,6 +25,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { useConfig } from '../lib/config'
 import CustomBackdrop from './modalBackdrop'
+import global from '../globalStyles'
 
 export const UserInfo = props => {
    const [settingCartInfo, setSettingCartInfo] = useState(true)
@@ -178,7 +179,7 @@ const UserInfoForm = props => {
             ]}
             textContainerStyle={styles.phoneInputTextContainerStyle}
             disableArrowIcon={true}
-            textInputProps={{ placeholderTextColor: '#A2A2A2' }}
+            textInputProps={{ placeholderTextColor: global.greyColor }}
             placeholder={'Enter Phone Number...'}
             codeTextStyle={styles.phoneInputCodeTextStyle}
          />
@@ -287,16 +288,14 @@ const UserDetails = ({
             <>
                <View style={styles.row}>
                   <UserIcon size={16} />
-                  <Text
-                     style={{ fontFamily: 'MetropolisSemiBold', marginLeft: 9 }}
-                  >
+                  <Text style={{ fontFamily: global.semibold, marginLeft: 9 }}>
                      {cart?.customerInfo?.customerFirstName}{' '}
                      {cart?.customerInfo?.customerLastName}
                   </Text>
                </View>
                <View style={styles.row}>
                   <PhoneIcon size={16} />
-                  <Text style={{ fontFamily: 'Metropolis', marginLeft: 9 }}>
+                  <Text style={{ fontFamily: global.regular, marginLeft: 9 }}>
                      {cart?.customerInfo?.customerPhone}
                   </Text>
                </View>
@@ -364,24 +363,24 @@ const styles = StyleSheet.create({
       paddingVertical: 22,
       paddingHorizontal: 18,
       borderWidth: 0.3,
-      borderColor: '#A2A2A2',
+      borderColor: global.greyColor,
    },
    userInfoFormHeading: {
       fontSize: 18,
       lineHeight: 18,
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       color: 'rgba(0, 0, 0, 0.8)',
    },
    formLabel: {
       fontSize: 12,
       lineHeight: 12,
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       color: 'rgba(0, 0, 0, 0.6)',
       marginTop: 25,
       marginBottom: 8,
    },
    inputField: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       width: '100%',
       height: 40,
       borderRadius: 6,
@@ -389,7 +388,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
    },
    phoneInputTextInputStyle: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       color: '#000',
       fontSize: 14,
    },
@@ -403,7 +402,7 @@ const styles = StyleSheet.create({
       paddingVertical: 0,
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
    },
-   phoneInputCodeTextStyle: { fontFamily: 'Metropolis', fontSize: 14 },
+   phoneInputCodeTextStyle: { fontFamily: global.regular, fontSize: 14 },
    saveInfoBtn: {
       marginTop: 25,
       marginBottom: 10,
@@ -413,7 +412,7 @@ const styles = StyleSheet.create({
    saveInfoBtnText: {
       fontSize: 14,
       lineHeight: 14,
-      fontWeight: '500',
+      fontFamily: global.regular,
    },
    editUserInfoBtn: {},
    error: {

@@ -25,6 +25,7 @@ import { useUser } from '../../context/user'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import CustomBackdrop from '../../components/modalBackdrop'
+import global from '../../globalStyles'
 
 const CartScreen = () => {
    const navigation = useNavigation()
@@ -140,9 +141,8 @@ const styles = StyleSheet.create({
       borderRadius: 8,
    },
    orderNowTextStyle: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 18,
-      fontWeight: '500',
    },
    buttonContainer: {
       width: '100%',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
    },
    buttonText: {
       textAlign: 'center',
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 15,
    },
    loginPopUp: {
@@ -182,14 +182,14 @@ const styles = StyleSheet.create({
    loginPopUpHeading: {
       fontSize: 24,
       lineHeight: 24,
-      fontWeight: '600',
+      fontFamily: global.medium,
       marginBottom: 12,
    },
    loginPopUpDescription: {
       fontSize: 12,
       lineHeight: 12,
-      fontWeight: '600',
-      color: '#A2A2A2',
+      fonFamily: global.regular,
+      color: global.greyColor,
       marginBottom: 12,
    },
    loginPopUpButton: {

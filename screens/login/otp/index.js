@@ -29,6 +29,7 @@ import { OTPS } from '../../../graphql/subscriptions'
 import { useUser } from '../../../context/user'
 import { useConfig } from '../../../lib/config'
 import * as Notifications from 'expo-notifications'
+import global from '../../../globalStyles'
 
 export const OtpLogin = () => {
    const { appConfig, brand } = useConfig()
@@ -281,7 +282,7 @@ export const OtpLogin = () => {
                      style={{
                         color: appConfig.brandSettings.buttonSettings
                            .activeTextColor.value,
-                        fontFamily: 'Metropolis',
+                        fontFamily: global.regular,
                      }}
                   >
                      Skip

@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Button } from '../../../components/button'
 import moment from 'moment'
 import { generateTimeStamp } from '../../../utils'
+import global from '../../../globalStyles'
 
 export const TimeSlots = ({
    availableDaySlots,
@@ -103,8 +104,7 @@ export const TimeSlots = ({
 
 const styles = StyleSheet.create({
    headingStyle: {
-      fontFamily: 'MetropolisSemiBold',
-      fontWeight: '500',
+      fontFamily: global.semibold,
       color: '#00000060',
       marginVertical: 6,
    },

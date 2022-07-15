@@ -6,6 +6,7 @@ import { useConfig } from '../lib/config'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import { Button } from '../components/button'
 import Modal from '../components/modal'
+import global from '../globalStyles'
 
 const PaymentProcessingModal = ({
    isOpen,
@@ -274,7 +275,7 @@ const styles = StyleSheet.create({
    modalTitle: {
       fontSize: 14,
       lineHeight: 25,
-      fontWeight: '500',
+      fontFamily: global.medium,
       marginBottom: 3,
       textAlign: 'center',
    },
@@ -282,10 +283,10 @@ const styles = StyleSheet.create({
       marginBottom: 8,
    },
    modalSubtitle: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 11,
       lineHeight: 13,
-      color: '#A2A2A2',
+      color: global.greyColor,
       textAlign: 'center',
    },
    paymentStatusLoader: {

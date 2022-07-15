@@ -61,7 +61,7 @@ export const PromotionCarousel = ({ data, height = 128, showDots = true }) => {
                   height: 8,
                   borderRadius: 5,
                   marginHorizontal: -10,
-                  backgroundColor: '#EF5266',
+                  backgroundColor: global.primaryColor,
                }}
                inactiveDotOpacity={0.4}
                inactiveDotScale={1}

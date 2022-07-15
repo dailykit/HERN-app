@@ -6,6 +6,7 @@ import { useConfig } from '../lib/config'
 import { useCart } from '../context/cart'
 import React, { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import global from '../globalStyles'
 
 export const Header = () => {
    const navigation = useNavigation()
@@ -120,7 +121,7 @@ export const Header = () => {
                         color:
                            appConfig?.brandSettings.headerSettings?.textColor
                               ?.value || '#000000',
-                        fontFamily: 'MetropolisRegularItalic',
+                        fontFamily: global.italic,
                      }}
                   >
                      Getting your location
@@ -132,7 +133,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
-                           fontFamily: 'MetropolisSemiBold',
+                           fontFamily: global.semibold,
                         }}
                      >
                         {label}
@@ -142,7 +143,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
-                           fontFamily: 'Metropolis',
+                           fontFamily: global.regular,
                         }}
                      >
                         {userLocation?.label
@@ -181,7 +182,6 @@ export const Header = () => {
                               ?.cartItemCountBackgroundColor?.value,
                         color: appConfig?.brandSettings.headerSettings
                            ?.cartItemCountTextColor?.value,
-                        fontFamily: 'Metropolis',
                      },
                   ]}
                >
@@ -215,9 +215,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    headerTextStyle: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 12,
-      fontWeight: '500',
       lineHeight: 12,
       marginHorizontal: 4,
    },
@@ -228,6 +227,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 6,
       borderRadius: 10,
       fontSize: 12,
+      fontFamily: global.regular,
       right: -4,
       zIndex: 1000,
    },

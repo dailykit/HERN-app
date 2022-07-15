@@ -22,6 +22,7 @@ import { ModifierPopup } from '../../components/modifierPopup'
 import Modal from 'react-native-modal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
+import global from '../../globalStyles'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -157,7 +158,7 @@ const ProductScreen = () => {
    if (productError) {
       return (
          <View>
-            <Text style={{ fontFamily: 'MetropolisMedium' }}>
+            <Text style={{ fontFamily: global.medium }}>
                Something went wrong
             </Text>
          </View>
@@ -245,7 +246,7 @@ const ProductScreen = () => {
                                     style={{
                                        color: appConfig.brandSettings.brandColor
                                           .value,
-                                       fontWeight: '500',
+                                       fontFamily: global.medium,
                                        fontSize: 14,
                                        textAlign: 'right',
                                     }}
@@ -263,7 +264,7 @@ const ProductScreen = () => {
          <View style={{ flex: 1, backgroundColor: '#000' }}>
             <Button
                buttonStyle={{ height: 40, margin: 8 }}
-               textStyle={{ fontWeight: '500', fontSize: 16 }}
+               textStyle={{ fontFamily: global.regular, fontSize: 16 }}
                onPress={() => {
                   onAddItemClick()
                }}
@@ -323,7 +324,7 @@ const styles = StyleSheet.create({
    image: {},
    productName: {
       fontSize: 18,
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
    },
    productDetails: {
       paddingHorizontal: 21,
@@ -336,24 +337,24 @@ const styles = StyleSheet.create({
       marginBottom: 18,
    },
    productOriginalValue: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 12,
       color: '#00000080',
    },
    discountPrice: {
       fontSize: 12,
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       color: '#00000080',
    },
    additionalText: {
-      fontFamily: 'MetropolisMedium',
-      fontWeight: 14,
+      fontFamily: global.medium,
+      fontSize: 14,
       color: '#00000040',
    },
    description: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 14,
-      color: '#A2A2A2',
+      color: global.greyColor,
    },
 })
 export default ProductScreen

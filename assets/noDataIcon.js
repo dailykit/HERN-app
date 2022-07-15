@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Svg, { Path } from 'react-native-svg'
+import global from '../globalStyles'
 
 export const NoDataIcon = ({ size = 112 }) => (
    <Svg
@@ -20,7 +21,7 @@ export const NoDataIcon = ({ size = 112 }) => (
       />
       <Path
          d="M53.4648 98.7202C54.7362 97.4538 56.4544 96.7432 58.2451 96.7432C60.0358 96.7432 61.7539 97.4538 63.0253 98.7202"
-         stroke="#EF5266"
+         stroke={global.primaryColor}
          strokeWidth={3.08}
          strokeLinecap="round"
          strokeLinejoin="round"

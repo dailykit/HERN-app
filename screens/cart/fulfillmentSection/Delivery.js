@@ -15,6 +15,7 @@ import moment from 'moment'
 import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
+import global from '../../../globalStyles'
 
 export const Delivery = () => {
    const {
@@ -543,13 +544,19 @@ export const Delivery = () => {
                <View style={{ flexDirection: 'row' }}>
                   <OrderTime size={20} />
                   {/* &nbsp;&nbsp; */}
-                  <Text style={{ marginLeft: 6, color: '#00000080' }}>
+                  <Text
+                     style={{
+                        marginLeft: 6,
+                        color: '#00000080',
+                        fontFamily: global.regular,
+                     }}
+                  >
                      {title}
                      {cartState.cart?.fulfillmentInfo?.type ===
                         'PREORDER_PICKUP' ||
                      cartState.cart?.fulfillmentInfo?.type ===
                         'PREORDER_DELIVERY' ? (
-                        <Text>
+                        <Text style={{ fontFamily: global.regular }}>
                            {' '}
                            {moment(
                               cartState.cart?.fulfillmentInfo?.slot?.from
@@ -604,7 +611,7 @@ export const Delivery = () => {
          >
             <Text
                style={{
-                  fontFamily: 'MetropolisSemiBold',
+                  fontFamily: global.semibold,
                   alignSelf: 'flex-start',
                   marginBottom: 5,
                }}
@@ -623,6 +630,7 @@ export const Delivery = () => {
                         height: 28,
                      }}
                      textStyle={{
+                        fontFamily: global.regular,
                         fontSize: 11,
                         paddingHorizontal: 7,
                      }}
@@ -657,7 +665,13 @@ export const Delivery = () => {
                style={{ marginVertical: 6 }}
             />
          ) : stores.length === 0 ? (
-            <Text style={{ textAlign: 'center', marginVertical: 8 }}>
+            <Text
+               style={{
+                  textAlign: 'center',
+                  marginVertical: 8,
+                  fontFamily: global.semibold,
+               }}
+            >
                No store available
             </Text>
          ) : fulfillmentType === 'PREORDER_DELIVERY' ? (

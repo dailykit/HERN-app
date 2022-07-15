@@ -21,6 +21,7 @@ import { AccountHeader } from './header'
 import { UserInfo } from './userInfo'
 import { Spinner } from '../../assets/loaders'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
 
 const AccountScreen = () => {
    const navigation = useNavigation()
@@ -58,7 +59,7 @@ const AccountScreen = () => {
                      <Text style={styles.accountTileText}>Check Offers</Text>
                   </Tile>
                   <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                     style={{ height: 0.5, backgroundColor: global.greyColor }}
                   ></View>
                   {isWalletAvailable ? (
                      <>
@@ -73,7 +74,7 @@ const AccountScreen = () => {
                         <View
                            style={{
                               height: 0.5,
-                              backgroundColor: '#A2A2A2',
+                              backgroundColor: global.greyColor,
                            }}
                         ></View>
                      </>
@@ -91,7 +92,10 @@ const AccountScreen = () => {
                            </Text>
                         </Tile>
                         <View
-                           style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                           style={{
+                              height: 0.5,
+                              backgroundColor: global.greyColor,
+                           }}
                         ></View>
                      </>
                   ) : null}
@@ -102,7 +106,7 @@ const AccountScreen = () => {
                      </Text>
                   </Tile>
                   <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                     style={{ height: 0.5, backgroundColor: global.greyColor }}
                   ></View>
                   {isReferralAvailable ? (
                      <>
@@ -113,7 +117,10 @@ const AccountScreen = () => {
                            </Text>
                         </Tile>
                         <View
-                           style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                           style={{
+                              height: 0.5,
+                              backgroundColor: global.greyColor,
+                           }}
                         ></View>
                      </>
                   ) : null}
@@ -124,7 +131,7 @@ const AccountScreen = () => {
                      </Text>
                   </Tile>
                   <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                     style={{ height: 0.5, backgroundColor: global.greyColor }}
                   ></View>
                   <Tile
                      onPress={async () => {
@@ -155,7 +162,7 @@ const AccountScreen = () => {
                   <OfferIcon />
                   <Text style={styles.accountTileText}>Check Offers</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: global.greyColor }}></View>
                <Tile
                   onPress={() => {
                      navigation.navigate('Wallet')
@@ -164,7 +171,7 @@ const AccountScreen = () => {
                   <WalletIcon />
                   <Text style={styles.accountTileText}>Wallet</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: global.greyColor }}></View>
                <Tile
                   onPress={() => {
                      navigation.navigate('LoyaltyPoints')
@@ -173,22 +180,22 @@ const AccountScreen = () => {
                   <LoyaltyPointIcon />
                   <Text style={styles.accountTileText}>Loyalty Points</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: global.greyColor }}></View>
                <Tile>
                   <LocationIcon fill="#00000080" size={20} />
                   <Text style={styles.accountTileText}>Manage Addresses</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: global.greyColor }}></View>
                <Tile>
                   <ReferIcon />
                   <Text style={styles.accountTileText}>Refer your friends</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: global.greyColor }}></View>
                <Tile>
                   <CardsIcon />
                   <Text style={styles.accountTileText}>Manage your cards</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: global.greyColor }}></View>
                <Tile>
                   <LogoutIcon />
                   <Text style={styles.accountTileText}>Sign Out</Text>
@@ -241,9 +248,8 @@ const styles = StyleSheet.create({
    },
    accountTileText: {
       color: '#00000080',
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 18,
-      fontWeight: '400',
       marginLeft: 18,
    },
 })
