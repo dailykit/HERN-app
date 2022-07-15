@@ -17,6 +17,7 @@ import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
 import PaymentOptionsRenderer from '../../../components/paymentOptionRenderer'
+import global from '../../../globalStyles'
 
 const WalletScreen = () => {
    const { isLoading } = useUser()
@@ -66,7 +67,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                <Text
                   style={{
                      fontSize: 18,
-                     fontWeight: '500',
+                     fontFamily: global.semibold,
                      color: appConfig.brandSettings.buttonSettings
                         .activeTextColor.value,
                   }}
@@ -76,7 +77,13 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             </TouchableWithoutFeedback>
          </View>
          <View style={{ flex: 11 }}>
-            <Text style={{ fontSize: 18, fontWeight: '500', marginBottom: 10 }}>
+            <Text
+               style={{
+                  fontSize: 18,
+                  fontFamily: global.semibold,
+                  marginBottom: 10,
+               }}
+            >
                Transaction History
             </Text>
             {user.wallet.walletTransactions.length == 0 ? (
@@ -205,7 +212,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                <Text
                   style={{
                      fontSize: 18,
-                     fontWeight: '500',
+                     fontFamily: global.semibold,
                      color: appConfig.brandSettings.buttonSettings
                         .activeTextColor.value,
                   }}
@@ -215,11 +222,13 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
             </TouchableWithoutFeedback>
          </View>
          <View style={{ flex: 2 }}>
-            <Text style={{ fontSize: 14, fontWeight: '500' }}>Add Money</Text>
+            <Text style={{ fontSize: 14, fontFamily: global.semibold }}>
+               Add Money
+            </Text>
             <Text
                style={{
                   fontSize: 18,
-                  fontWeight: '500',
+                  fontFamily: global.semibold,
                   position: 'absolute',
                   top: 42,
                   left: 10,
@@ -302,7 +311,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
 }
 const styles = StyleSheet.create({
    balance: {
-      fontWeight: '500',
+      fontFamily: global.semibold,
       fontSize: 18,
    },
    transactionStyle: {
@@ -313,8 +322,8 @@ const styles = StyleSheet.create({
    },
    headingText: {
       fontSize: 16,
-      fontFamily: 'MetropolisSemiBold',
-      color: '#A2A2A2',
+      fontFamily: global.semibold,
+      color: global.greyColor,
    },
    transactionHeader: {
       flexDirection: 'row',
@@ -325,25 +334,25 @@ const styles = StyleSheet.create({
       height: 40,
    },
    noTransactionMessage: {
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 16,
       marginVertical: 10,
    },
    transactionId: {
       fontSize: 16,
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       flex: 1,
       textAlign: 'center',
    },
    transactionDate: {
       fontSize: 16,
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       flex: 2,
       textAlign: 'left',
    },
    transactionAmount: {
       fontSize: 16,
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       flex: 1,
       textAlign: 'right',
    },
@@ -356,7 +365,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
       paddingLeft: 22,
       fontSize: 20,
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       color: '#00000080',
    },
 })

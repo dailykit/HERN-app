@@ -20,6 +20,7 @@ import { useUser } from '../context/user'
 import * as QUERIES from '../graphql'
 import { formatCurrency, get_env } from '../utils'
 import { CardsLoader } from '../assets/loaders'
+import global from '../globalStyles'
 
 export default function PaymentOptionsRenderer({
    cartId,
@@ -384,7 +385,7 @@ const styles = StyleSheet.create({
       width: '80%',
       borderRadius: 8,
       text: {
-         fontFamily: 'Metropolis',
+         fontFamily: global.regular,
          textAlign: 'center',
       },
       marginTop: 15,
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
    heading: {
       textAlign: 'center',
       marginVertical: 24,
-      fontFamily: 'MetropolisBold',
+      fontFamily: global.bold,
       fontSize: 24,
       lineHeight: 24,
       color: '#000000',
@@ -408,19 +409,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       borderWidth: 0.3,
       borderStyle: 'solid',
-      borderColor: '#A2A2A2',
+      borderColor: global.greyColor,
       borderRadius: 6,
       padding: 10,
    },
    paymentOptionCardHeader: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 12,
       lineHeight: 14,
       color: 'rgba(0, 0, 0, 0.8)',
       margin: 2,
    },
    paymentOptionCardTitle: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 16,
       lineHeight: 18,
       color: '#000',

@@ -12,6 +12,7 @@ import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
 import { StoreList } from './storeList'
 import { Button } from '../button'
+import global from '../../globalStyles'
 
 export const Pickup = () => {
    const navigation = useNavigation()
@@ -258,7 +259,9 @@ export const Pickup = () => {
          />
          <View style={{ zIndex: -10 }}>
             {locationSearching.loading ? (
-               <Text style={{ fontStyle: 'italic', fontFamily: 'Metropolis' }}>
+               <Text
+                  style={{ fontStyle: 'italic', fontFamily: global.regular }}
+               >
                   Getting your location
                </Text>
             ) : locationSearching.error ? (
@@ -328,8 +331,7 @@ const styles = StyleSheet.create({
    searchingStoreStyle: { marginVertical: 15, alignItems: 'center' },
    findingTextStyle: {
       fontSize: 18,
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
       color: 'rgba(0, 0, 0, 0.8)',
       marginBottom: 16,
    },
@@ -339,13 +341,12 @@ const styles = StyleSheet.create({
    },
    noStoreText1: {
       fontSize: 16,
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: global.regular,
       marginVertical: 4,
    },
    noStoreText2: {
-      fontFamily: 'Metropolis',
-      color: '#A2A2A2',
+      fontFamily: global.regular,
+      color: global.greyColor,
       fontSize: 12,
       marginVertical: 4,
    },

@@ -1,11 +1,12 @@
 import { StyleSheet, View, Text } from 'react-native'
 import LocationIcon from '../../assets/locationIcon'
+import global from '../../globalStyles'
 
 export const AddressInfo = props => {
    const { address } = props
    return (
       <View style={styles.addressContainer}>
-         <LocationIcon fill={'#A2A2A2'} />
+         <LocationIcon fill={global.greyColor} />
          <View style={{ flexShrink: 1 }}>
             <Text style={styles.addressText}>
                {address.mainText || address.line1}
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
    },
    addressText: {
       color: 'rgba(0, 0, 0, 0.6)',
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 13,
    },
 })

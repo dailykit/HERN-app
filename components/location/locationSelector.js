@@ -9,6 +9,7 @@ import { Pickup } from './pickup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
+import global from '../../globalStyles'
 
 export const LocationSelector = () => {
    const navigation = useNavigation()
@@ -134,8 +135,7 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    locationText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: global.regular,
       fontSize: 16,
       lineHeight: 16,
    },

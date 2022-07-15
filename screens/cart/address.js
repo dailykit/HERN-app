@@ -6,6 +6,7 @@ import { useCart } from '../../context'
 import { useConfig } from '../../lib/config'
 import { DownVector } from '../../assets/vector'
 import { useNavigation } from '@react-navigation/native'
+import global from '../../globalStyles'
 
 export const Address = () => {
    const { orderTabs, selectedOrderTab, appConfig } = useConfig()
@@ -65,10 +66,10 @@ export const Address = () => {
                   navigation.navigate('LocationSelector')
                }}
             >
-               <LocationIcon fill="#A2A2A2" />
+               <LocationIcon fill={global.greyColor} />
                <Text
                   style={{
-                     fontFamily: 'Metropolis',
+                     fontFamily: global.regular,
                      color: '#00000060',
                      marginRight: 3,
                   }}
@@ -85,7 +86,7 @@ export const Address = () => {
             >
                <Text
                   numberOfLines={numberOfLines}
-                  style={{ fontFamily: 'MetropolisMedium', color: '#00000060' }}
+                  style={{ fontFamily: global.medium, color: '#00000060' }}
                >
                   {`${address?.line1} ${address?.city} ${address?.state} ${address?.country},${address?.zipcode}`}
                </Text>

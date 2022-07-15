@@ -6,6 +6,7 @@ import {
    StyleSheet,
    Image,
 } from 'react-native'
+import global from '../globalStyles'
 
 const categoryViewStyles = {
    cardView: 'cardView',
@@ -93,7 +94,7 @@ const categoryStyles = StyleSheet.create({
       width: 80,
    },
    selectedCategory: {
-      backgroundColor: '#EF5266',
+      backgroundColor: global.primaryColor,
       paddingHorizontal: 8,
       paddingVertical: 5,
    },
@@ -101,11 +102,10 @@ const categoryStyles = StyleSheet.create({
       borderRadius: 10,
    },
    categoryText: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 12,
       lineHeight: 14,
       textTransform: 'capitalize',
-      fontWeight: '500',
       textAlign: 'center',
    },
    selectedText: {

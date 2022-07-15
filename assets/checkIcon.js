@@ -1,7 +1,12 @@
 import * as React from 'react'
 import Svg, { Rect, Path } from 'react-native-svg'
+import global from '../globalStyles'
 
-const CheckIcon = ({ size = 16, fill = '#EF5266', checkFill = '#ffffff' }) => (
+const CheckIcon = ({
+   size = 16,
+   fill = global.primaryColor,
+   checkFill = '#ffffff',
+}) => (
    <Svg
       width={size}
       height={size}

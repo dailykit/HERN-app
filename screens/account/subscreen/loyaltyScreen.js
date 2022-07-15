@@ -6,6 +6,7 @@ import moment from 'moment'
 import { NoDataIcon } from '../../../assets/noDataIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import global from '../../../globalStyles'
 
 const LoyaltyPointsScreen = () => {
    const { user, isLoading } = useUser()
@@ -29,9 +30,8 @@ const LoyaltyPointsScreen = () => {
                <Text
                   style={{
                      fontSize: 18,
-                     fontWeight: '500',
                      marginBottom: 10,
-                     fontFamily: 'Metropolis',
+                     fontFamily: global.regular,
                   }}
                >
                   Transaction History
@@ -119,19 +119,16 @@ const LoyaltyPointsScreen = () => {
 }
 const styles = StyleSheet.create({
    loyaltyText: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 18,
-      fontWeight: '500',
    },
    headingText: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 16,
-      fontWeight: '500',
-      color: '#A2A2A2',
+      color: global.greyColor,
    },
    noTransactionMessage: {
-      fontFamily: 'MetropolisSemiBold',
-      fontWeight: '600',
+      fontFamily: global.semibold,
       fontSize: 16,
       marginVertical: 10,
    },
@@ -151,21 +148,19 @@ const styles = StyleSheet.create({
    },
    transactionId: {
       fontSize: 16,
-      fontWeight: '500',
+      fontFamily: global.regular,
       flex: 1,
       textAlign: 'center',
    },
    transactionDate: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 16,
-      fontWeight: '500',
       flex: 2,
       textAlign: 'left',
    },
    transactionAmount: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 16,
-      fontWeight: '500',
       flex: 1,
       textAlign: 'right',
    },

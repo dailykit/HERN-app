@@ -16,6 +16,7 @@ import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
+import global from '../../globalStyles'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems, methods } = useCart()
@@ -87,13 +88,13 @@ const styles = StyleSheet.create({
       elevation: 3,
    },
    clearCartText: {
-      color: '#EF5266',
+      color: global.primaryColor,
       fontSize: 12,
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
    },
    itemStyle: {
       fontSize: 14,
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
    },
    productMetaDetails: {
       flexDirection: 'row',
@@ -109,9 +110,8 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
    },
    productName: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 14,
-      fontWeight: '500',
    },
    metaDetailsBottom: {
       flexDirection: 'row',
@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
    },
    discountPrice: {
       fontSize: 18,
-      fontWeight: '500',
    },
    productOption: {
       flexDirection: 'row',
@@ -136,7 +135,6 @@ const styles = StyleSheet.create({
    },
    productOptionLabel: {
       color: '#00000080',
-      fontWeight: '500',
    },
    modifierOption: {
       flexDirection: 'row',
@@ -145,7 +143,6 @@ const styles = StyleSheet.create({
       fontSize: 13,
    },
    modifierOptionText: {
-      fontWeight: '500',
       color: '#00000080',
       fontSize: 13,
    },

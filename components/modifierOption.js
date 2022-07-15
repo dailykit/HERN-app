@@ -10,6 +10,7 @@ import {
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { useConfig } from '../lib/config'
+import global from '../globalStyles'
 
 export const ModifierOptionCard = ({
    modifierOption,
@@ -107,25 +108,22 @@ const styles = StyleSheet.create({
       flex: 1,
    },
    modifierOptionName: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
    },
    modifierOptionOriginalValue: {
       textDecorationLine: 'line-through',
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
       fontSize: 12,
       lineHeight: 12,
-      color: '#A2A2A2',
+      color: global.greyColor,
       opacity: 0.5,
       marginRight: 5,
    },
    modifierOptionPrice: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
       fontSize: 12,
       lineHeight: 12,
-      color: '#A2A2A2',
+      color: global.greyColor,
    },
    customizeContainer: {
       position: 'absolute',
@@ -133,8 +131,7 @@ const styles = StyleSheet.create({
       bottom: 0,
    },
    customizeText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '400',
+      fontFamily: global.regular,
       lineHeight: 8,
       fontSize: 9,
       paddingTop: 3,

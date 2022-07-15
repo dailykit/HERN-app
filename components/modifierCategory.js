@@ -5,6 +5,7 @@ import RadioIcon from '../assets/radioIcon'
 import CheckIcon from '../assets/checkIcon'
 import UncheckIcon from '../assets/uncheckIcon'
 import { useConfig } from '../lib/config'
+import global from '../globalStyles'
 
 export const ModifierCategory = props => {
    const {
@@ -247,21 +248,18 @@ const styles = StyleSheet.create({
       marginBottom: 3,
    },
    categoryName: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
+      fontFamily: global.regular,
       fontSize: 18,
       lineHeight: 18,
    },
    categoryMessageText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '400',
+      fontFamily: global.regular,
       lineHeight: 10,
       fontSize: 10,
       marginHorizontal: 8,
    },
    categoryError: {
-      fontFamily: 'Metropolis',
-      fontStyle: 'italic',
+      fontFamily: global.italic,
       fontSize: 11,
       color: 'red',
    },

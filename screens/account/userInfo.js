@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { MailIcon } from '../../assets/mailIcon'
 import { PhoneIcon } from '../../assets/phoneIcon'
 import { useUser } from '../../context/user'
+import global from '../../globalStyles'
 
 export const UserInfo = () => {
    const { user } = useUser()
@@ -44,22 +45,19 @@ const styles = StyleSheet.create({
       marginTop: 12,
    },
    userName: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.medium,
       fontSize: 18,
-      fontWeight: '500',
       marginBottom: 8,
    },
    userPhoneNumber: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 14,
-      fontWeight: '400',
       marginLeft: 6,
       color: '#00000095',
    },
    userEmail: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 14,
-      fontWeight: '400',
       marginLeft: 8,
       color: '#00000095',
    },

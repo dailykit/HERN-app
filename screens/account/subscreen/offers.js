@@ -9,6 +9,7 @@ import { useConfig } from '../../../lib/config'
 import { SubScreenHeader } from './header'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import global from '../../../globalStyles'
 
 const OffersScreen = () => {
    // context
@@ -47,7 +48,7 @@ const OffersScreen = () => {
             {isCouponsLoading ? (
                <Spinner size={'large'} showText={true} />
             ) : error ? (
-               <Text style={{ fontFamily: 'MetropolisMedium' }}>
+               <Text style={{ fontFamily: global.medium }}>
                   Something went wrong
                </Text>
             ) : availableCoupons.length === 0 ? (
@@ -91,11 +92,11 @@ export default OffersScreen
 
 const styles = StyleSheet.create({
    couponTextStyle: {
-      fontWeight: '500',
+      fontFamily: global.semibold,
       fontSize: 16,
    },
    noCoupons: {
-      fontWeight: '600',
+      fontFamily: global.semibold,
       fontSize: 16,
       marginVertical: 10,
    },
@@ -108,13 +109,12 @@ const styles = StyleSheet.create({
    },
    codeText: {
       fontSize: 18,
-      fontWeight: '500',
+      fontFamily: global.semibold,
       marginVertical: 2,
    },
    codeDetail: {
       fontSize: 14,
-      fontWeight: '500',
-
+      fontFamily: global.semibold,
       marginVertical: 2,
    },
 })

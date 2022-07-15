@@ -3,6 +3,7 @@ import { ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import GPSicon from '../../assets/GPSicon'
 import { get_env } from '../../utils/get_env'
+import global from '../../globalStyles'
 
 export const GooglePlacesAutocompleteWrapper = ({
    formatAddress = () => {},
@@ -37,14 +38,14 @@ export const GooglePlacesAutocompleteWrapper = ({
             }}
             styles={{
                textInput: {
-                  fontFamily: 'MetropolisMedium',
+                  fontFamily: global.medium,
                   shadowColor: '#000000',
                   elevation: 6,
                   paddingRight: 35,
                   borderRadius: 8,
                },
                listView: {
-                  fontFamily: 'MetropolisMedium',
+                  fontFamily: global.medium,
                   zIndex: 10000,
                   position: 'absolute',
                   top: 50,

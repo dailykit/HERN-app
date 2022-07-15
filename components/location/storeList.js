@@ -6,6 +6,8 @@ import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import global from '../../globalStyles'
+
 export const StoreList = ({ stores, address, fulfillmentType }) => {
    const { dispatch, orderTabs } = useConfig()
    const navigation = useNavigation()
@@ -18,9 +20,8 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
       <View style={{ marginVertical: 8 }}>
          <Text
             style={{
-               fontWeight: '600',
                fontSize: 16,
-               fontFamily: 'Metropolis',
+               fontFamily: global.regular,
             }}
          >
             Select Store
@@ -115,19 +116,19 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                      <View style={{ flexDirection: 'row' }}>
                         {/* <StoreIcon /> */}
                         <View style={{ flex: 1 }}>
-                           <LocationIcon fill={'#A2A2A2'} />
+                           <LocationIcon fill={global.greyColor} />
                         </View>
                         <View style={{ flex: 11 }}>
                            <Text style={styles.storeLabel}>{label}</Text>
                            <View>
-                              <Text style={{ fontFamily: 'Metropolis' }}>
+                              <Text style={{ fontFamily: global.regular }}>
                                  {line1}
                               </Text>
-                              <Text style={{ fontFamily: 'Metropolis' }}>
+                              <Text style={{ fontFamily: global.regular }}>
                                  {line2}
                               </Text>
                               <View>
-                                 <Text style={{ fontFamily: 'Metropolis' }}>
+                                 <Text style={{ fontFamily: global.regular }}>
                                     {city} {state} {country}
                                     {' ('}
                                     {zipcode}
@@ -158,7 +159,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
 
 const styles = StyleSheet.create({
    storeLabel: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 16,
    },
    storeCard: {
@@ -168,6 +169,6 @@ const styles = StyleSheet.create({
       marginLeft: 4,
       color: 'rgba(0, 0, 0, 0.6)',
       fontSize: 12,
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
    },
 })

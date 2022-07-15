@@ -24,6 +24,7 @@ import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import { FloatingMenu } from '../../components/floatingMenu'
+import global from '../../globalStyles'
 
 const MenuScreen = ({ route }) => {
    // context
@@ -130,7 +131,7 @@ const MenuScreen = ({ route }) => {
          {status === 'loading' ? (
             <Spinner size="large" showText={true} />
          ) : status === 'error' ? (
-            <Text style={{ fontFamily: 'MetropolisMedium' }}>Error</Text>
+            <Text style={{ fontFamily: global.medium }}>Error</Text>
          ) : null}
          {status === 'success' ? (
             <>
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
    categoryListName: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 24,
       lineHeight: 36,
       marginHorizontal: 12,
@@ -260,8 +261,7 @@ const styles = StyleSheet.create({
       borderRadius: 6,
    },
    searchBarText: {
-      fontWeight: '500',
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 14,
       color: '#00000060',
       marginLeft: 10,

@@ -15,6 +15,7 @@ import DeliveryIcon from '../../assets/deliveryIcon'
 import PickupIcon from '../../assets/pickupIcon'
 import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import global from '../../globalStyles'
 
 const Fulfillment = () => {
    const { orderTabs, appConfig } = useConfig()
@@ -225,12 +226,12 @@ const styles = StyleSheet.create({
       marginBottom: 69,
    },
    headingText: {
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 28,
       lineHeight: 28,
    },
    subHeadingText: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 14,
       lineHeight: 18,
       width: '80%',
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
       marginHorizontal: 'auto',
    },
    commonText: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       color: '#fff',
    },
    pressedBtn: {

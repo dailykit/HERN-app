@@ -1,7 +1,8 @@
 import * as React from 'react'
 import Svg, { Path } from 'react-native-svg'
+import global from '../globalStyles'
 
-const GPSicon = ({ size = 24, fill = '#EF5266' }) => (
+const GPSicon = ({ size = 24, fill = global.primaryColor }) => (
    <Svg
       width={size}
       height={size}

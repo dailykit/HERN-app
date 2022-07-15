@@ -14,6 +14,7 @@ import { useQuery } from '@apollo/client'
 import Modal from 'react-native-modal'
 import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
+import global from '../../globalStyles'
 
 export const CartCard = ({ productData, quantity }) => {
    // context
@@ -395,7 +396,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={{
                            color: '#f33737',
-                           fontFamily: 'MetropolisMedium',
+                           fontFamily: global.medium,
                            fontSize: 13,
                         }}
                      >
@@ -448,7 +449,7 @@ export const CartCard = ({ productData, quantity }) => {
          >
             <View style={{ backgroundColor: 'white', padding: 12 }}>
                <View style={{ marginBottom: 12 }}>
-                  <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                  <Text style={{ fontSize: 16, fontFamily: global.medium }}>
                      Repeat last used customization?
                   </Text>
                </View>
@@ -513,9 +514,7 @@ const AdditionalDetails = ({ productData }) => {
                   paddingHorizontal: 12,
                }}
             >
-               <Text style={{ fontFamily: 'MetropolisSemiBold' }}>
-                  Customizable
-               </Text>
+               <Text style={{ fontFamily: global.semibold }}>Customizable</Text>
                {showAdditionalDetailsOnCard ? (
                   <UpVector size={18} />
                ) : (
@@ -709,13 +708,11 @@ const styles = StyleSheet.create({
       marginBottom: 6,
    },
    clearCartText: {
-      color: '#EF5266',
+      color: global.primaryColor,
       fontSize: 12,
-      fontWeight: '600',
    },
    itemStyle: {
       fontSize: 14,
-      fontWeight: '500',
    },
    productMetaDetails: {
       flexDirection: 'row',
@@ -733,7 +730,7 @@ const styles = StyleSheet.create({
    },
    productName: {
       fontSize: 14,
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
    },
    metaDetailsBottom: {
       flexDirection: 'row',
@@ -747,11 +744,11 @@ const styles = StyleSheet.create({
    originalPrice: {
       marginRight: 6,
       textDecorationLine: 'line-through',
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
    },
    discountPrice: {
       fontSize: 18,
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
    },
    productOption: {
       flexDirection: 'row',
@@ -759,7 +756,7 @@ const styles = StyleSheet.create({
    },
    productOptionLabel: {
       color: '#00000080',
-      fontWeight: '500',
+      fontFamily: global.regular,
    },
    modifierOption: {
       flexDirection: 'row',
@@ -768,7 +765,7 @@ const styles = StyleSheet.create({
       fontSize: 13,
    },
    modifierOptionText: {
-      fontWeight: '500',
+      fontFamily: global.regular,
       color: '#00000080',
       fontSize: 13,
    },

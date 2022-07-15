@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import EmptyCartIcon from '../../assets/emptyCart'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
+
 export const EmptyCart = () => {
    const { appConfig } = useConfig()
    return (
@@ -34,14 +36,12 @@ const styles = StyleSheet.create({
       marginBottom: 40,
    },
    emptyCartMessage: {
-      fontFamily: 'MetropolisMedium',
+      fontFamily: global.medium,
       fontSize: 20,
-      fontWeight: '600',
    },
    emptyCartCustomMessage: {
-      fontFamily: 'MetropolisMedium',
-      color: '#a2a2a2',
+      fontFamily: global.medium,
+      color: global.greyColor,
       fontSize: 14,
-      fontWeight: '500',
    },
 })

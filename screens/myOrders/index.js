@@ -18,6 +18,7 @@ import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
 
 const MyOrdersScreen = () => {
    // context
@@ -58,7 +59,7 @@ const MyOrdersScreen = () => {
             orderHistoryLoading || componentStatus === 'loading' ? (
                <Spinner size="large" showText={true} />
             ) : error ? (
-               <Text style={{ fontFamily: 'MetropolisMedium' }}>
+               <Text style={{ fontFamily: global.medium }}>
                   Something went wrong
                </Text>
             ) : (
@@ -86,9 +87,7 @@ const MyOrdersScreen = () => {
 const NoOrdersAvailable = () => {
    return (
       <View>
-         <Text style={{ fontFamily: 'MetropolisMedium' }}>
-            No orders available
-         </Text>
+         <Text style={{ fontFamily: global.medium }}>No orders available</Text>
       </View>
    )
 }
@@ -171,9 +170,8 @@ const OrderCard = ({ order }) => {
                <Button
                   variant="noOutline"
                   textStyle={{
-                     fontWeight: '600',
                      fontSize: 12,
-                     fontFamily: 'Metropolis',
+                     fontFamily: global.regular,
                   }}
                   onPress={handleCardOnPress}
                >
@@ -212,7 +210,7 @@ const OrderStatus = ({ order }) => {
 const PleaseLogIn = () => {
    return (
       <View>
-         <Text style={{ fontFamily: 'MetropolisMedium' }}>Please login</Text>
+         <Text style={{ fontFamily: global.medium }}>Please login</Text>
       </View>
    )
 }
@@ -236,8 +234,7 @@ const Header = () => {
                   appConfig.brandSettings.headerSettings?.textColor?.value ||
                   '#000000',
                fontSize: 16,
-               fontWeight: '500',
-               fontFamily: 'Metropolis',
+               fontFamily: global.regular,
             }}
          >
             My Orders
@@ -284,13 +281,11 @@ const styles = StyleSheet.create({
       marginVertical: 6,
    },
    fulfillmentInfo: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       color: '#00000080',
-      fontWeight: '500',
    },
    orderFulfillmentStatus: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
+      fontFamily: global.regular,
    },
 })
 export default MyOrdersScreen

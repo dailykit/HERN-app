@@ -16,6 +16,7 @@ import { ProductList } from '../../components/product'
 import { onDemandMenuContext } from '../../context'
 import { PRODUCTS_QUERY } from '../../graphql'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
 
 const ProductSearchScreen = () => {
    //    const textRef = React.useRef(null)
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
    },
    input: {
       fontSize: 16,
-      fontWeight: '500',
+      fontFamily: global.regular,
    },
 })
 export default ProductSearchScreen

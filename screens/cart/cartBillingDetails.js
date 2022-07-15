@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from 'react-native'
 // import { useTranslation, useUser } from '../context'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
+
 const user = {}
 export const CartBillingDetails = ({ cart, billing, tip = false }) => {
    //    const { user } = useUser()
@@ -30,7 +32,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   {billing.deliveryPrice === 0 ? (
                      <Text
                         style={{
-                           fontFamily: 'MetropolisBold',
+                           fontFamily: global.bold,
                         }}
                      >
                         {'Free'}
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
       marginVertical: 3,
    },
    textCommonStyle: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 16,
    },
 })

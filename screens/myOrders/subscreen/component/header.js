@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import CloseIcon from '../../../../assets/closeIcon'
+import global from '../../../../globalStyles'
 
 export const SubScreenHeader = ({ title }) => {
    const navigation = useNavigation()
@@ -45,8 +46,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
    },
    headerTextStyle: {
-      fontWeight: '500',
-      fontFamily: 'MetropolisSemiBold',
+      fontFamily: global.semibold,
       fontSize: 18,
    },
 })

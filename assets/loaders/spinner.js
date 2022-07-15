@@ -1,5 +1,6 @@
 import { Text, View, ActivityIndicator } from 'react-native'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
 
 export const Spinner = ({
    size = 'small',
@@ -28,7 +29,11 @@ export const Spinner = ({
          />
          {showText && (
             <Text
-               style={{ marginTop: 8, fontFamily: 'Metropolis', ...textStyle }}
+               style={{
+                  marginTop: 8,
+                  fontFamily: global.regular,
+                  ...textStyle,
+               }}
             >
                {text || 'Loading...'}
             </Text>

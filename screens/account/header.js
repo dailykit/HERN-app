@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import { useConfig } from '../../lib/config'
+import global from '../../globalStyles'
 
 export const AccountHeader = () => {
    const { appConfig } = useConfig()
@@ -39,8 +40,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
    },
    headerTextStyle: {
-      fontFamily: 'Metropolis',
+      fontFamily: global.regular,
       fontSize: 16,
-      fontWeight: '500',
    },
 })
