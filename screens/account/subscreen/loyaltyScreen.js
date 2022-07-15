@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
       color: '#A2A2A2',
    },
    noTransactionMessage: {
-      fontFamily: 'Metropolis',
+      fontFamily: 'MetropolisSemiBold',
       fontWeight: '600',
       fontSize: 16,
       marginVertical: 10,

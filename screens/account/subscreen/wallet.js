@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
    },
    headingText: {
       fontSize: 16,
-      fontWeight: '500',
+      fontFamily: 'MetropolisSemiBold',
       color: '#A2A2A2',
    },
    transactionHeader: {
@@ -325,25 +325,25 @@ const styles = StyleSheet.create({
       height: 40,
    },
    noTransactionMessage: {
-      fontWeight: '600',
+      fontFamily: 'MetropolisSemiBold',
       fontSize: 16,
       marginVertical: 10,
    },
    transactionId: {
       fontSize: 16,
-      fontWeight: '500',
+      fontFamily: 'MetropolisMedium',
       flex: 1,
       textAlign: 'center',
    },
    transactionDate: {
       fontSize: 16,
-      fontWeight: '500',
+      fontFamily: 'MetropolisMedium',
       flex: 2,
       textAlign: 'left',
    },
    transactionAmount: {
       fontSize: 16,
-      fontWeight: '500',
+      fontFamily: 'MetropolisMedium',
       flex: 1,
       textAlign: 'right',
    },
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
       paddingLeft: 22,
       fontSize: 20,
-      fontWeight: '500',
+      fontFamily: 'MetropolisMedium',
       color: '#00000080',
    },
 })

@@ -238,6 +238,7 @@ export const OtpLogin = () => {
             setError('Entered OTP is incorrect, please try again!')
          }
       } catch (error) {
+         console.error('Error is this', error)
          setLoading(false)
          if (error.response.status === 400) {
             setError('Entered OTP is incorrect, please try again!')
