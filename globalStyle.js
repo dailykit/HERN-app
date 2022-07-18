@@ -17,7 +17,6 @@ const useGlobalStyle = () => {
       },
    })
    useEffect(() => {
-      console.log(globalStyle)
       setGlobalStyle({
          ...globalStyle,
          color: {

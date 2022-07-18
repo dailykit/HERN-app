@@ -85,7 +85,7 @@ export const MobileNumberForm = ({
                         color:
                            appConfig.brandSettings.buttonSettings
                               .activeTextColor.value || '#ffffff',
-                        fontSize: 12,
+                        fontSize: 10,
                         fontFamily: globalStyle.font.regular,
                      }}
                   >
@@ -107,7 +107,7 @@ export const MobileNumberForm = ({
                         color:
                            appConfig.brandSettings.buttonSettings
                               .activeTextColor.value || '#ffffff',
-                        fontSize: 12,
+                        fontSize: 10,
                         fontFamily: globalStyle.font.regular,
                      }}
                   >
