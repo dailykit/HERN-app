@@ -111,7 +111,11 @@ const CartScreen = () => {
                disabled={
                   isAuthenticated &&
                   (!cartState?.cart?.fulfillmentInfo ||
-                     !cartState?.cart?.customerInfo ||
+                     !(
+                        cartState?.cart?.customerInfo?.customerFirstName
+                           ?.length &&
+                        cartState?.cart?.customerInfo?.customerPhone?.length
+                     ) ||
                      !cartState?.cart?.address)
                }
                onPress={() => {
