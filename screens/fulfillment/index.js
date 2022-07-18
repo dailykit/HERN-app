@@ -15,10 +15,11 @@ import DeliveryIcon from '../../assets/deliveryIcon'
 import PickupIcon from '../../assets/pickupIcon'
 import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 const Fulfillment = () => {
    const { orderTabs, appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { brandSettings } = appConfig
    const navigation = useNavigation()
    const [isDeliveryPressed, setDeliveryPressed] = useState(false)
@@ -63,7 +64,13 @@ const Fulfillment = () => {
          />
          {orderTabs && orderTabs.length > 0 ? (
             <>
-               <Text style={[styles.headingText, styles.commonText]}>
+               <Text
+                  style={[
+                     styles.headingText,
+                     styles.commonText,
+                     { fontFamily: globalCss.font.semibold },
+                  ]}
+               >
                   Choose Between
                </Text>
                <View style={styles.row}>
@@ -178,7 +185,13 @@ const Fulfillment = () => {
                      </TouchableWithoutFeedback>
                   ) : null}
                </View>
-               <Text style={[styles.commonText, styles.subHeadingText]}>
+               <Text
+                  style={[
+                     styles.commonText,
+                     styles.subHeadingText,
+                     { fontFamily: globalCss.font.medium },
+                  ]}
+               >
                   You can change your preference on the checkout page
                </Text>
             </>
@@ -226,12 +239,10 @@ const styles = StyleSheet.create({
       marginBottom: 69,
    },
    headingText: {
-      fontFamily: global.semibold,
       fontSize: 28,
       lineHeight: 28,
    },
    subHeadingText: {
-      fontFamily: global.medium,
       fontSize: 14,
       lineHeight: 18,
       width: '80%',
@@ -239,7 +250,6 @@ const styles = StyleSheet.create({
       marginHorizontal: 'auto',
    },
    commonText: {
-      fontFamily: global.medium,
       color: '#fff',
    },
    pressedBtn: {

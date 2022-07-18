@@ -1,17 +1,27 @@
 import { StyleSheet, View, Text } from 'react-native'
 import LocationIcon from '../../assets/locationIcon'
-import global from '../../globalStyles'
-
+import useGlobalCss from '../../globalStyle'
 export const AddressInfo = props => {
+   const { globalCss } = useGlobalCss()
    const { address } = props
    return (
       <View style={styles.addressContainer}>
-         <LocationIcon fill={global.greyColor} />
+         <LocationIcon fill={globalCss.color.grey} />
          <View style={{ flexShrink: 1 }}>
-            <Text style={styles.addressText}>
+            <Text
+               style={[
+                  styles.addressText,
+                  { fontFamily: globalCss.font.regular },
+               ]}
+            >
                {address.mainText || address.line1}
             </Text>
-            <Text style={styles.addressText}>
+            <Text
+               style={[
+                  styles.addressText,
+                  { fontFamily: globalCss.font.regular },
+               ]}
+            >
                {address.secondaryText ||
                   `${address?.city || ''} ${address?.state || ''} ${
                      address?.country || ''
@@ -31,7 +41,6 @@ const styles = StyleSheet.create({
    },
    addressText: {
       color: 'rgba(0, 0, 0, 0.6)',
-      fontFamily: global.regular,
       fontSize: 13,
    },
 })

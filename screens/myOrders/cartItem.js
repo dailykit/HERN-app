@@ -3,16 +3,27 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { combineCartItems } from '../../utils'
 import { formatCurrency } from '../../utils/formatCurrency'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 export const CartItem = ({ products, createdAt }) => {
    const cartItems = React.useMemo(() => combineCartItems(products), [products])
+   const { globalCss } = useGlobalCss()
 
    return (
       <View>
          <View style={styles.cartItemHeader}>
-            <Text style={styles.itemCount}>Item(s)({cartItems.length})</Text>
-            <Text style={styles.orderDate}>
+            <Text
+               style={[
+                  styles.itemCount,
+                  { fontFamily: globalCss.font.semibold },
+               ]}
+            >
+               Item(s)({cartItems.length})
+            </Text>
+
+            <Text
+               style={[styles.orderDate, { fontFamily: globalCss.font.italic }]}
+            >
                {moment(createdAt).format('DD MMM YY hh:mm a')}
             </Text>
          </View>
@@ -27,7 +38,7 @@ export const CartItem = ({ products, createdAt }) => {
                            marginRight: 10,
                         }}
                      >
-                        <Text style={{ fontFamily: global.medium }}>
+                        <Text style={{ fontFamily: globalCss.font.medium }}>
                            {product.name}{' '}
                         </Text>
                      </View>
@@ -81,7 +92,6 @@ const styles = StyleSheet.create({
       color: '#00000080',
    },
    itemCount: {
-      fontFamily: global.semibold,
       fontSize: 14,
    },
    productOptionText: {
@@ -93,8 +103,5 @@ const styles = StyleSheet.create({
    cartItemHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-   },
-   orderDate: {
-      fontFamily: global.italic,
    },
 })

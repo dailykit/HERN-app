@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import CloseIcon from '../../../../assets/closeIcon'
-import global from '../../../../globalStyles'
+import useGlobalCss from '../../../../globalStyle'
 
 export const SubScreenHeader = ({ title }) => {
+   const { globalCss } = useGlobalCss()
    const navigation = useNavigation()
    return (
       <View
@@ -18,6 +19,7 @@ export const SubScreenHeader = ({ title }) => {
             style={[
                {
                   color: '#000000',
+                  fontFamily: globalCss.font.semibold,
                },
                styles.headerTextStyle,
             ]}
@@ -46,7 +48,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
    },
    headerTextStyle: {
-      fontFamily: global.semibold,
       fontSize: 18,
    },
 })

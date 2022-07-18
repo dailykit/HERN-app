@@ -18,9 +18,10 @@ import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import { useConfig } from '../../lib/config'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 const MyOrdersScreen = () => {
+   const { globalCss } = useGlobalCss()
    // context
    const { user, isLoading: userLoading } = useUser()
 
@@ -59,7 +60,7 @@ const MyOrdersScreen = () => {
             orderHistoryLoading || componentStatus === 'loading' ? (
                <Spinner size="large" showText={true} />
             ) : error ? (
-               <Text style={{ fontFamily: global.medium }}>
+               <Text style={{ fontFamily: globalCss.font.medium }}>
                   Something went wrong
                </Text>
             ) : (
@@ -85,9 +86,13 @@ const MyOrdersScreen = () => {
    )
 }
 const NoOrdersAvailable = () => {
+   const { globalCss } = useGlobalCss()
+
    return (
       <View>
-         <Text style={{ fontFamily: global.medium }}>No orders available</Text>
+         <Text style={{ fontFamily: globalCss.font.medium }}>
+            No orders available
+         </Text>
       </View>
    )
 }
@@ -104,6 +109,8 @@ const getTitle = type => {
    }
 }
 const OrderCard = ({ order }) => {
+   const { globalCss } = useGlobalCss()
+
    const navigation = useNavigation()
    const handleCardOnPress = () => {
       if (order.status === 'ORDER_DELIVERED') {
@@ -140,10 +147,20 @@ const OrderCard = ({ order }) => {
                {(order?.fulfillmentInfo?.type === 'PREORDER_PICKUP' ||
                   order?.fulfillmentInfo?.type === 'PREORDER_DELIVERY') && (
                   <View>
-                     <Text style={styles.fulfillmentInfo}>
+                     <Text
+                        style={[
+                           styles.fulfillmentInfo,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {getTitle(order?.fulfillmentInfo?.type)}
                      </Text>
-                     <Text style={styles.fulfillmentInfo}>
+                     <Text
+                        style={[
+                           styles.fulfillmentInfo,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         on{' '}
                         {moment(order?.fulfillmentInfo?.slot?.from).format(
                            'DD MMM YYYY'
@@ -171,7 +188,7 @@ const OrderCard = ({ order }) => {
                   variant="noOutline"
                   textStyle={{
                      fontSize: 12,
-                     fontFamily: global.regular,
+                     fontFamily: globalCss.font.regular,
                   }}
                   onPress={handleCardOnPress}
                >
@@ -186,6 +203,8 @@ const OrderCard = ({ order }) => {
 }
 
 const OrderStatus = ({ order }) => {
+   const { globalCss } = useGlobalCss()
+
    const statusLabel = React.useMemo(() => {
       switch (order.status) {
          case 'ORDER_PENDING':
@@ -204,19 +223,27 @@ const OrderStatus = ({ order }) => {
             return 'Status Not Available'
       }
    }, [])
-   return <Text style={styles.orderFulfillmentStatus}>Order {statusLabel}</Text>
+   return (
+      <Text style={{ fontFamily: globalCss.font.regular }}>
+         Order {statusLabel}
+      </Text>
+   )
 }
 
 const PleaseLogIn = () => {
+   const { globalCss } = useGlobalCss()
+
    return (
       <View>
-         <Text style={{ fontFamily: global.medium }}>Please login</Text>
+         <Text style={{ fontFamily: globalCss.font.medium }}>Please login</Text>
       </View>
    )
 }
 
 const Header = () => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
+
    return (
       <View
          style={[
@@ -234,7 +261,7 @@ const Header = () => {
                   appConfig.brandSettings.headerSettings?.textColor?.value ||
                   '#000000',
                fontSize: 16,
-               fontFamily: global.regular,
+               fontFamily: globalCss.font.regular,
             }}
          >
             My Orders
@@ -281,11 +308,7 @@ const styles = StyleSheet.create({
       marginVertical: 6,
    },
    fulfillmentInfo: {
-      fontFamily: global.regular,
       color: '#00000080',
-   },
-   orderFulfillmentStatus: {
-      fontFamily: global.regular,
    },
 })
 export default MyOrdersScreen

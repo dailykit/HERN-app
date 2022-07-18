@@ -6,7 +6,7 @@ import { useConfig } from '../lib/config'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import { Button } from '../components/button'
 import Modal from '../components/modal'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 const PaymentProcessingModal = ({
    isOpen,
@@ -21,6 +21,7 @@ const PaymentProcessingModal = ({
    setIsProcessingPayment = () => null,
    setIsPaymentInitiated = () => null,
 }) => {
+   const { globalCss } = useGlobalCss()
    const [countDown, setCountDown] = useState(null)
    //    const { t } = useTranslation()
 
@@ -58,16 +59,46 @@ const PaymentProcessingModal = ({
          />
       )
 
-      let title = <Text style={styles.modalTitle}>Processing your payment</Text>
+      let title = (
+         <Text
+            style={{ ...styles.modalTitle, fontFamily: globalCss.font.medium }}
+         >
+            Processing your payment
+         </Text>
+      )
       let subtitle = (
          <View style={styles.modalSubtitleBlock}>
-            <Text style={[styles.modalSubtitle]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                Please wait while we process your payment
             </Text>
-            <Text style={[styles.modalSubtitle]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                Please do not refresh or reload the page
             </Text>
-            <Text style={[styles.modalSubtitle]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                you'll be automatically redirected
             </Text>
          </View>
@@ -81,12 +112,26 @@ const PaymentProcessingModal = ({
             />
          )
          title = (
-            <Text style={styles.modalTitle}>
+            <Text
+               style={{
+                  ...styles.modalTitle,
+                  fontFamily: globalCss.font.medium,
+               }}
+            >
                Successfully placed your order
             </Text>
          )
          subtitle = (
-            <Text style={[styles.modalSubtitle, styles.modalSubtitleBlock]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  styles.modalSubtitleBlock,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                You will be redirected to your booking page shortly
             </Text>
          )
@@ -98,12 +143,26 @@ const PaymentProcessingModal = ({
             />
          )
          title = (
-            <Text style={styles.modalTitle}>
+            <Text
+               style={{
+                  ...styles.modalTitle,
+                  fontFamily: globalCss.font.medium,
+               }}
+            >
                Looks like your card requires authentication
             </Text>
          )
          subtitle = (
-            <Text style={[styles.modalSubtitle, styles.modalSubtitleBlock]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  styles.modalSubtitleBlock,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                An additional verification step which direct you to an
                authentication page on your bank’s website
             </Text>
@@ -130,9 +189,27 @@ const PaymentProcessingModal = ({
                style={styles.paymentStatusLoader}
             />
          )
-         title = <Text style={styles.modalTitle}>Payment Failed</Text>
+         title = (
+            <Text
+               style={{
+                  ...styles.modalTitle,
+                  fontFamily: globalCss.font.medium,
+               }}
+            >
+               Payment Failed
+            </Text>
+         )
          subtitle = (
-            <Text style={[styles.modalSubtitle, styles.modalSubtitleBlock]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  styles.modalSubtitleBlock,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                Something went wrong
             </Text>
          )
@@ -151,9 +228,27 @@ const PaymentProcessingModal = ({
                style={styles.paymentStatusLoader}
             />
          )
-         title = <Text style={styles.modalTitle}>Payment Cancelled</Text>
+         title = (
+            <Text
+               style={{
+                  ...styles.modalTitle,
+                  fontFamily: globalCss.font.medium,
+               }}
+            >
+               Payment Cancelled
+            </Text>
+         )
          subtitle = (
-            <Text style={[styles.modalSubtitle, styles.modalSubtitleBlock]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  styles.modalSubtitleBlock,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                You cancelled your payment process
             </Text>
          )
@@ -172,9 +267,27 @@ const PaymentProcessingModal = ({
                style={styles.paymentStatusLoader}
             />
          )
-         title = <Text style={styles.modalTitle}>Payment Failed</Text>
+         title = (
+            <Text
+               style={{
+                  ...styles.modalTitle,
+                  fontFamily: globalCss.font.medium,
+               }}
+            >
+               Payment Failed
+            </Text>
+         )
          subtitle = (
-            <Text style={[styles.modalSubtitle, styles.modalSubtitleBlock]}>
+            <Text
+               style={[
+                  styles.modalSubtitle,
+                  styles.modalSubtitleBlock,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                Your payment is failed since your bank doesn't authenticate you
             </Text>
          )
@@ -226,7 +339,12 @@ const PaymentProcessingModal = ({
                {ShowPaymentStatusInfo(cartPayment?.paymentStatus).subtitle}
             </>
          ) : (
-            <Text style={styles.modalTitle}>
+            <Text
+               style={{
+                  ...styles.modalTitle,
+                  fontFamily: globalCss.font.medium,
+               }}
+            >
                Successfully top-up your wallet
             </Text>
          )}
@@ -275,7 +393,6 @@ const styles = StyleSheet.create({
    modalTitle: {
       fontSize: 14,
       lineHeight: 25,
-      fontFamily: global.medium,
       marginBottom: 3,
       textAlign: 'center',
    },
@@ -283,10 +400,9 @@ const styles = StyleSheet.create({
       marginBottom: 8,
    },
    modalSubtitle: {
-      fontFamily: global.regular,
       fontSize: 11,
       lineHeight: 13,
-      color: global.greyColor,
+
       textAlign: 'center',
    },
    paymentStatusLoader: {

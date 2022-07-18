@@ -12,11 +12,12 @@ import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
 import { StoreList } from './storeList'
 import { Button } from '../button'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 export const Pickup = () => {
    const navigation = useNavigation()
    const { orderTabs, brand, appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
 
    const [userCoordinate, setUserCoordinate] = useState({
       latitude: null,
@@ -260,7 +261,10 @@ export const Pickup = () => {
          <View style={{ zIndex: -10 }}>
             {locationSearching.loading ? (
                <Text
-                  style={{ fontStyle: 'italic', fontFamily: global.regular }}
+                  style={{
+                     fontStyle: 'italic',
+                     fontFamily: globalCss.font.regular,
+                  }}
                >
                   Getting your location
                </Text>
@@ -279,7 +283,12 @@ export const Pickup = () => {
          <View>
             {!address ? null : isGetStoresLoading ? (
                <View style={styles.searchingStoreStyle}>
-                  <Text style={styles.findingTextStyle}>
+                  <Text
+                     style={[
+                        styles.findingTextStyle,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
                      Finding your nearest store...
                   </Text>
                   <Image
@@ -289,10 +298,25 @@ export const Pickup = () => {
                </View>
             ) : stores?.length === 0 ? (
                <View style={styles.noStoreContainer}>
-                  <Text style={styles.noStoreText1}>
+                  <Text
+                     style={[
+                        styles.noStoreText1,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
                      Store service not found at your location
                   </Text>
-                  <Text style={styles.noStoreText2}>Try other Locations</Text>
+                  <Text
+                     style={[
+                        styles.noStoreText2,
+                        {
+                           fontFamily: globalCss.font.regular,
+                           color: globalCss.color.grey,
+                        },
+                     ]}
+                  >
+                     Try other Locations
+                  </Text>
                   <Image
                      source={require('../../assets/noStore.png')}
                      style={{
@@ -331,7 +355,6 @@ const styles = StyleSheet.create({
    searchingStoreStyle: { marginVertical: 15, alignItems: 'center' },
    findingTextStyle: {
       fontSize: 18,
-      fontFamily: global.regular,
       color: 'rgba(0, 0, 0, 0.8)',
       marginBottom: 16,
    },
@@ -341,12 +364,9 @@ const styles = StyleSheet.create({
    },
    noStoreText1: {
       fontSize: 16,
-      fontFamily: global.regular,
       marginVertical: 4,
    },
    noStoreText2: {
-      fontFamily: global.regular,
-      color: global.greyColor,
       fontSize: 12,
       marginVertical: 4,
    },

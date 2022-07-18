@@ -13,10 +13,11 @@ import { ProfileIcon } from '../../../assets/profileIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
-import global from '../../../globalStyles'
+import useGlobalCss from '../../../globalStyle'
 
 const OrderDetailScreen = ({ products, createdAt }) => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const route = useRoute()
    const [componentStatus, setComponentStatus] = React.useState('loading')
    const [cartItems, setCartItems] = React.useState([])
@@ -85,7 +86,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
          {componentStatus === 'loading' ? (
             <Spinner size={'large'} showText={true} />
          ) : componentStatus === 'error' ? (
-            <Text style={{ fontFamily: global.medium }}>
+            <Text style={{ fontFamily: globalCss.font.medium }}>
                Something went wrong
             </Text>
          ) : (
@@ -98,40 +99,54 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                   }}
                >
                   <View style={styles.userInfo}>
-                     <Text style={{ fontFamily: global.semibold }}>
+                     <Text style={{ fontFamily: globalCss.font.semibold }}>
                         <ProfileIcon /> {'  '}
                         {carts[0].customerInfo.customerFirstName}{' '}
                         {carts[0].customerInfo.customerLastName}
                      </Text>
                      <Text
-                        style={{ fontFamily: global.regular, marginLeft: 20 }}
+                        style={{
+                           fontFamily: globalCss.font.regular,
+                           marginLeft: 20,
+                        }}
                      >
                         {carts[0].customerInfo.customerPhone}
                      </Text>
                   </View>
                   <View style={styles.addressContainer}>
                      <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontFamily: global.semibold }}>
+                        <Text style={{ fontFamily: globalCss.font.semibold }}>
                            {label}
                         </Text>
                      </View>
                      {carts[0].address.label ? (
-                        <Text style={{ fontFamily: global.regular }}>
+                        <Text style={{ fontFamily: globalCss.font.regular }}>
                            carts[0].address.label
                         </Text>
                      ) : null}
                      <Text
-                        style={{ fontFamily: global.regular }}
+                        style={{ fontFamily: globalCss.font.regular }}
                      >{`${carts[0].address?.line1}`}</Text>
-                     <Text style={{ fontFamily: global.regular }}>
+                     <Text style={{ fontFamily: globalCss.font.regular }}>
                         {`${carts[0].address?.city} ${carts[0].address?.state} ${carts[0].address?.country},${carts[0].address?.zipcode}`}
                      </Text>
                   </View>
                   <View style={styles.fulfillmentContainer}>
-                     <Text style={styles.fulfillmentInfo}>
+                     <Text
+                        style={[
+                           styles.fulfillmentInfo,
+                           { fontFamily: globalCss.font.semibold },
+                        ]}
+                     >
                         {getTitle(carts[0]?.fulfillmentInfo?.type)}
                      </Text>
-                     <Text style={styles.fulfillmentInfo}>
+
+                     <Text
+                        style={[
+                           styles.fulfillmentInfo,
+                           { fontFamily: globalCss.font.semibold },
+                        ]}
+                     >
                         {' '}
                         on{' '}
                         {moment(carts[0]?.fulfillmentInfo?.slot?.from).format(
@@ -153,20 +168,26 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                      <Text
                         style={{
                            marginHorizontal: 6,
-                           fontFamily: global.semibold,
+                           fontFamily: globalCss.font.semibold,
                         }}
                      >
                         Payment Details:
                      </Text>
-                     <Text style={{ fontFamily: global.regular }}>
+                     <Text style={{ fontFamily: globalCss.font.regular }}>
                         {carts[0].availablePaymentOption?.label || 'N/A'}
                      </Text>
                   </View>
                   <View style={styles.cartItemHeader}>
-                     <Text style={styles.itemCount}>
+                     <Text
+                        style={[
+                           styles.itemCount,
+                           { fontFamily: globalCss.font.semibold },
+                        ]}
+                     >
                         Item(s)({cartItems.length})
                      </Text>
-                     <Text style={styles.orderDate}>
+
+                     <Text style={{ fontFamily: globalCss.font.italic }}>
                         {moment(createdAt).format('DD MMM YY hh:mm a')}
                      </Text>
                   </View>
@@ -192,7 +213,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                     />
                                     <Text
                                        style={{
-                                          fontFamily: global.medium,
+                                          fontFamily: globalCss.font.medium,
                                        }}
                                     >
                                        {product.name}{' '}
@@ -202,10 +223,11 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                 <Text
                                                    style={{
                                                       fontFamily:
-                                                         global.regular,
+                                                         globalCss.font.regular,
                                                       textDecorationLine:
                                                          'line-through',
-                                                      color: global.greyColor,
+                                                      color: globalCss.color
+                                                         .grey,
                                                       marginRight: 4,
                                                    }}
                                                 >
@@ -216,7 +238,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                 <Text
                                                    style={{
                                                       fontFamily:
-                                                         global.regular,
+                                                         globalCss.font.regular,
                                                    }}
                                                 >
                                                    {formatCurrency(
@@ -228,7 +250,8 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                           ) : (
                                              <Text
                                                 style={{
-                                                   fontFamily: global.regular,
+                                                   fontFamily:
+                                                      globalCss.font.regular,
                                                 }}
                                              >
                                                 {formatCurrency(product.price)}
@@ -240,7 +263,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                               </View>
                               <Text
                                  style={{
-                                    fontFamily: global.regular,
+                                    fontFamily: globalCss.font.regular,
                                  }}
                               >
                                  x{product.ids.length}
@@ -249,7 +272,12 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                            {product.childs.length > 0 ? (
                               <View style={{ marginLeft: 6 }}>
                                  <View style={styles.productOption}>
-                                    <Text style={styles.productOptionText}>
+                                    <Text
+                                       style={[
+                                          styles.productOptionText,
+                                          { fontFamily: globalCss.font.medium },
+                                       ]}
+                                    >
                                        {product.childs[0].productOption.label}
                                     </Text>
                                     {product.childs[0].price !== 0 ? (
@@ -264,9 +292,10 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                 style={{
                                                    textDecorationLine:
                                                       'line-through',
-                                                   color: global.greyColor,
+                                                   color: globalCss.color.grey,
                                                    marginRight: 4,
-                                                   fontFamily: global.regular,
+                                                   fontFamily:
+                                                      globalCss.font.regular,
                                                 }}
                                              >
                                                 {formatCurrency(
@@ -275,7 +304,13 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                              </Text>
                                           ) : null}
                                           <Text
-                                             style={styles.productOptionText}
+                                             style={[
+                                                styles.productOptionText,
+                                                {
+                                                   fontFamily:
+                                                      globalCss.font.medium,
+                                                },
+                                             ]}
                                           >
                                              {formatCurrency(
                                                 product.childs[0].price -
@@ -296,9 +331,15 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                    >
                                                       <View>
                                                          <Text
-                                                            style={
-                                                               styles.modifierOptionText
-                                                            }
+                                                            style={[
+                                                               styles.modifierOptionText,
+                                                               {
+                                                                  fontFamily:
+                                                                     globalCss
+                                                                        .font
+                                                                        .medium,
+                                                               },
+                                                            ]}
                                                          >
                                                             {
                                                                eachModifier
@@ -322,7 +363,9 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                                      style={{
                                                                         textDecorationLine:
                                                                            'line-through',
-                                                                        color: global.greyColor,
+                                                                        color: globalCss
+                                                                           .color
+                                                                           .grey,
                                                                         marginRight: 4,
                                                                      }}
                                                                   >
@@ -332,9 +375,15 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                                   </Text>
                                                                ) : null}
                                                                <Text
-                                                                  style={
-                                                                     styles.modifierOptionText
-                                                                  }
+                                                                  style={[
+                                                                     styles.modifierOptionText,
+                                                                     {
+                                                                        fontFamily:
+                                                                           globalCss
+                                                                              .font
+                                                                              .medium,
+                                                                     },
+                                                                  ]}
                                                                >
                                                                   {formatCurrency(
                                                                      eachModifier.price -
@@ -359,7 +408,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                   <View
                      style={{
                         height: 1,
-                        backgroundColor: global.greyColor,
+                        backgroundColor: globalCss.color.grey,
                         marginVertical: 15,
                      }}
                   ></View>
@@ -410,20 +459,16 @@ const styles = StyleSheet.create({
       marginVertical: 6,
    },
    fulfillmentInfo: {
-      fontFamily: global.semibold,
       color: '#000000',
    },
    itemCount: {
       fontSize: 14,
-      fontFamily: global.semibold,
    },
    productOptionText: {
-      fontFamily: global.medium,
       marginVertical: 3,
       color: '#00000080',
    },
    modifierOptionText: {
-      fontFamily: global.medium,
       marginVertical: 3,
       color: '#00000080',
    },
@@ -431,9 +476,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
    },
-   orderDate: {
-      fontFamily: global.italic,
-   },
+
    addressContainer: {
       marginVertical: 10,
       borderWidth: 1,

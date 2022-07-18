@@ -2,21 +2,33 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import EmptyCartIcon from '../../assets/emptyCart'
 import { useConfig } from '../../lib/config'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 export const EmptyCart = () => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    return (
       <View style={styles.emptyCartContainer}>
          <View style={styles.messages}>
-            <Text style={styles.emptyCartMessage}>
+            <Text
+               style={[
+                  styles.emptyCartMessage,
+                  { fontFamily: globalCss.font.medium },
+               ]}
+            >
                Oops! Your cart is empty.
             </Text>
-            <Text style={styles.emptyCartCustomMessage}>
-               {
-                  appConfig?.brandSettings?.cartSettings?.customEmptyMessage
-                     ?.value
-               }
+            <Text
+               style={[
+                  styles.emptyCartCustomMessage,
+                  {
+                     fontFamily: globalCss.font.medium,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
+               {appConfig?.brandSettings?.cartSettings?.customEmptyMessage
+                  ?.value || ''}
             </Text>
          </View>
          <EmptyCartIcon />
@@ -36,12 +48,9 @@ const styles = StyleSheet.create({
       marginBottom: 40,
    },
    emptyCartMessage: {
-      fontFamily: global.medium,
       fontSize: 20,
    },
    emptyCartCustomMessage: {
-      fontFamily: global.medium,
-      color: global.greyColor,
       fontSize: 14,
    },
 })

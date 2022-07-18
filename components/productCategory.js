@@ -6,7 +6,7 @@ import {
    StyleSheet,
    Image,
 } from 'react-native'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 const categoryViewStyles = {
    cardView: 'cardView',
@@ -21,6 +21,7 @@ export const ProductCategory = ({
    textColor,
    viewStyle = 'iconView',
 }) => {
+   const { globalCss } = useGlobalCss()
    return (
       <TouchableWithoutFeedback
          onPress={() => {
@@ -64,7 +65,11 @@ export const ProductCategory = ({
             />
             <Text
                style={[
-                  { ...categoryStyles.categoryText, color: textColor },
+                  {
+                     ...categoryStyles.categoryText,
+                     color: textColor,
+                     fontFamily: globalCss.font.regular,
+                  },
                   viewStyle === categoryViewStyles.cardView
                      ? { marginVertical: 8 }
                      : { marginTop: 8 },
@@ -94,7 +99,6 @@ const categoryStyles = StyleSheet.create({
       width: 80,
    },
    selectedCategory: {
-      backgroundColor: global.primaryColor,
       paddingHorizontal: 8,
       paddingVertical: 5,
    },
@@ -102,7 +106,6 @@ const categoryStyles = StyleSheet.create({
       borderRadius: 10,
    },
    categoryText: {
-      fontFamily: global.regular,
       fontSize: 12,
       lineHeight: 14,
       textTransform: 'capitalize',

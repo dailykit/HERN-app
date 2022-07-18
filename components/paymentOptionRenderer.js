@@ -20,7 +20,7 @@ import { useUser } from '../context/user'
 import * as QUERIES from '../graphql'
 import { formatCurrency, get_env } from '../utils'
 import { CardsLoader } from '../assets/loaders'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 export default function PaymentOptionsRenderer({
    cartId,
@@ -31,6 +31,7 @@ export default function PaymentOptionsRenderer({
    onPaymentCancel,
 }) {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { setPaymentInfo, paymentInfo, updatePaymentState } = usePayment()
    const { user } = useUser()
    const [isLoading, setIsLoading] = React.useState(true)
@@ -172,7 +173,9 @@ export default function PaymentOptionsRenderer({
 
    return (
       <View style={styles.Wrapper}>
-         <Text style={styles.heading}>Select Payment Mode</Text>
+         <Text style={{ ...styles.heading, fontFamily: globalCss.font.bold }}>
+            Select Payment Mode
+         </Text>
          {(cartId ? isLoading || loading : loading) ? (
             <CardsLoader />
          ) : (
@@ -287,6 +290,7 @@ export default function PaymentOptionsRenderer({
                            backgroundColor:
                               appConfig?.brandSettings?.buttonSettings
                                  ?.buttonBGColor?.value || '#222222',
+                           fontFamily: globalCss.font.regular,
                         }}
                      >
                         <Text
@@ -295,6 +299,7 @@ export default function PaymentOptionsRenderer({
                               color:
                                  appConfig?.brandSettings?.buttonSettings
                                     ?.textColor?.value || '#ffffff',
+                              fontFamily: globalCss.font.regular,
                            }}
                         >
                            Pay Now
@@ -321,6 +326,7 @@ const PaymentOptionCard = ({
    metaData = {},
 }) => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { isAuthenticated } = true
    const { setPaymentInfo, paymentInfo } = usePayment()
 
@@ -332,13 +338,37 @@ const PaymentOptionCard = ({
    }
    return (
       <TouchableOpacity onPress={onClick} style={styles.paymentOptionContainer}>
-         <Text style={styles.paymentOptionCardHeader}>{title}</Text>
-         <View style={styles.paymentOptionCard}>
+         <Text
+            style={{
+               ...styles.paymentOptionCardHeader,
+               fontFamily: globalCss.font.medium,
+            }}
+         >
+            {title}
+         </Text>
+         <View
+            style={{
+               ...styles.paymentOptionCard,
+               borderColor: globalCss.color.grey,
+            }}
+         >
             {icon}
             <View style={{ marginHorizontal: 8 }}>
-               <Text style={styles.paymentOptionCardTitle}>{title}</Text>
+               <Text
+                  style={{
+                     ...styles.paymentOptionCardTitle,
+                     fontFamily: globalCss.font.medium,
+                  }}
+               >
+                  {title}
+               </Text>
                {description ? (
-                  <Text style={styles.paymentOptionCardDescription}>
+                  <Text
+                     style={{
+                        ...styles.paymentOptionCardDescription,
+                        fontFamily: globalCss.font.regular,
+                     }}
+                  >
                      {description}
                   </Text>
                ) : null}
@@ -349,9 +379,9 @@ const PaymentOptionCard = ({
                   stroke={
                      isSelected
                         ? appConfig?.brandSettings?.checkIconSettings
-                             ?.checkIconFillColor?.value
+                             ?.checkIconFillColor?.value || '#000000'
                         : appConfig?.brandSettings?.checkIconSettings
-                             ?.boundaryColor?.value
+                             ?.boundaryColor?.value || '#A2A2A2'
                   }
                />
             </View>
@@ -385,7 +415,6 @@ const styles = StyleSheet.create({
       width: '80%',
       borderRadius: 8,
       text: {
-         fontFamily: global.regular,
          textAlign: 'center',
       },
       marginTop: 15,
@@ -393,7 +422,7 @@ const styles = StyleSheet.create({
    heading: {
       textAlign: 'center',
       marginVertical: 24,
-      fontFamily: global.bold,
+
       fontSize: 24,
       lineHeight: 24,
       color: '#000000',
@@ -409,19 +438,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       borderWidth: 0.3,
       borderStyle: 'solid',
-      borderColor: global.greyColor,
       borderRadius: 6,
       padding: 10,
    },
    paymentOptionCardHeader: {
-      fontFamily: global.medium,
       fontSize: 12,
       lineHeight: 14,
       color: 'rgba(0, 0, 0, 0.8)',
       margin: 2,
    },
    paymentOptionCardTitle: {
-      fontFamily: global.medium,
       fontSize: 16,
       lineHeight: 18,
       color: '#000',

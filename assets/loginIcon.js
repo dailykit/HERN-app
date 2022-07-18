@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Svg, { Path } from 'react-native-svg'
-import global from '../globalStyles'
 
 export const LoginIcon = props => (
    <Svg
@@ -79,7 +78,7 @@ export const LoginIcon = props => (
          fillRule="evenodd"
          clipRule="evenodd"
          d="M81.2481 76.1356C78.2995 76.091 75.6415 74.7972 74.079 72.3377C71.2464 67.8789 73.0956 61.2656 78.2181 57.5782C83.3405 53.8908 89.8177 54.5138 92.6497 58.9726C94.4818 61.8565 94.3321 65.6482 92.6409 68.9556C99.5851 66.6191 105.799 67.7768 107.366 72.0909C109.199 77.1566 103.92 84.6721 95.5923 88.8585C87.2648 93.0449 78.9896 92.3388 77.1563 87.2731C76.0125 84.0531 77.7078 79.8498 81.2481 76.1356Z"
-         fill={global.greyColor}
+         fill="#A2A2A2"
       />
       <Path
          fillRule="evenodd"

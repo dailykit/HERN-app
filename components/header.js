@@ -6,7 +6,7 @@ import { useConfig } from '../lib/config'
 import { useCart } from '../context/cart'
 import React, { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 export const Header = () => {
    const navigation = useNavigation()
@@ -19,6 +19,7 @@ export const Header = () => {
       locationId,
       appConfig,
    } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { cartState } = useCart()
    React.useEffect(() => {
       if (orderTabs?.length > 0) {
@@ -121,7 +122,7 @@ export const Header = () => {
                         color:
                            appConfig?.brandSettings.headerSettings?.textColor
                               ?.value || '#000000',
-                        fontFamily: global.italic,
+                        fontFamily: globalCss.font.italic,
                      }}
                   >
                      Getting your location
@@ -133,7 +134,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
-                           fontFamily: global.semibold,
+                           fontFamily: globalCss.font.semibold,
                         }}
                      >
                         {label}
@@ -143,7 +144,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
-                           fontFamily: global.regular,
+                           fontFamily: globalCss.font.regular,
                         }}
                      >
                         {userLocation?.label
@@ -159,6 +160,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
+                           fontFamily: globalCss.font.regular,
                         },
                      ]}
                   >
@@ -179,9 +181,12 @@ export const Header = () => {
                      {
                         backgroundColor:
                            appConfig?.brandSettings.headerSettings
-                              ?.cartItemCountBackgroundColor?.value,
-                        color: appConfig?.brandSettings.headerSettings
-                           ?.cartItemCountTextColor?.value,
+                              ?.cartItemCountBackgroundColor?.value ||
+                           '#000000',
+                        color:
+                           appConfig?.brandSettings.headerSettings
+                              ?.cartItemCountTextColor?.value || '#ffffff',
+                        fontFamily: globalCss.font.regular,
                      },
                   ]}
                >
@@ -215,7 +220,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    headerTextStyle: {
-      fontFamily: global.regular,
       fontSize: 12,
       lineHeight: 12,
       marginHorizontal: 4,
@@ -227,7 +231,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 6,
       borderRadius: 10,
       fontSize: 12,
-      fontFamily: global.regular,
       right: -4,
       zIndex: 1000,
    },

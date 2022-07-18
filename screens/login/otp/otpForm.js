@@ -12,7 +12,7 @@ import CountDown from 'react-native-countdown-component'
 import React, { useEffect } from 'react'
 import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
-import global from '../../../globalStyles'
+import useGlobalCss from '../../../globalStyle'
 // TODO: countdown for resend button
 
 export const OTPform = ({
@@ -31,6 +31,7 @@ export const OTPform = ({
 }) => {
    const { appConfig } = useConfig()
    const [showResendBtn, setShowResendBtn] = React.useState(false)
+   const { globalCss } = useGlobalCss()
 
    const ResentBtn = () => {
       return (
@@ -45,7 +46,7 @@ export const OTPform = ({
                setShowResendBtn(true)
             }}
          >
-            <Text style={{ color: 'red', fontFamily: global.medium }}>
+            <Text style={{ color: 'red', fontFamily: globalCss.font.medium }}>
                Resend OTP
             </Text>
          </TouchableOpacity>
@@ -65,7 +66,7 @@ export const OTPform = ({
                style={{
                   color: '#ffffff',
                   fontSize: 24,
-                  fontFamily: global.medium,
+                  fontFamily: globalCss.font.medium,
                }}
             >
                ENTER OTP
@@ -83,12 +84,15 @@ export const OTPform = ({
                   style={{
                      color: '#fff',
                      fontSize: 13,
-                     fontFamily: global.medium,
+                     fontFamily: globalCss.font.medium,
                   }}
                >
                   An OTP has been sent to
                   <Text
-                     style={{ fontSize: 11.5, fontFamily: global.medium }}
+                     style={{
+                        fontSize: 11.5,
+                        fontFamily: globalCss.font.medium,
+                     }}
                   >{`  ${form?.phoneNumber || ''}`}</Text>
                </Text>
                <TouchableOpacity
@@ -100,10 +104,11 @@ export const OTPform = ({
                >
                   <Text
                      style={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#ffffff',
                         fontSize: 14,
-                        fontFamily: global.medium,
+                        fontFamily: globalCss.font.medium,
                         marginLeft: 4,
                      }}
                   >
@@ -123,8 +128,14 @@ export const OTPform = ({
                   setForm(prev => ({ ...prev, otp: code }))
                }}
                autoFocusOnLoad
-               codeInputFieldStyle={styles.underlineStyleBase}
-               codeInputHighlightStyle={styles.underlineStyleHighLighted}
+               codeInputFieldStyle={[
+                  styles.underlineStyleBase,
+                  { fontFamily: globalCss.font.medium },
+               ]}
+               codeInputHighlightStyle={[
+                  styles.underlineStyleHighLighted,
+                  { borderColor: globalCss.color.highlight },
+               ]}
                onCodeFilled={code => {
                   console.log('filledCode', code)
                }}
@@ -136,7 +147,7 @@ export const OTPform = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: global.italic,
+                     fontFamily: globalCss.font.italic,
                      width: '100%',
                   }}
                >
@@ -204,7 +215,6 @@ const styles = StyleSheet.create({
       marginTop: 6,
    },
    continueBtn: {
-      backgroundColor: global.primaryColor,
       borderRadius: 8,
       width: '100%',
       height: 50,
@@ -225,7 +235,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    resendOTPtext: {
-      color: global.primaryColor,
       fontSize: 14,
       lineHeight: 20,
       marginTop: 16,
@@ -233,15 +242,10 @@ const styles = StyleSheet.create({
    changeNum: {
       fontSize: 12,
       lineHeight: 20,
-      color: global.primaryColor,
    },
    borderStyleBase: {
       width: 30,
       height: 45,
-   },
-
-   borderStyleHighLighted: {
-      borderColor: global.highlightColor,
    },
 
    underlineStyleBase: {
@@ -251,10 +255,5 @@ const styles = StyleSheet.create({
       backgroundColor: '#242424',
       borderRadius: 6,
       // borderBottomWidth: 1,
-      fontFamily: global.medium,
-   },
-
-   underlineStyleHighLighted: {
-      borderColor: global.highlightColor,
    },
 })

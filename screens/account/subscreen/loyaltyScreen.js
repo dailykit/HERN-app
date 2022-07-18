@@ -6,10 +6,11 @@ import moment from 'moment'
 import { NoDataIcon } from '../../../assets/noDataIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import global from '../../../globalStyles'
+import useGlobalCss from '../../../globalStyle'
 
 const LoyaltyPointsScreen = () => {
    const { user, isLoading } = useUser()
+   const { globalCss } = useGlobalCss()
    if (isLoading) {
       return <Spinner size={'large'} showText={true} />
    }
@@ -20,9 +21,21 @@ const LoyaltyPointsScreen = () => {
             <View
                style={{ alignItems: 'center', flexDirection: 'row', flex: 1 }}
             >
-               <Text style={styles.loyaltyText}>Loyalty Points :</Text>
+               <Text
+                  style={[
+                     styles.loyaltyText,
+                     { fontFamily: globalCss.font.regular },
+                  ]}
+               >
+                  Loyalty Points :
+               </Text>
                <CoinsIcon />
-               <Text style={[styles.loyaltyText, { marginLeft: 5 }]}>
+               <Text
+                  style={[
+                     styles.loyaltyText,
+                     { fontFamily: globalCss.font.regular, marginLeft: 5 },
+                  ]}
+               >
                   {user.loyaltyPoint.points || 0}
                </Text>
             </View>
@@ -31,7 +44,7 @@ const LoyaltyPointsScreen = () => {
                   style={{
                      fontSize: 18,
                      marginBottom: 10,
-                     fontFamily: global.regular,
+                     fontFamily: globalCss.font.regular,
                   }}
                >
                   Transaction History
@@ -46,7 +59,12 @@ const LoyaltyPointsScreen = () => {
                      }}
                   >
                      <NoDataIcon />
-                     <Text style={styles.noTransactionMessage}>
+                     <Text
+                        style={[
+                           styles.noTransactionMessage,
+                           { fontFamily: globalCss.font.semibold },
+                        ]}
+                     >
                         Oops! No transaction history is available yet
                      </Text>
                   </View>
@@ -56,7 +74,12 @@ const LoyaltyPointsScreen = () => {
                         <Text
                            style={[
                               styles.headingText,
-                              { flex: 2, textAlign: 'left' },
+                              {
+                                 fontFamily: globalCss.font.regular,
+                                 color: globalCss.color.grey,
+                                 flex: 2,
+                                 textAlign: 'left',
+                              },
                            ]}
                         >
                            Transaction Date
@@ -64,7 +87,12 @@ const LoyaltyPointsScreen = () => {
                         <Text
                            style={[
                               styles.headingText,
-                              { flex: 1, textAlign: 'right' },
+                              {
+                                 fontFamily: globalCss.font.regular,
+                                 color: globalCss.color.grey,
+                                 flex: 1,
+                                 textAlign: 'right',
+                              },
                            ]}
                         >
                            Balance
@@ -84,7 +112,14 @@ const LoyaltyPointsScreen = () => {
                                        },
                                     ]}
                                  >
-                                    <Text style={styles.transactionDate}>
+                                    <Text
+                                       style={[
+                                          styles.transactionDate,
+                                          {
+                                             fontFamily: globalCss.font.regular,
+                                          },
+                                       ]}
+                                    >
                                        {moment(
                                           eachTransaction.created_at
                                        ).format('DD MMM YY HH:mm')}
@@ -98,6 +133,7 @@ const LoyaltyPointsScreen = () => {
                                                 'CREDIT'
                                                    ? '#61D836'
                                                    : '#FF0000',
+                                             fontFamily: globalCss.font.regular,
                                           },
                                        ]}
                                     >
@@ -119,16 +155,12 @@ const LoyaltyPointsScreen = () => {
 }
 const styles = StyleSheet.create({
    loyaltyText: {
-      fontFamily: global.regular,
       fontSize: 18,
    },
    headingText: {
-      fontFamily: global.regular,
       fontSize: 16,
-      color: global.greyColor,
    },
    noTransactionMessage: {
-      fontFamily: global.semibold,
       fontSize: 16,
       marginVertical: 10,
    },
@@ -148,18 +180,15 @@ const styles = StyleSheet.create({
    },
    transactionId: {
       fontSize: 16,
-      fontFamily: global.regular,
       flex: 1,
       textAlign: 'center',
    },
    transactionDate: {
-      fontFamily: global.regular,
       fontSize: 16,
       flex: 2,
       textAlign: 'left',
    },
    transactionAmount: {
-      fontFamily: global.regular,
       fontSize: 16,
       flex: 1,
       textAlign: 'right',

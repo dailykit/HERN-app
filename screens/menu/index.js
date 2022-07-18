@@ -24,11 +24,12 @@ import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import { FloatingMenu } from '../../components/floatingMenu'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 const MenuScreen = ({ route }) => {
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const {
       onDemandMenu: { isMenuLoading, allProductIds, categories },
    } = React.useContext(onDemandMenuContext)
@@ -131,7 +132,7 @@ const MenuScreen = ({ route }) => {
          {status === 'loading' ? (
             <Spinner size="large" showText={true} />
          ) : status === 'error' ? (
-            <Text style={{ fontFamily: global.medium }}>Error</Text>
+            <Text style={{ fontFamily: globalCss.font.medium }}>Error</Text>
          ) : null}
          {status === 'success' ? (
             <>
@@ -176,7 +177,12 @@ const MenuScreen = ({ route }) => {
                >
                   <View style={styles.searchBar}>
                      <SearchIcon size={14} />
-                     <Text style={styles.searchBarText}>
+                     <Text
+                        style={[
+                           styles.searchBarText,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         Search for item...
                      </Text>
                   </View>
@@ -196,7 +202,12 @@ const MenuScreen = ({ route }) => {
                      }
                      return (
                         <View key={eachCategory.name + '--' + fIndex}>
-                           <Text style={styles.categoryListName}>
+                           <Text
+                              style={[
+                                 styles.categoryListName,
+                                 { fontFamily: globalCss.font.medium },
+                              ]}
+                           >
                               {eachCategory.name}
                            </Text>
                            <ProductList productsList={eachCategory.products} />
@@ -239,7 +250,6 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
    categoryListName: {
-      fontFamily: global.medium,
       fontSize: 24,
       lineHeight: 36,
       marginHorizontal: 12,
@@ -261,7 +271,6 @@ const styles = StyleSheet.create({
       borderRadius: 6,
    },
    searchBarText: {
-      fontFamily: global.regular,
       fontSize: 14,
       color: '#00000060',
       marginLeft: 10,

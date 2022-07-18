@@ -2,7 +2,7 @@ import { FascinateInline_400Regular } from '@expo-google-fonts/dev'
 import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
 import RadioIcon from '../assets/radioIcon'
 import { useConfig } from '../lib/config'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 export const Button = ({
    children,
@@ -18,6 +18,7 @@ export const Button = ({
    additionalIcon: AdditionalIcon = null,
 }) => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { buttonSettings } = appConfig.brandSettings
    const containerStyleByVariant = variant => {
       switch (variant) {
@@ -28,8 +29,8 @@ export const Button = ({
          case 'outline':
             return {
                borderColor: isActive
-                  ? buttonSettings.borderActiveColor.value
-                  : buttonSettings.borderInactiveColor.value,
+                  ? buttonSettings.borderActiveColor.value || '#000000'
+                  : buttonSettings.borderInactiveColor.value || '#A2A2A2',
                borderWidth: 1,
                backgroundColor: '#FFFFFF',
             }
@@ -84,9 +85,9 @@ export const Button = ({
                      stroke={
                         isActive
                            ? appConfig.brandSettings.checkIconSettings
-                                .checkIconFillColor.value
+                                .checkIconFillColor.value || '#000000'
                            : appConfig.brandSettings.checkIconSettings
-                                .boundaryColor.value
+                                .boundaryColor.value || '#A2A2A2'
                      }
                   />
                </View>
@@ -96,6 +97,7 @@ export const Button = ({
                   styles.buttonTextStyle,
                   textStyleByVariant(variant),
                   textStyle ? textStyle : null,
+                  { fontFamily: globalCss.font.regular },
                ]}
             >
                {children}
@@ -116,6 +118,5 @@ const styles = StyleSheet.create({
       paddingHorizontal: 12,
       paddingVertical: 6,
       fontSize: 12,
-      fontFamily: global.regular,
    },
 })

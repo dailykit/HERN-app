@@ -1,8 +1,7 @@
 import * as React from 'react'
 import Svg, { Path } from 'react-native-svg'
-import global from '../globalStyles'
 
-export const ProfileIcon = ({ size = 15, fill = global.greyColor }) => (
+export const ProfileIcon = ({ size = 15, fill = '#A2A2A2' }) => (
    <Svg
       width={size}
       height={size}

@@ -6,10 +6,11 @@ import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 export const StoreList = ({ stores, address, fulfillmentType }) => {
    const { dispatch, orderTabs } = useConfig()
+   const { globalCss } = useGlobalCss()
    const navigation = useNavigation()
    const selectedOrderTab = React.useMemo(() => {
       return orderTabs.find(
@@ -21,7 +22,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
          <Text
             style={{
                fontSize: 16,
-               fontFamily: global.regular,
+               fontFamily: globalCss.font.regular,
             }}
          >
             Select Store
@@ -116,19 +117,34 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                      <View style={{ flexDirection: 'row' }}>
                         {/* <StoreIcon /> */}
                         <View style={{ flex: 1 }}>
-                           <LocationIcon fill={global.greyColor} />
+                           <LocationIcon fill={globalCss.color.grey} />
                         </View>
                         <View style={{ flex: 11 }}>
-                           <Text style={styles.storeLabel}>{label}</Text>
+                           <Text
+                              style={[
+                                 styles.storeLabel,
+                                 { fontFamily: globalCss.font.regular },
+                              ]}
+                           >
+                              {label}
+                           </Text>
                            <View>
-                              <Text style={{ fontFamily: global.regular }}>
+                              <Text
+                                 style={{ fontFamily: globalCss.font.regular }}
+                              >
                                  {line1}
                               </Text>
-                              <Text style={{ fontFamily: global.regular }}>
+                              <Text
+                                 style={{ fontFamily: globalCss.font.regular }}
+                              >
                                  {line2}
                               </Text>
                               <View>
-                                 <Text style={{ fontFamily: global.regular }}>
+                                 <Text
+                                    style={{
+                                       fontFamily: globalCss.font.regular,
+                                    }}
+                                 >
                                     {city} {state} {country}
                                     {' ('}
                                     {zipcode}
@@ -144,7 +160,12 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                            }}
                         >
                            <DistanceIcon />
-                           <Text style={styles.mileText}>
+                           <Text
+                              style={[
+                                 styles.mileText,
+                                 { fontFamily: globalCss.font.regular },
+                              ]}
+                           >
                               {aerialDistance} {distanceUnit}
                            </Text>
                         </View>
@@ -159,7 +180,6 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
 
 const styles = StyleSheet.create({
    storeLabel: {
-      fontFamily: global.regular,
       fontSize: 16,
    },
    storeCard: {
@@ -169,6 +189,5 @@ const styles = StyleSheet.create({
       marginLeft: 4,
       color: 'rgba(0, 0, 0, 0.6)',
       fontSize: 12,
-      fontFamily: global.regular,
    },
 })

@@ -29,10 +29,11 @@ import { OTPS } from '../../../graphql/subscriptions'
 import { useUser } from '../../../context/user'
 import { useConfig } from '../../../lib/config'
 import * as Notifications from 'expo-notifications'
-import global from '../../../globalStyles'
+import useGlobalCss from '../../../globalStyle'
 
 export const OtpLogin = () => {
    const { appConfig, brand } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { login } = useUser()
    const navigation = useNavigation()
    const phoneInput = React.useRef(null)
@@ -280,9 +281,10 @@ export const OtpLogin = () => {
                >
                   <Text
                      style={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
-                        fontFamily: global.regular,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#ffffff',
+                        fontFamily: globalCss.font.regular,
                      }}
                   >
                      Skip

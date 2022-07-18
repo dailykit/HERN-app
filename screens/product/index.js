@@ -22,12 +22,13 @@ import { ModifierPopup } from '../../components/modifierPopup'
 import Modal from 'react-native-modal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 const windowWidth = Dimensions.get('window').width
 
 const ProductScreen = () => {
    const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const navigation = useNavigation()
    const { params: { productId } = {} } = useRoute()
    const { addToCart } = useCart()
@@ -158,7 +159,7 @@ const ProductScreen = () => {
    if (productError) {
       return (
          <View>
-            <Text style={{ fontFamily: global.medium }}>
+            <Text style={{ fontFamily: globalCss.font.medium }}>
                Something went wrong
             </Text>
          </View>
@@ -190,7 +191,14 @@ const ProductScreen = () => {
                </View>
                <View style={styles.productDetails}>
                   <View style={styles.productDetailsHeader}>
-                     <Text style={styles.productName}>{products[0].name}</Text>
+                     <Text
+                        style={[
+                           styles.productName,
+                           { fontFamily: globalCss.font.semibold },
+                        ]}
+                     >
+                        {products[0].name}
+                     </Text>
                   </View>
                   <View style={styles.priceContainer}>
                      {
@@ -198,7 +206,12 @@ const ProductScreen = () => {
                            {(products[0].discount ||
                               defaultProductOption?.discount) &&
                            products[0].price > 0 ? (
-                              <Text style={styles.productOriginalValue}>
+                              <Text
+                                 style={[
+                                    styles.productOriginalValue,
+                                    { fontFamily: globalCss.font.medium },
+                                 ]}
+                              >
                                  {formatCurrency(
                                     products[0].price +
                                        defaultProductOption.price
@@ -207,7 +220,13 @@ const ProductScreen = () => {
                            ) : null}
                         </>
                      }
-                     <Text style={styles.discountPrice}>
+
+                     <Text
+                        style={[
+                           styles.discountPrice,
+                           { fontFamily: globalCss.font.medium },
+                        ]}
+                     >
                         {formatCurrency(
                            getPriceWithDiscount(
                               products[0].price,
@@ -222,14 +241,25 @@ const ProductScreen = () => {
                   </View>
                   <View>
                      {products[0].additionalText && (
-                        <Text style={styles.additionalText}>
+                        <Text
+                           style={[
+                              styles.additionalText,
+                              { fontFamily: globalCss.font.medium },
+                           ]}
+                        >
                            {products[0].additionalText}
                         </Text>
                      )}
                      {products[0].description && (
                         <>
                            <Text
-                              style={styles.description}
+                              style={[
+                                 styles.description,
+                                 {
+                                    fontFamily: globalCss.font.medium,
+                                    color: globalCss.color.grey,
+                                 },
+                              ]}
                               numberOfLines={numberOfLines}
                               onTextLayout={onTextLayout}
                            >
@@ -244,9 +274,10 @@ const ProductScreen = () => {
                               >
                                  <Text
                                     style={{
-                                       color: appConfig.brandSettings.brandColor
-                                          .value,
-                                       fontFamily: global.medium,
+                                       color:
+                                          appConfig.brandSettings.brandColor
+                                             .value || '#000000',
+                                       fontFamily: globalCss.font.medium,
                                        fontSize: 14,
                                        textAlign: 'right',
                                     }}
@@ -264,7 +295,7 @@ const ProductScreen = () => {
          <View style={{ flex: 1, backgroundColor: '#000' }}>
             <Button
                buttonStyle={{ height: 40, margin: 8 }}
-               textStyle={{ fontFamily: global.regular, fontSize: 16 }}
+               textStyle={{ fontFamily: globalCss.font.regular, fontSize: 16 }}
                onPress={() => {
                   onAddItemClick()
                }}
@@ -324,7 +355,6 @@ const styles = StyleSheet.create({
    image: {},
    productName: {
       fontSize: 18,
-      fontFamily: global.semibold,
    },
    productDetails: {
       paddingHorizontal: 21,
@@ -337,24 +367,19 @@ const styles = StyleSheet.create({
       marginBottom: 18,
    },
    productOriginalValue: {
-      fontFamily: global.medium,
       fontSize: 12,
       color: '#00000080',
    },
    discountPrice: {
       fontSize: 12,
-      fontFamily: global.medium,
       color: '#00000080',
    },
    additionalText: {
-      fontFamily: global.medium,
       fontSize: 14,
       color: '#00000040',
    },
    description: {
-      fontFamily: global.medium,
       fontSize: 14,
-      color: global.greyColor,
    },
 })
 export default ProductScreen
