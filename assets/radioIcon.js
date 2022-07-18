@@ -1,12 +1,7 @@
 import * as React from 'react'
 import Svg, { Rect } from 'react-native-svg'
-import global from '../globalStyles'
 
-const RadioIcon = ({
-   size = 16,
-   checked = false,
-   stroke = global.primaryColor,
-}) => (
+const RadioIcon = ({ size = 16, checked = false, stroke = '#EF5266' }) => (
    <Svg
       width={size}
       height={size}

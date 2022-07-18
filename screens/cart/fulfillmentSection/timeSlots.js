@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Button } from '../../../components/button'
 import moment from 'moment'
 import { generateTimeStamp } from '../../../utils'
-import global from '../../../globalStyles'
+import useGlobalCss from '../../../globalStyle'
 
 export const TimeSlots = ({
    availableDaySlots,
@@ -12,6 +12,7 @@ export const TimeSlots = ({
    setSelectedSlot,
    onFulfillmentTimeClick,
 }) => {
+   const { globalCss } = useGlobalCss()
    const [showAllDates, setShowAllDates] = React.useState(true)
    const [showAllTimeSlots, setShowAllTimeSlots] = React.useState(true)
 
@@ -29,7 +30,14 @@ export const TimeSlots = ({
    return (
       <View>
          <View>
-            <Text style={styles.headingStyle}>Select Date For Later</Text>
+            <Text
+               style={[
+                  styles.headingStyle,
+                  { fontFamily: globalCss.font.semibold },
+               ]}
+            >
+               Select Date For Later
+            </Text>
             <View>
                <ScrollView horizontal={true}>
                   {daySlots.map((eachSlot, index) => {
@@ -54,7 +62,14 @@ export const TimeSlots = ({
          </View>
          {selectedSlot ? (
             <View>
-               <Text style={styles.headingStyle}>Select Time</Text>
+               <Text
+                  style={[
+                     styles.headingStyle,
+                     { fontFamily: globalCss.font.semibold },
+                  ]}
+               >
+                  Select Time
+               </Text>
                <ScrollView horizontal={true}>
                   {sortBy(timeSlots, [
                      function (slot) {
@@ -104,7 +119,6 @@ export const TimeSlots = ({
 
 const styles = StyleSheet.create({
    headingStyle: {
-      fontFamily: global.semibold,
       color: '#00000060',
       marginVertical: 6,
    },

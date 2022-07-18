@@ -10,7 +10,7 @@ import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { Button } from '../../../components/button'
 import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
-import global from '../../../globalStyles'
+import useGlobalCss from '../../../globalStyle'
 
 export const MobileNumberForm = ({
    setForm,
@@ -21,6 +21,7 @@ export const MobileNumberForm = ({
 }) => {
    const { appConfig } = useConfig()
    const phoneInput = React.useRef(null)
+   const { globalCss } = useGlobalCss()
 
    return (
       <View style={styles.phoneNumberContainer}>
@@ -29,7 +30,7 @@ export const MobileNumberForm = ({
                style={{
                   color: '#ffffff',
                   fontSize: 24,
-                  fontFamily: global.medium,
+                  fontFamily: globalCss.font.medium,
                }}
             >
                LOGIN
@@ -53,10 +54,16 @@ export const MobileNumberForm = ({
                   withDarkTheme
                   withShadow
                   autoFocus
-                  textInputStyle={styles.textInputStyle}
+                  textInputStyle={[
+                     styles.textInputStyle,
+                     { fontFamily: globalCss.font.medium },
+                  ]}
                   containerStyle={styles.containerStyle}
                   textContainerStyle={styles.textContainerStyle}
-                  codeTextStyle={styles.codeTextStyle}
+                  codeTextStyle={[
+                     styles.codeTextStyle,
+                     { fontFamily: globalCss.font.medium },
+                  ]}
                   disableArrowIcon={true}
                   textInputProps={{ placeholderTextColor: '#ffffff80' }}
                   placeholder={'Enter Phone Number...'}
@@ -67,7 +74,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: global.regular,
+                     fontFamily: globalCss.font.regular,
                   }}
                >
                   By continuing, I agree to the{' '}
@@ -75,10 +82,11 @@ export const MobileNumberForm = ({
                <TouchableOpacity style={{ alignItems: 'center' }}>
                   <Text
                      style={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#ffffff',
                         fontSize: 12,
-                        fontFamily: global.regular,
+                        fontFamily: globalCss.font.regular,
                      }}
                   >
                      Terms of Use{' '}
@@ -88,7 +96,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: global.regular,
+                     fontFamily: globalCss.font.regular,
                   }}
                >
                   &{' '}
@@ -96,10 +104,11 @@ export const MobileNumberForm = ({
                <TouchableOpacity style={{ alignItems: 'center' }}>
                   <Text
                      style={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#ffffff',
                         fontSize: 12,
-                        fontFamily: global.regular,
+                        fontFamily: globalCss.font.regular,
                      }}
                   >
                      Privacy Policy
@@ -110,7 +119,7 @@ export const MobileNumberForm = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: global.italic,
+                     fontFamily: globalCss.font.italic,
                   }}
                >
                   {error}
@@ -183,14 +192,12 @@ const styles = StyleSheet.create({
       borderRadius: 6,
    },
    textInputStyle: {
-      fontFamily: global.medium,
       borderLeftWidth: 4,
       fontSize: 16,
       lineHeight: 20,
       color: '#FFFFFF',
    },
    codeTextStyle: {
-      fontFamily: global.medium,
       color: '#FFFFFF',
    },
    termAndCond: {

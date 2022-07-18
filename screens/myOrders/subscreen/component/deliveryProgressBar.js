@@ -12,34 +12,40 @@ import { PhoneIcon } from '../../../../assets/phoneIcon'
 import { ProfileIcon } from '../../../../assets/profileIcon'
 import moment from 'moment'
 import { useConfig } from '../../../../lib/config'
-import global from '../../../../globalStyles'
+import useGlobalCss from '../../../../globalStyle'
 
 export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const customStyles = React.useMemo(
       () => ({
          stepIndicatorSize: 30,
          currentStepIndicatorSize: 35,
          separatorStrokeWidth: 2,
          currentStepStrokeWidth: 0,
-         stepStrokeCurrentColor: appConfig.brandSettings.brandColor.value,
+         stepStrokeCurrentColor:
+            appConfig.brandSettings.brandColor.value || '#000000',
          stepStrokeWidth: 0,
-         stepStrokeFinishedColor: appConfig.brandSettings.brandColor.value,
+         stepStrokeFinishedColor:
+            appConfig.brandSettings.brandColor.value || '#000000',
          stepStrokeUnFinishedColor: '#aaaaaa',
-         separatorFinishedColor: appConfig.brandSettings.brandColor.value,
+         separatorFinishedColor:
+            appConfig.brandSettings.brandColor.value || '#000000',
          separatorUnFinishedColor: '#aaaaaa',
-         stepIndicatorFinishedColor: appConfig.brandSettings.brandColor.value,
-         stepIndicatorUnFinishedColor: global.greyColor,
-         stepIndicatorCurrentColor: global.greyColor,
+         stepIndicatorFinishedColor:
+            appConfig.brandSettings.brandColor.value || '#000000',
+         stepIndicatorUnFinishedColor: globalCss.color.grey,
+         stepIndicatorCurrentColor: globalCss.color.grey,
          stepIndicatorLabelFontSize: 13,
          currentStepIndicatorLabelFontSize: 13,
          stepIndicatorLabelCurrentColor:
-            appConfig.brandSettings.brandColor.value,
+            appConfig.brandSettings.brandColor.value || '#000000',
          stepIndicatorLabelFinishedColor: '#ffffff',
          stepIndicatorLabelUnFinishedColor: '#aaaaaa',
          labelColor: '#999999',
          labelSize: 13,
-         currentStepLabelColor: appConfig.brandSettings.brandColor.value,
+         currentStepLabelColor:
+            appConfig.brandSettings.brandColor.value || '#000000',
          labelAlign: 'flex-start',
       }),
       []
@@ -173,9 +179,10 @@ export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
    )
 }
 const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
+   const { globalCss } = useGlobalCss()
    return (
       <View key={eachOrderStatus.step}>
-         <Text style={{ fontFamily: global.regular }}>
+         <Text style={{ fontFamily: globalCss.font.regular }}>
             {eachOrderStatus.label}
          </Text>
          {!isEmpty(deliveryInfo) &&
@@ -192,6 +199,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                      styles.time,
                      {
                         color: isActive ? '#00000080' : '#00000025',
+                        fontFamily: globalCss.font.italic,
                      },
                   ]}
                >
@@ -215,6 +223,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         styles.time,
                         {
                            color: '#00000080',
+                           fontFamily: globalCss.font.italic,
                         },
                      ]}
                   >
@@ -230,7 +239,12 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         }}
                      >
                         <ProfileIcon size={10} />
-                        <Text style={styles.assignedName}>
+                        <Text
+                           style={[
+                              styles.assignedName,
+                              { fontFamily: globalCss.font.regular },
+                           ]}
+                        >
                            {eachOrderStatus.details.assignedName}
                         </Text>
                      </View>
@@ -242,7 +256,12 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         }}
                      >
                         <PhoneIcon fill={'#00000060'} />
-                        <Text style={styles.assignedPhone}>
+                        <Text
+                           style={[
+                              styles.assignedPhone,
+                              { fontFamily: globalCss.font.regular },
+                           ]}
+                        >
                            {eachOrderStatus.details.assignedPhone}
                         </Text>
                      </View>
@@ -264,7 +283,6 @@ const styles = StyleSheet.create({
       marginLeft: 8,
    },
    time: {
-      fontStyle: 'italic',
       fontSize: 10,
       marginLeft: 4,
    },

@@ -19,10 +19,11 @@ import { onDemandMenuContext } from '../../context'
 import { PRODUCTS_QUERY } from '../../graphql'
 import { useQuery } from '@apollo/client'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 const HomeScreen = () => {
    const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const navigation = useNavigation()
    const {
       onDemandMenu: { isMenuLoading, allProductIds, categories },
@@ -124,10 +125,20 @@ const HomeScreen = () => {
                   style={styles.orderNowImage}
                />
                <View style={{ marginHorizontal: 14 }}>
-                  <Text style={styles.orderNowHeading}>
+                  <Text
+                     style={[
+                        styles.orderNowHeading,
+                        { fontFamily: globalCss.font.semibold },
+                     ]}
+                  >
                      {appConfig?.data?.orderNow?.heading?.value || ''}
                   </Text>
-                  <Text style={styles.orderNowSubHeading}>
+                  <Text
+                     style={[
+                        styles.orderNowSubHeading,
+                        { fontFamily: globalCss.font.medium },
+                     ]}
+                  >
                      {appConfig?.data?.orderNow?.subHeading?.value || ''}
                   </Text>
                   <TouchableOpacity
@@ -140,9 +151,8 @@ const HomeScreen = () => {
                      <Text
                         style={{
                            ...styles.orderNowBtn,
-                           color:
-                              appConfig?.brandSettings?.orderNow?.btnColor
-                                 ?.value || global.primaryColor,
+                           color: globalCss.color.primary || '#000',
+                           fontFamily: globalCss.font.semibold,
                         }}
                      >
                         Order Now
@@ -159,7 +169,14 @@ const HomeScreen = () => {
             )}
             {/* Shop By Collection Block */}
             <View style={styles.showByCollectionContainer}>
-               <Text style={styles.trendingNowHeading}>Shop By Collection</Text>
+               <Text
+                  style={[
+                     styles.trendingNowHeading,
+                     { fontFamily: globalCss.font.semibold },
+                  ]}
+               >
+                  Shop By Collection
+               </Text>
                <ScrollView style={styles.container} horizontal={true}>
                   {categories.map((eachCategory, index) => {
                      if (!eachCategory.isCategoryPublished) {
@@ -205,7 +222,6 @@ const styles = StyleSheet.create({
       marginHorizontal: 12,
    },
    trendingNowHeading: {
-      fontFamily: global.semibold,
       fontSize: 20,
       lineHeight: 20,
       color: '#fff',
@@ -232,7 +248,6 @@ const styles = StyleSheet.create({
       borderTopRightRadius: 16,
    },
    orderNowHeading: {
-      fontFamily: global.semibold,
       fontSize: 13.5,
       lineHeight: 16,
       textAlign: 'center',
@@ -240,7 +255,6 @@ const styles = StyleSheet.create({
       marginBottom: 6,
    },
    orderNowSubHeading: {
-      fontFamily: global.medium,
       fontSize: 10,
       lineHeight: 12,
       textAlign: 'center',
@@ -249,13 +263,11 @@ const styles = StyleSheet.create({
    },
    orderNowBtn: {
       textAlign: 'center',
-      fontFamily: global.semibold,
       fontSize: 16,
       lineHeight: 16,
       textDecorationLine: 'underline',
       marginTop: 6,
       marginBottom: 11,
-      color: global.primaryColor,
    },
    showByCollectionContainer: {
       marginTop: 12,

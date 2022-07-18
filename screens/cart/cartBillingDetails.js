@@ -3,10 +3,11 @@ import { View, Text, StyleSheet } from 'react-native'
 // import { useTranslation, useUser } from '../context'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { useConfig } from '../../lib/config'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 const user = {}
 export const CartBillingDetails = ({ cart, billing, tip = false }) => {
+   const { globalCss } = useGlobalCss()
    //    const { user } = useUser()
    const { configOf } = useConfig()
 
@@ -18,37 +19,78 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
    )
    return (
       <View style={styles.cartDetailContainer}>
-         <Text style={[styles.textCommonStyle]}>{'Bill Details'}</Text>
+         <Text
+            style={[
+               styles.textCommonStyle,
+               { fontFamily: globalCss.font.regular },
+            ]}
+         >
+            {'Bill Details'}
+         </Text>
          {billing && (
             <View>
                <View style={[styles.rowCommonStyle]}>
-                  <Text style={[styles.textCommonStyle]}>{'Item total'}</Text>
-                  <Text style={[styles.textCommonStyle]}>
+                  <Text
+                     style={[
+                        styles.textCommonStyle,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
+                     {'Item total'}
+                  </Text>
+                  <Text
+                     style={[
+                        styles.textCommonStyle,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
                      {formatCurrency(billing.itemTotal || 0)}
                   </Text>
                </View>
                <View style={[styles.rowCommonStyle]}>
-                  <Text style={[styles.textCommonStyle]}>{'Delivery fee'}</Text>
+                  <Text
+                     style={[
+                        styles.textCommonStyle,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
+                     {'Delivery fee'}
+                  </Text>
                   {billing.deliveryPrice === 0 ? (
                      <Text
                         style={{
-                           fontFamily: global.bold,
+                           fontFamily: globalCss.font.bold,
                         }}
                      >
                         {'Free'}
                      </Text>
                   ) : (
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {formatCurrency(billing.deliveryPrice || 0)}
                      </Text>
                   )}
                </View>
                {billing.itemTotalInclusiveTax > 0 ? (
                   <View style={[styles.rowCommonStyle]}>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {'Tax (Inclusive)'}
                      </Text>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {formatCurrency(
                            Math.round(
                               (billing.itemTotalInclusiveTax + Number.EPSILON) *
@@ -59,8 +101,20 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   </View>
                ) : (
                   <View style={[styles.rowCommonStyle]}>
-                     <Text style={[styles.textCommonStyle]}>{'Tax'}</Text>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
+                        {'Tax'}
+                     </Text>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {formatCurrency(
                            Math.round(
                               (billing.itemTotalTaxExcluded + Number.EPSILON) *
@@ -72,20 +126,40 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                )}
                {billing.totalDiscount > 0 && (
                   <View style={[styles.rowCommonStyle]}>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {'Total Discount'}
                      </Text>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         - {formatCurrency(billing.totalDiscount || 0)}
                      </Text>
                   </View>
                )}
                {user?.keycloakId && billing.loyaltyAmountApplied > 0 && (
                   <View style={[styles.rowCommonStyle]}>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {'Loyalty amount applied'}
                      </Text>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         <Text
                            title={
                               loyaltyPointsConversionRate &&
@@ -99,25 +173,59 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                )}
                {user?.keycloakId && billing.walletAmountUsed > 0 && (
                   <View style={[styles.rowCommonStyle]}>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {'Wallet amount used'}
                      </Text>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         - {formatCurrency(billing.walletAmountUsed)}
                      </Text>
                   </View>
                )}
                {tip && tip !== 0 ? (
                   <View style={[styles.rowCommonStyle]}>
-                     <Text style={[styles.textCommonStyle]}>{'Tip'}</Text>
-                     <Text style={[styles.textCommonStyle]}>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
+                        {'Tip'}
+                     </Text>
+                     <Text
+                        style={[
+                           styles.textCommonStyle,
+                           { fontFamily: globalCss.font.regular },
+                        ]}
+                     >
                         {formatCurrency(tip)}
                      </Text>
                   </View>
                ) : null}
                <View style={[styles.rowCommonStyle]}>
-                  <Text style={[styles.textCommonStyle]}>{'Total'}</Text>
-                  <Text style={[styles.textCommonStyle]}>
+                  <Text
+                     style={[
+                        styles.textCommonStyle,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
+                     {'Total'}
+                  </Text>
+                  <Text
+                     style={[
+                        styles.textCommonStyle,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
                      {formatCurrency(billing.totalToPay || 0)}
                   </Text>
                </View>
@@ -137,7 +245,6 @@ const styles = StyleSheet.create({
       marginVertical: 3,
    },
    textCommonStyle: {
-      fontFamily: global.regular,
       fontSize: 16,
    },
 })

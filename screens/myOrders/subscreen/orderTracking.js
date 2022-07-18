@@ -23,9 +23,10 @@ import { DeliveryProgressBar } from './component/deliveryProgressBar'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
-import global from '../../../globalStyles'
+import useGlobalCss from '../../../globalStyle'
 
 const OrderTrackingScreen = () => {
+   const { globalCss } = useGlobalCss()
    const route = useRoute()
    const cartId = React.useMemo(() => route.params.cartId, [])
 
@@ -52,7 +53,7 @@ const OrderTrackingScreen = () => {
                {loading ? (
                   <Spinner size={'large'} showText={true} />
                ) : error ? (
-                  <Text style={{ fontFamily: global.medium }}>
+                  <Text style={{ fontFamily: globalCss.font.medium }}>
                      {' '}
                      Something went wrong
                   </Text>
@@ -84,14 +85,16 @@ const OrderTrackingScreen = () => {
 }
 
 const AcceptingOrder = () => {
+   const { globalCss } = useGlobalCss()
+
    const { appConfig } = useConfig()
    return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
          <ActivityIndicator
             size="large"
-            color={appConfig.brandSettings.brandColor.value}
+            color={appConfig.brandSettings.brandColor.value || '#000000'}
          />
-         <Text style={{ fontFamily: global.italic, marginLeft: 8 }}>
+         <Text style={{ fontFamily: globalCss.font.italic, marginLeft: 8 }}>
             Waiting for Accepting Order
          </Text>
       </View>
@@ -99,9 +102,11 @@ const AcceptingOrder = () => {
 }
 
 const RejectedOrder = () => {
+   const { globalCss } = useGlobalCss()
+
    return (
       <View>
-         <Text style={{ fontFamily: global.medium }}>
+         <Text style={{ fontFamily: globalCss.font.medium }}>
             Your order has been Rejected.
          </Text>
       </View>
@@ -109,6 +114,8 @@ const RejectedOrder = () => {
 }
 
 const OrderDetail = ({ cart }) => {
+   const { globalCss } = useGlobalCss()
+
    const [componentStatus, setComponentStatus] = useState('loading')
    const [cartItems, setCartItems] = useState()
 
@@ -163,12 +170,14 @@ const OrderDetail = ({ cart }) => {
          }}
       >
          <View style={styles.userInfo}>
-            <Text style={{ fontFamily: global.semibold }}>
+            <Text style={{ fontFamily: globalCss.font.semibold }}>
                <ProfileIcon /> {'  '}
                {cart.customerInfo.customerFirstName}{' '}
                {cart.customerInfo.customerLastName}
             </Text>
-            <Text style={{ fontFamily: global.regular, marginLeft: 20 }}>
+            <Text
+               style={{ fontFamily: globalCss.font.regular, marginLeft: 20 }}
+            >
                {cart.customerInfo.customerPhone}
             </Text>
          </View>
@@ -176,29 +185,39 @@ const OrderDetail = ({ cart }) => {
             <View style={{ flexDirection: 'row' }}>
                <Text
                   style={{
-                     fontFamily: global.semibold,
+                     fontFamily: globalCss.font.semibold,
                   }}
                >
                   {label}
                </Text>
             </View>
             {cart.address.label ? (
-               <Text style={{ fontFamily: global.regular }}>
+               <Text style={{ fontFamily: globalCss.font.regular }}>
                   {cart.address.label}
                </Text>
             ) : null}
             <Text
-               style={{ fontFamily: global.regular }}
+               style={{ fontFamily: globalCss.font.regular }}
             >{`${cart.address?.line1}`}</Text>
-            <Text style={{ fontFamily: global.regular }}>
+            <Text style={{ fontFamily: globalCss.font.regular }}>
                {`${cart.address?.city} ${cart.address?.state} ${cart.address?.country},${cart.address?.zipcode}`}
             </Text>
          </View>
          <View style={styles.fulfillmentContainer}>
-            <Text style={styles.fulfillmentInfo}>
+            <Text
+               style={[
+                  styles.fulfillmentInfo,
+                  { fontFamily: globalCss.font.semibold },
+               ]}
+            >
                {getTitle(cart?.fulfillmentInfo?.type)}
             </Text>
-            <Text style={styles.fulfillmentInfo}>
+            <Text
+               style={[
+                  styles.fulfillmentInfo,
+                  { fontFamily: globalCss.font.semibold },
+               ]}
+            >
                {' '}
                on{' '}
                {moment(cart?.fulfillmentInfo?.slot?.from).format('DD MMM YYYY')}
@@ -211,16 +230,31 @@ const OrderDetail = ({ cart }) => {
          </View>
          <View style={styles.paymentDetails}>
             <CardsIcon />
-            <Text style={{ marginHorizontal: 6, fontFamily: global.semibold }}>
+            <Text
+               style={{
+                  marginHorizontal: 6,
+                  fontFamily: globalCss.font.semibold,
+               }}
+            >
                Payment Details:
             </Text>
-            <Text style={{ fontFamily: global.regular }}>
+            <Text style={{ fontFamily: globalCss.font.regular }}>
                {cart.availablePaymentOption?.label || 'N/A'}
             </Text>
          </View>
          <View style={styles.cartItemHeader}>
-            <Text style={styles.itemCount}>Item(s)({cartItems.length})</Text>
-            <Text style={styles.orderDate}>
+            <Text
+               style={[
+                  styles.itemCount,
+                  { fontFamily: globalCss.font.semibold },
+               ]}
+            >
+               Item(s)({cartItems.length})
+            </Text>
+
+            <Text
+               style={[styles.orderDate, { fontFamily: globalCss.font.italic }]}
+            >
                {moment(cart.order?.created_at).format('DD MMM YY hh:mm a')}
             </Text>
          </View>
@@ -244,23 +278,25 @@ const OrderDetail = ({ cart }) => {
                                  width: 80,
                               }}
                            />
-                           <Text style={{ fontFamily: global.medium }}>
+                           <Text style={{ fontFamily: globalCss.font.medium }}>
                               {product.name}{' '}
                               {product.price > 0 ? (
                                  product.discount !== 0 ? (
                                     <>
                                        <Text
                                           style={{
-                                             fontFamily: global.regular,
+                                             fontFamily: globalCss.font.regular,
                                              textDecorationLine: 'line-through',
-                                             color: global.greyColor,
+                                             color: globalCss.color.grey,
                                              marginRight: 4,
                                           }}
                                        >
                                           {formatCurrency(product.price)}
                                        </Text>
                                        <Text
-                                          style={{ fontFamily: global.regular }}
+                                          style={{
+                                             fontFamily: globalCss.font.regular,
+                                          }}
                                        >
                                           {formatCurrency(
                                              product.price - product.discount
@@ -269,7 +305,9 @@ const OrderDetail = ({ cart }) => {
                                     </>
                                  ) : (
                                     <Text
-                                       style={{ fontFamily: global.regular }}
+                                       style={{
+                                          fontFamily: globalCss.font.regular,
+                                       }}
                                     >
                                        {formatCurrency(product.price)}
                                     </Text>
@@ -278,14 +316,19 @@ const OrderDetail = ({ cart }) => {
                            </Text>
                         </View>
                      </View>
-                     <Text style={{ fontFamily: global.regular }}>
+                     <Text style={{ fontFamily: globalCss.font.regular }}>
                         x{product.ids.length}
                      </Text>
                   </View>
                   {product.childs.length > 0 ? (
                      <View style={{ marginLeft: 6 }}>
                         <View style={styles.productOption}>
-                           <Text style={styles.productOptionText}>
+                           <Text
+                              style={[
+                                 styles.productOptionText,
+                                 { fontFamily: globalCss.font.regular },
+                              ]}
+                           >
                               {product.childs[0].productOption.label}
                            </Text>
                            {product.childs[0].price !== 0 ? (
@@ -298,16 +341,21 @@ const OrderDetail = ({ cart }) => {
                                  {product.childs[0].discount != 0 ? (
                                     <Text
                                        style={{
-                                          fontFamily: global.regular,
+                                          fontFamily: globalCss.font.regular,
                                           textDecorationLine: 'line-through',
-                                          color: global.greyColor,
+                                          color: globalCss.color.grey,
                                           marginRight: 4,
                                        }}
                                     >
                                        {formatCurrency(product.childs[0].price)}
                                     </Text>
                                  ) : null}
-                                 <Text style={styles.productOptionText}>
+                                 <Text
+                                    style={[
+                                       styles.productOptionText,
+                                       { fontFamily: globalCss.font.regular },
+                                    ]}
+                                 >
                                     {formatCurrency(
                                        product.childs[0].price -
                                           product.childs[0].discount
@@ -327,9 +375,14 @@ const OrderDetail = ({ cart }) => {
                                           >
                                              <View>
                                                 <Text
-                                                   style={
-                                                      styles.modifierOptionText
-                                                   }
+                                                   style={[
+                                                      styles.modifierOptionText,
+                                                      {
+                                                         fontFamily:
+                                                            globalCss.font
+                                                               .regular,
+                                                      },
+                                                   ]}
                                                 >
                                                    {
                                                       eachModifier
@@ -348,10 +401,12 @@ const OrderDetail = ({ cart }) => {
                                                          <Text
                                                             style={{
                                                                fontFamily:
-                                                                  global.regular,
+                                                                  globalCss.font
+                                                                     .regular,
                                                                textDecorationLine:
                                                                   'line-through',
-                                                               color: global.greyColor,
+                                                               color: globalCss
+                                                                  .color.grey,
                                                                marginRight: 4,
                                                             }}
                                                          >
@@ -361,9 +416,14 @@ const OrderDetail = ({ cart }) => {
                                                          </Text>
                                                       ) : null}
                                                       <Text
-                                                         style={
-                                                            styles.modifierOptionText
-                                                         }
+                                                         style={[
+                                                            styles.modifierOptionText,
+                                                            {
+                                                               fontFamily:
+                                                                  globalCss.font
+                                                                     .regular,
+                                                            },
+                                                         ]}
                                                       >
                                                          {formatCurrency(
                                                             eachModifier.price -
@@ -388,7 +448,7 @@ const OrderDetail = ({ cart }) => {
          <View
             style={{
                height: 1,
-               backgroundColor: global.greyColor,
+               backgroundColor: globalCss.color.grey,
                marginVertical: 15,
             }}
          ></View>
@@ -407,7 +467,6 @@ const styles = StyleSheet.create({
       marginLeft: 8,
    },
    time: {
-      fontFamily: global.regular,
       fontSize: 10,
       marginLeft: 4,
    },
@@ -451,28 +510,21 @@ const styles = StyleSheet.create({
    },
    fulfillmentInfo: {
       color: '#000000',
-      fontFamily: global.semibold,
    },
    itemCount: {
       fontSize: 14,
-      fontFamily: global.semibold,
    },
    productOptionText: {
-      fontFamily: global.regular,
       marginVertical: 3,
       color: '#00000080',
    },
    modifierOptionText: {
-      fontFamily: global.regular,
       marginVertical: 3,
       color: '#00000080',
    },
    cartItemHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-   },
-   orderDate: {
-      fontFamily: global.italic,
    },
    addressContainer: {
       marginVertical: 10,

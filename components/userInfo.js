@@ -25,7 +25,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { useConfig } from '../lib/config'
 import CustomBackdrop from './modalBackdrop'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 export const UserInfo = props => {
    const [settingCartInfo, setSettingCartInfo] = useState(true)
@@ -60,6 +60,7 @@ const UserInfoForm = props => {
    const { handleClose, cart, settingCartInfo, setSettingCartInfo } = props
    const { methods } = React.useContext(CartContext)
    const { user } = useUser()
+   const { globalCss } = useGlobalCss()
 
    const namePattern = /^[a-zA-Z .]*$/
    const [savingUserInfo, setSavingUserInfo] = React.useState(false)
@@ -138,32 +139,55 @@ const UserInfoForm = props => {
    }, [cart])
 
    return (
-      <ScrollView style={styles.userInfoForm}>
+      <ScrollView
+         style={[styles.userInfoForm, { borderColor: globalCss.color.grey }]}
+      >
          <View style={[styles.row, { justifyContent: 'space-between' }]}>
-            <Text style={styles.userInfoFormHeading}>User Info</Text>
+            <Text
+               style={[
+                  styles.userInfoFormHeading,
+                  { fontFamily: globalCss.font.semibold },
+               ]}
+            >
+               User Info
+            </Text>
             <TouchableOpacity onPress={() => handleClose()}>
                <CloseIcon />
             </TouchableOpacity>
          </View>
-         <Text style={styles.formLabel}>First Name</Text>
+         <Text
+            style={[styles.formLabel, { fontFamily: globalCss.font.medium }]}
+         >
+            First Name
+         </Text>
          <TextInput
             style={[
                styles.inputField,
                !namePattern.test(firstName) && styles.error,
+               { fontFamily: globalCss.font.regular },
             ]}
             value={firstName}
             onChangeText={setFirstName}
          />
-         <Text style={styles.formLabel}>Last Name</Text>
+         <Text
+            style={[styles.formLabel, { fontFamily: globalCss.font.medium }]}
+         >
+            Last Name
+         </Text>
          <TextInput
             style={[
                styles.inputField,
                !namePattern.test(lastName) && styles.error,
+               { fontFamily: globalCss.font.regular },
             ]}
             value={lastName}
             onChangeText={setLastName}
          />
-         <Text style={styles.formLabel}>Phone Number</Text>
+         <Text
+            style={[styles.formLabel, { fontFamily: globalCss.font.medium }]}
+         >
+            Phone Number
+         </Text>
          <PhoneInput
             ref={phoneInput}
             defaultCode="IN"
@@ -172,20 +196,29 @@ const UserInfoForm = props => {
             onChangeFormattedText={text => {
                setMobileNumber(text)
             }}
-            textInputStyle={styles.phoneInputTextInputStyle}
+            textInputStyle={[
+               styles.phoneInputTextInputStyle,
+               { fontFamily: globalCss.font.regular },
+            ]}
             containerStyle={[
                styles.phoneInputContainerStyle,
                !isValidNumber(mobileNumber) && styles.error,
             ]}
             textContainerStyle={styles.phoneInputTextContainerStyle}
             disableArrowIcon={true}
-            textInputProps={{ placeholderTextColor: global.greyColor }}
+            textInputProps={{ placeholderTextColor: globalCss.color.grey }}
             placeholder={'Enter Phone Number...'}
-            codeTextStyle={styles.phoneInputCodeTextStyle}
+            codeTextStyle={[
+               styles.phoneInputCodeTextStyle,
+               { fontFamily: globalCss.font.regular },
+            ]}
          />
          <Button
             buttonStyle={styles.saveInfoBtn}
-            textStyle={styles.saveInfoBtnText}
+            textStyle={[
+               styles.saveInfoBtnText,
+               { fontFamily: globalCss.font.regular },
+            ]}
             onPress={handleSave}
             disabled={!isValid}
          >
@@ -206,6 +239,7 @@ const UserDetails = ({
    setSettingCartInfo,
 }) => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { user } = useUser()
    const { methods } = React.useContext(CartContext)
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
@@ -288,14 +322,24 @@ const UserDetails = ({
             <>
                <View style={styles.row}>
                   <UserIcon size={16} />
-                  <Text style={{ fontFamily: global.semibold, marginLeft: 9 }}>
+                  <Text
+                     style={{
+                        fontFamily: globalCss.font.semibold,
+                        marginLeft: 9,
+                     }}
+                  >
                      {cart?.customerInfo?.customerFirstName}{' '}
                      {cart?.customerInfo?.customerLastName}
                   </Text>
                </View>
                <View style={styles.row}>
                   <PhoneIcon size={16} />
-                  <Text style={{ fontFamily: global.regular, marginLeft: 9 }}>
+                  <Text
+                     style={{
+                        fontFamily: globalCss.font.regular,
+                        marginLeft: 9,
+                     }}
+                  >
                      {cart?.customerInfo?.customerPhone}
                   </Text>
                </View>
@@ -353,7 +397,7 @@ const styles = StyleSheet.create({
       //   width: '100%',
    },
    addUserInfoBtn: {},
-   userInfoForm: {
+   userInfoFuserInfoFormorm: {
       display: 'flex',
       flexDirection: 'column',
       borderTopLeftRadius: 8,
@@ -363,24 +407,22 @@ const styles = StyleSheet.create({
       paddingVertical: 22,
       paddingHorizontal: 18,
       borderWidth: 0.3,
-      borderColor: global.greyColor,
    },
    userInfoFormHeading: {
       fontSize: 18,
       lineHeight: 18,
-      fontFamily: global.semibold,
+
       color: 'rgba(0, 0, 0, 0.8)',
    },
    formLabel: {
       fontSize: 12,
       lineHeight: 12,
-      fontFamily: global.medium,
+
       color: 'rgba(0, 0, 0, 0.6)',
       marginTop: 25,
       marginBottom: 8,
    },
    inputField: {
-      fontFamily: global.regular,
       width: '100%',
       height: 40,
       borderRadius: 6,
@@ -388,7 +430,6 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
    },
    phoneInputTextInputStyle: {
-      fontFamily: global.regular,
       color: '#000',
       fontSize: 14,
    },
@@ -402,7 +443,9 @@ const styles = StyleSheet.create({
       paddingVertical: 0,
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
    },
-   phoneInputCodeTextStyle: { fontFamily: global.regular, fontSize: 14 },
+   phoneInputCodeTextStyle: {
+      fontSize: 14,
+   },
    saveInfoBtn: {
       marginTop: 25,
       marginBottom: 10,
@@ -412,7 +455,6 @@ const styles = StyleSheet.create({
    saveInfoBtnText: {
       fontSize: 14,
       lineHeight: 14,
-      fontFamily: global.regular,
    },
    editUserInfoBtn: {},
    error: {

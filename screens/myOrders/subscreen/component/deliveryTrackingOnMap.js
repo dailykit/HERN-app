@@ -57,7 +57,9 @@ export const MapTracking = ({ deliveryInfo }) => {
                apikey={get_env('GOOGLE_API_KEY')}
                optimizeWaypoints={true}
                strokeWidth={2}
-               strokeColor={appConfig.brandSettings.brandColor.value}
+               strokeColor={
+                  appConfig.brandSettings.brandColor.value || '#000000'
+               }
             />
             <Marker coordinate={coordinates.driver.center}>
                <Image

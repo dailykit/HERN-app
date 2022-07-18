@@ -23,9 +23,10 @@ import { GooglePlacesAutocompleteWrapper } from '../../components/location/googl
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useCart } from '../../context'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 const RefineLocation = () => {
+   const { globalCss } = useGlobalCss()
    const navigation = useNavigation()
    const route = useRoute()
    const { methods, storedCartId } = useCart()
@@ -292,7 +293,14 @@ const RefineLocation = () => {
    return (
       <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
          <View style={[styles.refineLocationSelectorHeader, { flex: 1 }]}>
-            <Text style={styles.refineLocationText}>Refine Location</Text>
+            <Text
+               style={[
+                  styles.refineLocationText,
+                  { fontFamily: globalCss.font.regular },
+               ]}
+            >
+               Refine Location
+            </Text>
             <TouchableOpacity
                onPress={() => {
                   navigation.goBack()
@@ -346,7 +354,7 @@ const RefineLocation = () => {
                         style={{
                            marginHorizontal: 8,
                            color: 'red',
-                           fontFamily: global.italic,
+                           fontFamily: globalCss.font.italic,
                         }}
                      >
                         {googlePlaceAutoCompleteError.message}
@@ -388,7 +396,7 @@ const RefineLocation = () => {
             buttonStyle={{ height: 40, margin: 12, marginVertical: 6 }}
             textStyle={{
                fontSize: 18,
-               fontFamily: global.regular,
+               fontFamily: globalCss.font.regular,
             }}
             disabled={
                !isStoreAvailableOnAddress ||
@@ -413,19 +421,36 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
       line1: false,
    })
    const [showOtherLabelField, setShowOtherLabelField] = React.useState(false)
+   const { globalCss } = useGlobalCss()
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View>
-            <Text style={styles.formLabel}>
+            <Text
+               style={[
+                  styles.formLabel,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
                Apartment/Building Info/Street info*
             </Text>
             {addressWarnings.line1 ? (
-               <Text style={[styles.formLabel, { color: 'red' }]}>
+               <Text
+                  style={[
+                     styles.formLabel,
+                     { color: 'red', fontFamily: globalCss.font.regular },
+                  ]}
+               >
                   fill this field
                </Text>
             ) : null}
             <TextInput
-               style={styles.inputField}
+               style={[
+                  styles.inputField,
+                  { fontFamily: globalCss.font.regular },
+               ]}
                placeholder="Enter apartment/building info/street info"
                value={additionalAddressInfo.line1}
                onChangeText={text => {
@@ -440,9 +465,22 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             />
          </View>
          <View>
-            <Text style={styles.formLabel}>Landmark</Text>
+            <Text
+               style={[
+                  styles.formLabel,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
+               Landmark
+            </Text>
             <TextInput
-               style={styles.inputField}
+               style={[
+                  styles.inputField,
+                  { fontFamily: globalCss.font.regular },
+               ]}
                placeholder="Enter landmark"
                value={additionalAddressInfo.landmark}
                onChangeText={text =>
@@ -454,7 +492,17 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             />
          </View>
          <View>
-            <Text style={styles.formLabel}>Label*</Text>
+            <Text
+               style={[
+                  styles.formLabel,
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
+               Label*
+            </Text>
             <View
                style={{
                   flexDirection: 'row',
@@ -506,7 +554,10 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             </View>
             {showOtherLabelField ? (
                <TextInput
-                  style={styles.inputField}
+                  style={[
+                     styles.inputField,
+                     { fontFamily: globalCss.font.regular },
+                  ]}
                   placeholder="Enter label for this address"
                   value={additionalAddressInfo.label}
                   onChangeText={text =>
@@ -519,9 +570,23 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             ) : null}
          </View>
          <View>
-            <Text style={styles.formLabel}>Dropoff Instructions</Text>
+            <Text
+               style={[
+                  styles.formLabel,
+
+                  {
+                     fontFamily: globalCss.font.regular,
+                     color: globalCss.color.grey,
+                  },
+               ]}
+            >
+               Dropoff Instructions
+            </Text>
             <TextInput
-               style={styles.inputField}
+               style={[
+                  styles.inputField,
+                  { fontFamily: globalCss.font.regular },
+               ]}
                placeholder="Enter dropoff instructions"
                value={additionalAddressInfo.notes}
                onChangeText={text =>
@@ -564,17 +629,13 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    refineLocationText: {
-      fontFamily: global.regular,
       fontSize: 16,
       lineHeight: 16,
    },
    formLabel: {
-      fontFamily: global.regular,
       fontSize: 12,
-      color: global.greyColor,
    },
    inputField: {
-      fontFamily: global.regular,
       height: 40,
       backgroundColor: '#ffffff',
       borderRadius: 6,

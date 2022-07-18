@@ -16,10 +16,11 @@ import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems, methods } = useCart()
+   const { globalCss } = useGlobalCss()
    const removeCartItems = cartItemIds => {
       methods.cartItems.delete({
          variables: {
@@ -41,7 +42,12 @@ export const CartItemList = () => {
                margin: 8,
             }}
          >
-            <Text style={styles.itemStyle}>
+            <Text
+               style={[
+                  styles.itemStyle,
+                  { fontFamily: globalCss.font.semibold },
+               ]}
+            >
                Items{'('}
                {cartState?.cart?.cartItems_aggregate?.aggregate?.count}
                {')'}
@@ -58,7 +64,17 @@ export const CartItemList = () => {
                   removeCartItems(cartItemsIds)
                }}
             >
-               <Text style={styles.clearCartText}>Clear Cart</Text>
+               <Text
+                  style={[
+                     styles.clearCartText,
+                     {
+                        fontFamily: globalCss.font.medium,
+                        color: globalCss.color.primary,
+                     },
+                  ]}
+               >
+                  Clear Cart
+               </Text>
             </TouchableOpacity>
          </View>
          <ScrollView>
@@ -88,13 +104,10 @@ const styles = StyleSheet.create({
       elevation: 3,
    },
    clearCartText: {
-      color: global.primaryColor,
       fontSize: 12,
-      fontFamily: global.medium,
    },
    itemStyle: {
       fontSize: 14,
-      fontFamily: global.semibold,
    },
    productMetaDetails: {
       flexDirection: 'row',
@@ -110,7 +123,6 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
    },
    productName: {
-      fontFamily: global.regular,
       fontSize: 14,
    },
    metaDetailsBottom: {

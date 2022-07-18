@@ -4,7 +4,7 @@ import HomeIcon from '../assets/homeIcon'
 import MenuIcon from '../assets/menuIcon'
 import MyOrdersIcon from '../assets/myOrdersIcon'
 import AccountIcon from '../assets/accountIcon'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 const ICONS = (routeName, props = {}) => {
    switch (routeName) {
@@ -20,6 +20,7 @@ const ICONS = (routeName, props = {}) => {
 }
 
 function BottomNavbar({ state, descriptors, navigation }) {
+   const { globalCss } = useGlobalCss()
    return (
       <View style={styles.container}>
          {state.routes.map((route, index) => {
@@ -67,14 +68,19 @@ function BottomNavbar({ state, descriptors, navigation }) {
                   <View style={styles.tab}>
                      <View style={styles.icon}>
                         {ICONS(route.name, {
-                           fill: isFocused ? global.primaryColor : '#ffffff',
+                           fill: isFocused
+                              ? globalCss.color.primary
+                              : '#ffffff',
                         })}
                      </View>
                      <Text
                         style={[
                            styles.tabText,
                            {
-                              color: isFocused ? global.primaryColor : '#fff',
+                              color: isFocused
+                                 ? globalCss.color.primary
+                                 : '#fff',
+                              fontFamily: globalCss.font.regular,
                            },
                         ]}
                      >
@@ -105,7 +111,7 @@ const styles = StyleSheet.create({
    },
    tabText: {
       textAlign: 'center',
-      fontFamily: global.regular,
+
       fontSize: 10,
       lineHeight: 10,
       color: '#fff',

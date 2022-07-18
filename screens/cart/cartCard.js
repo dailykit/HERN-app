@@ -14,11 +14,12 @@ import { useQuery } from '@apollo/client'
 import Modal from 'react-native-modal'
 import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 export const CartCard = ({ productData, quantity }) => {
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const { addToCart, methods } = useCart()
 
    const [modifyProductId, setModifyProductId] = useState(null)
@@ -342,7 +343,14 @@ export const CartCard = ({ productData, quantity }) => {
                   }}
                >
                   <View style={{ flex: 10 }}>
-                     <Text style={styles.productName}>{productData.name}</Text>
+                     <Text
+                        style={[
+                           styles.productName,
+                           { fontFamily: globalCss.font.semibold },
+                        ]}
+                     >
+                        {productData.name}
+                     </Text>
                   </View>
                   <View style={{ flex: 1, justifyContent: 'center' }}>
                      {productData.childs.length > 0 ? (
@@ -396,7 +404,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={{
                            color: '#f33737',
-                           fontFamily: global.medium,
+                           fontFamily: globalCss.font.medium,
                            fontSize: 13,
                         }}
                      >
@@ -405,11 +413,21 @@ export const CartCard = ({ productData, quantity }) => {
                   )}
                   <View style={styles.priceContainer}>
                      {getTotalPrice.totalDiscount > 0 && (
-                        <Text style={styles.originalPrice}>
+                        <Text
+                           style={[
+                              styles.originalPrice,
+                              { fontFamily: globalCss.font.regular },
+                           ]}
+                        >
                            {formatCurrency(getTotalPrice.totalPrice)}
                         </Text>
                      )}
-                     <Text style={styles.discountPrice}>
+                     <Text
+                        style={[
+                           styles.discountPrice,
+                           { fontFamily: globalCss.font.semibold },
+                        ]}
+                     >
                         {getTotalPrice.totalPrice !== 0
                            ? formatCurrency(
                                 getTotalPrice.totalPrice -
@@ -449,7 +467,9 @@ export const CartCard = ({ productData, quantity }) => {
          >
             <View style={{ backgroundColor: 'white', padding: 12 }}>
                <View style={{ marginBottom: 12 }}>
-                  <Text style={{ fontSize: 16, fontFamily: global.medium }}>
+                  <Text
+                     style={{ fontSize: 16, fontFamily: globalCss.font.medium }}
+                  >
                      Repeat last used customization?
                   </Text>
                </View>
@@ -458,8 +478,9 @@ export const CartCard = ({ productData, quantity }) => {
                      variant="outline"
                      isActive={true}
                      textStyle={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#000000',
                      }}
                      buttonStyle={{
                         flex: 1,
@@ -497,6 +518,8 @@ export const CartCard = ({ productData, quantity }) => {
 const AdditionalDetails = ({ productData }) => {
    const [showAdditionalDetailsOnCard, setShowAdditionalDetailsOnCard] =
       React.useState(false)
+
+   const { globalCss } = useGlobalCss()
    return (
       <View style={{ marginTop: 12 }}>
          {productData.childs.length > 0 && (
@@ -514,7 +537,9 @@ const AdditionalDetails = ({ productData }) => {
                   paddingHorizontal: 12,
                }}
             >
-               <Text style={{ fontFamily: global.semibold }}>Customizable</Text>
+               <Text style={{ fontFamily: globalCss.font.semibold }}>
+                  Customizable
+               </Text>
                {showAdditionalDetailsOnCard ? (
                   <UpVector size={18} />
                ) : (
@@ -532,7 +557,12 @@ const AdditionalDetails = ({ productData }) => {
                }}
             >
                <View style={styles.productOption}>
-                  <Text style={styles.productOptionLabel}>
+                  <Text
+                     style={[
+                        styles.productOptionLabel,
+                        { fontFamily: globalCss.font.regular },
+                     ]}
+                  >
                      {productData.childs[0].productOption.label || 'N/A'}
                   </Text>
                   {productData.childs[0].price !== 0 ? (
@@ -570,9 +600,13 @@ const AdditionalDetails = ({ productData }) => {
                                        <View key={index}>
                                           <View style={styles.modifierOption}>
                                              <Text
-                                                style={
-                                                   styles.modifierOptionText
-                                                }
+                                                style={[
+                                                   styles.modifierOptionText,
+                                                   {
+                                                      fontFamily:
+                                                         globalCss.font.regular,
+                                                   },
+                                                ]}
                                              >
                                                 {modifier.modifierOption.name}
                                              </Text>
@@ -585,7 +619,15 @@ const AdditionalDetails = ({ productData }) => {
                                                          0 ? (
                                                             <Text
                                                                style={[
-                                                                  styles.modifierOptionText,
+                                                                  [
+                                                                     styles.modifierOptionText,
+                                                                     {
+                                                                        fontFamily:
+                                                                           globalCss
+                                                                              .font
+                                                                              .regular,
+                                                                     },
+                                                                  ],
                                                                   {
                                                                      textDecoration:
                                                                         'line-through',
@@ -599,7 +641,15 @@ const AdditionalDetails = ({ productData }) => {
                                                          ) : null}
                                                          <Text
                                                             style={[
-                                                               styles.modifierOptionText,
+                                                               [
+                                                                  styles.modifierOptionText,
+                                                                  {
+                                                                     fontFamily:
+                                                                        globalCss
+                                                                           .font
+                                                                           .regular,
+                                                                  },
+                                                               ],
                                                                {
                                                                   marginLeft: 6,
                                                                },
@@ -631,7 +681,15 @@ const AdditionalDetails = ({ productData }) => {
                                                          >
                                                             <Text
                                                                style={[
-                                                                  styles.modifierOptionText,
+                                                                  [
+                                                                     styles.modifierOptionText,
+                                                                     {
+                                                                        fontFamily:
+                                                                           globalCss
+                                                                              .font
+                                                                              .regular,
+                                                                     },
+                                                                  ],
                                                                ]}
                                                             >
                                                                {
@@ -649,7 +707,15 @@ const AdditionalDetails = ({ productData }) => {
                                                                            0 && (
                                                                            <Text
                                                                               style={[
-                                                                                 styles.modifierOptionText,
+                                                                                 [
+                                                                                    styles.modifierOptionText,
+                                                                                    {
+                                                                                       fontFamily:
+                                                                                          globalCss
+                                                                                             .font
+                                                                                             .regular,
+                                                                                    },
+                                                                                 ],
                                                                                  {
                                                                                     textDecoration:
                                                                                        'line-through',
@@ -663,7 +729,15 @@ const AdditionalDetails = ({ productData }) => {
                                                                         )}
                                                                         <Text
                                                                            style={[
-                                                                              styles.modifierOptionText,
+                                                                              [
+                                                                                 styles.modifierOptionText,
+                                                                                 {
+                                                                                    fontFamily:
+                                                                                       globalCss
+                                                                                          .font
+                                                                                          .regular,
+                                                                                 },
+                                                                              ],
                                                                               {
                                                                                  marginLeft: 6,
                                                                               },
@@ -708,7 +782,6 @@ const styles = StyleSheet.create({
       marginBottom: 6,
    },
    clearCartText: {
-      color: global.primaryColor,
       fontSize: 12,
    },
    itemStyle: {
@@ -730,7 +803,6 @@ const styles = StyleSheet.create({
    },
    productName: {
       fontSize: 14,
-      fontFamily: global.semibold,
    },
    metaDetailsBottom: {
       flexDirection: 'row',
@@ -744,11 +816,9 @@ const styles = StyleSheet.create({
    originalPrice: {
       marginRight: 6,
       textDecorationLine: 'line-through',
-      fontFamily: global.regular,
    },
    discountPrice: {
       fontSize: 18,
-      fontFamily: global.semibold,
    },
    productOption: {
       flexDirection: 'row',
@@ -756,7 +826,6 @@ const styles = StyleSheet.create({
    },
    productOptionLabel: {
       color: '#00000080',
-      fontFamily: global.regular,
    },
    modifierOption: {
       flexDirection: 'row',
@@ -765,7 +834,6 @@ const styles = StyleSheet.create({
       fontSize: 13,
    },
    modifierOptionText: {
-      fontFamily: global.regular,
       color: '#00000080',
       fontSize: 13,
    },

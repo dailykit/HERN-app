@@ -5,7 +5,7 @@ import { Button } from './button'
 import Modal from 'react-native-modal'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useConfig } from '../lib/config'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 export const FloatingMenu = ({
    hydratedMenu,
@@ -13,6 +13,7 @@ export const FloatingMenu = ({
    onCategoryClick,
 }) => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const [showModal, setShowModal] = React.useState(false)
 
    const Icon = () => {
@@ -59,8 +60,8 @@ export const FloatingMenu = ({
                                     styles.categoryText,
                                     selectedCategoryName === eachCategory.name
                                        ? {
-                                            color: appConfig.brandSettings
-                                               .brandColor.value,
+                                            color: globalCss.color.primary,
+                                            fontFamily: globalCss.font.regular,
                                          }
                                        : {},
                                  ]}
@@ -72,8 +73,8 @@ export const FloatingMenu = ({
                                     styles.categoryText,
                                     selectedCategoryName === eachCategory.name
                                        ? {
-                                            color: appConfig.brandSettings
-                                               .brandColor.value,
+                                            color: globalCss.color.primary,
+                                            fontFamily: globalCss.font.regular,
                                          }
                                        : {},
                                  ]}
@@ -98,7 +99,7 @@ export const FloatingMenu = ({
                fontSize: 16,
                paddingHorizontal: 8,
                color: '#000000',
-               fontFamily: global.medium,
+               fontFamily: globalCss.font.medium,
             }}
             additionalIcon={Icon}
             onPress={() => {
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
    },
    categoryText: {
       fontSize: 12,
-      fontFamily: global.regular,
       color: '#00000085',
    },
 })

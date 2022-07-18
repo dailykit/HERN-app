@@ -1,6 +1,6 @@
 import { GFSNeohellenic_700Bold_Italic } from '@expo-google-fonts/dev'
 import { Button, View, Text, StyleSheet } from 'react-native'
-import global from '../globalStyles'
+import useGlobalCss from '../globalStyle'
 
 export const HelperBar = ({ type = 'info', children }) => {
    return (
@@ -11,18 +11,45 @@ export const HelperBar = ({ type = 'info', children }) => {
 }
 
 const HelperButton = ({ children, onClick }) => {
+   const { globalCss } = useGlobalCss()
    return (
-      <Button onClick={onClick} style={styles.hernHelperBar__btn}>
+      <Button
+         onClick={onClick}
+         style={[
+            styles.hernHelperBar__btn,
+            { fontFamily: globalCss.font.regular },
+         ]}
+      >
          {children}
       </Button>
    )
 }
 
 const Title = ({ children }) => {
-   return <Text style={styles.hernHelperBar__title}>{children}</Text>
+   const { globalCss } = useGlobalCss()
+   return (
+      <Text
+         style={[
+            styles.hernHelperBar__title,
+            { fontFamily: globalCss.font.medium },
+         ]}
+      >
+         {children}
+      </Text>
+   )
 }
 const SubTitle = ({ children }) => {
-   return <Text style={styles.hernHelperBar__subtitle}>{children}</Text>
+   const { globalCss } = useGlobalCss()
+   return (
+      <Text
+         style={[
+            styles.hernHelperBar__subtitle,
+            { fontFamily: globalCss.font.regular },
+         ]}
+      >
+         {children}
+      </Text>
+   )
 }
 
 HelperBar.Button = HelperButton
@@ -62,18 +89,17 @@ const styles = StyleSheet.create({
       paddingVertical: 4,
       paddingHorizontal: 8,
       borderRadius: 4,
-      fontFamily: global.regular,
+
       fontSize: 14,
       lineHeight: 20,
    },
    hernHelperBar__title: {
       textAlign: 'center',
-      fontFamily: global.medium,
+
       fontSize: 15,
       lineHeight: 18,
    },
    hernHelperBar__subtitle: {
-      fontFamily: global.regular,
       textAlign: 'center',
    },
 })

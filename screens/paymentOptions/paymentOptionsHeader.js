@@ -3,10 +3,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LeftArrow } from '../../assets/arrowIcon'
 import { formatCurrency } from '../../utils'
 import { useConfig } from '../../lib/config'
-import global from '../../globalStyles'
+import useGlobalCss from '../../globalStyle'
 
 export const PaymentOptionsHeader = ({ totalToPay = 0 }) => {
    const { appConfig } = useConfig()
+   const { globalCss } = useGlobalCss()
    const navigation = useNavigation()
    return (
       <View
@@ -38,9 +39,8 @@ export const PaymentOptionsHeader = ({ totalToPay = 0 }) => {
          <Text
             style={[
                {
-                  color:
-                     appConfig?.brandSettings.headerSettings?.textColor
-                        ?.value || '#000000',
+                  color: globalCss.color.primary || '#000000',
+                  fontFamily: globalCss.font.regular,
                },
                styles.headerTextStyle,
             ]}
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    headerTextStyle: {
-      fontFamily: global.regular,
       fontSize: 16,
    },
 })
