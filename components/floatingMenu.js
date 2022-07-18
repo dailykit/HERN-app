@@ -11,13 +11,14 @@ export const FloatingMenu = ({
    hydratedMenu,
    selectedCategoryName,
    onCategoryClick,
+   position,
 }) => {
    const { appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const [showModal, setShowModal] = React.useState(false)
 
    const Icon = () => {
-      return <FloatingMenuIcon size={20} />
+      return <FloatingMenuIcon size={30} fill={'#ffffff'} />
    }
    return (
       <View style={{ width: 120 }}>
@@ -96,6 +97,17 @@ export const FloatingMenu = ({
                alignItems: 'center',
                paddingHorizontal: 12,
                height: 40,
+               elevation: 4,
+
+               ...(position === 'RIGHT'
+                  ? {
+                       flexDirection: 'column',
+                       paddingHorizontal: 0,
+                       height: 60,
+                       borderRadius: 30,
+                       width: 60,
+                    }
+                  : {}),
             }}
             textStyle={{
                fontSize: 16,
@@ -108,7 +120,7 @@ export const FloatingMenu = ({
                setShowModal(true)
             }}
          >
-            Menu
+            {position === 'RIGHT' ? null : 'Menu'}
          </Button>
       </View>
    )

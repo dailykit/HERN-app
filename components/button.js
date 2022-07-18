@@ -57,15 +57,15 @@ export const Button = ({
       <TouchableWithoutFeedback onPress={onPress} disabled={disabled}>
          <View
             style={[
-               styles.buttonContainerStyle,
-               containerStyleByVariant(variant),
-               buttonStyle ? buttonStyle : null,
                {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                   flexDirection: 'row',
                },
+               styles.buttonContainerStyle,
+               containerStyleByVariant(variant),
+               buttonStyle ? buttonStyle : null,
                disabled ? { opacity: 0.5 } : null,
             ]}
          >
@@ -92,16 +92,19 @@ export const Button = ({
                   />
                </View>
             ) : null}
-            <Text
-               style={[
-                  styles.buttonTextStyle,
-                  textStyleByVariant(variant),
-                  textStyle ? textStyle : null,
-                  { fontFamily: globalStyle.font.regular },
-               ]}
-            >
-               {children}
-            </Text>
+            {children ? (
+               <Text
+                  style={[
+                     styles.buttonTextStyle,
+                     textStyleByVariant(variant),
+                     textStyle ? textStyle : null,
+                     { fontFamily: globalStyle.font.regular },
+
+                  ]}
+               >
+                  {children}
+               </Text>
+            ) : null}
          </View>
       </TouchableWithoutFeedback>
    )

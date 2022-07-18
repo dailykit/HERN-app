@@ -26,6 +26,8 @@ import { Spinner } from '../../assets/loaders'
 import { FloatingMenu } from '../../components/floatingMenu'
 import useGlobalStyle from '../../globalStyle'
 
+const floatingMenuPosition = 'RIGHT'
+
 const MenuScreen = ({ route }) => {
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
@@ -160,13 +162,20 @@ const MenuScreen = ({ route }) => {
                      </ScrollView>
                   </View>
                ) : (
-                  <View style={styles.floatingMenuContainer}>
+                  <View
+                     style={
+                        floatingMenuPosition === 'CENTER'
+                           ? styles.floatingMenuContainer
+                           : styles.floatingMenuContainerRight
+                     }
+                  >
                      <FloatingMenu
                         hydratedMenu={hydratedMenu}
                         selectedCategoryName={selectedCategoryName}
                         onCategoryClick={name => {
                            setSelectedCategoryName(name)
                         }}
+                        position={floatingMenuPosition}
                      />
                   </View>
                )}
@@ -215,7 +224,7 @@ const MenuScreen = ({ route }) => {
                         </View>
                      )
                   }}
-                  contentContainerStyle={{ paddingBottom: 60 }}
+                  contentContainerStyle={{ paddingBottom: 90 }}
                   ListHeaderComponent={() => {
                      return (
                         <>
@@ -281,6 +290,14 @@ const styles = StyleSheet.create({
       zIndex: 10000000,
       width: '100%',
       alignItems: 'center',
+   },
+   floatingMenuContainerRight: {
+      position: 'absolute',
+      bottom: 10,
+      zIndex: 10000000,
+      width: '100%',
+      alignItems: 'flex-end',
+      right: -35,
    },
 })
 export default MenuScreen
