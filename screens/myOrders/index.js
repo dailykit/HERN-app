@@ -18,10 +18,10 @@ import { LoginScreenForAuthScreen } from '../../components/authScreenLogin'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import { useConfig } from '../../lib/config'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const MyOrdersScreen = () => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    // context
    const { user, isLoading: userLoading } = useUser()
 
@@ -60,7 +60,7 @@ const MyOrdersScreen = () => {
             orderHistoryLoading || componentStatus === 'loading' ? (
                <Spinner size="large" showText={true} />
             ) : error ? (
-               <Text style={{ fontFamily: globalCss.font.medium }}>
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
                   Something went wrong
                </Text>
             ) : (
@@ -86,11 +86,11 @@ const MyOrdersScreen = () => {
    )
 }
 const NoOrdersAvailable = () => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <View>
-         <Text style={{ fontFamily: globalCss.font.medium }}>
+         <Text style={{ fontFamily: globalStyle.font.medium }}>
             No orders available
          </Text>
       </View>
@@ -109,7 +109,7 @@ const getTitle = type => {
    }
 }
 const OrderCard = ({ order }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const navigation = useNavigation()
    const handleCardOnPress = () => {
@@ -150,7 +150,7 @@ const OrderCard = ({ order }) => {
                      <Text
                         style={[
                            styles.fulfillmentInfo,
-                           { fontFamily: globalCss.font.regular },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         {getTitle(order?.fulfillmentInfo?.type)}
@@ -158,7 +158,7 @@ const OrderCard = ({ order }) => {
                      <Text
                         style={[
                            styles.fulfillmentInfo,
-                           { fontFamily: globalCss.font.regular },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         on{' '}
@@ -188,7 +188,7 @@ const OrderCard = ({ order }) => {
                   variant="noOutline"
                   textStyle={{
                      fontSize: 12,
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   }}
                   onPress={handleCardOnPress}
                >
@@ -203,7 +203,7 @@ const OrderCard = ({ order }) => {
 }
 
 const OrderStatus = ({ order }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const statusLabel = React.useMemo(() => {
       switch (order.status) {
@@ -224,25 +224,27 @@ const OrderStatus = ({ order }) => {
       }
    }, [])
    return (
-      <Text style={{ fontFamily: globalCss.font.regular }}>
+      <Text style={{ fontFamily: globalStyle.font.regular }}>
          Order {statusLabel}
       </Text>
    )
 }
 
 const PleaseLogIn = () => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <View>
-         <Text style={{ fontFamily: globalCss.font.medium }}>Please login</Text>
+         <Text style={{ fontFamily: globalStyle.font.medium }}>
+            Please login
+         </Text>
       </View>
    )
 }
 
 const Header = () => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <View
@@ -261,7 +263,7 @@ const Header = () => {
                   appConfig.brandSettings.headerSettings?.textColor?.value ||
                   '#000000',
                fontSize: 16,
-               fontFamily: globalCss.font.regular,
+               fontFamily: globalStyle.font.regular,
             }}
          >
             My Orders

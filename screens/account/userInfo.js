@@ -3,16 +3,19 @@ import { StyleSheet, Text, View } from 'react-native'
 import { MailIcon } from '../../assets/mailIcon'
 import { PhoneIcon } from '../../assets/phoneIcon'
 import { useUser } from '../../context/user'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const UserInfo = () => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { user } = useUser()
    return (
       <View style={styles.userInfoContainer}>
          {user.platform_customer?.firstName ? (
             <Text
-               style={{ ...styles.userName, fontFamily: globalCss.font.medium }}
+               style={{
+                  ...styles.userName,
+                  fontFamily: globalStyle.font.medium,
+               }}
             >
                {user.platform_customer?.firstName}{' '}
                {user.platform_customer?.lastName || ''}
@@ -24,7 +27,7 @@ export const UserInfo = () => {
                <Text
                   style={[
                      styles.userPhoneNumber,
-                     { fontFamily: globalCss.font.regular },
+                     { fontFamily: globalStyle.font.regular },
                   ]}
                >
                   {user.platform_customer?.phoneNumber}
@@ -37,7 +40,7 @@ export const UserInfo = () => {
                <Text
                   style={[
                      styles.userEmail,
-                     { fontFamily: globalCss.font.regular },
+                     { fontFamily: globalStyle.font.regular },
                   ]}
                >
                   {user.platform_customer?.email}

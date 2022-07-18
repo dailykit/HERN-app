@@ -24,7 +24,7 @@ import { client } from '../lib/apollo'
 import { getCartItemWithModifiers } from '../utils'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from './modalBackdrop'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -38,7 +38,7 @@ export const ProductList = ({
    heading,
    viewStyle = 'horizontalCard',
 }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    // group the product list by product type
    const groupedByType = React.useMemo(() => {
       const data = chain(productsList)
@@ -66,7 +66,7 @@ export const ProductList = ({
             <Text
                style={[
                   styles.productListHeading,
-                  { fontFamily: globalCss.font.semibold },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                {heading}
@@ -98,10 +98,10 @@ export const ProductList = ({
                <View
                   style={[
                      styles.noProductsMsgContainer,
-                     { fontFamily: globalCss.font.regular },
+                     { fontFamily: globalStyle.font.regular },
                   ]}
                >
-                  <Text style={{ fontFamily: globalCss.font.medium }}>
+                  <Text style={{ fontFamily: globalStyle.font.medium }}>
                      No Products Found
                   </Text>
                </View>
@@ -114,7 +114,7 @@ export const ProductList = ({
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
    const { brand, locationId, brandLocation, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const bottomSheetModalRef = React.useRef(null)
 
    // variables
@@ -527,7 +527,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalCss.font.regular },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                         numberOfLines={
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
@@ -538,7 +538,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      <Text
                         style={[
                            styles.additionalText,
-                           { fontFamily: globalCss.font.regular },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                         numberOfLines={
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
@@ -554,7 +554,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                            <Text
                               style={[
                                  styles.productDiscountValue,
-                                 { fontFamily: globalCss.font.semibold },
+                                 { fontFamily: globalStyle.font.semibold },
                               ]}
                            >
                               {formatCurrency(
@@ -577,7 +577,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                                        style={[
                                           styles.productOriginalValue,
                                           {
-                                             fontFamily: globalCss.font.regular,
+                                             fontFamily:
+                                                globalStyle.font.regular,
                                           },
                                        ]}
                                     >
@@ -662,7 +663,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      <Text
                         style={{
                            fontSize: 16,
-                           fontFamily: globalCss.font.medium,
+                           fontFamily: globalStyle.font.medium,
                         }}
                      >
                         Repeat last used customization?

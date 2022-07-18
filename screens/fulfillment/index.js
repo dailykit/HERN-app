@@ -15,11 +15,11 @@ import DeliveryIcon from '../../assets/deliveryIcon'
 import PickupIcon from '../../assets/pickupIcon'
 import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const Fulfillment = () => {
    const { orderTabs, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { brandSettings } = appConfig
    const navigation = useNavigation()
    const [isDeliveryPressed, setDeliveryPressed] = useState(false)
@@ -68,7 +68,7 @@ const Fulfillment = () => {
                   style={[
                      styles.headingText,
                      styles.commonText,
-                     { fontFamily: globalCss.font.semibold },
+                     { fontFamily: globalStyle.font.semibold },
                   ]}
                >
                   Choose Between
@@ -189,7 +189,7 @@ const Fulfillment = () => {
                   style={[
                      styles.commonText,
                      styles.subHeadingText,
-                     { fontFamily: globalCss.font.medium },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                >
                   You can change your preference on the checkout page

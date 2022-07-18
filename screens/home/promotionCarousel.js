@@ -2,11 +2,11 @@ import React from 'react'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { Image, Text, Dimensions, View, StyleSheet } from 'react-native'
 import { Video } from 'expo-av'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 const windowWidth = Dimensions.get('window').width
 
 export const PromotionCarousel = ({ data, height = 128, showDots = true }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const _carousel = React.useRef(null)
    const [activeIndex, setActiveIndex] = React.useState(0)
    const _renderItem = ({ item, index }) => {
@@ -62,7 +62,7 @@ export const PromotionCarousel = ({ data, height = 128, showDots = true }) => {
                   height: 8,
                   borderRadius: 5,
                   marginHorizontal: -10,
-                  backgroundColor: globalCss.color.primary,
+                  backgroundColor: globalStyle.color.primary,
                }}
                inactiveDotOpacity={0.4}
                inactiveDotScale={1}

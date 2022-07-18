@@ -6,11 +6,11 @@ import { useCart } from '../../context'
 import { useConfig } from '../../lib/config'
 import { DownVector } from '../../assets/vector'
 import { useNavigation } from '@react-navigation/native'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const Address = () => {
    const { orderTabs, selectedOrderTab, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { cartState: { cart } = {} } = useCart()
    const [numberOfLines, setNumberOfLines] = React.useState(1)
@@ -67,10 +67,10 @@ export const Address = () => {
                   navigation.navigate('LocationSelector')
                }}
             >
-               <LocationIcon fill={globalCss.color.grey} />
+               <LocationIcon fill={globalStyle.color.grey} />
                <Text
                   style={{
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                      color: '#00000060',
                      marginRight: 3,
                   }}
@@ -88,7 +88,7 @@ export const Address = () => {
                <Text
                   numberOfLines={numberOfLines}
                   style={{
-                     fontFamily: globalCss.font.medium,
+                     fontFamily: globalStyle.font.medium,
                      color: '#00000060',
                   }}
                >

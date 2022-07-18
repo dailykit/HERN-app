@@ -2,18 +2,18 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import EmptyCartIcon from '../../assets/emptyCart'
 import { useConfig } from '../../lib/config'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const EmptyCart = () => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <View style={styles.emptyCartContainer}>
          <View style={styles.messages}>
             <Text
                style={[
                   styles.emptyCartMessage,
-                  { fontFamily: globalCss.font.medium },
+                  { fontFamily: globalStyle.font.medium },
                ]}
             >
                Oops! Your cart is empty.
@@ -22,8 +22,8 @@ export const EmptyCart = () => {
                style={[
                   styles.emptyCartCustomMessage,
                   {
-                     fontFamily: globalCss.font.medium,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.medium,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >

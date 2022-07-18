@@ -17,10 +17,10 @@ import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
 import PaymentOptionsRenderer from '../../../components/paymentOptionRenderer'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 
 const WalletScreen = () => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { isLoading } = useUser()
    const [showTopUpTab, setShowTopUpTab] = useState(false)
    if (isLoading) {
@@ -40,7 +40,7 @@ const WalletScreen = () => {
 
 const WalletDetails = ({ setShowTopUpTab }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { user } = useUser()
 
    return (
@@ -59,7 +59,10 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             }}
          >
             <Text
-               style={[styles.balance, { fontFamily: globalCss.font.semibold }]}
+               style={[
+                  styles.balance,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
             >
                Available Balance : {formatCurrency(user.wallet?.amount || 0)}
             </Text>
@@ -71,7 +74,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                <Text
                   style={{
                      fontSize: 18,
-                     fontFamily: globalCss.font.semibold,
+                     fontFamily: globalStyle.font.semibold,
                      color:
                         appConfig.brandSettings.buttonSettings.activeTextColor
                            .value || '#000000',
@@ -85,7 +88,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             <Text
                style={{
                   fontSize: 18,
-                  fontFamily: globalCss.font.semibold,
+                  fontFamily: globalStyle.font.semibold,
                   marginBottom: 10,
                }}
             >
@@ -104,7 +107,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                   <Text
                      style={[
                         styles.noTransactionMessage,
-                        { fontFamily: globalCss.font.semibold },
+                        { fontFamily: globalStyle.font.semibold },
                      ]}
                   >
                      Oops! No transaction history is available yet
@@ -119,8 +122,8 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                            {
                               flex: 2,
                               textAlign: 'left',
-                              fontFamily: globalCss.font.semibold,
-                              color: globalCss.color.grey,
+                              fontFamily: globalStyle.font.semibold,
+                              color: globalStyle.color.grey,
                            },
                         ]}
                      >
@@ -132,8 +135,8 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                            {
                               flex: 1,
                               textAlign: 'right',
-                              fontFamily: globalCss.font.semibold,
-                              color: globalCss.color.grey,
+                              fontFamily: globalStyle.font.semibold,
+                              color: globalStyle.color.grey,
                            },
                         ]}
                      >
@@ -156,7 +159,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                               <Text
                                  style={[
                                     styles.transactionDate,
-                                    { fontFamily: globalCss.font.medium },
+                                    { fontFamily: globalStyle.font.medium },
                                  ]}
                               >
                                  {moment(eachTransaction.created_at).format(
@@ -171,7 +174,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                                           eachTransaction.type === 'CREDIT'
                                              ? '#61D836'
                                              : '#FF0000',
-                                       fontFamily: globalCss.font.medium,
+                                       fontFamily: globalStyle.font.medium,
                                     },
                                  ]}
                               >
@@ -196,7 +199,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
 
 const AddWalletAmount = ({ setShowTopUpTab }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const { user } = useUser()
    const [amount, setAmount] = useState(0)
@@ -232,7 +235,10 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
             }}
          >
             <Text
-               style={[styles.balance, { fontFamily: globalCss.font.semibold }]}
+               style={[
+                  styles.balance,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
             >
                Top-Up
             </Text>
@@ -244,7 +250,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                <Text
                   style={{
                      fontSize: 18,
-                     fontFamily: globalCss.font.semibold,
+                     fontFamily: globalStyle.font.semibold,
                      color:
                         appConfig.brandSettings.buttonSettings.activeTextColor
                            .value || '#000000',
@@ -255,13 +261,15 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
             </TouchableWithoutFeedback>
          </View>
          <View style={{ flex: 2 }}>
-            <Text style={{ fontSize: 14, fontFamily: globalCss.font.semibold }}>
+            <Text
+               style={{ fontSize: 14, fontFamily: globalStyle.font.semibold }}
+            >
                Add Money
             </Text>
             <Text
                style={{
                   fontSize: 18,
-                  fontFamily: globalCss.font.semibold,
+                  fontFamily: globalStyle.font.semibold,
                   position: 'absolute',
                   top: 42,
                   left: 10,
@@ -270,7 +278,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                {formatCurrency('')}
             </Text>
             <TextInput
-               style={[styles.input, { fontFamily: globalCss.font.medium }]}
+               style={[styles.input, { fontFamily: globalStyle.font.medium }]}
                onChangeText={setAmount}
                value={`${amount}`}
                placeholder="Enter amount..."

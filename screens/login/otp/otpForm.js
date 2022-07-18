@@ -12,7 +12,7 @@ import CountDown from 'react-native-countdown-component'
 import React, { useEffect } from 'react'
 import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 // TODO: countdown for resend button
 
 export const OTPform = ({
@@ -31,7 +31,7 @@ export const OTPform = ({
 }) => {
    const { appConfig } = useConfig()
    const [showResendBtn, setShowResendBtn] = React.useState(false)
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const ResentBtn = () => {
       return (
@@ -46,7 +46,7 @@ export const OTPform = ({
                setShowResendBtn(true)
             }}
          >
-            <Text style={{ color: 'red', fontFamily: globalCss.font.medium }}>
+            <Text style={{ color: 'red', fontFamily: globalStyle.font.medium }}>
                Resend OTP
             </Text>
          </TouchableOpacity>
@@ -66,7 +66,7 @@ export const OTPform = ({
                style={{
                   color: '#ffffff',
                   fontSize: 24,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                ENTER OTP
@@ -84,14 +84,14 @@ export const OTPform = ({
                   style={{
                      color: '#fff',
                      fontSize: 13,
-                     fontFamily: globalCss.font.medium,
+                     fontFamily: globalStyle.font.medium,
                   }}
                >
                   An OTP has been sent to
                   <Text
                      style={{
                         fontSize: 11.5,
-                        fontFamily: globalCss.font.medium,
+                        fontFamily: globalStyle.font.medium,
                      }}
                   >{`  ${form?.phoneNumber || ''}`}</Text>
                </Text>
@@ -108,7 +108,7 @@ export const OTPform = ({
                            appConfig.brandSettings.buttonSettings
                               .activeTextColor.value || '#ffffff',
                         fontSize: 14,
-                        fontFamily: globalCss.font.medium,
+                        fontFamily: globalStyle.font.medium,
                         marginLeft: 4,
                      }}
                   >
@@ -130,11 +130,11 @@ export const OTPform = ({
                autoFocusOnLoad
                codeInputFieldStyle={[
                   styles.underlineStyleBase,
-                  { fontFamily: globalCss.font.medium },
+                  { fontFamily: globalStyle.font.medium },
                ]}
                codeInputHighlightStyle={[
                   styles.underlineStyleHighLighted,
-                  { borderColor: globalCss.color.highlight },
+                  { borderColor: globalStyle.color.highlight },
                ]}
                onCodeFilled={code => {
                   console.log('filledCode', code)
@@ -147,7 +147,7 @@ export const OTPform = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: globalCss.font.italic,
+                     fontFamily: globalStyle.font.italic,
                      width: '100%',
                   }}
                >

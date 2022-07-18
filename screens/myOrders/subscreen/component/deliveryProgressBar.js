@@ -12,11 +12,11 @@ import { PhoneIcon } from '../../../../assets/phoneIcon'
 import { ProfileIcon } from '../../../../assets/profileIcon'
 import moment from 'moment'
 import { useConfig } from '../../../../lib/config'
-import useGlobalCss from '../../../../globalStyle'
+import useGlobalStyle from '../../../../globalStyle'
 
 export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const customStyles = React.useMemo(
       () => ({
          stepIndicatorSize: 30,
@@ -34,8 +34,8 @@ export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
          separatorUnFinishedColor: '#aaaaaa',
          stepIndicatorFinishedColor:
             appConfig.brandSettings.brandColor.value || '#000000',
-         stepIndicatorUnFinishedColor: globalCss.color.grey,
-         stepIndicatorCurrentColor: globalCss.color.grey,
+         stepIndicatorUnFinishedColor: globalStyle.color.grey,
+         stepIndicatorCurrentColor: globalStyle.color.grey,
          stepIndicatorLabelFontSize: 13,
          currentStepIndicatorLabelFontSize: 13,
          stepIndicatorLabelCurrentColor:
@@ -179,10 +179,10 @@ export const DeliveryProgressBar = ({ orderStatus, deliveryInfo }) => {
    )
 }
 const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <View key={eachOrderStatus.step}>
-         <Text style={{ fontFamily: globalCss.font.regular }}>
+         <Text style={{ fontFamily: globalStyle.font.regular }}>
             {eachOrderStatus.label}
          </Text>
          {!isEmpty(deliveryInfo) &&
@@ -199,7 +199,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                      styles.time,
                      {
                         color: isActive ? '#00000080' : '#00000025',
-                        fontFamily: globalCss.font.italic,
+                        fontFamily: globalStyle.font.italic,
                      },
                   ]}
                >
@@ -223,7 +223,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         styles.time,
                         {
                            color: '#00000080',
-                           fontFamily: globalCss.font.italic,
+                           fontFamily: globalStyle.font.italic,
                         },
                      ]}
                   >
@@ -242,7 +242,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         <Text
                            style={[
                               styles.assignedName,
-                              { fontFamily: globalCss.font.regular },
+                              { fontFamily: globalStyle.font.regular },
                            ]}
                         >
                            {eachOrderStatus.details.assignedName}
@@ -259,7 +259,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         <Text
                            style={[
                               styles.assignedPhone,
-                              { fontFamily: globalCss.font.regular },
+                              { fontFamily: globalStyle.font.regular },
                            ]}
                         >
                            {eachOrderStatus.details.assignedPhone}

@@ -1,6 +1,6 @@
 import { GFSNeohellenic_700Bold_Italic } from '@expo-google-fonts/dev'
 import { Button, View, Text, StyleSheet } from 'react-native'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export const HelperBar = ({ type = 'info', children }) => {
    return (
@@ -11,13 +11,13 @@ export const HelperBar = ({ type = 'info', children }) => {
 }
 
 const HelperButton = ({ children, onClick }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <Button
          onClick={onClick}
          style={[
             styles.hernHelperBar__btn,
-            { fontFamily: globalCss.font.regular },
+            { fontFamily: globalStyle.font.regular },
          ]}
       >
          {children}
@@ -26,12 +26,12 @@ const HelperButton = ({ children, onClick }) => {
 }
 
 const Title = ({ children }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <Text
          style={[
             styles.hernHelperBar__title,
-            { fontFamily: globalCss.font.medium },
+            { fontFamily: globalStyle.font.medium },
          ]}
       >
          {children}
@@ -39,12 +39,12 @@ const Title = ({ children }) => {
    )
 }
 const SubTitle = ({ children }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <Text
          style={[
             styles.hernHelperBar__subtitle,
-            { fontFamily: globalCss.font.regular },
+            { fontFamily: globalStyle.font.regular },
          ]}
       >
          {children}

@@ -16,11 +16,11 @@ import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems, methods } = useCart()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const removeCartItems = cartItemIds => {
       methods.cartItems.delete({
          variables: {
@@ -45,7 +45,7 @@ export const CartItemList = () => {
             <Text
                style={[
                   styles.itemStyle,
-                  { fontFamily: globalCss.font.semibold },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Items{'('}
@@ -68,8 +68,8 @@ export const CartItemList = () => {
                   style={[
                      styles.clearCartText,
                      {
-                        fontFamily: globalCss.font.medium,
-                        color: globalCss.color.primary,
+                        fontFamily: globalStyle.font.medium,
+                        color: globalStyle.color.primary,
                      },
                   ]}
                >

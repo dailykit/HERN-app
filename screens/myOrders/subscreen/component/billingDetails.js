@@ -3,13 +3,13 @@ import { View, Text, StyleSheet } from 'react-native'
 // import { useTranslation, useUser } from '../context'
 import { formatCurrency } from '../../../../utils/formatCurrency'
 import { useConfig } from '../../../../lib/config'
-import useGlobalCss from '../../../../globalStyle'
+import useGlobalStyle from '../../../../globalStyle'
 
 const user = {}
 export const BillingDetails = ({ billing }) => {
    //    const { user } = useUser()
    const { configOf } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const loyaltyPointsUsage = configOf('Loyalty Points Usage', 'rewards')[
       'Loyalty Points Usage'
@@ -22,7 +22,7 @@ export const BillingDetails = ({ billing }) => {
          <Text
             style={[
                styles.textCommonStyle,
-               { fontFamily: globalCss.font.medium },
+               { fontFamily: globalStyle.font.medium },
             ]}
          >
             {'Bill Details'}
@@ -33,7 +33,7 @@ export const BillingDetails = ({ billing }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalCss.font.medium },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {'Item total'}
@@ -41,7 +41,7 @@ export const BillingDetails = ({ billing }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalCss.font.medium },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {formatCurrency(billing.itemTotal || 0)}
@@ -51,7 +51,7 @@ export const BillingDetails = ({ billing }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalCss.font.medium },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {'Delivery fee'}
@@ -59,7 +59,7 @@ export const BillingDetails = ({ billing }) => {
                   {billing.deliveryPrice === 0 ? (
                      <Text
                         style={{
-                           fontFamily: globalCss.font.bold,
+                           fontFamily: globalStyle.font.bold,
                         }}
                      >
                         {'Free'}
@@ -68,7 +68,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {formatCurrency(billing.deliveryPrice || 0)}
@@ -80,7 +80,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Tax (Inclusive)'}
@@ -88,7 +88,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {formatCurrency(
@@ -104,7 +104,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Tax'}
@@ -112,7 +112,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {formatCurrency(
@@ -129,7 +129,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Total Discount'}
@@ -137,7 +137,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         - {formatCurrency(billing.totalDiscount || 0)}
@@ -149,7 +149,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Loyalty amount applied'}
@@ -157,7 +157,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         <Text
@@ -176,7 +176,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Wallet amount used'}
@@ -184,7 +184,7 @@ export const BillingDetails = ({ billing }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         - {formatCurrency(billing.walletAmountUsed)}
@@ -196,7 +196,7 @@ export const BillingDetails = ({ billing }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalCss.font.medium },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {'Total'}
@@ -204,7 +204,7 @@ export const BillingDetails = ({ billing }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalCss.font.medium },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {formatCurrency(billing.totalToPay || 0)}

@@ -3,11 +3,11 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { combineCartItems } from '../../utils'
 import { formatCurrency } from '../../utils/formatCurrency'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const CartItem = ({ products, createdAt }) => {
    const cartItems = React.useMemo(() => combineCartItems(products), [products])
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <View>
@@ -15,14 +15,17 @@ export const CartItem = ({ products, createdAt }) => {
             <Text
                style={[
                   styles.itemCount,
-                  { fontFamily: globalCss.font.semibold },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Item(s)({cartItems.length})
             </Text>
 
             <Text
-               style={[styles.orderDate, { fontFamily: globalCss.font.italic }]}
+               style={[
+                  styles.orderDate,
+                  { fontFamily: globalStyle.font.italic },
+               ]}
             >
                {moment(createdAt).format('DD MMM YY hh:mm a')}
             </Text>
@@ -38,7 +41,7 @@ export const CartItem = ({ products, createdAt }) => {
                            marginRight: 10,
                         }}
                      >
-                        <Text style={{ fontFamily: globalCss.font.medium }}>
+                        <Text style={{ fontFamily: globalStyle.font.medium }}>
                            {product.name}{' '}
                         </Text>
                      </View>

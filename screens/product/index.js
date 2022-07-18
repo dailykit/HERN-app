@@ -22,13 +22,13 @@ import { ModifierPopup } from '../../components/modifierPopup'
 import Modal from 'react-native-modal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const windowWidth = Dimensions.get('window').width
 
 const ProductScreen = () => {
    const { brand, locationId, brandLocation, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { params: { productId } = {} } = useRoute()
    const { addToCart } = useCart()
@@ -159,7 +159,7 @@ const ProductScreen = () => {
    if (productError) {
       return (
          <View>
-            <Text style={{ fontFamily: globalCss.font.medium }}>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
                Something went wrong
             </Text>
          </View>
@@ -194,7 +194,7 @@ const ProductScreen = () => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalCss.font.semibold },
+                           { fontFamily: globalStyle.font.semibold },
                         ]}
                      >
                         {products[0].name}
@@ -209,7 +209,7 @@ const ProductScreen = () => {
                               <Text
                                  style={[
                                     styles.productOriginalValue,
-                                    { fontFamily: globalCss.font.medium },
+                                    { fontFamily: globalStyle.font.medium },
                                  ]}
                               >
                                  {formatCurrency(
@@ -224,7 +224,7 @@ const ProductScreen = () => {
                      <Text
                         style={[
                            styles.discountPrice,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {formatCurrency(
@@ -244,7 +244,7 @@ const ProductScreen = () => {
                         <Text
                            style={[
                               styles.additionalText,
-                              { fontFamily: globalCss.font.medium },
+                              { fontFamily: globalStyle.font.medium },
                            ]}
                         >
                            {products[0].additionalText}
@@ -256,8 +256,8 @@ const ProductScreen = () => {
                               style={[
                                  styles.description,
                                  {
-                                    fontFamily: globalCss.font.medium,
-                                    color: globalCss.color.grey,
+                                    fontFamily: globalStyle.font.medium,
+                                    color: globalStyle.color.grey,
                                  },
                               ]}
                               numberOfLines={numberOfLines}
@@ -277,7 +277,7 @@ const ProductScreen = () => {
                                        color:
                                           appConfig.brandSettings.brandColor
                                              .value || '#000000',
-                                       fontFamily: globalCss.font.medium,
+                                       fontFamily: globalStyle.font.medium,
                                        fontSize: 14,
                                        textAlign: 'right',
                                     }}
@@ -295,7 +295,10 @@ const ProductScreen = () => {
          <View style={{ flex: 1, backgroundColor: '#000' }}>
             <Button
                buttonStyle={{ height: 40, margin: 8 }}
-               textStyle={{ fontFamily: globalCss.font.regular, fontSize: 16 }}
+               textStyle={{
+                  fontFamily: globalStyle.font.regular,
+                  fontSize: 16,
+               }}
                onPress={() => {
                   onAddItemClick()
                }}

@@ -6,7 +6,7 @@ import { useConfig } from '../lib/config'
 import { useCart } from '../context/cart'
 import React, { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export const Header = () => {
    const navigation = useNavigation()
@@ -19,7 +19,7 @@ export const Header = () => {
       locationId,
       appConfig,
    } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { cartState } = useCart()
    React.useEffect(() => {
       if (orderTabs?.length > 0) {
@@ -122,7 +122,7 @@ export const Header = () => {
                         color:
                            appConfig?.brandSettings.headerSettings?.textColor
                               ?.value || '#000000',
-                        fontFamily: globalCss.font.italic,
+                        fontFamily: globalStyle.font.italic,
                      }}
                   >
                      Getting your location
@@ -134,7 +134,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
-                           fontFamily: globalCss.font.semibold,
+                           fontFamily: globalStyle.font.semibold,
                         }}
                      >
                         {label}
@@ -144,7 +144,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
-                           fontFamily: globalCss.font.regular,
+                           fontFamily: globalStyle.font.regular,
                         }}
                      >
                         {userLocation?.label
@@ -160,7 +160,7 @@ export const Header = () => {
                            color:
                               appConfig?.brandSettings.headerSettings?.textColor
                                  ?.value || '#000000',
-                           fontFamily: globalCss.font.regular,
+                           fontFamily: globalStyle.font.regular,
                         },
                      ]}
                   >
@@ -186,7 +186,7 @@ export const Header = () => {
                         color:
                            appConfig?.brandSettings.headerSettings
                               ?.cartItemCountTextColor?.value || '#ffffff',
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                      },
                   ]}
                >

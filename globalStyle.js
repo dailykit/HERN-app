@@ -1,8 +1,8 @@
 import { useConfig } from './lib/config'
 import React, { useState, useEffect } from 'react'
-const useGlobalCss = () => {
+const useGlobalStyle = () => {
    const { appConfig, isConfigLoading } = useConfig()
-   const [globalCss, setGlobalCss] = useState({
+   const [globalStyle, setGlobalStyle] = useState({
       font: {
          regular: 'Metropolis',
          medium: 'MetropolisMedium',
@@ -17,16 +17,16 @@ const useGlobalCss = () => {
       },
    })
    useEffect(() => {
-      console.log(globalCss)
-      setGlobalCss({
-         ...globalCss,
+      console.log(globalStyle)
+      setGlobalStyle({
+         ...globalStyle,
          color: {
-            ...globalCss?.color,
+            ...globalStyle?.color,
             primary: appConfig?.brandSettings?.brandColor?.value,
          },
       })
    }, [appConfig])
-   return { globalCss }
+   return { globalStyle }
 }
 
-export default useGlobalCss
+export default useGlobalStyle

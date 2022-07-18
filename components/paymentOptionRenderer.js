@@ -20,7 +20,7 @@ import { useUser } from '../context/user'
 import * as QUERIES from '../graphql'
 import { formatCurrency, get_env } from '../utils'
 import { CardsLoader } from '../assets/loaders'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export default function PaymentOptionsRenderer({
    cartId,
@@ -31,7 +31,7 @@ export default function PaymentOptionsRenderer({
    onPaymentCancel,
 }) {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { setPaymentInfo, paymentInfo, updatePaymentState } = usePayment()
    const { user } = useUser()
    const [isLoading, setIsLoading] = React.useState(true)
@@ -173,7 +173,7 @@ export default function PaymentOptionsRenderer({
 
    return (
       <View style={styles.Wrapper}>
-         <Text style={{ ...styles.heading, fontFamily: globalCss.font.bold }}>
+         <Text style={{ ...styles.heading, fontFamily: globalStyle.font.bold }}>
             Select Payment Mode
          </Text>
          {(cartId ? isLoading || loading : loading) ? (
@@ -290,7 +290,7 @@ export default function PaymentOptionsRenderer({
                            backgroundColor:
                               appConfig?.brandSettings?.buttonSettings
                                  ?.buttonBGColor?.value || '#222222',
-                           fontFamily: globalCss.font.regular,
+                           fontFamily: globalStyle.font.regular,
                         }}
                      >
                         <Text
@@ -299,7 +299,7 @@ export default function PaymentOptionsRenderer({
                               color:
                                  appConfig?.brandSettings?.buttonSettings
                                     ?.textColor?.value || '#ffffff',
-                              fontFamily: globalCss.font.regular,
+                              fontFamily: globalStyle.font.regular,
                            }}
                         >
                            Pay Now
@@ -326,7 +326,7 @@ const PaymentOptionCard = ({
    metaData = {},
 }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { isAuthenticated } = true
    const { setPaymentInfo, paymentInfo } = usePayment()
 
@@ -341,7 +341,7 @@ const PaymentOptionCard = ({
          <Text
             style={{
                ...styles.paymentOptionCardHeader,
-               fontFamily: globalCss.font.medium,
+               fontFamily: globalStyle.font.medium,
             }}
          >
             {title}
@@ -349,7 +349,7 @@ const PaymentOptionCard = ({
          <View
             style={{
                ...styles.paymentOptionCard,
-               borderColor: globalCss.color.grey,
+               borderColor: globalStyle.color.grey,
             }}
          >
             {icon}
@@ -357,7 +357,7 @@ const PaymentOptionCard = ({
                <Text
                   style={{
                      ...styles.paymentOptionCardTitle,
-                     fontFamily: globalCss.font.medium,
+                     fontFamily: globalStyle.font.medium,
                   }}
                >
                   {title}
@@ -366,7 +366,7 @@ const PaymentOptionCard = ({
                   <Text
                      style={{
                         ...styles.paymentOptionCardDescription,
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      {description}

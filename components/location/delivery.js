@@ -11,12 +11,12 @@ import { getFormattedAddress } from '../../utils/getFormattedAddress'
 import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
 import { Button } from '../button'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const Delivery = () => {
    const navigation = useNavigation()
    const { orderTabs, brand, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const [userCoordinate, setUserCoordinate] = useState({
       latitude: null,
@@ -238,7 +238,7 @@ export const Delivery = () => {
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View style={styles.deliveryTime}>
-            <Text style={{ fontFamily: globalCss.font.regular }}>
+            <Text style={{ fontFamily: globalStyle.font.regular }}>
                Delivery Time
             </Text>
             <View style={{ flexDirection: 'row' }}>
@@ -267,12 +267,12 @@ export const Delivery = () => {
          />
          <View style={{ zIndex: -10 }}>
             {locationSearching.loading ? (
-               <Text style={{ fontFamily: globalCss.font.italic }}>
+               <Text style={{ fontFamily: globalStyle.font.italic }}>
                   Getting your location
                </Text>
             ) : locationSearching.error ? (
                <Text
-                  style={{ color: 'red', fontFamily: globalCss.font.regular }}
+                  style={{ color: 'red', fontFamily: globalStyle.font.regular }}
                >
                   {locationSearching.errorType === 'blockByPermission'
                      ? locationSearching.errorType === 'zipcodeNotFound'
@@ -290,7 +290,7 @@ export const Delivery = () => {
                   <Text
                      style={[
                         styles.findingTextStyle,
-                        { fontFamily: globalCss.font.regular },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      Finding your nearest store...
@@ -305,7 +305,7 @@ export const Delivery = () => {
                   <Text
                      style={[
                         styles.noStoreText1,
-                        { fontFamily: globalCss.font.regular },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      Store service not found at your location
@@ -314,8 +314,8 @@ export const Delivery = () => {
                      style={[
                         styles.noStoreText2,
                         {
-                           fontFamily: globalCss.font.regular,
-                           color: globalCss.color.grey,
+                           fontFamily: globalStyle.font.regular,
+                           color: globalStyle.color.grey,
                         },
                      ]}
                   >
