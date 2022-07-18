@@ -353,7 +353,7 @@ export const CartProvider = ({ children }) => {
    //update cartItems
    const [updateCartItems] = useMutation(UPDATE_CART_ITEMS)
    //add to cart
-   const addToCart = async (cartItem, quantity) => {
+   const addToCart = async (cartItem, quantity, onCompleted) => {
       // setIsFinalCartLoading(true)
       const cartItems = new Array(quantity).fill({ ...cartItem })
       const orderTabInLocal = await AsyncStorage.getItem('orderTab')
@@ -434,6 +434,9 @@ export const CartProvider = ({ children }) => {
                variables: {
                   object,
                },
+               onCompleted: () => {
+                  onCompleted && onCompleted()
+               },
             })
          } else {
             //cart already exist
@@ -445,6 +448,9 @@ export const CartProvider = ({ children }) => {
             await createCartItems({
                variables: {
                   objects: cartItemsWithCartId,
+               },
+               onCompleted: () => {
+                  onCompleted && onCompleted()
                },
             })
          }
@@ -483,6 +489,9 @@ export const CartProvider = ({ children }) => {
                variables: {
                   object,
                },
+               onCompleted: () => {
+                  onCompleted && onCompleted()
+               },
             })
          } else {
             // update existing cart
@@ -493,6 +502,9 @@ export const CartProvider = ({ children }) => {
             await createCartItems({
                variables: {
                   objects: cartItemsWithCartId,
+               },
+               onCompleted: () => {
+                  onCompleted && onCompleted()
                },
             })
          }
