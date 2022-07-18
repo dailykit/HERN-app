@@ -17,6 +17,8 @@ import { combineCartItems } from '../utils'
 import { indexOf } from 'lodash'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useUser } from '../context/user'
+import Toast from 'react-native-simple-toast'
+
 export const CartContext = React.createContext()
 
 const initialState = {
@@ -339,6 +341,7 @@ export const CartProvider = ({ children }) => {
             // addToast(('Item removed!'), {
             //    appearance: 'success',
             // })
+            Toast.show('Item removed!')
          }
       },
       onError: error => {
@@ -347,6 +350,7 @@ export const CartProvider = ({ children }) => {
          //  `addToast(('Failed to delete items!'), {
          //     appearance: 'error',
          //  })`
+         Toast.show('Failed to remove item!')
       },
    })
 
@@ -509,6 +513,7 @@ export const CartProvider = ({ children }) => {
             })
          }
       }
+      Toast.show('Item added into cart.')
    }
 
    // get user pending cart when logging in
