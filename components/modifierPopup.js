@@ -440,7 +440,7 @@ export const ModifierPopup = ({
                   </Text>
                </View>
             </View>
-            <ScrollView horizontal={true} style={{ marginVertical: 10 }}>
+            <View style={{ marginVertical: 10 }}>
                {isModifiersLoading
                   ? null
                   : productOptionsGroupedByProductOptionType
@@ -451,50 +451,43 @@ export const ModifierPopup = ({
                           }
 
                           return (
-                             <TouchableWithoutFeedback
+                             <Button
                                 key={eachOption.id}
                                 onPress={e => {
                                    if (eachOption.isAvailable) {
-                                      setProductOption(eachOption)
+                                      const selectedOption =
+                                         completeProductData.productOptions.find(
+                                            option => option.id == eachOption.id
+                                         )
+                                      setProductOption(selectedOption)
                                    }
                                 }}
+                                variant={'outline'}
+                                isActive={productOption.id === eachOption.id}
+                                showRadio={true}
+                                buttonStyle={{
+                                   marginVertical: index === 0 ? 0 : 6,
+                                }}
                              >
-                                <Text
-                                   style={[
-                                      styles.productOptionButton,
-                                      {
-                                         borderColor:
-                                            productOption.id === eachOption.id
-                                               ? appConfig.brandSettings
-                                                    .buttonSettings
-                                                    .borderActiveColor.value
-                                               : appConfig.brandSettings
-                                                    .buttonSettings
-                                                    .borderInactiveColor.value,
-                                         marginHorizontal: index === 0 ? 0 : 6,
-                                      },
-                                   ]}
-                                >
-                                   {eachOption.label}
+                                {eachOption.label}
 
-                                   {' (+ '}
-                                   {eachOption.discount > 0 && (
-                                      <Text>
-                                         {formatCurrency(eachOption.price)}
-                                      </Text>
-                                   )}
-                                   {formatCurrency(
-                                      getPriceWithDiscount(
-                                         eachOption.price,
-                                         eachOption.discount
-                                      )
-                                   )}
-                                   {')'}
-                                </Text>
-                             </TouchableWithoutFeedback>
+                                {' (+ '}
+                                {eachOption.discount > 0 && (
+                                   <Text>
+                                      {formatCurrency(eachOption.price)}
+                                   </Text>
+                                )}
+                                {formatCurrency(
+                                   getPriceWithDiscount(
+                                      eachOption.price,
+                                      eachOption.discount
+                                   )
+                                )}
+                                {')'}
+                             </Button>
                           )
                        })}
-            </ScrollView>
+            </View>
             {/* <View>
             {productData.productionOptionSelectionStatement ? (
                <Text>{productData.productionOptionSelectionStatement}</Text>
