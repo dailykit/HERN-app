@@ -136,7 +136,6 @@ function PayButton({
       }, [cart, loading])
    }
 
-   // console.log('==> Disabled ', cartId, cartValidity.status)
    return (
       <>
          {loading ? (

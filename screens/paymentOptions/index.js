@@ -24,8 +24,13 @@ const PaymentOptions = () => {
    } else {
       return (
          <SafeAreaView>
-            <Text style={{ fontFamily: globalStyle.font.medium }}>
-               Redirect to Order Tracking Screen
+            <Text
+               style={{
+                  textAlign: 'center',
+                  fontFamily: globalStyle.font.medium,
+               }}
+            >
+               Redirecting to Order Tracking Screen...
             </Text>
          </SafeAreaView>
       )
