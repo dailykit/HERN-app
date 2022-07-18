@@ -44,7 +44,11 @@ export const ModifierPopup = ({
    // const completeProductData = React.useMemo(() => productData, [])
    const [productOptionType, setProductOptionType] = useState(null)
    const [quantity, setQuantity] = useState(1)
+   const [isProductAdding, setIsProductAdding] = useState(false)
 
+   const onProductAddComplete = () => {
+      setIsProductAdding(false)
+   }
    const productOptionsGroupedByProductOptionType = React.useMemo(() => {
       const groupedData = chain(productData.productOptions)
          .groupBy('type')
@@ -144,6 +148,7 @@ export const ModifierPopup = ({
       }
    }, [completeProductData])
    const handleAddOnCartOn = async () => {
+      setIsProductAdding(true)
       //check category fulfillment conditions
       const allSelectedOptions = [
          ...selectedModifierOptions.single,
@@ -163,7 +168,7 @@ export const ModifierPopup = ({
          )
          // const objects = new Array(quantity).fill({ ...cartItem })
          // console.log('cartItem', objects)
-         await addToCart(cartItem, quantity)
+         await addToCart(cartItem, quantity, onProductAddComplete)
          console.log('==> Added to Cart!')
          if (edit) {
             methods.cartItems.delete({
@@ -259,6 +264,7 @@ export const ModifierPopup = ({
       nestedSetErrorCategories(nestedFinalErrorCategories)
       if (errorState.length > 0 || nestedFinalErrorCategories.length > 0) {
          // console.log('FAIL')
+         onProductAddComplete()
          return
       } else {
          // console.log('PASS')
@@ -280,13 +286,13 @@ export const ModifierPopup = ({
                nestedModifierOptionsGroupByParentModifierOptionId
             )
             // console.log('finalCartItem', cartItem)
-            await addToCart(cartItem, quantity)
+            await addToCart(cartItem, quantity, onProductAddComplete)
          } else {
             const cartItem = getCartItemWithModifiers(
                productOption.cartItem,
                allSelectedOptions.map(x => x.cartItem)
             )
-            await addToCart(cartItem, quantity)
+            await addToCart(cartItem, quantity, onProductAddComplete)
          }
          if (edit) {
             methods.cartItems.delete({
@@ -440,7 +446,7 @@ export const ModifierPopup = ({
                   </Text>
                </View>
             </View>
-            <ScrollView horizontal={true} style={{ marginVertical: 10 }}>
+            <View style={{ marginVertical: 10 }}>
                {isModifiersLoading
                   ? null
                   : productOptionsGroupedByProductOptionType
@@ -451,50 +457,43 @@ export const ModifierPopup = ({
                           }
 
                           return (
-                             <TouchableWithoutFeedback
+                             <Button
                                 key={eachOption.id}
                                 onPress={e => {
                                    if (eachOption.isAvailable) {
-                                      setProductOption(eachOption)
+                                      const selectedOption =
+                                         completeProductData.productOptions.find(
+                                            option => option.id == eachOption.id
+                                         )
+                                      setProductOption(selectedOption)
                                    }
                                 }}
+                                variant={'outline'}
+                                isActive={productOption.id === eachOption.id}
+                                showRadio={true}
+                                buttonStyle={{
+                                   marginVertical: index === 0 ? 0 : 6,
+                                }}
                              >
-                                <Text
-                                   style={[
-                                      styles.productOptionButton,
-                                      {
-                                         borderColor:
-                                            productOption.id === eachOption.id
-                                               ? appConfig.brandSettings
-                                                    .buttonSettings
-                                                    .borderActiveColor.value
-                                               : appConfig.brandSettings
-                                                    .buttonSettings
-                                                    .borderInactiveColor.value,
-                                         marginHorizontal: index === 0 ? 0 : 6,
-                                      },
-                                   ]}
-                                >
-                                   {eachOption.label}
+                                {eachOption.label}
 
-                                   {' (+ '}
-                                   {eachOption.discount > 0 && (
-                                      <Text>
-                                         {formatCurrency(eachOption.price)}
-                                      </Text>
-                                   )}
-                                   {formatCurrency(
-                                      getPriceWithDiscount(
-                                         eachOption.price,
-                                         eachOption.discount
-                                      )
-                                   )}
-                                   {')'}
-                                </Text>
-                             </TouchableWithoutFeedback>
+                                {' (+ '}
+                                {eachOption.discount > 0 && (
+                                   <Text>
+                                      {formatCurrency(eachOption.price)}
+                                   </Text>
+                                )}
+                                {formatCurrency(
+                                   getPriceWithDiscount(
+                                      eachOption.price,
+                                      eachOption.discount
+                                   )
+                                )}
+                                {')'}
+                             </Button>
                           )
                        })}
-            </ScrollView>
+            </View>
             {/* <View>
             {productData.productionOptionSelectionStatement ? (
                <Text>{productData.productionOptionSelectionStatement}</Text>
@@ -583,24 +582,46 @@ export const ModifierPopup = ({
                }}
             />
             <Button
-               buttonStyle={{ height: 42, borderRadius: 8 }}
+               buttonStyle={{
+                  height: 42,
+                  borderRadius: 8,
+               }}
                textStyle={{ fontSize: 14 }}
                onPress={handleAddOnCartOn}
+               disabled={isProductAdding}
             >
-               ADD ITEM {'('}
-               {formatCurrency(total.toFixed(2))}
-               {totalDiscount > 0 && (
-                  <Text
-                     style={{
-                        textDecorationLine: 'line-through',
-                        fontSize: 12,
+               {isProductAdding ? (
+                  <Spinner
+                     text={'Adding...'}
+                     showText={true}
+                     color={'#ffffff'}
+                     style={{ flexDirection: 'row' }}
+                     textStyle={{
+                        marginLeft: 8,
+                        marginTop: 0,
+                        fontSize: 14,
+                        color: '#ffffff',
                      }}
-                  >
-                     {' '}
-                     {formatCurrency(totalWithoutDiscount.toFixed(2))}
-                  </Text>
+                  />
+               ) : null}
+               {!isProductAdding && (
+                  <>
+                     ADD ITEM {'('}
+                     {formatCurrency(total.toFixed(2))}
+                     {totalDiscount > 0 && (
+                        <Text
+                           style={{
+                              textDecorationLine: 'line-through',
+                              fontSize: 12,
+                           }}
+                        >
+                           {' '}
+                           {formatCurrency(totalWithoutDiscount.toFixed(2))}
+                        </Text>
+                     )}
+                     {')'}
+                  </>
                )}
-               {')'}
             </Button>
          </View>
       </View>

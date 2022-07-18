@@ -124,13 +124,11 @@ export const ModifierCategory = props => {
       }
    }
    return (
-      <View>
+      <View style={{ marginVertical: 6 }}>
          <View style={styles.categoryHeader}>
             <Text style={styles.categoryName}>{eachCategory.name}</Text>
             <Text style={styles.categoryMessageText}>
-               {'('}
                {renderConditionText(eachCategory)}
-               {')'}
             </Text>
          </View>
          {errorCategories.includes(eachCategory.id) && (
@@ -249,7 +247,7 @@ const styles = StyleSheet.create({
    categoryName: {
       fontFamily: 'Metropolis',
       fontWeight: '600',
-      fontSize: 18,
+      fontSize: 16,
       lineHeight: 18,
    },
    categoryMessageText: {
