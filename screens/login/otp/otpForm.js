@@ -31,7 +31,7 @@ export const OTPform = ({
    otp,
 }) => {
    const { appConfig } = useConfig()
-   const [showResendBtn, setShowResendBtn] = React.useState(false)
+   const [showResendBtn, setShowResendBtn] = React.useState(true)
    const { globalStyle } = useGlobalStyle()
 
    const ResentBtn = () => {
