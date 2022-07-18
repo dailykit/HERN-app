@@ -6,6 +6,7 @@ import {
    TouchableWithoutFeedback,
    View,
    Animated,
+   ScrollView,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CardsIcon } from '../../assets/cardsIcon'
@@ -48,7 +49,7 @@ const AccountScreen = () => {
          {isLoading ? (
             <Spinner size={'large'} showText={true} />
          ) : isAuthenticated ? (
-            <View style={{ marginHorizontal: 12 }}>
+            <ScrollView style={{ marginHorizontal: 12 }}>
                <UserInfo />
                <View>
                   <Tile
@@ -193,7 +194,7 @@ const AccountScreen = () => {
                      </Text>
                   </Tile>
                </View>
-            </View>
+            </ScrollView>
          ) : (
             <LoginScreenForAuthScreen />
          )}
