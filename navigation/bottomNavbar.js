@@ -111,10 +111,11 @@ const styles = StyleSheet.create({
    },
    tabText: {
       textAlign: 'center',
-
-      fontSize: 10,
-      lineHeight: 10,
+      fontSize: 11,
+      lineHeight: 11,
       color: '#fff',
    },
-   icon: {},
+   icon: {
+      marginBottom: -6,
+   },
 })

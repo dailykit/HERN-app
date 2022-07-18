@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       flexDirection: 'row',
       marginVertical: 4,
-      marginLeft: 2,
+      marginLeft: -10,
    },
    containerStyle: {
       backgroundColor: '#242424',

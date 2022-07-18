@@ -21,7 +21,9 @@ export const AccountHeader = () => {
          <Text
             style={[
                {
-                  color: globalStyle.color.primary || '#000000',
+                  color:
+                     appConfig?.brandSettings.headerSettings?.textColor
+                        ?.value || '#000000',
                   fontFamily: globalStyle.font.regular,
                },
                styles.headerTextStyle,
