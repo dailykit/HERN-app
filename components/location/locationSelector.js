@@ -9,14 +9,14 @@ import { Pickup } from './pickup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const LocationSelector = () => {
    const navigation = useNavigation()
 
    const { brand, orderTabs } = useConfig()
 
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const orderTabFulfillmentType = React.useMemo(
       () =>
@@ -50,7 +50,7 @@ export const LocationSelector = () => {
             <Text
                style={[
                   styles.locationText,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
             >
                Location

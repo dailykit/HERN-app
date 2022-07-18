@@ -21,12 +21,12 @@ import { AccountHeader } from './header'
 import { UserInfo } from './userInfo'
 import { Spinner } from '../../assets/loaders'
 import { useConfig } from '../../lib/config'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const AccountScreen = () => {
    const navigation = useNavigation()
    const { configOf } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { user, isAuthenticated, isLoading, logout } = useUser()
    const walletConfig = configOf('Wallet', 'rewards')
    const isWalletAvailable = React.useMemo(() => {
@@ -60,7 +60,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         Check Offers
@@ -69,7 +69,7 @@ const AccountScreen = () => {
                   <View
                      style={{
                         height: 0.5,
-                        backgroundColor: globalCss.color.grey,
+                        backgroundColor: globalStyle.color.grey,
                      }}
                   ></View>
                   {isWalletAvailable ? (
@@ -83,7 +83,7 @@ const AccountScreen = () => {
                            <Text
                               style={[
                                  styles.accountTileText,
-                                 { fontFamily: globalCss.font.medium },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               Wallet
@@ -92,7 +92,7 @@ const AccountScreen = () => {
                         <View
                            style={{
                               height: 0.5,
-                              backgroundColor: globalCss.color.grey,
+                              backgroundColor: globalStyle.color.grey,
                            }}
                         ></View>
                      </>
@@ -108,7 +108,7 @@ const AccountScreen = () => {
                            <Text
                               style={[
                                  styles.accountTileText,
-                                 { fontFamily: globalCss.font.medium },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               Loyalty Points
@@ -117,7 +117,7 @@ const AccountScreen = () => {
                         <View
                            style={{
                               height: 0.5,
-                              backgroundColor: globalCss.color.grey,
+                              backgroundColor: globalStyle.color.grey,
                            }}
                         ></View>
                      </>
@@ -127,7 +127,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         Manage Addresses
@@ -136,7 +136,7 @@ const AccountScreen = () => {
                   <View
                      style={{
                         height: 0.5,
-                        backgroundColor: globalCss.color.grey,
+                        backgroundColor: globalStyle.color.grey,
                      }}
                   ></View>
                   {isReferralAvailable ? (
@@ -146,7 +146,7 @@ const AccountScreen = () => {
                            <Text
                               style={[
                                  styles.accountTileText,
-                                 { fontFamily: globalCss.font.medium },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               Refer your friends
@@ -155,7 +155,7 @@ const AccountScreen = () => {
                         <View
                            style={{
                               height: 0.5,
-                              backgroundColor: globalCss.color.grey,
+                              backgroundColor: globalStyle.color.grey,
                            }}
                         ></View>
                      </>
@@ -165,7 +165,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         Manage your cards
@@ -174,7 +174,7 @@ const AccountScreen = () => {
                   <View
                      style={{
                         height: 0.5,
-                        backgroundColor: globalCss.color.grey,
+                        backgroundColor: globalStyle.color.grey,
                      }}
                   ></View>
                   <Tile
@@ -186,7 +186,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         Sign Out
@@ -213,10 +213,10 @@ const AccountScreen = () => {
                   <OfferIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}>Check Offers</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: globalCss.color.grey }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile
                   onPress={() => {
                      navigation.navigate('Wallet')
@@ -225,10 +225,10 @@ const AccountScreen = () => {
                   <WalletIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}>Wallet</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: globalCss.color.grey }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile
                   onPress={() => {
                      navigation.navigate('LoyaltyPoints')
@@ -237,39 +237,39 @@ const AccountScreen = () => {
                   <LoyaltyPointIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}>Loyalty Points</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: globalCss.color.grey }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <LocationIcon fill="#00000080" size={20} />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}>Manage Addresses</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: globalCss.color.grey }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <ReferIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}>Refer your friends</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: globalCss.color.grey }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <CardsIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}>Manage your cards</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: globalCss.color.grey }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <LogoutIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalCss.font.medium },
+                           { fontFamily: globalStyle.font.medium },
                         ]}>Sign Out</Text>
                </Tile>
             </View>

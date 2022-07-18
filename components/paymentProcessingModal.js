@@ -6,7 +6,7 @@ import { useConfig } from '../lib/config'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import { Button } from '../components/button'
 import Modal from '../components/modal'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 const PaymentProcessingModal = ({
    isOpen,
@@ -21,7 +21,7 @@ const PaymentProcessingModal = ({
    setIsProcessingPayment = () => null,
    setIsPaymentInitiated = () => null,
 }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const [countDown, setCountDown] = useState(null)
    //    const { t } = useTranslation()
 
@@ -61,7 +61,10 @@ const PaymentProcessingModal = ({
 
       let title = (
          <Text
-            style={{ ...styles.modalTitle, fontFamily: globalCss.font.medium }}
+            style={{
+               ...styles.modalTitle,
+               fontFamily: globalStyle.font.medium,
+            }}
          >
             Processing your payment
          </Text>
@@ -72,8 +75,8 @@ const PaymentProcessingModal = ({
                style={[
                   styles.modalSubtitle,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -83,8 +86,8 @@ const PaymentProcessingModal = ({
                style={[
                   styles.modalSubtitle,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -94,8 +97,8 @@ const PaymentProcessingModal = ({
                style={[
                   styles.modalSubtitle,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -115,7 +118,7 @@ const PaymentProcessingModal = ({
             <Text
                style={{
                   ...styles.modalTitle,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                Successfully placed your order
@@ -127,8 +130,8 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -146,7 +149,7 @@ const PaymentProcessingModal = ({
             <Text
                style={{
                   ...styles.modalTitle,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                Looks like your card requires authentication
@@ -158,8 +161,8 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -193,7 +196,7 @@ const PaymentProcessingModal = ({
             <Text
                style={{
                   ...styles.modalTitle,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                Payment Failed
@@ -205,8 +208,8 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -232,7 +235,7 @@ const PaymentProcessingModal = ({
             <Text
                style={{
                   ...styles.modalTitle,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                Payment Cancelled
@@ -244,8 +247,8 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -271,7 +274,7 @@ const PaymentProcessingModal = ({
             <Text
                style={{
                   ...styles.modalTitle,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                Payment Failed
@@ -283,8 +286,8 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalCss.font.regular,
-                     color: globalCss.color.grey,
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
                   },
                ]}
             >
@@ -342,7 +345,7 @@ const PaymentProcessingModal = ({
             <Text
                style={{
                   ...styles.modalTitle,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                Successfully top-up your wallet

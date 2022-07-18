@@ -1,6 +1,6 @@
 import { Text, View, ActivityIndicator } from 'react-native'
 import { useConfig } from '../../lib/config'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const Spinner = ({
    size = 'small',
@@ -11,7 +11,7 @@ export const Spinner = ({
    textStyle = {},
 }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <View
          style={{
@@ -32,7 +32,7 @@ export const Spinner = ({
             <Text
                style={{
                   marginTop: 8,
-                  fontFamily: globalCss.font.regular,
+                  fontFamily: globalStyle.font.regular,
                   ...textStyle,
                }}
             >

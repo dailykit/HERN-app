@@ -1,17 +1,17 @@
 import { StyleSheet, View, Text } from 'react-native'
 import LocationIcon from '../../assets/locationIcon'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 export const AddressInfo = props => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { address } = props
    return (
       <View style={styles.addressContainer}>
-         <LocationIcon fill={globalCss.color.grey} />
+         <LocationIcon fill={globalStyle.color.grey} />
          <View style={{ flexShrink: 1 }}>
             <Text
                style={[
                   styles.addressText,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
             >
                {address.mainText || address.line1}
@@ -19,7 +19,7 @@ export const AddressInfo = props => {
             <Text
                style={[
                   styles.addressText,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
             >
                {address.secondaryText ||

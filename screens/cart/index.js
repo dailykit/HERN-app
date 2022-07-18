@@ -25,10 +25,10 @@ import { useUser } from '../../context/user'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import CustomBackdrop from '../../components/modalBackdrop'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const CartScreen = () => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { isAuthenticated } = useUser()
    const { cartState, combinedCartItems, isFinalCartLoading, storedCartId } =
@@ -65,7 +65,7 @@ const CartScreen = () => {
                   buttonStyle={styles.orderNowButtonStyle}
                   textStyle={[
                      styles.orderNowTextStyle,
-                     { fontFamily: globalCss.font.regular },
+                     { fontFamily: globalStyle.font.regular },
                   ]}
                   onPress={() => {
                      navigation.navigate('Menu')
@@ -106,7 +106,7 @@ const CartScreen = () => {
                buttonStyle={styles.button}
                textStyle={[
                   styles.buttonText,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
                disabled={
                   isAuthenticated &&
@@ -203,13 +203,13 @@ const styles = StyleSheet.create({
 })
 
 const LoginPopUp = ({ navigation, loginPopUp }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <View style={styles.loginPopUp}>
          <Text
             style={[
                styles.loginPopUpHeading,
-               { fontFamily: globalCss.font.medium },
+               { fontFamily: globalStyle.font.medium },
             ]}
          >
             Almost There
@@ -218,8 +218,8 @@ const LoginPopUp = ({ navigation, loginPopUp }) => {
             style={[
                styles.loginPopUpDescription,
                {
-                  fontFamily: globalCss.font.regular,
-                  color: globalCss.color.grey,
+                  fontFamily: globalStyle.font.regular,
+                  color: globalStyle.color.grey,
                },
             ]}
          >

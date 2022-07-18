@@ -16,13 +16,13 @@ import { ProductList } from '../../components/product'
 import { onDemandMenuContext } from '../../context'
 import { PRODUCTS_QUERY } from '../../graphql'
 import { useConfig } from '../../lib/config'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const ProductSearchScreen = () => {
    //    const textRef = React.useRef(null)
    const [searchText, setSearchText] = React.useState('')
    const { brand, locationId, brandLocation } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
 
    const { onDemandMenu } = React.useContext(onDemandMenuContext)
@@ -76,7 +76,10 @@ const ProductSearchScreen = () => {
                }}
             >
                <TextInput
-                  style={[styles.input, { fontFamily: globalCss.font.regular }]}
+                  style={[
+                     styles.input,
+                     { fontFamily: globalStyle.font.regular },
+                  ]}
                   onChangeText={onTextChange}
                   placeholder={'Search for item...'}
                />

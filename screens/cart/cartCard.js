@@ -14,12 +14,12 @@ import { useQuery } from '@apollo/client'
 import Modal from 'react-native-modal'
 import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const CartCard = ({ productData, quantity }) => {
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { addToCart, methods } = useCart()
 
    const [modifyProductId, setModifyProductId] = useState(null)
@@ -346,7 +346,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalCss.font.semibold },
+                           { fontFamily: globalStyle.font.semibold },
                         ]}
                      >
                         {productData.name}
@@ -404,7 +404,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={{
                            color: '#f33737',
-                           fontFamily: globalCss.font.medium,
+                           fontFamily: globalStyle.font.medium,
                            fontSize: 13,
                         }}
                      >
@@ -416,7 +416,7 @@ export const CartCard = ({ productData, quantity }) => {
                         <Text
                            style={[
                               styles.originalPrice,
-                              { fontFamily: globalCss.font.regular },
+                              { fontFamily: globalStyle.font.regular },
                            ]}
                         >
                            {formatCurrency(getTotalPrice.totalPrice)}
@@ -425,7 +425,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={[
                            styles.discountPrice,
-                           { fontFamily: globalCss.font.semibold },
+                           { fontFamily: globalStyle.font.semibold },
                         ]}
                      >
                         {getTotalPrice.totalPrice !== 0
@@ -468,7 +468,10 @@ export const CartCard = ({ productData, quantity }) => {
             <View style={{ backgroundColor: 'white', padding: 12 }}>
                <View style={{ marginBottom: 12 }}>
                   <Text
-                     style={{ fontSize: 16, fontFamily: globalCss.font.medium }}
+                     style={{
+                        fontSize: 16,
+                        fontFamily: globalStyle.font.medium,
+                     }}
                   >
                      Repeat last used customization?
                   </Text>
@@ -519,7 +522,7 @@ const AdditionalDetails = ({ productData }) => {
    const [showAdditionalDetailsOnCard, setShowAdditionalDetailsOnCard] =
       React.useState(false)
 
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <View style={{ marginTop: 12 }}>
          {productData.childs.length > 0 && (
@@ -537,7 +540,7 @@ const AdditionalDetails = ({ productData }) => {
                   paddingHorizontal: 12,
                }}
             >
-               <Text style={{ fontFamily: globalCss.font.semibold }}>
+               <Text style={{ fontFamily: globalStyle.font.semibold }}>
                   Customizable
                </Text>
                {showAdditionalDetailsOnCard ? (
@@ -560,7 +563,7 @@ const AdditionalDetails = ({ productData }) => {
                   <Text
                      style={[
                         styles.productOptionLabel,
-                        { fontFamily: globalCss.font.regular },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      {productData.childs[0].productOption.label || 'N/A'}
@@ -604,7 +607,8 @@ const AdditionalDetails = ({ productData }) => {
                                                    styles.modifierOptionText,
                                                    {
                                                       fontFamily:
-                                                         globalCss.font.regular,
+                                                         globalStyle.font
+                                                            .regular,
                                                    },
                                                 ]}
                                              >
@@ -623,7 +627,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                      styles.modifierOptionText,
                                                                      {
                                                                         fontFamily:
-                                                                           globalCss
+                                                                           globalStyle
                                                                               .font
                                                                               .regular,
                                                                      },
@@ -645,7 +649,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                   styles.modifierOptionText,
                                                                   {
                                                                      fontFamily:
-                                                                        globalCss
+                                                                        globalStyle
                                                                            .font
                                                                            .regular,
                                                                   },
@@ -685,7 +689,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                      styles.modifierOptionText,
                                                                      {
                                                                         fontFamily:
-                                                                           globalCss
+                                                                           globalStyle
                                                                               .font
                                                                               .regular,
                                                                      },
@@ -711,7 +715,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                                     styles.modifierOptionText,
                                                                                     {
                                                                                        fontFamily:
-                                                                                          globalCss
+                                                                                          globalStyle
                                                                                              .font
                                                                                              .regular,
                                                                                     },
@@ -733,7 +737,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                                  styles.modifierOptionText,
                                                                                  {
                                                                                     fontFamily:
-                                                                                       globalCss
+                                                                                       globalStyle
                                                                                           .font
                                                                                           .regular,
                                                                                  },

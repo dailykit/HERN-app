@@ -1,10 +1,10 @@
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
 import { useConfig } from '../lib/config'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { backgroundColor, iconColor, countBackgroundColor, countColor } =
       appConfig?.brandSettings.counterButtonSettings || {}
    return (
@@ -25,7 +25,7 @@ export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
                   styles.textStyle,
                   {
                      color: iconColor.value,
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   },
                ]}
             >
@@ -45,7 +45,7 @@ export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
                   styles.textStyle,
                   {
                      color: countColor.value,
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   },
                ]}
             >
@@ -61,7 +61,7 @@ export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
                   styles.textStyle,
                   {
                      color: iconColor.value,
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   },
                ]}
             >

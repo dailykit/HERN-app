@@ -15,7 +15,7 @@ import moment from 'moment'
 import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 
 export const Pickup = () => {
    const {
@@ -27,7 +27,7 @@ export const Pickup = () => {
       locationId,
       appConfig,
    } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { cartState, methods } = useCart()
 
    const [fulfillmentType, setFulfillmentType] = useState(
@@ -567,7 +567,7 @@ export const Pickup = () => {
                      style={{
                         marginLeft: 6,
                         color: '#00000080',
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      {title}
@@ -575,7 +575,7 @@ export const Pickup = () => {
                         'PREORDER_PICKUP' ||
                      cartState.cart?.fulfillmentInfo?.type ===
                         'PREORDER_PICKUP' ? (
-                        <Text style={{ fontFamily: globalCss.font.regular }}>
+                        <Text style={{ fontFamily: globalStyle.font.regular }}>
                            {' '}
                            {moment(
                               cartState.cart?.fulfillmentInfo?.slot?.from
@@ -631,7 +631,7 @@ export const Pickup = () => {
          >
             <Text
                style={{
-                  fontFamily: globalCss.font.semibold,
+                  fontFamily: globalStyle.font.semibold,
                   alignSelf: 'flex-start',
                   marginBottom: 5,
                }}
@@ -650,7 +650,7 @@ export const Pickup = () => {
                         height: 28,
                      }}
                      textStyle={{
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                         fontSize: 11,
                         paddingHorizontal: 7,
                      }}
@@ -689,7 +689,7 @@ export const Pickup = () => {
                style={{
                   textAlign: 'center',
                   marginVertical: 8,
-                  fontFamily: globalCss.font.semibold,
+                  fontFamily: globalStyle.font.semibold,
                }}
             >
                No store available

@@ -12,12 +12,12 @@ import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
 import { StoreList } from './storeList'
 import { Button } from '../button'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const Pickup = () => {
    const navigation = useNavigation()
    const { orderTabs, brand, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const [userCoordinate, setUserCoordinate] = useState({
       latitude: null,
@@ -263,7 +263,7 @@ export const Pickup = () => {
                <Text
                   style={{
                      fontStyle: 'italic',
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   }}
                >
                   Getting your location
@@ -286,7 +286,7 @@ export const Pickup = () => {
                   <Text
                      style={[
                         styles.findingTextStyle,
-                        { fontFamily: globalCss.font.regular },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      Finding your nearest store...
@@ -301,7 +301,7 @@ export const Pickup = () => {
                   <Text
                      style={[
                         styles.noStoreText1,
-                        { fontFamily: globalCss.font.regular },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      Store service not found at your location
@@ -310,8 +310,8 @@ export const Pickup = () => {
                      style={[
                         styles.noStoreText2,
                         {
-                           fontFamily: globalCss.font.regular,
-                           color: globalCss.color.grey,
+                           fontFamily: globalStyle.font.regular,
+                           color: globalStyle.color.grey,
                         },
                      ]}
                   >

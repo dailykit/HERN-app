@@ -24,12 +24,12 @@ import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import { FloatingMenu } from '../../components/floatingMenu'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const MenuScreen = ({ route }) => {
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const {
       onDemandMenu: { isMenuLoading, allProductIds, categories },
    } = React.useContext(onDemandMenuContext)
@@ -132,7 +132,7 @@ const MenuScreen = ({ route }) => {
          {status === 'loading' ? (
             <Spinner size="large" showText={true} />
          ) : status === 'error' ? (
-            <Text style={{ fontFamily: globalCss.font.medium }}>Error</Text>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>Error</Text>
          ) : null}
          {status === 'success' ? (
             <>
@@ -180,7 +180,7 @@ const MenuScreen = ({ route }) => {
                      <Text
                         style={[
                            styles.searchBarText,
-                           { fontFamily: globalCss.font.regular },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         Search for item...
@@ -205,7 +205,7 @@ const MenuScreen = ({ route }) => {
                            <Text
                               style={[
                                  styles.categoryListName,
-                                 { fontFamily: globalCss.font.medium },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               {eachCategory.name}

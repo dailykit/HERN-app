@@ -2,7 +2,7 @@ import { FascinateInline_400Regular } from '@expo-google-fonts/dev'
 import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
 import RadioIcon from '../assets/radioIcon'
 import { useConfig } from '../lib/config'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export const Button = ({
    children,
@@ -18,7 +18,7 @@ export const Button = ({
    additionalIcon: AdditionalIcon = null,
 }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { buttonSettings } = appConfig.brandSettings
    const containerStyleByVariant = variant => {
       switch (variant) {
@@ -97,7 +97,7 @@ export const Button = ({
                   styles.buttonTextStyle,
                   textStyleByVariant(variant),
                   textStyle ? textStyle : null,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
             >
                {children}

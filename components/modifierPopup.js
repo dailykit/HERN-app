@@ -25,7 +25,7 @@ import { useCart } from '../context'
 import { getCartItemWithModifiers } from '../utils'
 import { Spinner } from '../assets/loaders'
 import { ScrollView } from 'react-native-gesture-handler'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export const ModifierPopup = ({
    closeModifier,
@@ -38,7 +38,7 @@ export const ModifierPopup = ({
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { addToCart, methods } = useCart()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    const [isModifiersLoading, setIsModifiersLoading] = useState(true)
    const [productOption, setProductOption] = useState(null) // for by default choose one product option
@@ -374,7 +374,7 @@ export const ModifierPopup = ({
             <Text
                style={[
                   styles.customizationText,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
             >
                Customization
@@ -411,7 +411,7 @@ export const ModifierPopup = ({
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalCss.font.regular },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         {productData.name}
@@ -431,12 +431,14 @@ export const ModifierPopup = ({
                                  textDecorationLine: 'line-through',
                                  marginRight: 5,
                                  fontSize: 12,
-                                 color: globalCss.color.grey,
+                                 color: globalStyle.color.grey,
                               }}
                            >
                               {formatCurrency(productData.price)}
                            </Text>
-                           <Text style={{ fontFamily: globalCss.font.regular }}>
+                           <Text
+                              style={{ fontFamily: globalStyle.font.regular }}
+                           >
                               {formatCurrency(
                                  getPriceWithDiscount(
                                     productData.price,
@@ -446,7 +448,7 @@ export const ModifierPopup = ({
                            </Text>
                         </View>
                      ) : (
-                        <Text style={{ fontFamily: globalCss.font.regular }}>
+                        <Text style={{ fontFamily: globalStyle.font.regular }}>
                            {formatCurrency(productData.price)}
                         </Text>
                      )
@@ -454,7 +456,7 @@ export const ModifierPopup = ({
                   <Text
                      style={[
                         styles.description,
-                        { fontFamily: globalCss.font.regular },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      {productData?.description}
@@ -484,7 +486,7 @@ export const ModifierPopup = ({
                                    style={[
                                       styles.productOptionButton,
                                       {
-                                         fontFamily: globalCss.font.regular,
+                                         fontFamily: globalStyle.font.regular,
                                          borderColor:
                                             productOption.id === eachOption.id
                                                ? appConfig.brandSettings
@@ -532,7 +534,7 @@ export const ModifierPopup = ({
             */}
             {productOption?.modifier ? (
                <View>
-                  <Text style={{ fontFamily: globalCss.font.regular }}>
+                  <Text style={{ fontFamily: globalStyle.font.regular }}>
                      Add On:
                   </Text>
                   {!isModifiersLoading &&
@@ -649,7 +651,7 @@ const AdditionalModifiers = ({
    const [showCustomize, setShowCustomize] = useState(
       !Boolean(additionalModifiersType)
    )
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <>
@@ -667,7 +669,7 @@ const AdditionalModifiers = ({
                      flexDirection: 'row',
                   }}
                >
-                  <Text style={{ fontFamily: globalCss.font.regular }}>
+                  <Text style={{ fontFamily: globalStyle.font.regular }}>
                      {eachAdditionalModifier.label}
                   </Text>
 

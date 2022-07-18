@@ -5,7 +5,7 @@ import RadioIcon from '../assets/radioIcon'
 import CheckIcon from '../assets/checkIcon'
 import UncheckIcon from '../assets/uncheckIcon'
 import { useConfig } from '../lib/config'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export const ModifierCategory = props => {
    const {
@@ -19,7 +19,7 @@ export const ModifierCategory = props => {
       nestedErrorCategories,
       parentModifierOptionId = null,
    } = props
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const renderConditionText = category => {
       if (category.type === 'single') {
          return 'CHOOSE ONE*'
@@ -131,7 +131,7 @@ export const ModifierCategory = props => {
             <Text
                style={[
                   styles.categoryName,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
             >
                {eachCategory.name}
@@ -139,7 +139,7 @@ export const ModifierCategory = props => {
             <Text
                style={[
                   styles.categoryMessageText,
-                  { fontFamily: globalCss.font.regular },
+                  { fontFamily: globalStyle.font.regular },
                ]}
             >
                {'('}
@@ -151,7 +151,7 @@ export const ModifierCategory = props => {
             <Text
                style={[
                   styles.categoryError,
-                  { fontFamily: globalCss.font.italic },
+                  { fontFamily: globalStyle.font.italic },
                ]}
             >
                You have to choose this category.

@@ -9,10 +9,10 @@ import { useConfig } from '../../../lib/config'
 import { SubScreenHeader } from './header'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 
 const OffersScreen = () => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    // context
    const { user } = useUser()
@@ -49,7 +49,7 @@ const OffersScreen = () => {
             <Text
                style={[
                   styles.couponTextStyle,
-                  { fontFamily: globalCss.font.semibold },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Coupons
@@ -57,7 +57,7 @@ const OffersScreen = () => {
             {isCouponsLoading ? (
                <Spinner size={'large'} showText={true} />
             ) : error ? (
-               <Text style={{ fontFamily: globalCss.font.medium }}>
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
                   Something went wrong
                </Text>
             ) : availableCoupons.length === 0 ? (
@@ -73,7 +73,7 @@ const OffersScreen = () => {
                   <Text
                      style={[
                         styles.noCoupons,
-                        { fontFamily: globalCss.font.semibold },
+                        { fontFamily: globalStyle.font.semibold },
                      ]}
                   >
                      No coupons available
@@ -96,18 +96,21 @@ const OffersScreen = () => {
    )
 }
 const CouponCard = ({ coupon }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <View style={styles.cardContainer}>
          <Text
-            style={{ ...styles.codeText, fontFamily: globalCss.font.semibold }}
+            style={{
+               ...styles.codeText,
+               fontFamily: globalStyle.font.semibold,
+            }}
          >
             {coupon.code}
          </Text>
          <Text
             style={{
                ...styles.codeDetail,
-               fontFamily: globalCss.font.semibold,
+               fontFamily: globalStyle.font.semibold,
             }}
          >
             {coupon.metaDetails.title}
@@ -115,7 +118,7 @@ const CouponCard = ({ coupon }) => {
          <Text
             style={{
                ...styles.codeDetail,
-               fontFamily: globalCss.font.semibold,
+               fontFamily: globalStyle.font.semibold,
             }}
          >
             {coupon.metaDetails.description}

@@ -10,7 +10,7 @@ import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { Button } from '../../../components/button'
 import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 
 export const MobileNumberForm = ({
    setForm,
@@ -21,7 +21,7 @@ export const MobileNumberForm = ({
 }) => {
    const { appConfig } = useConfig()
    const phoneInput = React.useRef(null)
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <View style={styles.phoneNumberContainer}>
@@ -30,7 +30,7 @@ export const MobileNumberForm = ({
                style={{
                   color: '#ffffff',
                   fontSize: 24,
-                  fontFamily: globalCss.font.medium,
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                LOGIN
@@ -56,13 +56,13 @@ export const MobileNumberForm = ({
                   autoFocus
                   textInputStyle={[
                      styles.textInputStyle,
-                     { fontFamily: globalCss.font.medium },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                   containerStyle={styles.containerStyle}
                   textContainerStyle={styles.textContainerStyle}
                   codeTextStyle={[
                      styles.codeTextStyle,
-                     { fontFamily: globalCss.font.medium },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                   disableArrowIcon={true}
                   textInputProps={{ placeholderTextColor: '#ffffff80' }}
@@ -74,7 +74,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   }}
                >
                   By continuing, I agree to the{' '}
@@ -86,7 +86,7 @@ export const MobileNumberForm = ({
                            appConfig.brandSettings.buttonSettings
                               .activeTextColor.value || '#ffffff',
                         fontSize: 12,
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      Terms of Use{' '}
@@ -96,7 +96,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   }}
                >
                   &{' '}
@@ -108,7 +108,7 @@ export const MobileNumberForm = ({
                            appConfig.brandSettings.buttonSettings
                               .activeTextColor.value || '#ffffff',
                         fontSize: 12,
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      Privacy Policy
@@ -119,7 +119,7 @@ export const MobileNumberForm = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: globalCss.font.italic,
+                     fontFamily: globalStyle.font.italic,
                   }}
                >
                   {error}

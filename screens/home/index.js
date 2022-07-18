@@ -19,11 +19,11 @@ import { onDemandMenuContext } from '../../context'
 import { PRODUCTS_QUERY } from '../../graphql'
 import { useQuery } from '@apollo/client'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 const HomeScreen = () => {
    const { brand, locationId, brandLocation, appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const {
       onDemandMenu: { isMenuLoading, allProductIds, categories },
@@ -128,7 +128,7 @@ const HomeScreen = () => {
                   <Text
                      style={[
                         styles.orderNowHeading,
-                        { fontFamily: globalCss.font.semibold },
+                        { fontFamily: globalStyle.font.semibold },
                      ]}
                   >
                      {appConfig?.data?.orderNow?.heading?.value || ''}
@@ -136,7 +136,7 @@ const HomeScreen = () => {
                   <Text
                      style={[
                         styles.orderNowSubHeading,
-                        { fontFamily: globalCss.font.medium },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {appConfig?.data?.orderNow?.subHeading?.value || ''}
@@ -151,8 +151,8 @@ const HomeScreen = () => {
                      <Text
                         style={{
                            ...styles.orderNowBtn,
-                           color: globalCss.color.primary || '#000',
-                           fontFamily: globalCss.font.semibold,
+                           color: globalStyle.color.primary || '#000',
+                           fontFamily: globalStyle.font.semibold,
                         }}
                      >
                         Order Now
@@ -172,7 +172,7 @@ const HomeScreen = () => {
                <Text
                   style={[
                      styles.trendingNowHeading,
-                     { fontFamily: globalCss.font.semibold },
+                     { fontFamily: globalStyle.font.semibold },
                   ]}
                >
                   Shop By Collection

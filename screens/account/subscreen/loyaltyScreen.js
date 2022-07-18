@@ -6,11 +6,11 @@ import moment from 'moment'
 import { NoDataIcon } from '../../../assets/noDataIcon'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 
 const LoyaltyPointsScreen = () => {
    const { user, isLoading } = useUser()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    if (isLoading) {
       return <Spinner size={'large'} showText={true} />
    }
@@ -24,7 +24,7 @@ const LoyaltyPointsScreen = () => {
                <Text
                   style={[
                      styles.loyaltyText,
-                     { fontFamily: globalCss.font.regular },
+                     { fontFamily: globalStyle.font.regular },
                   ]}
                >
                   Loyalty Points :
@@ -33,7 +33,7 @@ const LoyaltyPointsScreen = () => {
                <Text
                   style={[
                      styles.loyaltyText,
-                     { fontFamily: globalCss.font.regular, marginLeft: 5 },
+                     { fontFamily: globalStyle.font.regular, marginLeft: 5 },
                   ]}
                >
                   {user.loyaltyPoint.points || 0}
@@ -44,7 +44,7 @@ const LoyaltyPointsScreen = () => {
                   style={{
                      fontSize: 18,
                      marginBottom: 10,
-                     fontFamily: globalCss.font.regular,
+                     fontFamily: globalStyle.font.regular,
                   }}
                >
                   Transaction History
@@ -62,7 +62,7 @@ const LoyaltyPointsScreen = () => {
                      <Text
                         style={[
                            styles.noTransactionMessage,
-                           { fontFamily: globalCss.font.semibold },
+                           { fontFamily: globalStyle.font.semibold },
                         ]}
                      >
                         Oops! No transaction history is available yet
@@ -75,8 +75,8 @@ const LoyaltyPointsScreen = () => {
                            style={[
                               styles.headingText,
                               {
-                                 fontFamily: globalCss.font.regular,
-                                 color: globalCss.color.grey,
+                                 fontFamily: globalStyle.font.regular,
+                                 color: globalStyle.color.grey,
                                  flex: 2,
                                  textAlign: 'left',
                               },
@@ -88,8 +88,8 @@ const LoyaltyPointsScreen = () => {
                            style={[
                               styles.headingText,
                               {
-                                 fontFamily: globalCss.font.regular,
-                                 color: globalCss.color.grey,
+                                 fontFamily: globalStyle.font.regular,
+                                 color: globalStyle.color.grey,
                                  flex: 1,
                                  textAlign: 'right',
                               },
@@ -116,7 +116,8 @@ const LoyaltyPointsScreen = () => {
                                        style={[
                                           styles.transactionDate,
                                           {
-                                             fontFamily: globalCss.font.regular,
+                                             fontFamily:
+                                                globalStyle.font.regular,
                                           },
                                        ]}
                                     >
@@ -133,7 +134,8 @@ const LoyaltyPointsScreen = () => {
                                                 'CREDIT'
                                                    ? '#61D836'
                                                    : '#FF0000',
-                                             fontFamily: globalCss.font.regular,
+                                             fontFamily:
+                                                globalStyle.font.regular,
                                           },
                                        ]}
                                     >

@@ -10,7 +10,7 @@ import {
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { useConfig } from '../lib/config'
-import useGlobalCss from '../globalStyle'
+import useGlobalStyle from '../globalStyle'
 
 export const ModifierOptionCard = ({
    modifierOption,
@@ -20,7 +20,7 @@ export const ModifierOptionCard = ({
    onCustomizeClick = () => {},
 }) => {
    const { appConfig } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    return (
       <TouchableWithoutFeedback onPress={onCardClick}>
          <View
@@ -42,7 +42,7 @@ export const ModifierOptionCard = ({
                style={styles.modifierImage}
             />
             <View style={styles.modifierOptionDetails}>
-               <Text style={{ fontFamily: globalCss.font.regular }}>
+               <Text style={{ fontFamily: globalStyle.font.regular }}>
                   {modifierOption.name}
                </Text>
                <View
@@ -57,8 +57,8 @@ export const ModifierOptionCard = ({
                         style={[
                            styles.modifierOptionOriginalValue,
                            {
-                              fontFamily: globalCss.font.regular,
-                              color: globalCss.color.grey,
+                              fontFamily: globalStyle.font.regular,
+                              color: globalStyle.color.grey,
                            },
                         ]}
                      >
@@ -73,8 +73,8 @@ export const ModifierOptionCard = ({
                         style={[
                            styles.modifierOptionPrice,
                            {
-                              fontFamily: globalCss.font.regular,
-                              color: globalCss.color.grey,
+                              fontFamily: globalStyle.font.regular,
+                              color: globalStyle.color.grey,
                            },
                         ]}
                      >
@@ -102,7 +102,7 @@ export const ModifierOptionCard = ({
                   <Text
                      style={[
                         styles.customizeText,
-                        { fontFamily: globalCss.font.regular },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      customize

@@ -6,11 +6,11 @@ import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import useGlobalCss from '../../globalStyle'
+import useGlobalStyle from '../../globalStyle'
 
 export const StoreList = ({ stores, address, fulfillmentType }) => {
    const { dispatch, orderTabs } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const selectedOrderTab = React.useMemo(() => {
       return orderTabs.find(
@@ -22,7 +22,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
          <Text
             style={{
                fontSize: 16,
-               fontFamily: globalCss.font.regular,
+               fontFamily: globalStyle.font.regular,
             }}
          >
             Select Store
@@ -117,32 +117,36 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                      <View style={{ flexDirection: 'row' }}>
                         {/* <StoreIcon /> */}
                         <View style={{ flex: 1 }}>
-                           <LocationIcon fill={globalCss.color.grey} />
+                           <LocationIcon fill={globalStyle.color.grey} />
                         </View>
                         <View style={{ flex: 11 }}>
                            <Text
                               style={[
                                  styles.storeLabel,
-                                 { fontFamily: globalCss.font.regular },
+                                 { fontFamily: globalStyle.font.regular },
                               ]}
                            >
                               {label}
                            </Text>
                            <View>
                               <Text
-                                 style={{ fontFamily: globalCss.font.regular }}
+                                 style={{
+                                    fontFamily: globalStyle.font.regular,
+                                 }}
                               >
                                  {line1}
                               </Text>
                               <Text
-                                 style={{ fontFamily: globalCss.font.regular }}
+                                 style={{
+                                    fontFamily: globalStyle.font.regular,
+                                 }}
                               >
                                  {line2}
                               </Text>
                               <View>
                                  <Text
                                     style={{
-                                       fontFamily: globalCss.font.regular,
+                                       fontFamily: globalStyle.font.regular,
                                     }}
                                  >
                                     {city} {state} {country}
@@ -163,7 +167,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                            <Text
                               style={[
                                  styles.mileText,
-                                 { fontFamily: globalCss.font.regular },
+                                 { fontFamily: globalStyle.font.regular },
                               ]}
                            >
                               {aerialDistance} {distanceUnit}

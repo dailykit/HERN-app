@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Button } from '../../../components/button'
 import moment from 'moment'
 import { generateTimeStamp } from '../../../utils'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 
 export const TimeSlots = ({
    availableDaySlots,
@@ -12,7 +12,7 @@ export const TimeSlots = ({
    setSelectedSlot,
    onFulfillmentTimeClick,
 }) => {
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const [showAllDates, setShowAllDates] = React.useState(true)
    const [showAllTimeSlots, setShowAllTimeSlots] = React.useState(true)
 
@@ -33,7 +33,7 @@ export const TimeSlots = ({
             <Text
                style={[
                   styles.headingStyle,
-                  { fontFamily: globalCss.font.semibold },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Select Date For Later
@@ -65,7 +65,7 @@ export const TimeSlots = ({
                <Text
                   style={[
                      styles.headingStyle,
-                     { fontFamily: globalCss.font.semibold },
+                     { fontFamily: globalStyle.font.semibold },
                   ]}
                >
                   Select Time

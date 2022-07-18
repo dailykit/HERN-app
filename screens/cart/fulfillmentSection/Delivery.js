@@ -15,7 +15,7 @@ import moment from 'moment'
 import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
-import useGlobalCss from '../../../globalStyle'
+import useGlobalStyle from '../../../globalStyle'
 
 export const Delivery = () => {
    const {
@@ -26,7 +26,7 @@ export const Delivery = () => {
       dispatch,
       appConfig,
    } = useConfig()
-   const { globalCss } = useGlobalCss()
+   const { globalStyle } = useGlobalStyle()
    const { cartState, methods } = useCart()
 
    const [fulfillmentType, setFulfillmentType] = useState(
@@ -549,7 +549,7 @@ export const Delivery = () => {
                      style={{
                         marginLeft: 6,
                         color: '#00000080',
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      {title}
@@ -557,7 +557,7 @@ export const Delivery = () => {
                         'PREORDER_PICKUP' ||
                      cartState.cart?.fulfillmentInfo?.type ===
                         'PREORDER_DELIVERY' ? (
-                        <Text style={{ fontFamily: globalCss.font.regular }}>
+                        <Text style={{ fontFamily: globalStyle.font.regular }}>
                            {' '}
                            {moment(
                               cartState.cart?.fulfillmentInfo?.slot?.from
@@ -613,7 +613,7 @@ export const Delivery = () => {
          >
             <Text
                style={{
-                  fontFamily: globalCss.font.semibold,
+                  fontFamily: globalStyle.font.semibold,
                   alignSelf: 'flex-start',
                   marginBottom: 5,
                }}
@@ -632,7 +632,7 @@ export const Delivery = () => {
                         height: 28,
                      }}
                      textStyle={{
-                        fontFamily: globalCss.font.regular,
+                        fontFamily: globalStyle.font.regular,
                         fontSize: 11,
                         paddingHorizontal: 7,
                      }}
@@ -671,7 +671,7 @@ export const Delivery = () => {
                style={{
                   textAlign: 'center',
                   marginVertical: 8,
-                  fontFamily: globalCss.font.semibold,
+                  fontFamily: globalStyle.font.semibold,
                }}
             >
                No store available
