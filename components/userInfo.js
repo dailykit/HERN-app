@@ -28,7 +28,7 @@ import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
 
 export const UserInfo = props => {
-   const [settingCartInfo, setSettingCartInfo] = useState(true)
+   const [settingCartInfo, setSettingCartInfo] = useState(false)
    const UserInfoFormRef = useRef()
 
    const handleClose = () => {
@@ -62,7 +62,8 @@ const UserInfoForm = props => {
    const { user } = useUser()
    const { globalStyle } = useGlobalStyle()
 
-   const namePattern = /^[a-zA-Z .]*$/
+   const namePattern = /^[a-zA-Z .]+$/
+   const lastNamePattern = /^[a-zA-Z .]*$/
    const [savingUserInfo, setSavingUserInfo] = React.useState(false)
    const [firstName, setFirstName] = useState(
       cart?.customerInfo?.customerFirstName ||
@@ -130,7 +131,7 @@ const UserInfoForm = props => {
    let isValid =
       isValidNumber(mobileNumber) &&
       namePattern.test(firstName) &&
-      namePattern.test(lastName)
+      lastNamePattern.test(lastName)
 
    React.useEffect(() => {
       if (cart?.customerInfo !== null) {
@@ -177,7 +178,7 @@ const UserInfoForm = props => {
          <TextInput
             style={[
                styles.inputField,
-               !namePattern.test(lastName) && styles.error,
+               !lastNamePattern.test(lastName) && styles.error,
                { fontFamily: globalStyle.font.regular },
             ]}
             value={lastName}
@@ -252,13 +253,11 @@ const UserDetails = ({
    })
 
    const hasUserInfoInCart =
-      cart?.customerInfo?.customerFirstName?.length ||
-      cart?.customerInfo?.customerLastName?.length ||
+      cart?.customerInfo?.customerFirstName?.length &&
       cart?.customerInfo?.customerPhone?.length
 
    const hasUserInfo =
-      user?.platform_customer?.firstName?.length ||
-      user?.platform_customer?.lastName?.length ||
+      user?.platform_customer?.firstName?.length &&
       user?.platform_customer?.phoneNumber?.length
 
    const handleSave = async data => {
@@ -397,7 +396,7 @@ const styles = StyleSheet.create({
       //   width: '100%',
    },
    addUserInfoBtn: {},
-   userInfoFuserInfoFormorm: {
+   userInfoForm: {
       display: 'flex',
       flexDirection: 'column',
       borderTopLeftRadius: 8,

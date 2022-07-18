@@ -14,6 +14,7 @@ import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
 import useGlobalStyle from '../../../globalStyle'
 // TODO: countdown for resend button
+import Timer, { MAKE_TIME_READABLE } from '../../../components/timer'
 
 export const OTPform = ({
    form,
@@ -36,14 +37,9 @@ export const OTPform = ({
    const ResentBtn = () => {
       return (
          <TouchableOpacity
-            style={{
-               position: 'absolute',
-               right: 0,
-               bottom: 0,
-            }}
             onPress={() => {
                resend()
-               setShowResendBtn(true)
+               setShowResendBtn(false)
             }}
          >
             <Text style={{ color: 'red', fontFamily: globalStyle.font.medium }}>
@@ -119,7 +115,7 @@ export const OTPform = ({
             <OTPInputView
                style={{
                   width: '100%',
-                  height: 100,
+                  height: 75,
                }}
                pinCount={6}
                // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
@@ -140,8 +136,34 @@ export const OTPform = ({
                   console.log('filledCode', code)
                }}
             />
-            <View style={{ width: '100%' }}>
-               <ResentBtn />
+            <View
+               style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  marginVertical: 5,
+               }}
+            >
+               {showResendBtn ? (
+                  <ResentBtn />
+               ) : (
+                  <Timer
+                     seconds={120}
+                     onTimeZero={() => setShowResendBtn(true)}
+                     renderComponent={seconds => (
+                        <Text
+                           style={{
+                              color: '#fff',
+                              fontSize: 12,
+                              fontFamily: 'MetropolisMedium',
+                           }}
+                        >
+                           Resend OTP in {MAKE_TIME_READABLE(seconds)}
+                        </Text>
+                     )}
+                  />
+               )}
             </View>
             {error ? (
                <Text
@@ -149,6 +171,8 @@ export const OTPform = ({
                      color: 'red',
                      fontFamily: globalStyle.font.italic,
                      width: '100%',
+                     marginTop: 3,
+                     fontSize: 13,
                   }}
                >
                   {error}

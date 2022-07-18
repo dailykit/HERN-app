@@ -17,11 +17,9 @@ function useRazorPay() {
             </body>
             <script>
                function ondismiss(){
-                  alert("Dismiss!");
                   window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'cancel'}))
                }
                function eventHandler(){
-                  alert("Success!");
                   window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'success'}))
                }
                var options = JSON.parse('${JSON.stringify(options)}');

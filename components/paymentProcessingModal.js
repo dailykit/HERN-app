@@ -7,12 +7,14 @@ import { StyleSheet, View, Text, Image } from 'react-native'
 import { Button } from '../components/button'
 import Modal from '../components/modal'
 import useGlobalStyle from '../globalStyle'
+import Timer, { MAKE_TIME_READABLE } from '../components/timer'
 
 const PaymentProcessingModal = ({
    isOpen,
    cartPayment,
    cartId,
    PaymentOptions,
+   showWebView,
    closeModal = () => null,
    normalModalClose = () => null,
    cancelPayment = () => null,
@@ -323,25 +325,21 @@ const PaymentProcessingModal = ({
                cartPayment?.paymentStatus
             )
          ) {
-            setCountDown(Date.now() + 5 * 60000)
+            setCountDown(2 * 60)
          }
       }
    }, [cartPayment?.paymentStatus])
 
    // resetting countdown timer when payment status changes
-   // useEffect(() => {
-   //    setCountDown(60)
-   // }, [cartPayment?.paymentStatus])
+   useEffect(() => {
+      setCountDown(2 * 60)
+   }, [cartPayment?.paymentStatus])
 
    return (
       <Modal closeOnClickOutside={false} visible={isOpen} onClose={closeModal}>
          {ShowPaymentStatusInfo(cartPayment?.paymentStatus).icon}
-         {cartPayment?.metaData?.paymentFor !== 'walletTopUp' ? (
-            <>
-               {ShowPaymentStatusInfo(cartPayment?.paymentStatus).title}
-               {ShowPaymentStatusInfo(cartPayment?.paymentStatus).subtitle}
-            </>
-         ) : (
+         {cartPayment?.paymentStatus === 'SUCCEEDED' &&
+         cartPayment?.metaData?.paymentFor === 'walletTopUp' ? (
             <Text
                style={{
                   ...styles.modalTitle,
@@ -350,41 +348,39 @@ const PaymentProcessingModal = ({
             >
                Successfully top-up your wallet
             </Text>
+         ) : (
+            <>
+               {ShowPaymentStatusInfo(cartPayment?.paymentStatus).title}
+               {ShowPaymentStatusInfo(cartPayment?.paymentStatus).subtitle}
+            </>
          )}
          {ShowPaymentStatusInfo(cartPayment?.paymentStatus).extra}
-         {!isEmpty(cartPayment) &&
+         {!showWebView &&
+            !isEmpty(cartPayment) &&
             !['SUCCEEDED', 'FAILED', 'CANCELLED', 'QR_GENERATED'].includes(
                cartPayment?.paymentStatus
-            ) && (
-               <>
-                  {/* {countDown && (
-                     <Countdown
-                        date={countDown}
-                        renderer={({ minutes, seconds, completed }) => {
-                           if (completed) {
-                              return (
-                                 <h1 tw="font-extrabold color[rgba(0, 64, 106, 0.9)] text-xl text-center">
-                                    {t('Request timed out')}
-                                 </h1>
-                              )
-                           }
-                           return (
-                              <h1 tw="font-extrabold color[rgba(0, 64, 106, 0.9)] text-xl text-center">
-                                 {`Timeout in ${minutes}:${
-                                    seconds <= 9 ? '0' : ''
-                                 }${seconds}`}
-                              </h1>
-                           )
-                        }}
-                        onComplete={() =>
-                           cancelTerminalPayment({
-                              cartPayment,
-                              retryPaymentAttempt: false,
-                           })
-                        }
-                     />
-                  )} */}
-               </>
+            ) &&
+            countDown && (
+               <Timer
+                  seconds={countDown}
+                  onTimeZero={() => {
+                     cancelPayment()
+                  }}
+                  renderComponent={seconds => {
+                     return (
+                        <Text
+                           style={{
+                              width: '100%',
+                              textAlign: 'center',
+                              fontFamily: 'MetropolisMedium',
+                              fontSize: 11,
+                           }}
+                        >
+                           Timeout in {MAKE_TIME_READABLE(seconds)}
+                        </Text>
+                     )
+                  }}
+               />
             )}
       </Modal>
    )
