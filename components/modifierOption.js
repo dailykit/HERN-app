@@ -10,6 +10,7 @@ import {
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { useConfig } from '../lib/config'
+import useGlobalStyle from '../globalStyle'
 
 export const ModifierOptionCard = ({
    modifierOption,
@@ -19,6 +20,7 @@ export const ModifierOptionCard = ({
    onCustomizeClick = () => {},
 }) => {
    const { appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    return (
       <TouchableWithoutFeedback onPress={onCardClick}>
          <View
@@ -40,7 +42,7 @@ export const ModifierOptionCard = ({
                style={styles.modifierImage}
             />
             <View style={styles.modifierOptionDetails}>
-               <Text style={styles.modifierOptionName}>
+               <Text style={{ fontFamily: globalStyle.font.regular }}>
                   {modifierOption.name}
                </Text>
                <View
@@ -51,7 +53,15 @@ export const ModifierOptionCard = ({
                   }}
                >
                   {modifierOption.discount && modifierOption.price > 0 ? (
-                     <Text style={styles.modifierOptionOriginalValue}>
+                     <Text
+                        style={[
+                           styles.modifierOptionOriginalValue,
+                           {
+                              fontFamily: globalStyle.font.regular,
+                              color: globalStyle.color.grey,
+                           },
+                        ]}
+                     >
                         {formatCurrency(modifierOption.price)}
                      </Text>
                   ) : null}
@@ -59,7 +69,15 @@ export const ModifierOptionCard = ({
                      modifierOption.price,
                      modifierOption.discount
                   ) > 0 ? (
-                     <Text style={styles.modifierOptionPrice}>
+                     <Text
+                        style={[
+                           styles.modifierOptionPrice,
+                           {
+                              fontFamily: globalStyle.font.regular,
+                              color: globalStyle.color.grey,
+                           },
+                        ]}
+                     >
                         {formatCurrency(
                            getPriceWithDiscount(
                               modifierOption.price,
@@ -81,7 +99,14 @@ export const ModifierOptionCard = ({
                      onCustomizeClick()
                   }}
                >
-                  <Text style={styles.customizeText}>customize</Text>
+                  <Text
+                     style={[
+                        styles.customizeText,
+                        { fontFamily: globalStyle.font.regular },
+                     ]}
+                  >
+                     customize
+                  </Text>
                </TouchableOpacity>
             ) : null}
          </View>
@@ -106,26 +131,17 @@ const styles = StyleSheet.create({
    checkIcon: {
       flex: 1,
    },
-   modifierOptionName: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
-   },
    modifierOptionOriginalValue: {
       textDecorationLine: 'line-through',
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
       fontSize: 12,
       lineHeight: 12,
-      color: '#A2A2A2',
+
       opacity: 0.5,
       marginRight: 5,
    },
    modifierOptionPrice: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
       fontSize: 12,
       lineHeight: 12,
-      color: '#A2A2A2',
    },
    customizeContainer: {
       position: 'absolute',
@@ -133,8 +149,6 @@ const styles = StyleSheet.create({
       bottom: 0,
    },
    customizeText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '400',
       lineHeight: 8,
       fontSize: 9,
       paddingTop: 3,

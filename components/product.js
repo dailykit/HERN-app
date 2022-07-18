@@ -24,6 +24,7 @@ import { client } from '../lib/apollo'
 import { getCartItemWithModifiers } from '../utils'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from './modalBackdrop'
+import useGlobalStyle from '../globalStyle'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -37,6 +38,7 @@ export const ProductList = ({
    heading,
    viewStyle = 'horizontalCard',
 }) => {
+   const { globalStyle } = useGlobalStyle()
    // group the product list by product type
    const groupedByType = React.useMemo(() => {
       const data = chain(productsList)
@@ -60,7 +62,16 @@ export const ProductList = ({
    }, [groupedByType])
    return (
       <View>
-         {heading && <Text style={styles.productListHeading}>{heading}</Text>}
+         {heading && (
+            <Text
+               style={[
+                  styles.productListHeading,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
+            >
+               {heading}
+            </Text>
+         )}
          <ScrollView
             contentContainerStyle={{ display: 'flex' }}
             horizontal={viewStyle !== productViewStyles.horizontalCard}
@@ -84,8 +95,13 @@ export const ProductList = ({
                   )
                })
             ) : (
-               <View style={styles.noProductsMsgContainer}>
-                  <Text style={{ fontFamily: 'MetropolisMedium' }}>
+               <View
+                  style={[
+                     styles.noProductsMsgContainer,
+                     { fontFamily: globalStyle.font.regular },
+                  ]}
+               >
+                  <Text style={{ fontFamily: globalStyle.font.medium }}>
                      No Products Found
                   </Text>
                </View>
@@ -98,6 +114,7 @@ export const ProductList = ({
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
    const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const bottomSheetModalRef = React.useRef(null)
 
    // variables
@@ -508,7 +525,10 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                >
                   <View>
                      <Text
-                        style={styles.productName}
+                        style={[
+                           styles.productName,
+                           { fontFamily: globalStyle.font.regular },
+                        ]}
                         numberOfLines={
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
                         }
@@ -516,7 +536,10 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         {productData.name}
                      </Text>
                      <Text
-                        style={styles.additionalText}
+                        style={[
+                           styles.additionalText,
+                           { fontFamily: globalStyle.font.regular },
+                        ]}
                         numberOfLines={
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
                         }
@@ -528,7 +551,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      <View style={styles.footerLeft}>
                         <VegNonVegIcon size={12} fill={'#61D836'} />
                         <View style={styles.priceContainer}>
-                           <Text style={styles.productDiscountValue}>
+                           <Text
+                              style={[
+                                 styles.productDiscountValue,
+                                 { fontFamily: globalStyle.font.semibold },
+                              ]}
+                           >
                               {formatCurrency(
                                  getPriceWithDiscount(
                                     productData.price,
@@ -545,7 +573,15 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                                  {(productData.discount ||
                                     defaultProductOption?.discount) &&
                                  productData.price > 0 ? (
-                                    <Text style={styles.productOriginalValue}>
+                                    <Text
+                                       style={[
+                                          styles.productOriginalValue,
+                                          {
+                                             fontFamily:
+                                                globalStyle.font.regular,
+                                          },
+                                       ]}
+                                    >
                                        {formatCurrency(
                                           productData.price +
                                              defaultProductOption.price
@@ -625,7 +661,10 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                <View style={{ backgroundColor: 'white', padding: 12 }}>
                   <View style={{ marginBottom: 12 }}>
                      <Text
-                        style={{ fontSize: 16, fontFamily: 'MetropolisMedium' }}
+                        style={{
+                           fontSize: 16,
+                           fontFamily: globalStyle.font.medium,
+                        }}
                      >
                         Repeat last used customization?
                      </Text>
@@ -635,8 +674,9 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         variant="outline"
                         isActive={true}
                         textStyle={{
-                           color: appConfig.brandSettings.buttonSettings
-                              .activeTextColor.value,
+                           color:
+                              appConfig.brandSettings.buttonSettings
+                                 .activeTextColor.value || '#000000',
                         }}
                         buttonStyle={{
                            flex: 1,
@@ -670,10 +710,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
 
 const styles = StyleSheet.create({
    productListHeading: {
-      fontFamily: 'MetropolisSemiBold',
       fontSize: 20,
       lineHeight: 20,
-      fontWeight: '500',
       color: '#fff',
       paddingLeft: 12,
       marginTop: 12,
@@ -699,12 +737,9 @@ const styles = StyleSheet.create({
    },
    floatingImage: {},
    productName: {
-      fontFamily: 'Metropolis',
       fontSize: 12,
-      fontWeight: '500',
    },
    additionalText: {
-      fontWeight: '500',
       fontSize: 10,
       lineHeight: 10,
       marginVertical: 3,
@@ -730,16 +765,14 @@ const styles = StyleSheet.create({
       color: 'rgba(24, 24, 24, 0.28)',
       textDecorationLine: 'line-through',
       textDecorationStyle: 'solid',
-      fontFamily: 'Metropolis',
+
       fontSize: 10,
    },
    productDiscountValue: {
       color: '#181818',
       fontSize: 12,
-      fontFamily: 'MetropolisSemiBold',
    },
    noProductsMsgContainer: {
-      fontFamily: 'Metropolis',
       display: 'flex',
       height: '100%',
       justifyContent: 'center',

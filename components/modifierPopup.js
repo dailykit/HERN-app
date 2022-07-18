@@ -25,6 +25,7 @@ import { useCart } from '../context'
 import { getCartItemWithModifiers } from '../utils'
 import { Spinner } from '../assets/loaders'
 import { ScrollView } from 'react-native-gesture-handler'
+import useGlobalStyle from '../globalStyle'
 
 export const ModifierPopup = ({
    closeModifier,
@@ -37,6 +38,7 @@ export const ModifierPopup = ({
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { addToCart, methods } = useCart()
+   const { globalStyle } = useGlobalStyle()
 
    const [isModifiersLoading, setIsModifiersLoading] = useState(true)
    const [productOption, setProductOption] = useState(null) // for by default choose one product option
@@ -375,7 +377,14 @@ export const ModifierPopup = ({
    return (
       <View style={styles.modifierPopupContainer}>
          <View style={styles.modifierPopupHeader}>
-            <Text style={styles.customizationText}>Customization</Text>
+            <Text
+               style={[
+                  styles.customizationText,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
+            >
+               Customization
+            </Text>
             <TouchableOpacity
                onPress={() => {
                   closeModifier()
@@ -405,7 +414,14 @@ export const ModifierPopup = ({
                      }}
                   >
                      <VegNonVegIcon size={12} fill={'#61D836'} />
-                     <Text style={styles.productName}>{productData.name}</Text>
+                     <Text
+                        style={[
+                           styles.productName,
+                           { fontFamily: globalStyle.font.regular },
+                        ]}
+                     >
+                        {productData.name}
+                     </Text>
                   </View>
                   {productData.price > 0 ? (
                      productData.discount > 0 ? (
@@ -421,12 +437,14 @@ export const ModifierPopup = ({
                                  textDecorationLine: 'line-through',
                                  marginRight: 5,
                                  fontSize: 12,
-                                 color: '#A2A2A2',
+                                 color: globalStyle.color.grey,
                               }}
                            >
                               {formatCurrency(productData.price)}
                            </Text>
-                           <Text style={{ fontWeight: '500' }}>
+                           <Text
+                              style={{ fontFamily: globalStyle.font.regular }}
+                           >
                               {formatCurrency(
                                  getPriceWithDiscount(
                                     productData.price,
@@ -436,12 +454,17 @@ export const ModifierPopup = ({
                            </Text>
                         </View>
                      ) : (
-                        <Text style={{ fontWeight: '500' }}>
+                        <Text style={{ fontFamily: globalStyle.font.regular }}>
                            {formatCurrency(productData.price)}
                         </Text>
                      )
                   ) : null}
-                  <Text style={styles.description}>
+                  <Text
+                     style={[
+                        styles.description,
+                        { fontFamily: globalStyle.font.regular },
+                     ]}
+                  >
                      {productData?.description}
                   </Text>
                </View>
@@ -475,21 +498,41 @@ export const ModifierPopup = ({
                                    marginVertical: index === 0 ? 0 : 6,
                                 }}
                              >
-                                {eachOption.label}
+                                <Text
+                                   style={[
+                                      styles.productOptionButton,
+                                      {
+                                         fontFamily: globalStyle.font.regular,
+                                         borderColor:
+                                            productOption.id === eachOption.id
+                                               ? appConfig.brandSettings
+                                                    .buttonSettings
+                                                    .borderActiveColor.value ||
+                                                 '#000000'
+                                               : appConfig.brandSettings
+                                                    .buttonSettings
+                                                    .borderInactiveColor
+                                                    .value || '#A2A2A2',
+                                         marginHorizontal: index === 0 ? 0 : 6,
+                                      },
+                                   ]}
+                                >
+                                   {eachOption.label}
 
-                                {' (+ '}
-                                {eachOption.discount > 0 && (
-                                   <Text>
-                                      {formatCurrency(eachOption.price)}
-                                   </Text>
-                                )}
-                                {formatCurrency(
-                                   getPriceWithDiscount(
-                                      eachOption.price,
-                                      eachOption.discount
-                                   )
-                                )}
-                                {')'}
+                                   {' (+ '}
+                                   {eachOption.discount > 0 && (
+                                      <Text>
+                                         {formatCurrency(eachOption.price)}
+                                      </Text>
+                                   )}
+                                   {formatCurrency(
+                                      getPriceWithDiscount(
+                                         eachOption.price,
+                                         eachOption.discount
+                                      )
+                                   )}
+                                   {')'}
+                                </Text>
                              </Button>
                           )
                        })}
@@ -507,7 +550,9 @@ export const ModifierPopup = ({
             */}
             {productOption?.modifier ? (
                <View>
-                  <Text>Add On:</Text>
+                  <Text style={{ fontFamily: globalStyle.font.regular }}>
+                     Add On:
+                  </Text>
                   {!isModifiersLoading &&
                   productOption.additionalModifiers.length > 0
                      ? productOption.additionalModifiers.map(
@@ -568,7 +613,7 @@ export const ModifierPopup = ({
                {
                   backgroundColor:
                      appConfig.brandSettings.modifierSettings
-                        .footerBackgroundColor.value,
+                        .footerBackgroundColor.value || '#ffffff',
                },
             ]}
          >
@@ -644,6 +689,7 @@ const AdditionalModifiers = ({
    const [showCustomize, setShowCustomize] = useState(
       !Boolean(additionalModifiersType)
    )
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <>
@@ -661,7 +707,7 @@ const AdditionalModifiers = ({
                      flexDirection: 'row',
                   }}
                >
-                  <Text style={{ fontWeight: '600', fontFamily: 'Metropolis' }}>
+                  <Text style={{ fontFamily: globalStyle.font.regular }}>
                      {eachAdditionalModifier.label}
                   </Text>
 
@@ -714,8 +760,6 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    customizationText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
       fontSize: 16,
       lineHeight: 16,
    },
@@ -725,16 +769,12 @@ const styles = StyleSheet.create({
       marginVertical: 10,
    },
    productName: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
       fontSize: 14,
       lineHeight: 14,
       flexShrink: 1,
       marginHorizontal: 4,
    },
    description: {
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
       fontSize: 10,
       lineHeight: 12,
       color: 'rgba(0, 0, 0, 0.6)',
@@ -747,8 +787,6 @@ const styles = StyleSheet.create({
       paddingVertical: 6,
       color: '#000',
       fontSize: 14,
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
    },
    footer: {
       display: 'flex',

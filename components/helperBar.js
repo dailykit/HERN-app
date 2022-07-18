@@ -1,4 +1,6 @@
+import { GFSNeohellenic_700Bold_Italic } from '@expo-google-fonts/dev'
 import { Button, View, Text, StyleSheet } from 'react-native'
+import useGlobalStyle from '../globalStyle'
 
 export const HelperBar = ({ type = 'info', children }) => {
    return (
@@ -9,18 +11,45 @@ export const HelperBar = ({ type = 'info', children }) => {
 }
 
 const HelperButton = ({ children, onClick }) => {
+   const { globalStyle } = useGlobalStyle()
    return (
-      <Button onClick={onClick} style={styles.hernHelperBar__btn}>
+      <Button
+         onClick={onClick}
+         style={[
+            styles.hernHelperBar__btn,
+            { fontFamily: globalStyle.font.regular },
+         ]}
+      >
          {children}
       </Button>
    )
 }
 
 const Title = ({ children }) => {
-   return <Text style={styles.hernHelperBar__title}>{children}</Text>
+   const { globalStyle } = useGlobalStyle()
+   return (
+      <Text
+         style={[
+            styles.hernHelperBar__title,
+            { fontFamily: globalStyle.font.medium },
+         ]}
+      >
+         {children}
+      </Text>
+   )
 }
 const SubTitle = ({ children }) => {
-   return <Text style={styles.hernHelperBar__subtitle}>{children}</Text>
+   const { globalStyle } = useGlobalStyle()
+   return (
+      <Text
+         style={[
+            styles.hernHelperBar__subtitle,
+            { fontFamily: globalStyle.font.regular },
+         ]}
+      >
+         {children}
+      </Text>
+   )
 }
 
 HelperBar.Button = HelperButton
@@ -60,13 +89,13 @@ const styles = StyleSheet.create({
       paddingVertical: 4,
       paddingHorizontal: 8,
       borderRadius: 4,
-      fontFamily: 'Metropolis',
+
       fontSize: 14,
       lineHeight: 20,
    },
    hernHelperBar__title: {
       textAlign: 'center',
-      fontFamily: 'Metropolis',
+
       fontSize: 15,
       lineHeight: 18,
    },

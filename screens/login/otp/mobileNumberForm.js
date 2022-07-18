@@ -10,6 +10,7 @@ import PhoneInput, { isValidNumber } from 'react-native-phone-number-input'
 import { Button } from '../../../components/button'
 import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
+import useGlobalStyle from '../../../globalStyle'
 
 export const MobileNumberForm = ({
    setForm,
@@ -20,6 +21,7 @@ export const MobileNumberForm = ({
 }) => {
    const { appConfig } = useConfig()
    const phoneInput = React.useRef(null)
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <View style={styles.phoneNumberContainer}>
@@ -28,7 +30,7 @@ export const MobileNumberForm = ({
                style={{
                   color: '#ffffff',
                   fontSize: 24,
-                  fontFamily: 'MetropolisMedium',
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                LOGIN
@@ -52,10 +54,16 @@ export const MobileNumberForm = ({
                   withDarkTheme
                   withShadow
                   autoFocus
-                  textInputStyle={styles.textInputStyle}
+                  textInputStyle={[
+                     styles.textInputStyle,
+                     { fontFamily: globalStyle.font.medium },
+                  ]}
                   containerStyle={styles.containerStyle}
                   textContainerStyle={styles.textContainerStyle}
-                  codeTextStyle={styles.codeTextStyle}
+                  codeTextStyle={[
+                     styles.codeTextStyle,
+                     { fontFamily: globalStyle.font.medium },
+                  ]}
                   disableArrowIcon={true}
                   textInputProps={{ placeholderTextColor: '#ffffff80' }}
                   placeholder={'Enter Phone Number...'}
@@ -66,7 +74,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: 'Metropolis',
+                     fontFamily: globalStyle.font.regular,
                   }}
                >
                   By continuing, I agree to the{' '}
@@ -74,10 +82,11 @@ export const MobileNumberForm = ({
                <TouchableOpacity style={{ alignItems: 'center' }}>
                   <Text
                      style={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#ffffff',
                         fontSize: 12,
-                        fontFamily: 'Metropolis',
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      Terms of Use{' '}
@@ -87,7 +96,7 @@ export const MobileNumberForm = ({
                   style={{
                      color: '#fff',
                      fontSize: 12,
-                     fontFamily: 'Metropolis',
+                     fontFamily: globalStyle.font.regular,
                   }}
                >
                   &{' '}
@@ -95,10 +104,11 @@ export const MobileNumberForm = ({
                <TouchableOpacity style={{ alignItems: 'center' }}>
                   <Text
                      style={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#ffffff',
                         fontSize: 12,
-                        fontFamily: 'Metropolis',
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      Privacy Policy
@@ -109,7 +119,7 @@ export const MobileNumberForm = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: 'MetropolisRegularItalic',
+                     fontFamily: globalStyle.font.italic,
                   }}
                >
                   {error}
@@ -176,21 +186,18 @@ const styles = StyleSheet.create({
       borderRadius: 6,
       height: 50,
       width: '100%',
-      fontWeight: 500,
    },
    textContainerStyle: {
       backgroundColor: '#242424',
       borderRadius: 6,
    },
    textInputStyle: {
-      fontFamily: 'MetropolisMedium',
       borderLeftWidth: 4,
       fontSize: 16,
       lineHeight: 20,
       color: '#FFFFFF',
    },
    codeTextStyle: {
-      fontFamily: 'MetropolisMedium',
       color: '#FFFFFF',
    },
    termAndCond: {

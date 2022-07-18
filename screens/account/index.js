@@ -21,10 +21,12 @@ import { AccountHeader } from './header'
 import { UserInfo } from './userInfo'
 import { Spinner } from '../../assets/loaders'
 import { useConfig } from '../../lib/config'
+import useGlobalStyle from '../../globalStyle'
 
 const AccountScreen = () => {
    const navigation = useNavigation()
    const { configOf } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const { user, isAuthenticated, isLoading, logout } = useUser()
    const walletConfig = configOf('Wallet', 'rewards')
    const isWalletAvailable = React.useMemo(() => {
@@ -55,10 +57,20 @@ const AccountScreen = () => {
                      }}
                   >
                      <OfferIcon />
-                     <Text style={styles.accountTileText}>Check Offers</Text>
+                     <Text
+                        style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}
+                     >
+                        Check Offers
+                     </Text>
                   </Tile>
                   <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                     style={{
+                        height: 0.5,
+                        backgroundColor: globalStyle.color.grey,
+                     }}
                   ></View>
                   {isWalletAvailable ? (
                      <>
@@ -68,12 +80,19 @@ const AccountScreen = () => {
                            }}
                         >
                            <WalletIcon />
-                           <Text style={styles.accountTileText}>Wallet</Text>
+                           <Text
+                              style={[
+                                 styles.accountTileText,
+                                 { fontFamily: globalStyle.font.medium },
+                              ]}
+                           >
+                              Wallet
+                           </Text>
                         </Tile>
                         <View
                            style={{
                               height: 0.5,
-                              backgroundColor: '#A2A2A2',
+                              backgroundColor: globalStyle.color.grey,
                            }}
                         ></View>
                      </>
@@ -86,45 +105,77 @@ const AccountScreen = () => {
                            }}
                         >
                            <LoyaltyPointIcon />
-                           <Text style={styles.accountTileText}>
+                           <Text
+                              style={[
+                                 styles.accountTileText,
+                                 { fontFamily: globalStyle.font.medium },
+                              ]}
+                           >
                               Loyalty Points
                            </Text>
                         </Tile>
                         <View
-                           style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                           style={{
+                              height: 0.5,
+                              backgroundColor: globalStyle.color.grey,
+                           }}
                         ></View>
                      </>
                   ) : null}
                   <Tile>
                      <LocationIcon fill="#00000080" size={20} />
-                     <Text style={styles.accountTileText}>
+                     <Text
+                        style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}
+                     >
                         Manage Addresses
                      </Text>
                   </Tile>
                   <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                     style={{
+                        height: 0.5,
+                        backgroundColor: globalStyle.color.grey,
+                     }}
                   ></View>
                   {isReferralAvailable ? (
                      <>
                         <Tile>
                            <ReferIcon />
-                           <Text style={styles.accountTileText}>
+                           <Text
+                              style={[
+                                 styles.accountTileText,
+                                 { fontFamily: globalStyle.font.medium },
+                              ]}
+                           >
                               Refer your friends
                            </Text>
                         </Tile>
                         <View
-                           style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                           style={{
+                              height: 0.5,
+                              backgroundColor: globalStyle.color.grey,
+                           }}
                         ></View>
                      </>
                   ) : null}
                   <Tile>
                      <CardsIcon />
-                     <Text style={styles.accountTileText}>
+                     <Text
+                        style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}
+                     >
                         Manage your cards
                      </Text>
                   </Tile>
                   <View
-                     style={{ height: 0.5, backgroundColor: '#A2A2A2' }}
+                     style={{
+                        height: 0.5,
+                        backgroundColor: globalStyle.color.grey,
+                     }}
                   ></View>
                   <Tile
                      onPress={async () => {
@@ -132,7 +183,14 @@ const AccountScreen = () => {
                      }}
                   >
                      <LogoutIcon />
-                     <Text style={styles.accountTileText}>Sign Out</Text>
+                     <Text
+                        style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}
+                     >
+                        Sign Out
+                     </Text>
                   </Tile>
                </View>
             </View>
@@ -153,45 +211,66 @@ const AccountScreen = () => {
                   }}
                >
                   <OfferIcon />
-                  <Text style={styles.accountTileText}>Check Offers</Text>
+                  <Text style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}>Check Offers</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile
                   onPress={() => {
                      navigation.navigate('Wallet')
                   }}
                >
                   <WalletIcon />
-                  <Text style={styles.accountTileText}>Wallet</Text>
+                  <Text style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}>Wallet</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile
                   onPress={() => {
                      navigation.navigate('LoyaltyPoints')
                   }}
                >
                   <LoyaltyPointIcon />
-                  <Text style={styles.accountTileText}>Loyalty Points</Text>
+                  <Text style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}>Loyalty Points</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <LocationIcon fill="#00000080" size={20} />
-                  <Text style={styles.accountTileText}>Manage Addresses</Text>
+                  <Text style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}>Manage Addresses</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <ReferIcon />
-                  <Text style={styles.accountTileText}>Refer your friends</Text>
+                  <Text style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}>Refer your friends</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <CardsIcon />
-                  <Text style={styles.accountTileText}>Manage your cards</Text>
+                  <Text style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}>Manage your cards</Text>
                </Tile>
-               <View style={{ height: 0.5, backgroundColor: '#A2A2A2' }}></View>
+               <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
                <Tile>
                   <LogoutIcon />
-                  <Text style={styles.accountTileText}>Sign Out</Text>
+                  <Text style={[
+                           styles.accountTileText,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}>Sign Out</Text>
                </Tile>
             </View>
          </View>
@@ -241,9 +320,7 @@ const styles = StyleSheet.create({
    },
    accountTileText: {
       color: '#00000080',
-      fontFamily: 'Metropolis',
       fontSize: 18,
-      fontWeight: '400',
       marginLeft: 18,
    },
 })

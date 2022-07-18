@@ -6,8 +6,11 @@ import { useConfig } from '../../lib/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import useGlobalStyle from '../../globalStyle'
+
 export const StoreList = ({ stores, address, fulfillmentType }) => {
    const { dispatch, orderTabs } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const selectedOrderTab = React.useMemo(() => {
       return orderTabs.find(
@@ -18,9 +21,8 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
       <View style={{ marginVertical: 8 }}>
          <Text
             style={{
-               fontWeight: '600',
                fontSize: 16,
-               fontFamily: 'Metropolis',
+               fontFamily: globalStyle.font.regular,
             }}
          >
             Select Store
@@ -115,19 +117,38 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                      <View style={{ flexDirection: 'row' }}>
                         {/* <StoreIcon /> */}
                         <View style={{ flex: 1 }}>
-                           <LocationIcon fill={'#A2A2A2'} />
+                           <LocationIcon fill={globalStyle.color.grey} />
                         </View>
                         <View style={{ flex: 11 }}>
-                           <Text style={styles.storeLabel}>{label}</Text>
+                           <Text
+                              style={[
+                                 styles.storeLabel,
+                                 { fontFamily: globalStyle.font.regular },
+                              ]}
+                           >
+                              {label}
+                           </Text>
                            <View>
-                              <Text style={{ fontFamily: 'Metropolis' }}>
+                              <Text
+                                 style={{
+                                    fontFamily: globalStyle.font.regular,
+                                 }}
+                              >
                                  {line1}
                               </Text>
-                              <Text style={{ fontFamily: 'Metropolis' }}>
+                              <Text
+                                 style={{
+                                    fontFamily: globalStyle.font.regular,
+                                 }}
+                              >
                                  {line2}
                               </Text>
                               <View>
-                                 <Text style={{ fontFamily: 'Metropolis' }}>
+                                 <Text
+                                    style={{
+                                       fontFamily: globalStyle.font.regular,
+                                    }}
+                                 >
                                     {city} {state} {country}
                                     {' ('}
                                     {zipcode}
@@ -143,7 +164,12 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                            }}
                         >
                            <DistanceIcon />
-                           <Text style={styles.mileText}>
+                           <Text
+                              style={[
+                                 styles.mileText,
+                                 { fontFamily: globalStyle.font.regular },
+                              ]}
+                           >
                               {aerialDistance} {distanceUnit}
                            </Text>
                         </View>
@@ -158,7 +184,6 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
 
 const styles = StyleSheet.create({
    storeLabel: {
-      fontFamily: 'Metropolis',
       fontSize: 16,
    },
    storeCard: {
@@ -168,6 +193,5 @@ const styles = StyleSheet.create({
       marginLeft: 4,
       color: 'rgba(0, 0, 0, 0.6)',
       fontSize: 12,
-      fontFamily: 'Metropolis',
    },
 })

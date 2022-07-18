@@ -22,11 +22,13 @@ import { ModifierPopup } from '../../components/modifierPopup'
 import Modal from 'react-native-modal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
+import useGlobalStyle from '../../globalStyle'
 
 const windowWidth = Dimensions.get('window').width
 
 const ProductScreen = () => {
    const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { params: { productId } = {} } = useRoute()
    const { addToCart } = useCart()
@@ -157,7 +159,7 @@ const ProductScreen = () => {
    if (productError) {
       return (
          <View>
-            <Text style={{ fontFamily: 'MetropolisMedium' }}>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
                Something went wrong
             </Text>
          </View>
@@ -189,7 +191,14 @@ const ProductScreen = () => {
                </View>
                <View style={styles.productDetails}>
                   <View style={styles.productDetailsHeader}>
-                     <Text style={styles.productName}>{products[0].name}</Text>
+                     <Text
+                        style={[
+                           styles.productName,
+                           { fontFamily: globalStyle.font.semibold },
+                        ]}
+                     >
+                        {products[0].name}
+                     </Text>
                   </View>
                   <View style={styles.priceContainer}>
                      {
@@ -197,7 +206,12 @@ const ProductScreen = () => {
                            {(products[0].discount ||
                               defaultProductOption?.discount) &&
                            products[0].price > 0 ? (
-                              <Text style={styles.productOriginalValue}>
+                              <Text
+                                 style={[
+                                    styles.productOriginalValue,
+                                    { fontFamily: globalStyle.font.medium },
+                                 ]}
+                              >
                                  {formatCurrency(
                                     products[0].price +
                                        defaultProductOption.price
@@ -206,7 +220,13 @@ const ProductScreen = () => {
                            ) : null}
                         </>
                      }
-                     <Text style={styles.discountPrice}>
+
+                     <Text
+                        style={[
+                           styles.discountPrice,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}
+                     >
                         {formatCurrency(
                            getPriceWithDiscount(
                               products[0].price,
@@ -221,14 +241,25 @@ const ProductScreen = () => {
                   </View>
                   <View>
                      {products[0].additionalText && (
-                        <Text style={styles.additionalText}>
+                        <Text
+                           style={[
+                              styles.additionalText,
+                              { fontFamily: globalStyle.font.medium },
+                           ]}
+                        >
                            {products[0].additionalText}
                         </Text>
                      )}
                      {products[0].description && (
                         <>
                            <Text
-                              style={styles.description}
+                              style={[
+                                 styles.description,
+                                 {
+                                    fontFamily: globalStyle.font.medium,
+                                    color: globalStyle.color.grey,
+                                 },
+                              ]}
                               numberOfLines={numberOfLines}
                               onTextLayout={onTextLayout}
                            >
@@ -243,9 +274,10 @@ const ProductScreen = () => {
                               >
                                  <Text
                                     style={{
-                                       color: appConfig.brandSettings.brandColor
-                                          .value,
-                                       fontWeight: '500',
+                                       color:
+                                          appConfig.brandSettings.brandColor
+                                             .value || '#000000',
+                                       fontFamily: globalStyle.font.medium,
                                        fontSize: 14,
                                        textAlign: 'right',
                                     }}
@@ -263,7 +295,10 @@ const ProductScreen = () => {
          <View style={{ flex: 1, backgroundColor: '#000' }}>
             <Button
                buttonStyle={{ height: 40, margin: 8 }}
-               textStyle={{ fontWeight: '500', fontSize: 16 }}
+               textStyle={{
+                  fontFamily: globalStyle.font.regular,
+                  fontSize: 16,
+               }}
                onPress={() => {
                   onAddItemClick()
                }}
@@ -323,7 +358,6 @@ const styles = StyleSheet.create({
    image: {},
    productName: {
       fontSize: 18,
-      fontFamily: 'MetropolisSemiBold',
    },
    productDetails: {
       paddingHorizontal: 21,
@@ -336,24 +370,19 @@ const styles = StyleSheet.create({
       marginBottom: 18,
    },
    productOriginalValue: {
-      fontFamily: 'MetropolisMedium',
       fontSize: 12,
       color: '#00000080',
    },
    discountPrice: {
       fontSize: 12,
-      fontFamily: 'MetropolisMedium',
       color: '#00000080',
    },
    additionalText: {
-      fontFamily: 'MetropolisMedium',
-      fontWeight: 14,
+      fontSize: 14,
       color: '#00000040',
    },
    description: {
-      fontFamily: 'MetropolisMedium',
       fontSize: 14,
-      color: '#A2A2A2',
    },
 })
 export default ProductScreen

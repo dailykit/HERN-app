@@ -25,8 +25,10 @@ import { useUser } from '../../context/user'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import CustomBackdrop from '../../components/modalBackdrop'
+import useGlobalStyle from '../../globalStyle'
 
 const CartScreen = () => {
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { isAuthenticated } = useUser()
    const { cartState, combinedCartItems, isFinalCartLoading, storedCartId } =
@@ -61,7 +63,10 @@ const CartScreen = () => {
             <View style={{ bottom: 110, position: 'absolute', width: '100%' }}>
                <Button
                   buttonStyle={styles.orderNowButtonStyle}
-                  textStyle={styles.orderNowTextStyle}
+                  textStyle={[
+                     styles.orderNowTextStyle,
+                     { fontFamily: globalStyle.font.regular },
+                  ]}
                   onPress={() => {
                      navigation.navigate('Menu')
                   }}
@@ -99,7 +104,10 @@ const CartScreen = () => {
          <View style={styles.buttonContainer}>
             <Button
                buttonStyle={styles.button}
-               textStyle={styles.buttonText}
+               textStyle={[
+                  styles.buttonText,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
                disabled={
                   isAuthenticated &&
                   (!cartState?.cart?.fulfillmentInfo ||
@@ -140,9 +148,7 @@ const styles = StyleSheet.create({
       borderRadius: 8,
    },
    orderNowTextStyle: {
-      fontFamily: 'Metropolis',
       fontSize: 18,
-      fontWeight: '500',
    },
    buttonContainer: {
       width: '100%',
@@ -165,7 +171,7 @@ const styles = StyleSheet.create({
    },
    buttonText: {
       textAlign: 'center',
-      fontFamily: 'Metropolis',
+
       fontSize: 15,
    },
    loginPopUp: {
@@ -182,14 +188,12 @@ const styles = StyleSheet.create({
    loginPopUpHeading: {
       fontSize: 24,
       lineHeight: 24,
-      fontWeight: '600',
+
       marginBottom: 12,
    },
    loginPopUpDescription: {
       fontSize: 12,
       lineHeight: 12,
-      fontWeight: '600',
-      color: '#A2A2A2',
       marginBottom: 12,
    },
    loginPopUpButton: {
@@ -199,10 +203,26 @@ const styles = StyleSheet.create({
 })
 
 const LoginPopUp = ({ navigation, loginPopUp }) => {
+   const { globalStyle } = useGlobalStyle()
    return (
       <View style={styles.loginPopUp}>
-         <Text style={styles.loginPopUpHeading}>Almost There</Text>
-         <Text style={styles.loginPopUpDescription}>
+         <Text
+            style={[
+               styles.loginPopUpHeading,
+               { fontFamily: globalStyle.font.medium },
+            ]}
+         >
+            Almost There
+         </Text>
+         <Text
+            style={[
+               styles.loginPopUpDescription,
+               {
+                  fontFamily: globalStyle.font.regular,
+                  color: globalStyle.color.grey,
+               },
+            ]}
+         >
             Login to place your Order
          </Text>
          <Button

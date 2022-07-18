@@ -5,6 +5,7 @@ import { Button } from './button'
 import Modal from 'react-native-modal'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useConfig } from '../lib/config'
+import useGlobalStyle from '../globalStyle'
 
 export const FloatingMenu = ({
    hydratedMenu,
@@ -13,6 +14,7 @@ export const FloatingMenu = ({
    position,
 }) => {
    const { appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const [showModal, setShowModal] = React.useState(false)
 
    const Icon = () => {
@@ -59,8 +61,9 @@ export const FloatingMenu = ({
                                     styles.categoryText,
                                     selectedCategoryName === eachCategory.name
                                        ? {
-                                            color: appConfig.brandSettings
-                                               .brandColor.value,
+                                            color: globalStyle.color.primary,
+                                            fontFamily:
+                                               globalStyle.font.regular,
                                          }
                                        : {},
                                  ]}
@@ -72,8 +75,9 @@ export const FloatingMenu = ({
                                     styles.categoryText,
                                     selectedCategoryName === eachCategory.name
                                        ? {
-                                            color: appConfig.brandSettings
-                                               .brandColor.value,
+                                            color: globalStyle.color.primary,
+                                            fontFamily:
+                                               globalStyle.font.regular,
                                          }
                                        : {},
                                  ]}
@@ -109,7 +113,7 @@ export const FloatingMenu = ({
                fontSize: 16,
                paddingHorizontal: 8,
                color: '#000000',
-               fontWeight: '600',
+               fontFamily: globalStyle.font.medium,
             }}
             additionalIcon={Icon}
             onPress={() => {
@@ -138,9 +142,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    categoryText: {
-      fontWeight: '600',
       fontSize: 12,
-      fontFamily: 'Metropolis',
       color: '#00000085',
    },
 })
