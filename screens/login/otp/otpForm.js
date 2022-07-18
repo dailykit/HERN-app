@@ -12,6 +12,7 @@ import CountDown from 'react-native-countdown-component'
 import React, { useEffect } from 'react'
 import { useConfig } from '../../../lib/config'
 import { Spinner } from '../../../assets/loaders'
+import useGlobalStyle from '../../../globalStyle'
 // TODO: countdown for resend button
 
 export const OTPform = ({
@@ -30,6 +31,7 @@ export const OTPform = ({
 }) => {
    const { appConfig } = useConfig()
    const [showResendBtn, setShowResendBtn] = React.useState(false)
+   const { globalStyle } = useGlobalStyle()
 
    const ResentBtn = () => {
       return (
@@ -44,7 +46,7 @@ export const OTPform = ({
                setShowResendBtn(true)
             }}
          >
-            <Text style={{ color: 'red', fontFamily: 'MetropolisMedium' }}>
+            <Text style={{ color: 'red', fontFamily: globalStyle.font.medium }}>
                Resend OTP
             </Text>
          </TouchableOpacity>
@@ -64,7 +66,7 @@ export const OTPform = ({
                style={{
                   color: '#ffffff',
                   fontSize: 24,
-                  fontFamily: 'MetropolisMedium',
+                  fontFamily: globalStyle.font.medium,
                }}
             >
                ENTER OTP
@@ -82,12 +84,15 @@ export const OTPform = ({
                   style={{
                      color: '#fff',
                      fontSize: 13,
-                     fontFamily: 'MetropolisMedium',
+                     fontFamily: globalStyle.font.medium,
                   }}
                >
                   An OTP has been sent to
                   <Text
-                     style={{ fontSize: 11.5, fontFamily: 'MetropolisMedium' }}
+                     style={{
+                        fontSize: 11.5,
+                        fontFamily: globalStyle.font.medium,
+                     }}
                   >{`  ${form?.phoneNumber || ''}`}</Text>
                </Text>
                <TouchableOpacity
@@ -99,10 +104,11 @@ export const OTPform = ({
                >
                   <Text
                      style={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#ffffff',
                         fontSize: 14,
-                        fontFamily: 'MetropolisMedium',
+                        fontFamily: globalStyle.font.medium,
                         marginLeft: 4,
                      }}
                   >
@@ -122,8 +128,14 @@ export const OTPform = ({
                   setForm(prev => ({ ...prev, otp: code }))
                }}
                autoFocusOnLoad
-               codeInputFieldStyle={styles.underlineStyleBase}
-               codeInputHighlightStyle={styles.underlineStyleHighLighted}
+               codeInputFieldStyle={[
+                  styles.underlineStyleBase,
+                  { fontFamily: globalStyle.font.medium },
+               ]}
+               codeInputHighlightStyle={[
+                  styles.underlineStyleHighLighted,
+                  { borderColor: globalStyle.color.highlight },
+               ]}
                onCodeFilled={code => {
                   console.log('filledCode', code)
                }}
@@ -135,7 +147,7 @@ export const OTPform = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: 'MetropolisRegularItalic',
+                     fontFamily: globalStyle.font.italic,
                      width: '100%',
                   }}
                >
@@ -183,7 +195,6 @@ const styles = StyleSheet.create({
       borderRadius: 6,
       height: 50,
       width: '100%',
-      fontWeight: 500,
    },
    textContainerStyle: {
       backgroundColor: '#242424',
@@ -204,7 +215,6 @@ const styles = StyleSheet.create({
       marginTop: 6,
    },
    continueBtn: {
-      backgroundColor: '#EF5266',
       borderRadius: 8,
       width: '100%',
       height: 50,
@@ -225,7 +235,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    resendOTPtext: {
-      color: '#EF5266',
       fontSize: 14,
       lineHeight: 20,
       marginTop: 16,
@@ -233,15 +242,10 @@ const styles = StyleSheet.create({
    changeNum: {
       fontSize: 12,
       lineHeight: 20,
-      color: '#EF5266',
    },
    borderStyleBase: {
       width: 30,
       height: 45,
-   },
-
-   borderStyleHighLighted: {
-      borderColor: '#03DAC6',
    },
 
    underlineStyleBase: {
@@ -251,10 +255,5 @@ const styles = StyleSheet.create({
       backgroundColor: '#242424',
       borderRadius: 6,
       // borderBottomWidth: 1,
-      fontFamily: 'MetropolisMedium',
-   },
-
-   underlineStyleHighLighted: {
-      borderColor: '#03DAC6',
    },
 })

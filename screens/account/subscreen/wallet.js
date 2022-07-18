@@ -17,8 +17,10 @@ import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
 import PaymentOptionsRenderer from '../../../components/paymentOptionRenderer'
+import useGlobalStyle from '../../../globalStyle'
 
 const WalletScreen = () => {
+   const { globalStyle } = useGlobalStyle()
    const { isLoading } = useUser()
    const [showTopUpTab, setShowTopUpTab] = useState(false)
    if (isLoading) {
@@ -38,6 +40,7 @@ const WalletScreen = () => {
 
 const WalletDetails = ({ setShowTopUpTab }) => {
    const { appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const { user } = useUser()
 
    return (
@@ -55,7 +58,12 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                justifyContent: 'space-between',
             }}
          >
-            <Text style={styles.balance}>
+            <Text
+               style={[
+                  styles.balance,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
+            >
                Available Balance : {formatCurrency(user.wallet?.amount || 0)}
             </Text>
             <TouchableWithoutFeedback
@@ -66,9 +74,10 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                <Text
                   style={{
                      fontSize: 18,
-                     fontWeight: '500',
-                     color: appConfig.brandSettings.buttonSettings
-                        .activeTextColor.value,
+                     fontFamily: globalStyle.font.semibold,
+                     color:
+                        appConfig.brandSettings.buttonSettings.activeTextColor
+                           .value || '#000000',
                   }}
                >
                   Top-Up
@@ -76,7 +85,13 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             </TouchableWithoutFeedback>
          </View>
          <View style={{ flex: 11 }}>
-            <Text style={{ fontSize: 18, fontWeight: '500', marginBottom: 10 }}>
+            <Text
+               style={{
+                  fontSize: 18,
+                  fontFamily: globalStyle.font.semibold,
+                  marginBottom: 10,
+               }}
+            >
                Transaction History
             </Text>
             {user.wallet.walletTransactions.length == 0 ? (
@@ -89,7 +104,12 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                   }}
                >
                   <NoDataIcon />
-                  <Text style={styles.noTransactionMessage}>
+                  <Text
+                     style={[
+                        styles.noTransactionMessage,
+                        { fontFamily: globalStyle.font.semibold },
+                     ]}
+                  >
                      Oops! No transaction history is available yet
                   </Text>
                </View>
@@ -99,7 +119,12 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                      <Text
                         style={[
                            styles.headingText,
-                           { flex: 2, textAlign: 'left' },
+                           {
+                              flex: 2,
+                              textAlign: 'left',
+                              fontFamily: globalStyle.font.semibold,
+                              color: globalStyle.color.grey,
+                           },
                         ]}
                      >
                         Transaction Date
@@ -107,7 +132,12 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                      <Text
                         style={[
                            styles.headingText,
-                           { flex: 1, textAlign: 'right' },
+                           {
+                              flex: 1,
+                              textAlign: 'right',
+                              fontFamily: globalStyle.font.semibold,
+                              color: globalStyle.color.grey,
+                           },
                         ]}
                      >
                         Balance
@@ -126,7 +156,12 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                                  },
                               ]}
                            >
-                              <Text style={styles.transactionDate}>
+                              <Text
+                                 style={[
+                                    styles.transactionDate,
+                                    { fontFamily: globalStyle.font.medium },
+                                 ]}
+                              >
                                  {moment(eachTransaction.created_at).format(
                                     'DD MMM YY HH:mm'
                                  )}
@@ -139,6 +174,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
                                           eachTransaction.type === 'CREDIT'
                                              ? '#61D836'
                                              : '#FF0000',
+                                       fontFamily: globalStyle.font.medium,
                                     },
                                  ]}
                               >
@@ -163,6 +199,8 @@ const WalletDetails = ({ setShowTopUpTab }) => {
 
 const AddWalletAmount = ({ setShowTopUpTab }) => {
    const { appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
+
    const { user } = useUser()
    const [amount, setAmount] = useState(0)
    const predefinedAmount = React.useMemo(() => {
@@ -196,7 +234,14 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                justifyContent: 'space-between',
             }}
          >
-            <Text style={styles.balance}>Top-Up</Text>
+            <Text
+               style={[
+                  styles.balance,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
+            >
+               Top-Up
+            </Text>
             <TouchableWithoutFeedback
                onPress={() => {
                   setShowTopUpTab(false)
@@ -205,9 +250,10 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                <Text
                   style={{
                      fontSize: 18,
-                     fontWeight: '500',
-                     color: appConfig.brandSettings.buttonSettings
-                        .activeTextColor.value,
+                     fontFamily: globalStyle.font.semibold,
+                     color:
+                        appConfig.brandSettings.buttonSettings.activeTextColor
+                           .value || '#000000',
                   }}
                >
                   Back
@@ -215,11 +261,15 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
             </TouchableWithoutFeedback>
          </View>
          <View style={{ flex: 2 }}>
-            <Text style={{ fontSize: 14, fontWeight: '500' }}>Add Money</Text>
+            <Text
+               style={{ fontSize: 14, fontFamily: globalStyle.font.semibold }}
+            >
+               Add Money
+            </Text>
             <Text
                style={{
                   fontSize: 18,
-                  fontWeight: '500',
+                  fontFamily: globalStyle.font.semibold,
                   position: 'absolute',
                   top: 42,
                   left: 10,
@@ -228,7 +278,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                {formatCurrency('')}
             </Text>
             <TextInput
-               style={styles.input}
+               style={[styles.input, { fontFamily: globalStyle.font.medium }]}
                onChangeText={setAmount}
                value={`${amount}`}
                placeholder="Enter amount..."
@@ -249,9 +299,9 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                            color:
                               eachAmount.value == amount
                                  ? appConfig.brandSettings.buttonSettings
-                                      .textColor.value
+                                      .textColor.value || '#ffffff'
                                  : appConfig.brandSettings.buttonSettings
-                                      .activeTextColor.value,
+                                      .activeTextColor.value || '#000000',
                         }}
                         onPress={() => {
                            setAmount(eachAmount.value.toString())
@@ -302,7 +352,6 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
 }
 const styles = StyleSheet.create({
    balance: {
-      fontWeight: '500',
       fontSize: 18,
    },
    transactionStyle: {
@@ -313,8 +362,6 @@ const styles = StyleSheet.create({
    },
    headingText: {
       fontSize: 16,
-      fontFamily: 'MetropolisSemiBold',
-      color: '#A2A2A2',
    },
    transactionHeader: {
       flexDirection: 'row',
@@ -325,25 +372,23 @@ const styles = StyleSheet.create({
       height: 40,
    },
    noTransactionMessage: {
-      fontFamily: 'MetropolisSemiBold',
       fontSize: 16,
       marginVertical: 10,
    },
    transactionId: {
       fontSize: 16,
-      fontFamily: 'MetropolisMedium',
       flex: 1,
       textAlign: 'center',
    },
    transactionDate: {
       fontSize: 16,
-      fontFamily: 'MetropolisMedium',
+
       flex: 2,
       textAlign: 'left',
    },
    transactionAmount: {
       fontSize: 16,
-      fontFamily: 'MetropolisMedium',
+
       flex: 1,
       textAlign: 'right',
    },
@@ -356,7 +401,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
       paddingLeft: 22,
       fontSize: 20,
-      fontFamily: 'MetropolisMedium',
+
       color: '#00000080',
    },
 })

@@ -1,9 +1,11 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import { useConfig } from '../../lib/config'
+import useGlobalStyle from '../../globalStyle'
 
 export const AccountHeader = () => {
    const { appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    return (
       <View
@@ -19,9 +21,8 @@ export const AccountHeader = () => {
          <Text
             style={[
                {
-                  color:
-                     appConfig?.brandSettings.headerSettings?.textColor
-                        ?.value || '#000000',
+                  color: globalStyle.color.primary || '#000000',
+                  fontFamily: globalStyle.font.regular,
                },
                styles.headerTextStyle,
             ]}
@@ -39,8 +40,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
    },
    headerTextStyle: {
-      fontFamily: 'Metropolis',
       fontSize: 16,
-      fontWeight: '500',
    },
 })

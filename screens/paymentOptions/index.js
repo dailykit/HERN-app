@@ -4,9 +4,11 @@ import { PaymentOptionsHeader } from './paymentOptionsHeader'
 import { View, Text } from 'react-native'
 import isEmpty from 'lodash/isEmpty'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import useGlobalStyle from '../../globalStyle'
 
 const PaymentOptions = () => {
    const { cartState } = useCart()
+   const { globalStyle } = useGlobalStyle()
    if (!isEmpty(cartState?.cart)) {
       return (
          <SafeAreaView>
@@ -22,7 +24,9 @@ const PaymentOptions = () => {
    } else {
       return (
          <SafeAreaView>
-            <Text>Redirect to Order Tracking Screen</Text>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
+               Redirect to Order Tracking Screen
+            </Text>
          </SafeAreaView>
       )
    }

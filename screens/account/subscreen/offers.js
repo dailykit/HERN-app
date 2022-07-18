@@ -9,8 +9,11 @@ import { useConfig } from '../../../lib/config'
 import { SubScreenHeader } from './header'
 import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import useGlobalStyle from '../../../globalStyle'
 
 const OffersScreen = () => {
+   const { globalStyle } = useGlobalStyle()
+
    // context
    const { user } = useUser()
    const { brand } = useConfig()
@@ -43,11 +46,18 @@ const OffersScreen = () => {
       <SafeAreaView style={{ flex: 1 }}>
          <SubScreenHeader title={'Check Offers'} />
          <View style={{ backgroundColor: '#fff', height: '100%', padding: 12 }}>
-            <Text style={styles.couponTextStyle}>Coupons</Text>
+            <Text
+               style={[
+                  styles.couponTextStyle,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
+            >
+               Coupons
+            </Text>
             {isCouponsLoading ? (
                <Spinner size={'large'} showText={true} />
             ) : error ? (
-               <Text style={{ fontFamily: 'MetropolisMedium' }}>
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
                   Something went wrong
                </Text>
             ) : availableCoupons.length === 0 ? (
@@ -60,7 +70,14 @@ const OffersScreen = () => {
                   }}
                >
                   <NoDataIcon />
-                  <Text style={styles.noCoupons}>No coupons available</Text>
+                  <Text
+                     style={[
+                        styles.noCoupons,
+                        { fontFamily: globalStyle.font.semibold },
+                     ]}
+                  >
+                     No coupons available
+                  </Text>
                </View>
             ) : (
                <View>
@@ -79,11 +96,33 @@ const OffersScreen = () => {
    )
 }
 const CouponCard = ({ coupon }) => {
+   const { globalStyle } = useGlobalStyle()
    return (
       <View style={styles.cardContainer}>
-         <Text style={styles.codeText}>{coupon.code}</Text>
-         <Text style={styles.codeDetail}>{coupon.metaDetails.title}</Text>
-         <Text style={styles.codeDetail}>{coupon.metaDetails.description}</Text>
+         <Text
+            style={{
+               ...styles.codeText,
+               fontFamily: globalStyle.font.semibold,
+            }}
+         >
+            {coupon.code}
+         </Text>
+         <Text
+            style={{
+               ...styles.codeDetail,
+               fontFamily: globalStyle.font.semibold,
+            }}
+         >
+            {coupon.metaDetails.title}
+         </Text>
+         <Text
+            style={{
+               ...styles.codeDetail,
+               fontFamily: globalStyle.font.semibold,
+            }}
+         >
+            {coupon.metaDetails.description}
+         </Text>
       </View>
    )
 }
@@ -91,11 +130,9 @@ export default OffersScreen
 
 const styles = StyleSheet.create({
    couponTextStyle: {
-      fontWeight: '500',
       fontSize: 16,
    },
    noCoupons: {
-      fontWeight: '600',
       fontSize: 16,
       marginVertical: 10,
    },
@@ -108,13 +145,11 @@ const styles = StyleSheet.create({
    },
    codeText: {
       fontSize: 18,
-      fontWeight: '500',
+
       marginVertical: 2,
    },
    codeDetail: {
       fontSize: 14,
-      fontWeight: '500',
-
       marginVertical: 2,
    },
 })

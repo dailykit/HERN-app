@@ -5,6 +5,7 @@ import RadioIcon from '../assets/radioIcon'
 import CheckIcon from '../assets/checkIcon'
 import UncheckIcon from '../assets/uncheckIcon'
 import { useConfig } from '../lib/config'
+import useGlobalStyle from '../globalStyle'
 
 export const ModifierCategory = props => {
    const {
@@ -18,6 +19,7 @@ export const ModifierCategory = props => {
       nestedErrorCategories,
       parentModifierOptionId = null,
    } = props
+   const { globalStyle } = useGlobalStyle()
    const renderConditionText = category => {
       if (category.type === 'single') {
          return 'CHOOSE ONE*'
@@ -126,13 +128,31 @@ export const ModifierCategory = props => {
    return (
       <View style={{ marginVertical: 6 }}>
          <View style={styles.categoryHeader}>
-            <Text style={styles.categoryName}>{eachCategory.name}</Text>
-            <Text style={styles.categoryMessageText}>
+            <Text
+               style={[
+                  styles.categoryName,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
+            >
+               {eachCategory.name}
+            </Text>
+            <Text
+               style={[
+                  styles.categoryMessageText,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
+            >
+               {'('}
                {renderConditionText(eachCategory)}
             </Text>
          </View>
          {errorCategories.includes(eachCategory.id) && (
-            <Text style={styles.categoryError}>
+            <Text
+               style={[
+                  styles.categoryError,
+                  { fontFamily: globalStyle.font.italic },
+               ]}
+            >
                You have to choose this category.
             </Text>
          )}
@@ -245,21 +265,15 @@ const styles = StyleSheet.create({
       marginBottom: 3,
    },
    categoryName: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
-      fontSize: 16,
+      fontSize: 18,
       lineHeight: 18,
    },
    categoryMessageText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '400',
       lineHeight: 10,
       fontSize: 10,
       marginHorizontal: 8,
    },
    categoryError: {
-      fontFamily: 'Metropolis',
-      fontStyle: 'italic',
       fontSize: 11,
       color: 'red',
    },

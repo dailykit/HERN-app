@@ -11,10 +11,12 @@ import { getFormattedAddress } from '../../utils/getFormattedAddress'
 import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
 import { Button } from '../button'
+import useGlobalStyle from '../../globalStyle'
 
 export const Delivery = () => {
    const navigation = useNavigation()
    const { orderTabs, brand, appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
 
    const [userCoordinate, setUserCoordinate] = useState({
       latitude: null,
@@ -236,7 +238,9 @@ export const Delivery = () => {
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View style={styles.deliveryTime}>
-            <Text style={{ fontFamily: 'Metropolis' }}>Delivery Time</Text>
+            <Text style={{ fontFamily: globalStyle.font.regular }}>
+               Delivery Time
+            </Text>
             <View style={{ flexDirection: 'row' }}>
                {deliveryRadioOptions.map((option, index) => (
                   <Button
@@ -263,11 +267,13 @@ export const Delivery = () => {
          />
          <View style={{ zIndex: -10 }}>
             {locationSearching.loading ? (
-               <Text style={{ fontStyle: 'italic', fontFamily: 'Metropolis' }}>
+               <Text style={{ fontFamily: globalStyle.font.italic }}>
                   Getting your location
                </Text>
             ) : locationSearching.error ? (
-               <Text style={{ color: 'red', fontFamily: 'Metropolis' }}>
+               <Text
+                  style={{ color: 'red', fontFamily: globalStyle.font.regular }}
+               >
                   {locationSearching.errorType === 'blockByPermission'
                      ? locationSearching.errorType === 'zipcodeNotFound'
                         ? 'Please select precise location'
@@ -281,7 +287,12 @@ export const Delivery = () => {
          <View>
             {!address ? null : isGetStoresLoading ? (
                <View style={styles.searchingStoreStyle}>
-                  <Text style={styles.findingTextStyle}>
+                  <Text
+                     style={[
+                        styles.findingTextStyle,
+                        { fontFamily: globalStyle.font.regular },
+                     ]}
+                  >
                      Finding your nearest store...
                   </Text>
                   <Image
@@ -291,10 +302,25 @@ export const Delivery = () => {
                </View>
             ) : stores?.length === 0 ? (
                <View style={styles.noStoreContainer}>
-                  <Text style={styles.noStoreText1}>
+                  <Text
+                     style={[
+                        styles.noStoreText1,
+                        { fontFamily: globalStyle.font.regular },
+                     ]}
+                  >
                      Store service not found at your location
                   </Text>
-                  <Text style={styles.noStoreText2}>Try other Locations</Text>
+                  <Text
+                     style={[
+                        styles.noStoreText2,
+                        {
+                           fontFamily: globalStyle.font.regular,
+                           color: globalStyle.color.grey,
+                        },
+                     ]}
+                  >
+                     Try other Locations
+                  </Text>
                   <Image
                      source={require('../../assets/noStore.png')}
                      style={{
@@ -321,8 +347,6 @@ const styles = StyleSheet.create({
    searchingStoreStyle: { marginVertical: 15, alignItems: 'center' },
    findingTextStyle: {
       fontSize: 18,
-      fontFamily: 'Metropolis',
-      fontWeight: '500',
       color: 'rgba(0, 0, 0, 0.8)',
       marginBottom: 16,
    },
@@ -332,13 +356,9 @@ const styles = StyleSheet.create({
    },
    noStoreText1: {
       fontSize: 16,
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
       marginVertical: 4,
    },
    noStoreText2: {
-      fontFamily: 'Metropolis',
-      color: '#A2A2A2',
       fontSize: 12,
       marginVertical: 4,
    },

@@ -16,9 +16,11 @@ import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
+import useGlobalStyle from '../../globalStyle'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems, methods } = useCart()
+   const { globalStyle } = useGlobalStyle()
    const removeCartItems = cartItemIds => {
       methods.cartItems.delete({
          variables: {
@@ -40,7 +42,12 @@ export const CartItemList = () => {
                margin: 8,
             }}
          >
-            <Text style={styles.itemStyle}>
+            <Text
+               style={[
+                  styles.itemStyle,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
+            >
                Items{'('}
                {cartState?.cart?.cartItems_aggregate?.aggregate?.count}
                {')'}
@@ -57,7 +64,17 @@ export const CartItemList = () => {
                   removeCartItems(cartItemsIds)
                }}
             >
-               <Text style={styles.clearCartText}>Clear Cart</Text>
+               <Text
+                  style={[
+                     styles.clearCartText,
+                     {
+                        fontFamily: globalStyle.font.medium,
+                        color: globalStyle.color.primary,
+                     },
+                  ]}
+               >
+                  Clear Cart
+               </Text>
             </TouchableOpacity>
          </View>
          <ScrollView>
@@ -87,13 +104,10 @@ const styles = StyleSheet.create({
       elevation: 3,
    },
    clearCartText: {
-      color: '#EF5266',
       fontSize: 12,
-      fontFamily: 'MetropolisMedium',
    },
    itemStyle: {
       fontSize: 14,
-      fontFamily: 'MetropolisSemiBold',
    },
    productMetaDetails: {
       flexDirection: 'row',
@@ -109,9 +123,7 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
    },
    productName: {
-      fontFamily: 'Metropolis',
       fontSize: 14,
-      fontWeight: '500',
    },
    metaDetailsBottom: {
       flexDirection: 'row',
@@ -128,7 +140,6 @@ const styles = StyleSheet.create({
    },
    discountPrice: {
       fontSize: 18,
-      fontWeight: '500',
    },
    productOption: {
       flexDirection: 'row',
@@ -136,7 +147,6 @@ const styles = StyleSheet.create({
    },
    productOptionLabel: {
       color: '#00000080',
-      fontWeight: '500',
    },
    modifierOption: {
       flexDirection: 'row',
@@ -145,7 +155,6 @@ const styles = StyleSheet.create({
       fontSize: 13,
    },
    modifierOptionText: {
-      fontWeight: '500',
       color: '#00000080',
       fontSize: 13,
    },

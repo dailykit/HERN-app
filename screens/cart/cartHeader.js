@@ -2,9 +2,11 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LeftArrow } from '../../assets/arrowIcon'
 import { useConfig } from '../../lib/config'
+import useGlobalStyle from '../../globalStyle'
 
 export const CartHeader = () => {
    const { appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    return (
       <View
@@ -39,6 +41,7 @@ export const CartHeader = () => {
                   color:
                      appConfig?.brandSettings.headerSettings?.textColor
                         ?.value || '#000000',
+                  fontFamily: globalStyle.font.regular,
                },
                styles.headerTextStyle,
             ]}
@@ -55,8 +58,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
    headerTextStyle: {
-      fontFamily: 'Metropolis',
       fontSize: 16,
-      fontWeight: '500',
    },
 })

@@ -15,6 +15,7 @@ import moment from 'moment'
 import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
+import useGlobalStyle from '../../../globalStyle'
 
 export const Pickup = () => {
    const {
@@ -26,6 +27,7 @@ export const Pickup = () => {
       locationId,
       appConfig,
    } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const { cartState, methods } = useCart()
 
    const [fulfillmentType, setFulfillmentType] = useState(
@@ -565,6 +567,7 @@ export const Pickup = () => {
                      style={{
                         marginLeft: 6,
                         color: '#00000080',
+                        fontFamily: globalStyle.font.regular,
                      }}
                   >
                      {title}
@@ -572,7 +575,7 @@ export const Pickup = () => {
                         'PREORDER_PICKUP' ||
                      cartState.cart?.fulfillmentInfo?.type ===
                         'PREORDER_PICKUP' ? (
-                        <Text>
+                        <Text style={{ fontFamily: globalStyle.font.regular }}>
                            {' '}
                            {moment(
                               cartState.cart?.fulfillmentInfo?.slot?.from
@@ -605,8 +608,9 @@ export const Pickup = () => {
                         setShowSlots(true)
                      }}
                      textStyle={{
-                        color: appConfig.brandSettings.buttonSettings
-                           .activeTextColor.value,
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#000000',
                      }}
                   >
                      {'Change'}
@@ -627,7 +631,7 @@ export const Pickup = () => {
          >
             <Text
                style={{
-                  fontFamily: 'MetropolisSemiBold',
+                  fontFamily: globalStyle.font.semibold,
                   alignSelf: 'flex-start',
                   marginBottom: 5,
                }}
@@ -646,6 +650,7 @@ export const Pickup = () => {
                         height: 28,
                      }}
                      textStyle={{
+                        fontFamily: globalStyle.font.regular,
                         fontSize: 11,
                         paddingHorizontal: 7,
                      }}
@@ -680,7 +685,13 @@ export const Pickup = () => {
                style={{ marginVertical: 6 }}
             />
          ) : stores.length === 0 ? (
-            <Text style={{ textAlign: 'center', marginVertical: 8 }}>
+            <Text
+               style={{
+                  textAlign: 'center',
+                  marginVertical: 8,
+                  fontFamily: globalStyle.font.semibold,
+               }}
+            >
                No store available
             </Text>
          ) : fulfillmentType === 'PREORDER_PICKUP' ? (

@@ -6,9 +6,11 @@ import { useCart } from '../../context'
 import { useConfig } from '../../lib/config'
 import { DownVector } from '../../assets/vector'
 import { useNavigation } from '@react-navigation/native'
+import useGlobalStyle from '../../globalStyle'
 
 export const Address = () => {
    const { orderTabs, selectedOrderTab, appConfig } = useConfig()
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { cartState: { cart } = {} } = useCart()
    const [numberOfLines, setNumberOfLines] = React.useState(1)
@@ -65,10 +67,10 @@ export const Address = () => {
                   navigation.navigate('LocationSelector')
                }}
             >
-               <LocationIcon fill="#A2A2A2" />
+               <LocationIcon fill={globalStyle.color.grey} />
                <Text
                   style={{
-                     fontFamily: 'Metropolis',
+                     fontFamily: globalStyle.font.regular,
                      color: '#00000060',
                      marginRight: 3,
                   }}
@@ -85,7 +87,10 @@ export const Address = () => {
             >
                <Text
                   numberOfLines={numberOfLines}
-                  style={{ fontFamily: 'MetropolisMedium', color: '#00000060' }}
+                  style={{
+                     fontFamily: globalStyle.font.medium,
+                     color: '#00000060',
+                  }}
                >
                   {`${address?.line1} ${address?.city} ${address?.state} ${address?.country},${address?.zipcode}`}
                </Text>
@@ -111,7 +116,8 @@ export const Address = () => {
             >
                <EditIcon
                   fill={
-                     appConfig.brandSettings.buttonSettings.buttonBGColor.value
+                     appConfig.brandSettings.buttonSettings.buttonBGColor
+                        .value || '#00000060'
                   }
                   size={18}
                />

@@ -3,15 +3,30 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { combineCartItems } from '../../utils'
 import { formatCurrency } from '../../utils/formatCurrency'
+import useGlobalStyle from '../../globalStyle'
 
 export const CartItem = ({ products, createdAt }) => {
    const cartItems = React.useMemo(() => combineCartItems(products), [products])
+   const { globalStyle } = useGlobalStyle()
 
    return (
       <View>
          <View style={styles.cartItemHeader}>
-            <Text style={styles.itemCount}>Item(s)({cartItems.length})</Text>
-            <Text style={styles.orderDate}>
+            <Text
+               style={[
+                  styles.itemCount,
+                  { fontFamily: globalStyle.font.semibold },
+               ]}
+            >
+               Item(s)({cartItems.length})
+            </Text>
+
+            <Text
+               style={[
+                  styles.orderDate,
+                  { fontFamily: globalStyle.font.italic },
+               ]}
+            >
                {moment(createdAt).format('DD MMM YY hh:mm a')}
             </Text>
          </View>
@@ -26,7 +41,7 @@ export const CartItem = ({ products, createdAt }) => {
                            marginRight: 10,
                         }}
                      >
-                        <Text style={{ fontFamily: 'MetropolisMedium' }}>
+                        <Text style={{ fontFamily: globalStyle.font.medium }}>
                            {product.name}{' '}
                         </Text>
                      </View>
@@ -78,12 +93,9 @@ const styles = StyleSheet.create({
    },
    fulfillmentInfo: {
       color: '#00000080',
-      fontWeight: '500',
    },
    itemCount: {
-      fontFamily: 'MetropolisSemiBold',
       fontSize: 14,
-      fontWeight: '500',
    },
    productOptionText: {
       marginVertical: 3,
@@ -94,8 +106,5 @@ const styles = StyleSheet.create({
    cartItemHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-   },
-   orderDate: {
-      fontFamily: 'MetropolisRegularItalic',
    },
 })

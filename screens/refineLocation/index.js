@@ -23,8 +23,10 @@ import { GooglePlacesAutocompleteWrapper } from '../../components/location/googl
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useCart } from '../../context'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import useGlobalStyle from '../../globalStyle'
 
 const RefineLocation = () => {
+   const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const route = useRoute()
    const { methods, storedCartId } = useCart()
@@ -291,7 +293,14 @@ const RefineLocation = () => {
    return (
       <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
          <View style={[styles.refineLocationSelectorHeader, { flex: 1 }]}>
-            <Text style={styles.refineLocationText}>Refine Location</Text>
+            <Text
+               style={[
+                  styles.refineLocationText,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
+            >
+               Refine Location
+            </Text>
             <TouchableOpacity
                onPress={() => {
                   navigation.goBack()
@@ -345,7 +354,7 @@ const RefineLocation = () => {
                         style={{
                            marginHorizontal: 8,
                            color: 'red',
-                           fontStyle: 'italic',
+                           fontFamily: globalStyle.font.italic,
                         }}
                      >
                         {googlePlaceAutoCompleteError.message}
@@ -387,8 +396,7 @@ const RefineLocation = () => {
             buttonStyle={{ height: 40, margin: 12, marginVertical: 6 }}
             textStyle={{
                fontSize: 18,
-               fontWeight: '500',
-               fontFamily: 'Metropolis',
+               fontFamily: globalStyle.font.regular,
             }}
             disabled={
                !isStoreAvailableOnAddress ||
@@ -413,19 +421,36 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
       line1: false,
    })
    const [showOtherLabelField, setShowOtherLabelField] = React.useState(false)
+   const { globalStyle } = useGlobalStyle()
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View>
-            <Text style={styles.formLabel}>
+            <Text
+               style={[
+                  styles.formLabel,
+                  {
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
+                  },
+               ]}
+            >
                Apartment/Building Info/Street info*
             </Text>
             {addressWarnings.line1 ? (
-               <Text style={[styles.formLabel, { color: 'red' }]}>
+               <Text
+                  style={[
+                     styles.formLabel,
+                     { color: 'red', fontFamily: globalStyle.font.regular },
+                  ]}
+               >
                   fill this field
                </Text>
             ) : null}
             <TextInput
-               style={styles.inputField}
+               style={[
+                  styles.inputField,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
                placeholder="Enter apartment/building info/street info"
                value={additionalAddressInfo.line1}
                onChangeText={text => {
@@ -440,9 +465,22 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             />
          </View>
          <View>
-            <Text style={styles.formLabel}>Landmark</Text>
+            <Text
+               style={[
+                  styles.formLabel,
+                  {
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
+                  },
+               ]}
+            >
+               Landmark
+            </Text>
             <TextInput
-               style={styles.inputField}
+               style={[
+                  styles.inputField,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
                placeholder="Enter landmark"
                value={additionalAddressInfo.landmark}
                onChangeText={text =>
@@ -454,7 +492,17 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             />
          </View>
          <View>
-            <Text style={styles.formLabel}>Label*</Text>
+            <Text
+               style={[
+                  styles.formLabel,
+                  {
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
+                  },
+               ]}
+            >
+               Label*
+            </Text>
             <View
                style={{
                   flexDirection: 'row',
@@ -506,7 +554,10 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             </View>
             {showOtherLabelField ? (
                <TextInput
-                  style={styles.inputField}
+                  style={[
+                     styles.inputField,
+                     { fontFamily: globalStyle.font.regular },
+                  ]}
                   placeholder="Enter label for this address"
                   value={additionalAddressInfo.label}
                   onChangeText={text =>
@@ -519,9 +570,23 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             ) : null}
          </View>
          <View>
-            <Text style={styles.formLabel}>Dropoff Instructions</Text>
+            <Text
+               style={[
+                  styles.formLabel,
+
+                  {
+                     fontFamily: globalStyle.font.regular,
+                     color: globalStyle.color.grey,
+                  },
+               ]}
+            >
+               Dropoff Instructions
+            </Text>
             <TextInput
-               style={styles.inputField}
+               style={[
+                  styles.inputField,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
                placeholder="Enter dropoff instructions"
                value={additionalAddressInfo.notes}
                onChangeText={text =>
@@ -564,19 +629,13 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    refineLocationText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
       fontSize: 16,
       lineHeight: 16,
    },
    formLabel: {
-      fontFamily: 'Metropolis',
       fontSize: 12,
-      fontWeight: '600',
-      color: '#A2A2A2',
    },
    inputField: {
-      fontFamily: 'Metropolis',
       height: 40,
       backgroundColor: '#ffffff',
       borderRadius: 6,

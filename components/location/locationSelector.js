@@ -9,11 +9,14 @@ import { Pickup } from './pickup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
+import useGlobalStyle from '../../globalStyle'
 
 export const LocationSelector = () => {
    const navigation = useNavigation()
 
    const { brand, orderTabs } = useConfig()
+
+   const { globalStyle } = useGlobalStyle()
 
    const orderTabFulfillmentType = React.useMemo(
       () =>
@@ -44,7 +47,14 @@ export const LocationSelector = () => {
    return (
       <SafeAreaView style={styles.locationSelectorContainer}>
          <View style={styles.locationSelectorHeader}>
-            <Text style={styles.locationText}>Location</Text>
+            <Text
+               style={[
+                  styles.locationText,
+                  { fontFamily: globalStyle.font.regular },
+               ]}
+            >
+               Location
+            </Text>
             <TouchableOpacity
                onPress={() => {
                   navigation.goBack()
@@ -134,8 +144,6 @@ const styles = StyleSheet.create({
       padding: 12,
    },
    locationText: {
-      fontFamily: 'Metropolis',
-      fontWeight: '600',
       fontSize: 16,
       lineHeight: 16,
    },

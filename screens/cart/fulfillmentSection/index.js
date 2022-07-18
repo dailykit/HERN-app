@@ -3,9 +3,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import { useConfig } from '../../../lib/config'
 import { Delivery } from './Delivery'
 import { Pickup } from './Pickup'
+import useGlobalStyle from '../../../globalStyle'
 
 export const FulfillmentSection = () => {
    const { orderTabs, selectedOrderTab } = useConfig()
+   const { globalStyle } = useGlobalStyle()
 
    // check whether user select fulfillment type or not
    const selectedFulfillment = React.useMemo(
@@ -36,7 +38,10 @@ export const FulfillmentSection = () => {
       <View style={styles.fulfillmentContainer}>
          <View>
             <Text
-               style={{ fontFamily: 'MetropolisMedium', color: '#00000080' }}
+               style={{
+                  fontFamily: globalStyle.font.medium,
+                  color: '#00000080',
+               }}
             >
                {fulfillmentLabel}
             </Text>

@@ -3,13 +3,20 @@ import { StyleSheet, Text, View } from 'react-native'
 import { MailIcon } from '../../assets/mailIcon'
 import { PhoneIcon } from '../../assets/phoneIcon'
 import { useUser } from '../../context/user'
+import useGlobalStyle from '../../globalStyle'
 
 export const UserInfo = () => {
+   const { globalStyle } = useGlobalStyle()
    const { user } = useUser()
    return (
       <View style={styles.userInfoContainer}>
          {user.platform_customer?.firstName ? (
-            <Text style={styles.userName}>
+            <Text
+               style={{
+                  ...styles.userName,
+                  fontFamily: globalStyle.font.medium,
+               }}
+            >
                {user.platform_customer?.firstName}{' '}
                {user.platform_customer?.lastName || ''}
             </Text>
@@ -17,7 +24,12 @@ export const UserInfo = () => {
          {user.platform_customer?.phoneNumber ? (
             <View style={styles.contact}>
                <PhoneIcon />
-               <Text style={styles.userPhoneNumber}>
+               <Text
+                  style={[
+                     styles.userPhoneNumber,
+                     { fontFamily: globalStyle.font.regular },
+                  ]}
+               >
                   {user.platform_customer?.phoneNumber}
                </Text>
             </View>
@@ -25,7 +37,12 @@ export const UserInfo = () => {
          {user.platform_customer?.email ? (
             <View style={styles.contact}>
                <MailIcon />
-               <Text style={styles.userEmail}>
+               <Text
+                  style={[
+                     styles.userEmail,
+                     { fontFamily: globalStyle.font.regular },
+                  ]}
+               >
                   {user.platform_customer?.email}
                </Text>
             </View>
@@ -44,22 +61,16 @@ const styles = StyleSheet.create({
       marginTop: 12,
    },
    userName: {
-      fontFamily: 'Metropolis',
       fontSize: 18,
-      fontWeight: '500',
       marginBottom: 8,
    },
    userPhoneNumber: {
-      fontFamily: 'Metropolis',
       fontSize: 14,
-      fontWeight: '400',
       marginLeft: 6,
       color: '#00000095',
    },
    userEmail: {
-      fontFamily: 'Metropolis',
       fontSize: 14,
-      fontWeight: '400',
       marginLeft: 8,
       color: '#00000095',
    },
