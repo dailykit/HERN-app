@@ -219,7 +219,7 @@ export const OtpLogin = () => {
                phoneNumber: form.phoneNumber,
                otp: form.otp,
                email: form.email,
-               notificationToken: expoToken.data,
+               notificationToken: expoToken,
                brandId: brand?.id,
             })
          )
