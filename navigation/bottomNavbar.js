@@ -12,7 +12,7 @@ const ICONS = (routeName, props = {}) => {
          return <HomeIcon {...props} />
       case 'Menu':
          return <MenuIcon {...props} />
-      case 'My Orders':
+      case 'Orders':
          return <MyOrdersIcon {...props} />
       case 'Account':
          return <AccountIcon {...props} />
@@ -71,6 +71,7 @@ function BottomNavbar({ state, descriptors, navigation }) {
                            fill: isFocused
                               ? globalStyle.color.primary
                               : '#ffffff',
+                           size: 36,
                         })}
                      </View>
                      <Text
@@ -99,7 +100,7 @@ export default BottomNavbar
 const styles = StyleSheet.create({
    container: {
       flexDirection: 'row',
-      height: 64,
+      height: 48,
       alignItems: 'center',
       backgroundColor: '#000',
    },
@@ -116,6 +117,6 @@ const styles = StyleSheet.create({
       color: '#fff',
    },
    icon: {
-      marginBottom: -6,
+      marginVertical: -6,
    },
 })

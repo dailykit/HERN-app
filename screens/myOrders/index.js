@@ -265,7 +265,7 @@ const Header = () => {
                fontFamily: globalStyle.font.regular,
             }}
          >
-            My Orders
+            Orders
          </Text>
       </View>
    )

@@ -32,7 +32,7 @@ const TabNavigator = () => (
    >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Menu" component={MenuScreen} />
-      <Tab.Screen name="My Orders" component={MyOrdersScreen} />
+      <Tab.Screen name="Orders" component={MyOrdersScreen} />
       <Tab.Screen name="Account" component={AccountScreen} />
    </Tab.Navigator>
 )
