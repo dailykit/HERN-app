@@ -195,6 +195,7 @@ export const OTPform = ({
                         marginTop: 0,
                         fontSize: 14,
                         color: '#ffffff',
+                        fontFamily: globalStyle.font.medium,
                      }}
                   />
                ) : (

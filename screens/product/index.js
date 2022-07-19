@@ -194,7 +194,7 @@ const ProductScreen = () => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalStyle.font.semibold },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {products[0].name}

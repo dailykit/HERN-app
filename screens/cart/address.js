@@ -70,14 +70,14 @@ export const Address = () => {
                <LocationIcon fill={globalStyle.color.grey} />
                <Text
                   style={{
-                     fontFamily: globalStyle.font.regular,
-                     color: '#00000060',
+                     fontFamily: globalStyle.font.medium,
+                     color: '#00000080',
                      marginRight: 3,
                   }}
                >
                   {fulfillmentLabel}
                </Text>
-               <DownVector size={12} stroke={'#00000060'} />
+               <DownVector size={12} stroke={'#00000080'} />
             </TouchableOpacity>
             <TouchableOpacity
                style={{ flex: 6, flexShrink: 1, marginLeft: 30 }}
@@ -89,7 +89,7 @@ export const Address = () => {
                   numberOfLines={numberOfLines}
                   style={{
                      fontFamily: globalStyle.font.medium,
-                     color: '#00000060',
+                     color: '#00000080',
                   }}
                >
                   {`${address?.line1} ${address?.city} ${address?.state} ${address?.country},${address?.zipcode}`}
@@ -117,7 +117,7 @@ export const Address = () => {
                <EditIcon
                   fill={
                      appConfig.brandSettings.buttonSettings.buttonBGColor
-                        .value || '#00000060'
+                        .value || '#00000080'
                   }
                   size={18}
                />

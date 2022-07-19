@@ -527,7 +527,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                         numberOfLines={
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
@@ -554,7 +554,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                            <Text
                               style={[
                                  styles.productDiscountValue,
-                                 { fontFamily: globalStyle.font.semibold },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               {formatCurrency(

@@ -149,7 +149,7 @@ const OrderCard = ({ order }) => {
                      <Text
                         style={[
                            styles.fulfillmentInfo,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {getTitle(order?.fulfillmentInfo?.type)}
@@ -157,7 +157,7 @@ const OrderCard = ({ order }) => {
                      <Text
                         style={[
                            styles.fulfillmentInfo,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         on{' '}
@@ -176,7 +176,7 @@ const OrderCard = ({ order }) => {
                      </Text>
                   </View>
                )}
-               <Text>
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
                   {formatCurrency(order.billingDetails.itemTotal.value)}
                </Text>
             </View>
@@ -187,7 +187,7 @@ const OrderCard = ({ order }) => {
                   variant="noOutline"
                   textStyle={{
                      fontSize: 12,
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                   }}
                   onPress={handleCardOnPress}
                >
@@ -223,7 +223,7 @@ const OrderStatus = ({ order }) => {
       }
    }, [])
    return (
-      <Text style={{ fontFamily: globalStyle.font.regular }}>
+      <Text style={{ fontFamily: globalStyle.font.medium }}>
          Order {statusLabel}
       </Text>
    )

@@ -65,7 +65,7 @@ const CartScreen = () => {
                   buttonStyle={styles.orderNowButtonStyle}
                   textStyle={[
                      styles.orderNowTextStyle,
-                     { fontFamily: globalStyle.font.regular },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                   onPress={() => {
                      navigation.navigate('Menu')
@@ -104,10 +104,7 @@ const CartScreen = () => {
          <View style={styles.buttonContainer}>
             <Button
                buttonStyle={styles.button}
-               textStyle={[
-                  styles.buttonText,
-                  { fontFamily: globalStyle.font.regular },
-               ]}
+               textStyle={[styles.buttonText]}
                disabled={
                   isAuthenticated &&
                   (!cartState?.cart?.fulfillmentInfo ||

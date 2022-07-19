@@ -41,7 +41,7 @@ export const CartHeader = () => {
                   color:
                      appConfig?.brandSettings.headerSettings?.textColor
                         ?.value || '#000000',
-                  fontFamily: globalStyle.font.regular,
+                  fontFamily: globalStyle.font.medium,
                },
                styles.headerTextStyle,
             ]}

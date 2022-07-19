@@ -11,7 +11,7 @@ export const AddressInfo = props => {
             <Text
                style={[
                   styles.addressText,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                {address.mainText || address.line1}

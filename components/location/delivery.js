@@ -238,7 +238,7 @@ export const Delivery = () => {
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View style={styles.deliveryTime}>
-            <Text style={{ fontFamily: globalStyle.font.regular }}>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
                Delivery Time
             </Text>
             <View style={{ flexDirection: 'row' }}>
@@ -272,7 +272,7 @@ export const Delivery = () => {
                </Text>
             ) : locationSearching.error ? (
                <Text
-                  style={{ color: 'red', fontFamily: globalStyle.font.regular }}
+                  style={{ color: 'red', fontFamily: globalStyle.font.medium }}
                >
                   {locationSearching.errorType === 'blockByPermission'
                      ? locationSearching.errorType === 'zipcodeNotFound'
@@ -290,7 +290,7 @@ export const Delivery = () => {
                   <Text
                      style={[
                         styles.findingTextStyle,
-                        { fontFamily: globalStyle.font.regular },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      Finding your nearest store...
@@ -305,7 +305,7 @@ export const Delivery = () => {
                   <Text
                      style={[
                         styles.noStoreText1,
-                        { fontFamily: globalStyle.font.regular },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      Store service not found at your location
@@ -314,7 +314,7 @@ export const Delivery = () => {
                      style={[
                         styles.noStoreText2,
                         {
-                           fontFamily: globalStyle.font.regular,
+                           fontFamily: globalStyle.font.medium,
                            color: globalStyle.color.grey,
                         },
                      ]}

@@ -42,7 +42,7 @@ export const ModifierOptionCard = ({
                style={styles.modifierImage}
             />
             <View style={styles.modifierOptionDetails}>
-               <Text style={{ fontFamily: globalStyle.font.regular }}>
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
                   {modifierOption.name}
                </Text>
                <View
@@ -57,7 +57,7 @@ export const ModifierOptionCard = ({
                         style={[
                            styles.modifierOptionOriginalValue,
                            {
-                              fontFamily: globalStyle.font.regular,
+                              fontFamily: globalStyle.font.medium,
                               color: globalStyle.color.grey,
                            },
                         ]}
@@ -73,7 +73,7 @@ export const ModifierOptionCard = ({
                         style={[
                            styles.modifierOptionPrice,
                            {
-                              fontFamily: globalStyle.font.regular,
+                              fontFamily: globalStyle.font.medium,
                               color: globalStyle.color.grey,
                            },
                         ]}
@@ -102,7 +102,7 @@ export const ModifierOptionCard = ({
                   <Text
                      style={[
                         styles.customizeText,
-                        { fontFamily: globalStyle.font.regular },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      customize

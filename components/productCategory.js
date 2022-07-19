@@ -68,7 +68,7 @@ export const ProductCategory = ({
                   {
                      ...categoryStyles.categoryText,
                      color: textColor,
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                   },
                   viewStyle === categoryViewStyles.cardView
                      ? { marginVertical: 8 }

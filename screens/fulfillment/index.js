@@ -112,6 +112,7 @@ const Fulfillment = () => {
                                        (isDeliveryPressed &&
                                           brandSettings?.brandColor?.value) ||
                                        '#fff',
+                                    fontFamily: globalStyle.font.semibold,
                                  },
                               ]}
                            >
@@ -167,6 +168,7 @@ const Fulfillment = () => {
                                        (isPickupPressed &&
                                           brandSettings?.brandColor?.value) ||
                                        '#fff',
+                                    fontFamily: globalStyle.font.semibold,
                                  },
                               ]}
                            >

@@ -49,7 +49,7 @@ const OffersScreen = () => {
             <Text
                style={[
                   styles.couponTextStyle,
-                  { fontFamily: globalStyle.font.semibold },
+                  { fontFamily: globalStyle.font.medium },
                ]}
             >
                Coupons
@@ -102,7 +102,7 @@ const CouponCard = ({ coupon }) => {
          <Text
             style={{
                ...styles.codeText,
-               fontFamily: globalStyle.font.semibold,
+               fontFamily: globalStyle.font.medium,
             }}
          >
             {coupon.code}
@@ -110,7 +110,7 @@ const CouponCard = ({ coupon }) => {
          <Text
             style={{
                ...styles.codeDetail,
-               fontFamily: globalStyle.font.semibold,
+               fontFamily: globalStyle.font.medium,
             }}
          >
             {coupon.metaDetails.title}
@@ -118,7 +118,7 @@ const CouponCard = ({ coupon }) => {
          <Text
             style={{
                ...styles.codeDetail,
-               fontFamily: globalStyle.font.semibold,
+               fontFamily: globalStyle.font.medium,
             }}
          >
             {coupon.metaDetails.description}

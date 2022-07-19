@@ -78,7 +78,7 @@ const ProductSearchScreen = () => {
                <TextInput
                   style={[
                      styles.input,
-                     { fontFamily: globalStyle.font.regular },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                   onChangeText={onTextChange}
                   placeholder={'Search for item...'}

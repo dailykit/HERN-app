@@ -99,14 +99,14 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                   }}
                >
                   <View style={styles.userInfo}>
-                     <Text style={{ fontFamily: globalStyle.font.semibold }}>
+                     <Text style={{ fontFamily: globalStyle.font.medium }}>
                         <ProfileIcon /> {'  '}
                         {carts[0].customerInfo.customerFirstName}{' '}
                         {carts[0].customerInfo.customerLastName}
                      </Text>
                      <Text
                         style={{
-                           fontFamily: globalStyle.font.regular,
+                           fontFamily: globalStyle.font.medium,
                            marginLeft: 20,
                         }}
                      >
@@ -120,14 +120,14 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                         </Text>
                      </View>
                      {carts[0].address.label ? (
-                        <Text style={{ fontFamily: globalStyle.font.regular }}>
+                        <Text style={{ fontFamily: globalStyle.font.medium }}>
                            carts[0].address.label
                         </Text>
                      ) : null}
                      <Text
-                        style={{ fontFamily: globalStyle.font.regular }}
+                        style={{ fontFamily: globalStyle.font.medium }}
                      >{`${carts[0].address?.line1}`}</Text>
-                     <Text style={{ fontFamily: globalStyle.font.regular }}>
+                     <Text style={{ fontFamily: globalStyle.font.medium }}>
                         {`${carts[0].address?.city} ${carts[0].address?.state} ${carts[0].address?.country},${carts[0].address?.zipcode}`}
                      </Text>
                   </View>
@@ -173,7 +173,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                      >
                         Payment Details:
                      </Text>
-                     <Text style={{ fontFamily: globalStyle.font.regular }}>
+                     <Text style={{ fontFamily: globalStyle.font.medium }}>
                         {carts[0].availablePaymentOption?.label || 'N/A'}
                      </Text>
                   </View>
@@ -224,7 +224,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                    style={{
                                                       fontFamily:
                                                          globalStyle.font
-                                                            .regular,
+                                                            .medium,
                                                       textDecorationLine:
                                                          'line-through',
                                                       color: globalStyle.color
@@ -240,7 +240,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                    style={{
                                                       fontFamily:
                                                          globalStyle.font
-                                                            .regular,
+                                                            .medium,
                                                    }}
                                                 >
                                                    {formatCurrency(
@@ -253,7 +253,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                              <Text
                                                 style={{
                                                    fontFamily:
-                                                      globalStyle.font.regular,
+                                                      globalStyle.font.medium,
                                                 }}
                                              >
                                                 {formatCurrency(product.price)}
@@ -265,7 +265,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                               </View>
                               <Text
                                  style={{
-                                    fontFamily: globalStyle.font.regular,
+                                    fontFamily: globalStyle.font.medium,
                                  }}
                               >
                                  x{product.ids.length}
@@ -301,7 +301,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                                                       .grey,
                                                    marginRight: 4,
                                                    fontFamily:
-                                                      globalStyle.font.regular,
+                                                      globalStyle.font.medium,
                                                 }}
                                              >
                                                 {formatCurrency(

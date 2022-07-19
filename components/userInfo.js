@@ -165,7 +165,7 @@ const UserInfoForm = props => {
             style={[
                styles.inputField,
                !namePattern.test(firstName) && styles.error,
-               { fontFamily: globalStyle.font.regular },
+               { fontFamily: globalStyle.font.medium },
             ]}
             value={firstName}
             onChangeText={setFirstName}
@@ -179,7 +179,7 @@ const UserInfoForm = props => {
             style={[
                styles.inputField,
                !lastNamePattern.test(lastName) && styles.error,
-               { fontFamily: globalStyle.font.regular },
+               { fontFamily: globalStyle.font.medium },
             ]}
             value={lastName}
             onChangeText={setLastName}
@@ -199,7 +199,7 @@ const UserInfoForm = props => {
             }}
             textInputStyle={[
                styles.phoneInputTextInputStyle,
-               { fontFamily: globalStyle.font.regular },
+               { fontFamily: globalStyle.font.medium },
             ]}
             containerStyle={[
                styles.phoneInputContainerStyle,
@@ -211,7 +211,7 @@ const UserInfoForm = props => {
             placeholder={'Enter Phone Number...'}
             codeTextStyle={[
                styles.phoneInputCodeTextStyle,
-               { fontFamily: globalStyle.font.regular },
+               { fontFamily: globalStyle.font.medium },
             ]}
          />
          <Button
@@ -323,7 +323,7 @@ const UserDetails = ({
                   <UserIcon size={16} />
                   <Text
                      style={{
-                        fontFamily: globalStyle.font.semibold,
+                        fontFamily: globalStyle.font.medium,
                         marginLeft: 9,
                      }}
                   >
@@ -335,7 +335,7 @@ const UserDetails = ({
                   <PhoneIcon size={16} />
                   <Text
                      style={{
-                        fontFamily: globalStyle.font.regular,
+                        fontFamily: globalStyle.font.medium,
                         marginLeft: 9,
                      }}
                   >

@@ -19,7 +19,7 @@ export const SubScreenHeader = ({ title }) => {
             style={[
                {
                   color: '#000000',
-                  fontFamily: globalStyle.font.medium,
+                  fontFamily: globalStyle.font.semibold,
                },
                styles.headerTextStyle,
             ]}
