@@ -205,7 +205,14 @@ export const OtpLogin = () => {
          }
 
          setError('')
-         const expoToken = await Notifications.getExpoPushTokenAsync()
+         const { status: existingStatus } =
+            await Notifications.getPermissionsAsync()
+         let expoToken
+         if (existingStatus === 'granted') {
+            expoToken = (await Notifications.getExpoPushTokenAsync()).data
+         } else {
+            expoToken = null
+         }
          const authDetails = encodeURIComponent(
             JSON.stringify({
                authType: 'otp',

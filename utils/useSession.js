@@ -82,7 +82,14 @@ export const useSession = () => {
    const [deleteBrandCustomerDevice] = useMutation(DELETE_BRAND_CUSTOMER_DEVICE)
    const logout = React.useCallback(async () => {
       try {
-         const token = (await Notifications.getExpoPushTokenAsync()).data
+         const { status: existingStatus } =
+            await Notifications.getPermissionsAsync()
+         let token
+         if (existingStatus === 'granted') {
+            token = (await Notifications.getExpoPushTokenAsync()).data
+         } else {
+            token = null
+         }
          console.log('helo im hehere')
          // fetch mobile device id by current mobile's notificationToken
          const { data: { deviceHub_mobileDevice } = [] } = await client.query({
