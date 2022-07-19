@@ -82,29 +82,36 @@ export const useSession = () => {
    const [deleteBrandCustomerDevice] = useMutation(DELETE_BRAND_CUSTOMER_DEVICE)
    const logout = React.useCallback(async () => {
       try {
-         const token = (await Notifications.getExpoPushTokenAsync()).data
-         console.log('helo im hehere')
-         // fetch mobile device id by current mobile's notificationToken
-         const { data: { deviceHub_mobileDevice } = [] } = await client.query({
-            query: GET_MOBILE_DEVICE_IDS,
-            variables: {
-               where: {
-                  notificationToken: {
-                     _eq: token,
+         const { status: existingStatus } =
+            await Notifications.getPermissionsAsync()
+
+         if (existingStatus === 'granted') {
+            const token = (await Notifications.getExpoPushTokenAsync()).data
+            // fetch mobile device id by current mobile's notificationToken
+            const { data: { deviceHub_mobileDevice } = [] } =
+               await client.query({
+                  query: GET_MOBILE_DEVICE_IDS,
+                  variables: {
+                     where: {
+                        notificationToken: {
+                           _eq: token,
+                        },
+                     },
                   },
-               },
-            },
-         })
+               })
 
-         const flatMobileDeviceIds = deviceHub_mobileDevice.map(
-            eachDevice => eachDevice.id
-         )
+            const flatMobileDeviceIds = deviceHub_mobileDevice.map(
+               eachDevice => eachDevice.id
+            )
 
-         await deleteBrandCustomerDevice({
-            variables: {
-               mobileDeviceId: flatMobileDeviceIds[0],
-            },
-         })
+            if (flatMobileDeviceIds.length > 0) {
+               await deleteBrandCustomerDevice({
+                  variables: {
+                     mobileDeviceId: flatMobileDeviceIds[0],
+                  },
+               })
+            }
+         }
 
          await AsyncStorage.clear()
          setSession({
