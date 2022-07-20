@@ -25,7 +25,7 @@ export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
                   styles.textStyle,
                   {
                      color: iconColor.value,
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.semibold,
                   },
                ]}
             >
@@ -45,7 +45,7 @@ export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
                   styles.textStyle,
                   {
                      color: countColor.value,
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.semibold,
                   },
                ]}
             >
@@ -61,7 +61,7 @@ export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
                   styles.textStyle,
                   {
                      color: iconColor.value,
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.semibold,
                   },
                ]}
             >

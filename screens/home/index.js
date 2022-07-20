@@ -136,7 +136,7 @@ const HomeScreen = () => {
                   <Text
                      style={[
                         styles.orderNowSubHeading,
-                        { fontFamily: globalStyle.font.medium },
+                        { fontFamily: globalStyle.font.regular },
                      ]}
                   >
                      {appConfig?.data?.orderNow?.subHeading?.value || ''}

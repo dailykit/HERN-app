@@ -50,7 +50,7 @@ export const LocationSelector = () => {
             <Text
                style={[
                   styles.locationText,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Location

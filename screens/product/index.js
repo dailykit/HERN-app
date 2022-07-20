@@ -194,7 +194,7 @@ const ProductScreen = () => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalStyle.font.semibold },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {products[0].name}
@@ -296,7 +296,6 @@ const ProductScreen = () => {
             <Button
                buttonStyle={{ height: 40, margin: 8 }}
                textStyle={{
-                  fontFamily: globalStyle.font.regular,
                   fontSize: 16,
                }}
                onPress={() => {

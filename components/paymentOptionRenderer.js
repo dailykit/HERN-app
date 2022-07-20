@@ -173,7 +173,9 @@ export default function PaymentOptionsRenderer({
 
    return (
       <View style={styles.Wrapper}>
-         <Text style={{ ...styles.heading, fontFamily: globalStyle.font.bold }}>
+         <Text
+            style={{ ...styles.heading, fontFamily: globalStyle.font.semibold }}
+         >
             Select Payment Mode
          </Text>
          {(cartId ? isLoading || loading : loading) ? (
@@ -290,7 +292,7 @@ export default function PaymentOptionsRenderer({
                            backgroundColor:
                               appConfig?.brandSettings?.buttonSettings
                                  ?.buttonBGColor?.value || '#222222',
-                           fontFamily: globalStyle.font.regular,
+                           fontFamily: globalStyle.font.medium,
                         }}
                      >
                         <Text
@@ -299,7 +301,7 @@ export default function PaymentOptionsRenderer({
                               color:
                                  appConfig?.brandSettings?.buttonSettings
                                     ?.textColor?.value || '#ffffff',
-                              fontFamily: globalStyle.font.regular,
+                              fontFamily: globalStyle.font.medium,
                            }}
                         >
                            Pay Now
@@ -341,7 +343,7 @@ const PaymentOptionCard = ({
          <Text
             style={{
                ...styles.paymentOptionCardHeader,
-               fontFamily: globalStyle.font.medium,
+               fontFamily: globalStyle.font.semibold,
             }}
          >
             {title}
@@ -366,7 +368,7 @@ const PaymentOptionCard = ({
                   <Text
                      style={{
                         ...styles.paymentOptionCardDescription,
-                        fontFamily: globalStyle.font.regular,
+                        fontFamily: globalStyle.font.medium,
                      }}
                   >
                      {description}

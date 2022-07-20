@@ -24,7 +24,7 @@ const LoyaltyPointsScreen = () => {
                <Text
                   style={[
                      styles.loyaltyText,
-                     { fontFamily: globalStyle.font.regular },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                >
                   Loyalty Points :
@@ -33,7 +33,7 @@ const LoyaltyPointsScreen = () => {
                <Text
                   style={[
                      styles.loyaltyText,
-                     { fontFamily: globalStyle.font.regular, marginLeft: 5 },
+                     { fontFamily: globalStyle.font.medium, marginLeft: 5 },
                   ]}
                >
                   {user.loyaltyPoint.points || 0}
@@ -44,7 +44,7 @@ const LoyaltyPointsScreen = () => {
                   style={{
                      fontSize: 18,
                      marginBottom: 10,
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                   }}
                >
                   Transaction History
@@ -75,7 +75,7 @@ const LoyaltyPointsScreen = () => {
                            style={[
                               styles.headingText,
                               {
-                                 fontFamily: globalStyle.font.regular,
+                                 fontFamily: globalStyle.font.medium,
                                  color: globalStyle.color.grey,
                                  flex: 2,
                                  textAlign: 'left',
@@ -88,7 +88,7 @@ const LoyaltyPointsScreen = () => {
                            style={[
                               styles.headingText,
                               {
-                                 fontFamily: globalStyle.font.regular,
+                                 fontFamily: globalStyle.font.medium,
                                  color: globalStyle.color.grey,
                                  flex: 1,
                                  textAlign: 'right',
@@ -117,7 +117,7 @@ const LoyaltyPointsScreen = () => {
                                           styles.transactionDate,
                                           {
                                              fontFamily:
-                                                globalStyle.font.regular,
+                                                globalStyle.font.medium,
                                           },
                                        ]}
                                     >
@@ -135,7 +135,7 @@ const LoyaltyPointsScreen = () => {
                                                    ? '#61D836'
                                                    : '#FF0000',
                                              fontFamily:
-                                                globalStyle.font.regular,
+                                                globalStyle.font.medium,
                                           },
                                        ]}
                                     >

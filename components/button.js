@@ -98,8 +98,7 @@ export const Button = ({
                      styles.buttonTextStyle,
                      textStyleByVariant(variant),
                      textStyle ? textStyle : null,
-                     { fontFamily: globalStyle.font.regular },
-
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                >
                   {children}

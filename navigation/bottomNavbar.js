@@ -81,7 +81,7 @@ function BottomNavbar({ state, descriptors, navigation }) {
                               color: isFocused
                                  ? globalStyle.color.primary
                                  : '#fff',
-                              fontFamily: globalStyle.font.regular,
+                              fontFamily: globalStyle.font.medium,
                            },
                         ]}
                      >

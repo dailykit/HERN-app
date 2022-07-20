@@ -346,7 +346,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalStyle.font.semibold },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {productData.name}
@@ -416,7 +416,7 @@ export const CartCard = ({ productData, quantity }) => {
                         <Text
                            style={[
                               styles.originalPrice,
-                              { fontFamily: globalStyle.font.regular },
+                              { fontFamily: globalStyle.font.medium },
                            ]}
                         >
                            {formatCurrency(getTotalPrice.totalPrice)}
@@ -425,7 +425,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={[
                            styles.discountPrice,
-                           { fontFamily: globalStyle.font.semibold },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {getTotalPrice.totalPrice !== 0
@@ -544,9 +544,9 @@ const AdditionalDetails = ({ productData }) => {
                   Customizable
                </Text>
                {showAdditionalDetailsOnCard ? (
-                  <UpVector size={18} />
+                  <UpVector size={14} />
                ) : (
-                  <DownVector size={18} />
+                  <DownVector size={14} />
                )}
             </TouchableOpacity>
          )}
@@ -563,7 +563,7 @@ const AdditionalDetails = ({ productData }) => {
                   <Text
                      style={[
                         styles.productOptionLabel,
-                        { fontFamily: globalStyle.font.regular },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {productData.childs[0].productOption.label || 'N/A'}
@@ -573,13 +573,25 @@ const AdditionalDetails = ({ productData }) => {
                         {
                            <>
                               {productData.childs[0].discount > 0 ? (
-                                 <Text>
+                                 <Text
+                                    style={{
+                                       color: '#00000080',
+                                       fontFamily: globalStyle.font.medium,
+                                    }}
+                                 >
                                     {formatCurrency(
                                        productData.childs[0].price
                                     )}
                                  </Text>
                               ) : null}
-                              <Text style={{ marginLeft: 6 }}>
+                              <Text
+                                 style={{
+                                    marginLeft: 6,
+                                    color: '#00000080',
+                                    fontFamily: globalStyle.font.medium,
+                                    fontSize: 13,
+                                 }}
+                              >
                                  {formatCurrency(
                                     productData.childs[0].price -
                                        productData.childs[0].discount
@@ -608,7 +620,7 @@ const AdditionalDetails = ({ productData }) => {
                                                    {
                                                       fontFamily:
                                                          globalStyle.font
-                                                            .regular,
+                                                            .medium,
                                                    },
                                                 ]}
                                              >
@@ -629,7 +641,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                         fontFamily:
                                                                            globalStyle
                                                                               .font
-                                                                              .regular,
+                                                                              .medium,
                                                                      },
                                                                   ],
                                                                   {
@@ -651,7 +663,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                      fontFamily:
                                                                         globalStyle
                                                                            .font
-                                                                           .regular,
+                                                                           .medium,
                                                                   },
                                                                ],
                                                                {
@@ -691,7 +703,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                         fontFamily:
                                                                            globalStyle
                                                                               .font
-                                                                              .regular,
+                                                                              .medium,
                                                                      },
                                                                   ],
                                                                ]}
@@ -717,7 +729,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                                        fontFamily:
                                                                                           globalStyle
                                                                                              .font
-                                                                                             .regular,
+                                                                                             .medium,
                                                                                     },
                                                                                  ],
                                                                                  {
@@ -739,7 +751,7 @@ const AdditionalDetails = ({ productData }) => {
                                                                                     fontFamily:
                                                                                        globalStyle
                                                                                           .font
-                                                                                          .regular,
+                                                                                          .medium,
                                                                                  },
                                                                               ],
                                                                               {
@@ -830,6 +842,7 @@ const styles = StyleSheet.create({
    },
    productOptionLabel: {
       color: '#00000080',
+      fontSize: 13,
    },
    modifierOption: {
       flexDirection: 'row',

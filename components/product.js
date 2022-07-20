@@ -98,7 +98,7 @@ export const ProductList = ({
                <View
                   style={[
                      styles.noProductsMsgContainer,
-                     { fontFamily: globalStyle.font.regular },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                >
                   <Text style={{ fontFamily: globalStyle.font.medium }}>
@@ -527,7 +527,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                         numberOfLines={
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
@@ -538,7 +538,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      <Text
                         style={[
                            styles.additionalText,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                         numberOfLines={
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
@@ -554,7 +554,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                            <Text
                               style={[
                                  styles.productDiscountValue,
-                                 { fontFamily: globalStyle.font.semibold },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               {formatCurrency(
@@ -578,7 +578,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                                           styles.productOriginalValue,
                                           {
                                              fontFamily:
-                                                globalStyle.font.regular,
+                                                globalStyle.font.medium,
                                           },
                                        ]}
                                     >

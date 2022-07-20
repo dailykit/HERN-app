@@ -119,7 +119,7 @@ export const MobileNumberForm = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: globalStyle.font.italic,
+                     fontFamily: globalStyle.font.mediumItalic,
                   }}
                >
                   {error}
@@ -131,7 +131,9 @@ export const MobileNumberForm = ({
             <Button
                onPress={sendOTP}
                buttonStyle={{ width: 155, height: 43, marginTop: 30 }}
-               textStyle={{ fontSize: 16 }}
+               textStyle={{
+                  fontSize: 16,
+               }}
                disabled={sendingOtp || !form.isPhoneNumberValid}
             >
                {sendingOtp ? (
@@ -145,6 +147,7 @@ export const MobileNumberForm = ({
                         marginTop: 0,
                         fontSize: 14,
                         color: '#ffffff',
+                        fontFamily: globalStyle.font.medium,
                      }}
                   />
                ) : (

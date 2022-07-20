@@ -9,6 +9,7 @@ const useGlobalStyle = () => {
          semibold: 'MetropolisSemiBold',
          bold: 'MetropolisBold',
          italic: 'MetropolisRegularItalic',
+         mediumItalic: 'MetropolisMediumItalic',
       },
       color: {
          primary: appConfig?.brandSettings?.brandColor?.value,

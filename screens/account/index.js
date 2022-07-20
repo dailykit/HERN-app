@@ -61,7 +61,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         Check Offers
@@ -84,7 +84,7 @@ const AccountScreen = () => {
                            <Text
                               style={[
                                  styles.accountTileText,
-                                 { fontFamily: globalStyle.font.medium },
+                                 { fontFamily: globalStyle.font.regular },
                               ]}
                            >
                               Wallet
@@ -109,7 +109,7 @@ const AccountScreen = () => {
                            <Text
                               style={[
                                  styles.accountTileText,
-                                 { fontFamily: globalStyle.font.medium },
+                                 { fontFamily: globalStyle.font.regular },
                               ]}
                            >
                               Loyalty Points
@@ -128,7 +128,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         Manage Addresses
@@ -147,7 +147,7 @@ const AccountScreen = () => {
                            <Text
                               style={[
                                  styles.accountTileText,
-                                 { fontFamily: globalStyle.font.medium },
+                                 { fontFamily: globalStyle.font.regular },
                               ]}
                            >
                               Refer your friends
@@ -166,7 +166,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         Manage your cards
@@ -187,7 +187,7 @@ const AccountScreen = () => {
                      <Text
                         style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         Sign Out
@@ -214,7 +214,7 @@ const AccountScreen = () => {
                   <OfferIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}>Check Offers</Text>
                </Tile>
                <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
@@ -226,7 +226,7 @@ const AccountScreen = () => {
                   <WalletIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}>Wallet</Text>
                </Tile>
                <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
@@ -238,7 +238,7 @@ const AccountScreen = () => {
                   <LoyaltyPointIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}>Loyalty Points</Text>
                </Tile>
                <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
@@ -246,7 +246,7 @@ const AccountScreen = () => {
                   <LocationIcon fill="#00000080" size={20} />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}>Manage Addresses</Text>
                </Tile>
                <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
@@ -254,7 +254,7 @@ const AccountScreen = () => {
                   <ReferIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}>Refer your friends</Text>
                </Tile>
                <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
@@ -262,7 +262,7 @@ const AccountScreen = () => {
                   <CardsIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}>Manage your cards</Text>
                </Tile>
                <View style={{ height: 0.5, backgroundColor: globalStyle.color.grey }}></View>
@@ -270,7 +270,7 @@ const AccountScreen = () => {
                   <LogoutIcon />
                   <Text style={[
                            styles.accountTileText,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}>Sign Out</Text>
                </Tile>
             </View>

@@ -549,7 +549,7 @@ export const Delivery = () => {
                      style={{
                         marginLeft: 6,
                         color: '#00000080',
-                        fontFamily: globalStyle.font.regular,
+                        fontFamily: globalStyle.font.medium,
                      }}
                   >
                      {title}
@@ -557,7 +557,7 @@ export const Delivery = () => {
                         'PREORDER_PICKUP' ||
                      cartState.cart?.fulfillmentInfo?.type ===
                         'PREORDER_DELIVERY' ? (
-                        <Text style={{ fontFamily: globalStyle.font.regular }}>
+                        <Text style={{ fontFamily: globalStyle.font.medium }}>
                            {' '}
                            {moment(
                               cartState.cart?.fulfillmentInfo?.slot?.from
@@ -632,7 +632,7 @@ export const Delivery = () => {
                         height: 28,
                      }}
                      textStyle={{
-                        fontFamily: globalStyle.font.regular,
+                        fontFamily: globalStyle.font.medium,
                         fontSize: 11,
                         paddingHorizontal: 7,
                      }}

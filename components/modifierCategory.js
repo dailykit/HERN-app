@@ -131,7 +131,7 @@ export const ModifierCategory = props => {
             <Text
                style={[
                   styles.categoryName,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.medium },
                ]}
             >
                {eachCategory.name}
@@ -139,7 +139,7 @@ export const ModifierCategory = props => {
             <Text
                style={[
                   styles.categoryMessageText,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.medium },
                ]}
             >
                {'('}
@@ -150,7 +150,7 @@ export const ModifierCategory = props => {
             <Text
                style={[
                   styles.categoryError,
-                  { fontFamily: globalStyle.font.italic },
+                  { fontFamily: globalStyle.font.mediumItalic },
                ]}
             >
                You have to choose this category.

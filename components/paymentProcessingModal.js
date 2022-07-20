@@ -77,7 +77,7 @@ const PaymentProcessingModal = ({
                style={[
                   styles.modalSubtitle,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -88,7 +88,7 @@ const PaymentProcessingModal = ({
                style={[
                   styles.modalSubtitle,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -99,7 +99,7 @@ const PaymentProcessingModal = ({
                style={[
                   styles.modalSubtitle,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -132,7 +132,7 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -163,7 +163,7 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -210,7 +210,7 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -249,7 +249,7 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -288,7 +288,7 @@ const PaymentProcessingModal = ({
                   styles.modalSubtitle,
                   styles.modalSubtitleBlock,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}

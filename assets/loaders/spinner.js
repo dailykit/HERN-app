@@ -32,7 +32,7 @@ export const Spinner = ({
             <Text
                style={{
                   marginTop: 8,
-                  fontFamily: globalStyle.font.regular,
+                  fontFamily: globalStyle.font.medium,
                   ...textStyle,
                }}
             >

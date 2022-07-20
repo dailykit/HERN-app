@@ -380,7 +380,7 @@ export const ModifierPopup = ({
             <Text
                style={[
                   styles.customizationText,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Customization
@@ -417,7 +417,7 @@ export const ModifierPopup = ({
                      <Text
                         style={[
                            styles.productName,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {productData.name}
@@ -443,7 +443,7 @@ export const ModifierPopup = ({
                               {formatCurrency(productData.price)}
                            </Text>
                            <Text
-                              style={{ fontFamily: globalStyle.font.regular }}
+                              style={{ fontFamily: globalStyle.font.medium }}
                            >
                               {formatCurrency(
                                  getPriceWithDiscount(
@@ -454,7 +454,7 @@ export const ModifierPopup = ({
                            </Text>
                         </View>
                      ) : (
-                        <Text style={{ fontFamily: globalStyle.font.regular }}>
+                        <Text style={{ fontFamily: globalStyle.font.medium }}>
                            {formatCurrency(productData.price)}
                         </Text>
                      )
@@ -462,7 +462,7 @@ export const ModifierPopup = ({
                   <Text
                      style={[
                         styles.description,
-                        { fontFamily: globalStyle.font.regular },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      {productData?.description}
@@ -502,7 +502,7 @@ export const ModifierPopup = ({
                                    style={[
                                       styles.productOptionButton,
                                       {
-                                         fontFamily: globalStyle.font.regular,
+                                         fontFamily: globalStyle.font.medium,
                                          borderColor:
                                             productOption.id === eachOption.id
                                                ? appConfig.brandSettings
@@ -550,7 +550,7 @@ export const ModifierPopup = ({
             */}
             {productOption?.modifier ? (
                <View>
-                  <Text style={{ fontFamily: globalStyle.font.regular }}>
+                  <Text style={{ fontFamily: globalStyle.font.semibold }}>
                      Add On:
                   </Text>
                   {!isModifiersLoading &&
@@ -707,7 +707,7 @@ const AdditionalModifiers = ({
                      flexDirection: 'row',
                   }}
                >
-                  <Text style={{ fontFamily: globalStyle.font.regular }}>
+                  <Text style={{ fontFamily: globalStyle.font.medium }}>
                      {eachAdditionalModifier.label}
                   </Text>
 

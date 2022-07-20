@@ -59,10 +59,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             }}
          >
             <Text
-               style={[
-                  styles.balance,
-                  { fontFamily: globalStyle.font.semibold },
-               ]}
+               style={[styles.balance, { fontFamily: globalStyle.font.medium }]}
             >
                Available Balance : {formatCurrency(user.wallet?.amount || 0)}
             </Text>
@@ -88,7 +85,7 @@ const WalletDetails = ({ setShowTopUpTab }) => {
             <Text
                style={{
                   fontSize: 18,
-                  fontFamily: globalStyle.font.semibold,
+                  fontFamily: globalStyle.font.medium,
                   marginBottom: 10,
                }}
             >
@@ -235,10 +232,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
             }}
          >
             <Text
-               style={[
-                  styles.balance,
-                  { fontFamily: globalStyle.font.semibold },
-               ]}
+               style={[styles.balance, { fontFamily: globalStyle.font.medium }]}
             >
                Top-Up
             </Text>

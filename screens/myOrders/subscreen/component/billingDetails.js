@@ -22,7 +22,7 @@ export const BillingDetails = ({ billing }) => {
          <Text
             style={[
                styles.textCommonStyle,
-               { fontFamily: globalStyle.font.medium },
+               { fontFamily: globalStyle.font.semibold },
             ]}
          >
             {'Bill Details'}
@@ -192,11 +192,21 @@ export const BillingDetails = ({ billing }) => {
                   </View>
                )}
 
+               <View
+                  style={{
+                     width: '100%',
+                     height: 1,
+                     backgroundColor: '#00000030',
+                     marginTop: 2,
+                     marginBottom: 2,
+                  }}
+               ></View>
+
                <View style={[styles.rowCommonStyle]}>
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalStyle.font.medium },
+                        { fontFamily: globalStyle.font.semibold },
                      ]}
                   >
                      {'Total'}
@@ -204,7 +214,7 @@ export const BillingDetails = ({ billing }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalStyle.font.medium },
+                        { fontFamily: globalStyle.font.semibold },
                      ]}
                   >
                      {formatCurrency(billing.totalToPay || 0)}

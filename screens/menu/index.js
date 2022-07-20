@@ -189,7 +189,7 @@ const MenuScreen = ({ route }) => {
                      <Text
                         style={[
                            styles.searchBarText,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         Search for item...

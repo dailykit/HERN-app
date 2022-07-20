@@ -262,8 +262,7 @@ export const Pickup = () => {
             {locationSearching.loading ? (
                <Text
                   style={{
-                     fontStyle: 'italic',
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.mediumItalic,
                   }}
                >
                   Getting your location
@@ -286,7 +285,7 @@ export const Pickup = () => {
                   <Text
                      style={[
                         styles.findingTextStyle,
-                        { fontFamily: globalStyle.font.regular },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      Finding your nearest store...
@@ -301,7 +300,7 @@ export const Pickup = () => {
                   <Text
                      style={[
                         styles.noStoreText1,
-                        { fontFamily: globalStyle.font.regular },
+                        { fontFamily: globalStyle.font.medium },
                      ]}
                   >
                      Store service not found at your location
@@ -310,7 +309,7 @@ export const Pickup = () => {
                      style={[
                         styles.noStoreText2,
                         {
-                           fontFamily: globalStyle.font.regular,
+                           fontFamily: globalStyle.font.medium,
                            color: globalStyle.color.grey,
                         },
                      ]}

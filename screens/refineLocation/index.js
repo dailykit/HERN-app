@@ -296,7 +296,7 @@ const RefineLocation = () => {
             <Text
                style={[
                   styles.refineLocationText,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Refine Location
@@ -354,7 +354,7 @@ const RefineLocation = () => {
                         style={{
                            marginHorizontal: 8,
                            color: 'red',
-                           fontFamily: globalStyle.font.italic,
+                           fontFamily: globalStyle.font.mediumItalic,
                         }}
                      >
                         {googlePlaceAutoCompleteError.message}
@@ -396,7 +396,6 @@ const RefineLocation = () => {
             buttonStyle={{ height: 40, margin: 12, marginVertical: 6 }}
             textStyle={{
                fontSize: 18,
-               fontFamily: globalStyle.font.regular,
             }}
             disabled={
                !isStoreAvailableOnAddress ||
@@ -429,7 +428,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
                style={[
                   styles.formLabel,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -440,7 +439,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
                <Text
                   style={[
                      styles.formLabel,
-                     { color: 'red', fontFamily: globalStyle.font.regular },
+                     { color: 'red', fontFamily: globalStyle.font.medium },
                   ]}
                >
                   fill this field
@@ -449,7 +448,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             <TextInput
                style={[
                   styles.inputField,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.medium },
                ]}
                placeholder="Enter apartment/building info/street info"
                value={additionalAddressInfo.line1}
@@ -469,7 +468,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
                style={[
                   styles.formLabel,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -479,7 +478,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             <TextInput
                style={[
                   styles.inputField,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.medium },
                ]}
                placeholder="Enter landmark"
                value={additionalAddressInfo.landmark}
@@ -496,7 +495,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
                style={[
                   styles.formLabel,
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -556,7 +555,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
                <TextInput
                   style={[
                      styles.inputField,
-                     { fontFamily: globalStyle.font.regular },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                   placeholder="Enter label for this address"
                   value={additionalAddressInfo.label}
@@ -575,7 +574,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
                   styles.formLabel,
 
                   {
-                     fontFamily: globalStyle.font.regular,
+                     fontFamily: globalStyle.font.medium,
                      color: globalStyle.color.grey,
                   },
                ]}
@@ -585,7 +584,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
             <TextInput
                style={[
                   styles.inputField,
-                  { fontFamily: globalStyle.font.regular },
+                  { fontFamily: globalStyle.font.medium },
                ]}
                placeholder="Enter dropoff instructions"
                value={additionalAddressInfo.notes}

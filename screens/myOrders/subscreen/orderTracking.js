@@ -94,7 +94,9 @@ const AcceptingOrder = () => {
             size="large"
             color={appConfig.brandSettings.brandColor.value || '#000000'}
          />
-         <Text style={{ fontFamily: globalStyle.font.italic, marginLeft: 8 }}>
+         <Text
+            style={{ fontFamily: globalStyle.font.mediumItalic, marginLeft: 8 }}
+         >
             Waiting for Accepting Order
          </Text>
       </View>
@@ -170,13 +172,13 @@ const OrderDetail = ({ cart }) => {
          }}
       >
          <View style={styles.userInfo}>
-            <Text style={{ fontFamily: globalStyle.font.semibold }}>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
                <ProfileIcon /> {'  '}
                {cart.customerInfo.customerFirstName}{' '}
                {cart.customerInfo.customerLastName}
             </Text>
             <Text
-               style={{ fontFamily: globalStyle.font.regular, marginLeft: 20 }}
+               style={{ fontFamily: globalStyle.font.medium, marginLeft: 20 }}
             >
                {cart.customerInfo.customerPhone}
             </Text>
@@ -192,14 +194,14 @@ const OrderDetail = ({ cart }) => {
                </Text>
             </View>
             {cart.address.label ? (
-               <Text style={{ fontFamily: globalStyle.font.regular }}>
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
                   {cart.address.label}
                </Text>
             ) : null}
             <Text
-               style={{ fontFamily: globalStyle.font.regular }}
+               style={{ fontFamily: globalStyle.font.medium }}
             >{`${cart.address?.line1}`}</Text>
-            <Text style={{ fontFamily: globalStyle.font.regular }}>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
                {`${cart.address?.city} ${cart.address?.state} ${cart.address?.country},${cart.address?.zipcode}`}
             </Text>
          </View>
@@ -238,7 +240,7 @@ const OrderDetail = ({ cart }) => {
             >
                Payment Details:
             </Text>
-            <Text style={{ fontFamily: globalStyle.font.regular }}>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
                {cart.availablePaymentOption?.label || 'N/A'}
             </Text>
          </View>
@@ -255,7 +257,7 @@ const OrderDetail = ({ cart }) => {
             <Text
                style={[
                   styles.orderDate,
-                  { fontFamily: globalStyle.font.italic },
+                  { fontFamily: globalStyle.font.mediumItalic },
                ]}
             >
                {moment(cart.order?.created_at).format('DD MMM YY hh:mm a')}
@@ -291,7 +293,7 @@ const OrderDetail = ({ cart }) => {
                                        <Text
                                           style={{
                                              fontFamily:
-                                                globalStyle.font.regular,
+                                                globalStyle.font.medium,
                                              textDecorationLine: 'line-through',
                                              color: globalStyle.color.grey,
                                              marginRight: 4,
@@ -302,7 +304,7 @@ const OrderDetail = ({ cart }) => {
                                        <Text
                                           style={{
                                              fontFamily:
-                                                globalStyle.font.regular,
+                                                globalStyle.font.medium,
                                           }}
                                        >
                                           {formatCurrency(
@@ -313,7 +315,7 @@ const OrderDetail = ({ cart }) => {
                                  ) : (
                                     <Text
                                        style={{
-                                          fontFamily: globalStyle.font.regular,
+                                          fontFamily: globalStyle.font.medium,
                                        }}
                                     >
                                        {formatCurrency(product.price)}
@@ -323,7 +325,7 @@ const OrderDetail = ({ cart }) => {
                            </Text>
                         </View>
                      </View>
-                     <Text style={{ fontFamily: globalStyle.font.regular }}>
+                     <Text style={{ fontFamily: globalStyle.font.medium }}>
                         x{product.ids.length}
                      </Text>
                   </View>
@@ -333,7 +335,7 @@ const OrderDetail = ({ cart }) => {
                            <Text
                               style={[
                                  styles.productOptionText,
-                                 { fontFamily: globalStyle.font.regular },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               {product.childs[0].productOption.label}
@@ -348,7 +350,7 @@ const OrderDetail = ({ cart }) => {
                                  {product.childs[0].discount != 0 ? (
                                     <Text
                                        style={{
-                                          fontFamily: globalStyle.font.regular,
+                                          fontFamily: globalStyle.font.medium,
                                           textDecorationLine: 'line-through',
                                           color: globalStyle.color.grey,
                                           marginRight: 4,
@@ -360,7 +362,7 @@ const OrderDetail = ({ cart }) => {
                                  <Text
                                     style={[
                                        styles.productOptionText,
-                                       { fontFamily: globalStyle.font.regular },
+                                       { fontFamily: globalStyle.font.medium },
                                     ]}
                                  >
                                     {formatCurrency(
@@ -387,7 +389,7 @@ const OrderDetail = ({ cart }) => {
                                                       {
                                                          fontFamily:
                                                             globalStyle.font
-                                                               .regular,
+                                                               .medium,
                                                       },
                                                    ]}
                                                 >
@@ -410,7 +412,7 @@ const OrderDetail = ({ cart }) => {
                                                                fontFamily:
                                                                   globalStyle
                                                                      .font
-                                                                     .regular,
+                                                                     .medium,
                                                                textDecorationLine:
                                                                   'line-through',
                                                                color: globalStyle
@@ -430,7 +432,7 @@ const OrderDetail = ({ cart }) => {
                                                                fontFamily:
                                                                   globalStyle
                                                                      .font
-                                                                     .regular,
+                                                                     .medium,
                                                             },
                                                          ]}
                                                       >
