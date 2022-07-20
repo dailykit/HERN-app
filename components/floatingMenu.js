@@ -8,7 +8,7 @@ import { useConfig } from '../lib/config'
 import useGlobalStyle from '../globalStyle'
 
 export const FloatingMenu = ({
-   hydratedMenu,
+   categories,
    selectedCategoryName,
    onCategoryClick,
    position,
@@ -33,7 +33,7 @@ export const FloatingMenu = ({
          >
             <View style={styles.categoryContainer}>
                <ScrollView>
-                  {hydratedMenu.map((eachCategory, index) => {
+                  {categories.map((eachCategory, index) => {
                      if (!eachCategory.isCategoryPublished) {
                         return null
                      }
