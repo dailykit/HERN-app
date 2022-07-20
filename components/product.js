@@ -25,6 +25,7 @@ import { getCartItemWithModifiers } from '../utils'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
+import { ProductSkeleton } from './productCardSkeleton'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -48,18 +49,24 @@ export const ProductList = ({
             products: value,
          }))
          .value()
-      const nullData = data.filter(x => x.type === 'null')
-      const nonNullData = data.filter(x => x.type !== 'null')
+      // const nullData = data.filter(x => x.type === 'null')
+      // const nonNullData = data.filter(x => x.type !== 'null')
+      const nullData = []
+      const nonNullData = []
+      data.forEach(each => {
+         if (each.type === 'null') {
+            nullData.push(each)
+         } else {
+            nonNullData.push(each)
+         }
+      })
       return [...nonNullData, ...nullData]
    }, [productsList])
 
-   const [currentGroupProducts, setCurrentGroupedProduct] = useState([])
+   const [currentGroupProducts, setCurrentGroupedProduct] = useState(
+      groupedByType[0]?.products
+   )
 
-   useEffect(() => {
-      if (groupedByType.length > 0) {
-         setCurrentGroupedProduct(groupedByType[0].products)
-      }
-   }, [groupedByType])
    return (
       <View>
          {heading && (
@@ -76,7 +83,7 @@ export const ProductList = ({
             contentContainerStyle={{ display: 'flex' }}
             horizontal={viewStyle !== productViewStyles.horizontalCard}
          >
-            {currentGroupProducts.length > 0 ? (
+            {currentGroupProducts?.length > 0 ? (
                currentGroupProducts.map((eachProduct, index) => {
                   const publishedProductOptions =
                      eachProduct.productOptions.length > 0 &&

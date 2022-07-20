@@ -41,6 +41,7 @@ const MenuScreen = ({ route }) => {
    // state
    const [status, setStatus] = useState('loading')
    const categoryScroller = useRef()
+   const [nextCategory, setNextCategory] = React.useState(2)
 
    const [selectedCategoryName, setSelectedCategoryName] = React.useState(
       route?.params?.categoryName ||
@@ -69,6 +70,27 @@ const MenuScreen = ({ route }) => {
       }
    }, [categories, route?.params?.categoryName])
 
+   const onViewRef = React.useRef(({ viewableItems }) => {
+      // console.log('abc', abc)
+      // if (nextCategory - 2 <= viewableItems.length) {
+      //    setNextCategory(prev => prev + 2)
+      // }
+      setNextCategory(prev => {
+         console.log('inusee', prev, viewableItems.length, viewableItems)
+         if (
+            prev - 2 <=
+            (viewableItems.length === 1
+               ? viewableItems[0].index
+               : viewableItems[1].index)
+         ) {
+            return prev + 2
+         }
+         return prev
+      })
+      // Use viewable items in state or as intended
+   })
+   const viewConfigRef = React.useRef({ itemVisiblePercentThreshold: 1 })
+   console.log('current', nextCategory)
    return (
       <SafeAreaView style={{ backgroundColor: '#ffffff', flex: 1 }}>
          <Header />
@@ -151,6 +173,7 @@ const MenuScreen = ({ route }) => {
                         <CategoryWithProducts
                            category={eachCategory}
                            key={eachCategory.name + '--' + fIndex}
+                           isSkip={fIndex > nextCategory}
                         />
                      )
                   }}
@@ -173,6 +196,9 @@ const MenuScreen = ({ route }) => {
                      )
                   }}
                   nestedScrollEnabled={true}
+                  onViewableItemsChanged={onViewRef.current}
+                  viewabilityConfig={viewConfigRef.current}
+                  keyExtractor={(_, index) => index.toString()}
                />
             </>
          )}

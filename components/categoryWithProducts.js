@@ -8,9 +8,10 @@ import { useConfig } from '../lib/config'
 import React from 'react'
 import { Divider } from './divider'
 import { ProductList } from './product'
+import { ProductSkeleton } from './productCardSkeleton'
 
 const skeletonList = [1, 2, 3, 4]
-export const CategoryWithProducts = ({ category }) => {
+export const CategoryWithProducts = ({ category, isSkip }) => {
    const { brand, locationId, brandLocation } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const {
@@ -33,7 +34,7 @@ export const CategoryWithProducts = ({ category }) => {
       error: productsError,
       data: { products = [] } = {},
    } = useSubscription(PRODUCTS, {
-      skip: isMenuLoading,
+      skip: isMenuLoading || isSkip,
       variables: {
          ids: category.products,
          params: argsForByLocation,
@@ -51,8 +52,12 @@ export const CategoryWithProducts = ({ category }) => {
          >
             {category.name}
          </Text>
-         {productsLoading ? (
-            <Spinner size="large" />
+         {productsLoading || isSkip ? (
+            <>
+               {skeletonList.map((skt, index) => {
+                  return <ProductSkeleton key={`${skt}-${index}`} />
+               })}
+            </>
          ) : (
             <ProductList productsList={products} />
          )}
