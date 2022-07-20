@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+   Image,
+   ScrollView,
+   StyleSheet,
+   Text,
+   TouchableOpacity,
+   View,
+} from 'react-native'
 import * as Location from 'expo-location'
 import React, { useEffect, useState } from 'react'
 import { GooglePlacesAutocompleteWrapper } from './googlePlaceAutoComplete'
@@ -12,11 +19,15 @@ import { AddressInfo } from './addressInfo'
 import { useNavigation } from '@react-navigation/native'
 import { Button } from '../button'
 import useGlobalStyle from '../../globalStyle'
+import { UserAddressList } from './userAddressList'
+import { useCart } from '../../context'
+import { Spinner } from '../../assets/loaders'
 
 export const Delivery = () => {
    const navigation = useNavigation()
-   const { orderTabs, brand, appConfig } = useConfig()
+   const { orderTabs, brand, appConfig, dispatch } = useConfig()
    const { globalStyle } = useGlobalStyle()
+   const { methods, storedCartId } = useCart()
 
    const [userCoordinate, setUserCoordinate] = useState({
       latitude: null,
@@ -67,6 +78,9 @@ export const Delivery = () => {
    const [showRefineLocation, setShowRefineLocation] = useState(false)
    const [isGetStoresLoading, setIsGetStoresLoading] = useState(true)
    const [stores, setStores] = useState(null)
+   const [isSettingLocation, setIsSettingLocation] = useState(false)
+   const [isUserExistingAddressSelected, setIsUserExistingAddressSelected] =
+      useState(false)
 
    useEffect(() => {
       if (address && brand.id) {
@@ -81,10 +95,89 @@ export const Delivery = () => {
             setStores(availableStore)
             setIsGetStoresLoading(false)
             if (availableStore.length > 0) {
-               navigation.navigate('RefineLocation', {
-                  address: address,
-                  fulfillmentType: fulfillmentType,
-               })
+               setIsSettingLocation(true)
+               if (!isUserExistingAddressSelected) {
+                  navigation.navigate('RefineLocation', {
+                     address: address,
+                     fulfillmentType: fulfillmentType,
+                  })
+               } else {
+                  const selectedStore = availableStore[0]
+                  const selectedOrderTab = orderTabs.find(
+                     x => x.orderFulfillmentTypeLabel === fulfillmentType
+                  )
+                  const cartIdInLocal = await AsyncStorage.getItem('cart-id')
+                  if (cartIdInLocal || storedCartId) {
+                     const finalCartId = cartIdInLocal
+                        ? JSON.parse(cartIdInLocal)
+                        : storedCartId
+                     methods.cart.update({
+                        variables: {
+                           id: finalCartId,
+                           _set: {
+                              address: address,
+                              locationId: selectedStore.location.id,
+                              orderTabId: selectedOrderTab.id,
+                              fulfillmentInfo: null,
+                           },
+                        },
+                     })
+                  }
+                  dispatch({
+                     type: 'SET_LOCATION_ID',
+                     payload: selectedStore.location.id,
+                  })
+                  dispatch({
+                     type: 'SET_SELECTED_ORDER_TAB',
+                     payload: selectedOrderTab,
+                  })
+                  dispatch({
+                     type: 'SET_USER_LOCATION',
+                     payload: address,
+                  })
+                  dispatch({
+                     type: 'SET_STORE_STATUS',
+                     payload: {
+                        status: true,
+                        message: 'Store available on your location.',
+                        loading: false,
+                     },
+                  })
+                  try {
+                     await AsyncStorage.setItem('orderTab', fulfillmentType)
+                     const storeLocationIdInLocal = await AsyncStorage.getItem(
+                        'storeLocationId'
+                     )
+                     if (
+                        storeLocationIdInLocal &&
+                        storeLocationIdInLocal != selectedStore.location.id
+                     ) {
+                        const lastStoreLocationId = storeLocationIdInLocal
+                        await AsyncStorage.setItem(
+                           'lastStoreLocationId',
+                           lastStoreLocationId
+                        )
+                        dispatch({
+                           type: 'SET_LAST_LOCATION_ID',
+                           payload: lastStoreLocationId,
+                        })
+                     }
+                     await AsyncStorage.setItem(
+                        'storeLocationId',
+                        selectedStore.location.id.toString()
+                     )
+                     await AsyncStorage.setItem(
+                        'userLocation',
+                        JSON.stringify({
+                           ...address,
+                        })
+                     )
+                     await AsyncStorage.removeItem('storeLocation')
+                  } catch (err) {
+                     console.error('ExistingLocationSelectSubmit', err)
+                  }
+                  navigation.goBack()
+               }
             }
          }
          fetchStores()
@@ -235,6 +328,12 @@ export const Delivery = () => {
          console.log('form', err)
       }
    }
+
+   const onAddressSelect = addressFromUserAddressList => {
+      setIsUserExistingAddressSelected(true)
+      setAddress(addressFromUserAddressList)
+   }
+
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View style={styles.deliveryTime}>
@@ -265,72 +364,88 @@ export const Delivery = () => {
             formatAddress={formatAddress}
             onGPSiconClick={getLocationFromDevice}
          />
-         <View style={{ zIndex: -10 }}>
-            {locationSearching.loading ? (
-               <Text style={{ fontFamily: globalStyle.font.mediumItalic }}>
-                  Getting your location
-               </Text>
-            ) : locationSearching.error ? (
-               <Text
-                  style={{ color: 'red', fontFamily: globalStyle.font.medium }}
-               >
-                  {locationSearching.errorType === 'blockByPermission'
-                     ? locationSearching.errorType === 'zipcodeNotFound'
-                        ? 'Please select precise location'
-                        : 'Permission to access location was denied'
-                     : 'Unable to get your location'}
-               </Text>
-            ) : address ? (
-               <AddressInfo address={address} />
-            ) : null}
-         </View>
-         <View>
-            {!address ? null : isGetStoresLoading ? (
-               <View style={styles.searchingStoreStyle}>
-                  <Text
-                     style={[
-                        styles.findingTextStyle,
-                        { fontFamily: globalStyle.font.medium },
-                     ]}
-                  >
-                     Finding your nearest store...
+         <ScrollView style={{ height: '76%' }}>
+            <View style={{ zIndex: -10 }}>
+               {locationSearching.loading ? (
+                  <Text style={{ fontFamily: globalStyle.font.mediumItalic }}>
+                     Getting your location
                   </Text>
-                  <Image
-                     style={{ width: 150, height: 150 }}
-                     source={require('../../assets/locationSearchGif.gif')}
-                  />
-               </View>
-            ) : stores?.length === 0 ? (
-               <View style={styles.noStoreContainer}>
+               ) : locationSearching.error ? (
                   <Text
-                     style={[
-                        styles.noStoreText1,
-                        { fontFamily: globalStyle.font.medium },
-                     ]}
-                  >
-                     Store service not found at your location
-                  </Text>
-                  <Text
-                     style={[
-                        styles.noStoreText2,
-                        {
-                           fontFamily: globalStyle.font.medium,
-                           color: globalStyle.color.grey,
-                        },
-                     ]}
-                  >
-                     Try other Locations
-                  </Text>
-                  <Image
-                     source={require('../../assets/noStore.png')}
                      style={{
-                        height: 300,
-                        width: '100%',
+                        color: 'red',
+                        fontFamily: globalStyle.font.medium,
                      }}
-                  />
-               </View>
-            ) : null}
-         </View>
+                  >
+                     {locationSearching.errorType === 'blockByPermission'
+                        ? locationSearching.errorType === 'zipcodeNotFound'
+                           ? 'Please select precise location'
+                           : 'Permission to access location was denied'
+                        : 'Unable to get your location'}
+                  </Text>
+               ) : address ? (
+                  <AddressInfo address={address} />
+               ) : null}
+            </View>
+            <View>
+               {!address ? null : isGetStoresLoading ? (
+                  <View style={styles.searchingStoreStyle}>
+                     <Text
+                        style={[
+                           styles.findingTextStyle,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}
+                     >
+                        Finding your nearest store...
+                     </Text>
+                     <Image
+                        style={{ width: 150, height: 150 }}
+                        source={require('../../assets/locationSearchGif.gif')}
+                     />
+                  </View>
+               ) : stores?.length === 0 ? (
+                  <View style={styles.noStoreContainer}>
+                     <Text
+                        style={[
+                           styles.noStoreText1,
+                           { fontFamily: globalStyle.font.medium },
+                        ]}
+                     >
+                        Store service not found at your location
+                     </Text>
+                     <Text
+                        style={[
+                           styles.noStoreText2,
+                           {
+                              fontFamily: globalStyle.font.medium,
+                              color: globalStyle.color.grey,
+                           },
+                        ]}
+                     >
+                        Try other Locations
+                     </Text>
+                     <Image
+                        source={require('../../assets/noStore.png')}
+                        style={{
+                           height: 300,
+                           width: '100%',
+                        }}
+                     />
+                  </View>
+               ) : null}
+            </View>
+            {!isSettingLocation ? (
+               (stores == null || stores?.length == 0) && (
+                  <UserAddressList onAddressSelect={onAddressSelect} />
+               )
+            ) : (
+               <Spinner
+                  text={'Setting Your Location'}
+                  showText={true}
+                  size={'large'}
+               />
+            )}
+         </ScrollView>
       </View>
    )
 }
