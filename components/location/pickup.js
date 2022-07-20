@@ -262,7 +262,7 @@ export const Pickup = () => {
             {locationSearching.loading ? (
                <Text
                   style={{
-                     fontFamily: globalStyle.font.italic,
+                     fontFamily: globalStyle.font.mediumItalic,
                   }}
                >
                   Getting your location

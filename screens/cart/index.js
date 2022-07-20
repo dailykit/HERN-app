@@ -210,7 +210,7 @@ const LoginPopUp = ({ navigation, loginPopUp }) => {
          <Text
             style={[
                styles.loginPopUpHeading,
-               { fontFamily: globalStyle.font.medium },
+               { fontFamily: globalStyle.font.semibold },
             ]}
          >
             Almost There
@@ -219,7 +219,7 @@ const LoginPopUp = ({ navigation, loginPopUp }) => {
             style={[
                styles.loginPopUpDescription,
                {
-                  fontFamily: globalStyle.font.regular,
+                  fontFamily: globalStyle.font.semibold,
                   color: globalStyle.color.grey,
                },
             ]}

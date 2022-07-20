@@ -216,10 +216,7 @@ const UserInfoForm = props => {
          />
          <Button
             buttonStyle={styles.saveInfoBtn}
-            textStyle={[
-               styles.saveInfoBtnText,
-               { fontFamily: globalStyle.font.regular },
-            ]}
+            textStyle={[styles.saveInfoBtnText]}
             onPress={handleSave}
             disabled={!isValid}
          >

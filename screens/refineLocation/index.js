@@ -354,7 +354,7 @@ const RefineLocation = () => {
                         style={{
                            marginHorizontal: 8,
                            color: 'red',
-                           fontFamily: globalStyle.font.italic,
+                           fontFamily: globalStyle.font.mediumItalic,
                         }}
                      >
                         {googlePlaceAutoCompleteError.message}
@@ -396,7 +396,6 @@ const RefineLocation = () => {
             buttonStyle={{ height: 40, margin: 12, marginVertical: 6 }}
             textStyle={{
                fontSize: 18,
-               fontFamily: globalStyle.font.regular,
             }}
             disabled={
                !isStoreAvailableOnAddress ||
@@ -556,7 +555,7 @@ const AddressForm = ({ setAdditionalAddressInfo, additionalAddressInfo }) => {
                <TextInput
                   style={[
                      styles.inputField,
-                     { fontFamily: globalStyle.font.regular },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                   placeholder="Enter label for this address"
                   value={additionalAddressInfo.label}

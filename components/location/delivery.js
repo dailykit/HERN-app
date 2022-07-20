@@ -267,7 +267,7 @@ export const Delivery = () => {
          />
          <View style={{ zIndex: -10 }}>
             {locationSearching.loading ? (
-               <Text style={{ fontFamily: globalStyle.font.italic }}>
+               <Text style={{ fontFamily: globalStyle.font.mediumItalic }}>
                   Getting your location
                </Text>
             ) : locationSearching.error ? (

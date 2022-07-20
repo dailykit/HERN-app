@@ -62,8 +62,7 @@ export const FloatingMenu = ({
                                     selectedCategoryName === eachCategory.name
                                        ? {
                                             color: globalStyle.color.primary,
-                                            fontFamily:
-                                               globalStyle.font.regular,
+                                            fontFamily: globalStyle.font.medium,
                                          }
                                        : {},
                                  ]}
@@ -76,8 +75,7 @@ export const FloatingMenu = ({
                                     selectedCategoryName === eachCategory.name
                                        ? {
                                             color: globalStyle.color.primary,
-                                            fontFamily:
-                                               globalStyle.font.regular,
+                                            fontFamily: globalStyle.font.medium,
                                          }
                                        : {},
                                  ]}
@@ -113,7 +111,6 @@ export const FloatingMenu = ({
                fontSize: 16,
                paddingHorizontal: 8,
                color: '#000000',
-               fontFamily: globalStyle.font.medium,
             }}
             additionalIcon={Icon}
             onPress={() => {

@@ -119,7 +119,7 @@ export const MobileNumberForm = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: globalStyle.font.italic,
+                     fontFamily: globalStyle.font.mediumItalic,
                   }}
                >
                   {error}

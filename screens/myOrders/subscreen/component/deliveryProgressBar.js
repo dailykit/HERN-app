@@ -182,7 +182,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
    const { globalStyle } = useGlobalStyle()
    return (
       <View key={eachOrderStatus.step}>
-         <Text style={{ fontFamily: globalStyle.font.regular }}>
+         <Text style={{ fontFamily: globalStyle.font.medium }}>
             {eachOrderStatus.label}
          </Text>
          {!isEmpty(deliveryInfo) &&
@@ -199,7 +199,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                      styles.time,
                      {
                         color: isActive ? '#00000080' : '#00000025',
-                        fontFamily: globalStyle.font.italic,
+                        fontFamily: globalStyle.font.mediumItalic,
                      },
                   ]}
                >
@@ -223,7 +223,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         styles.time,
                         {
                            color: '#00000080',
-                           fontFamily: globalStyle.font.italic,
+                           fontFamily: globalStyle.font.mediumItalic,
                         },
                      ]}
                   >
@@ -242,7 +242,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         <Text
                            style={[
                               styles.assignedName,
-                              { fontFamily: globalStyle.font.regular },
+                              { fontFamily: globalStyle.font.medium },
                            ]}
                         >
                            {eachOrderStatus.details.assignedName}
@@ -259,7 +259,7 @@ const StepLabel = ({ eachOrderStatus, isActive, deliveryInfo }) => {
                         <Text
                            style={[
                               styles.assignedPhone,
-                              { fontFamily: globalStyle.font.regular },
+                              { fontFamily: globalStyle.font.medium },
                            ]}
                         >
                            {eachOrderStatus.details.assignedPhone}

@@ -292,7 +292,7 @@ export default function PaymentOptionsRenderer({
                            backgroundColor:
                               appConfig?.brandSettings?.buttonSettings
                                  ?.buttonBGColor?.value || '#222222',
-                           fontFamily: globalStyle.font.regular,
+                           fontFamily: globalStyle.font.medium,
                         }}
                      >
                         <Text

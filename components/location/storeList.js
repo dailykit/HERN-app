@@ -22,7 +22,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
          <Text
             style={{
                fontSize: 16,
-               fontFamily: globalStyle.font.regular,
+               fontFamily: globalStyle.font.medium,
             }}
          >
             Select Store
@@ -123,7 +123,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                            <Text
                               style={[
                                  styles.storeLabel,
-                                 { fontFamily: globalStyle.font.regular },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               {label}
@@ -131,14 +131,14 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                            <View>
                               <Text
                                  style={{
-                                    fontFamily: globalStyle.font.regular,
+                                    fontFamily: globalStyle.font.medium,
                                  }}
                               >
                                  {line1}
                               </Text>
                               <Text
                                  style={{
-                                    fontFamily: globalStyle.font.regular,
+                                    fontFamily: globalStyle.font.medium,
                                  }}
                               >
                                  {line2}
@@ -146,7 +146,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                               <View>
                                  <Text
                                     style={{
-                                       fontFamily: globalStyle.font.regular,
+                                       fontFamily: globalStyle.font.medium,
                                     }}
                                  >
                                     {city} {state} {country}
@@ -167,7 +167,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                            <Text
                               style={[
                                  styles.mileText,
-                                 { fontFamily: globalStyle.font.regular },
+                                 { fontFamily: globalStyle.font.medium },
                               ]}
                            >
                               {aerialDistance} {distanceUnit}

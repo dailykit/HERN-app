@@ -94,7 +94,9 @@ const AcceptingOrder = () => {
             size="large"
             color={appConfig.brandSettings.brandColor.value || '#000000'}
          />
-         <Text style={{ fontFamily: globalStyle.font.italic, marginLeft: 8 }}>
+         <Text
+            style={{ fontFamily: globalStyle.font.mediumItalic, marginLeft: 8 }}
+         >
             Waiting for Accepting Order
          </Text>
       </View>
@@ -255,7 +257,7 @@ const OrderDetail = ({ cart }) => {
             <Text
                style={[
                   styles.orderDate,
-                  { fontFamily: globalStyle.font.italic },
+                  { fontFamily: globalStyle.font.mediumItalic },
                ]}
             >
                {moment(cart.order?.created_at).format('DD MMM YY hh:mm a')}

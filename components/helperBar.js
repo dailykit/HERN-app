@@ -13,13 +13,7 @@ export const HelperBar = ({ type = 'info', children }) => {
 const HelperButton = ({ children, onClick }) => {
    const { globalStyle } = useGlobalStyle()
    return (
-      <Button
-         onClick={onClick}
-         style={[
-            styles.hernHelperBar__btn,
-            { fontFamily: globalStyle.font.regular },
-         ]}
-      >
+      <Button onClick={onClick} style={[styles.hernHelperBar__btn]}>
          {children}
       </Button>
    )
@@ -44,7 +38,7 @@ const SubTitle = ({ children }) => {
       <Text
          style={[
             styles.hernHelperBar__subtitle,
-            { fontFamily: globalStyle.font.regular },
+            { fontFamily: globalStyle.font.medium },
          ]}
       >
          {children}

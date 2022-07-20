@@ -169,7 +169,7 @@ export const OTPform = ({
                <Text
                   style={{
                      color: 'red',
-                     fontFamily: globalStyle.font.italic,
+                     fontFamily: globalStyle.font.mediumItalic,
                      width: '100%',
                      marginTop: 3,
                      fontSize: 13,

@@ -150,7 +150,7 @@ export const ModifierCategory = props => {
             <Text
                style={[
                   styles.categoryError,
-                  { fontFamily: globalStyle.font.italic },
+                  { fontFamily: globalStyle.font.mediumItalic },
                ]}
             >
                You have to choose this category.

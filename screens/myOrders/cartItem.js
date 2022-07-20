@@ -24,7 +24,7 @@ export const CartItem = ({ products, createdAt }) => {
             <Text
                style={[
                   styles.orderDate,
-                  { fontFamily: globalStyle.font.italic },
+                  { fontFamily: globalStyle.font.mediumItalic },
                ]}
             >
                {moment(createdAt).format('DD MMM YY hh:mm a')}

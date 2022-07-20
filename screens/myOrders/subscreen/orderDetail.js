@@ -187,7 +187,9 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                         Item(s)({cartItems.length})
                      </Text>
 
-                     <Text style={{ fontFamily: globalStyle.font.italic }}>
+                     <Text
+                        style={{ fontFamily: globalStyle.font.mediumItalic }}
+                     >
                         {moment(createdAt).format('DD MMM YY hh:mm a')}
                      </Text>
                   </View>

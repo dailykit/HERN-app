@@ -296,7 +296,6 @@ const ProductScreen = () => {
             <Button
                buttonStyle={{ height: 40, margin: 8 }}
                textStyle={{
-                  fontFamily: globalStyle.font.regular,
                   fontSize: 16,
                }}
                onPress={() => {
