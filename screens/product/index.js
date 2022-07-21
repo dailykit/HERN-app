@@ -23,6 +23,7 @@ import Modal from 'react-native-modal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import useGlobalStyle from '../../globalStyle'
+import { isEmpty } from 'lodash'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -317,10 +318,12 @@ const ProductScreen = () => {
                         products[0].price,
                         products[0].discount
                      ) +
-                     getPriceWithDiscount(
-                        defaultProductOption.price,
-                        defaultProductOption.discount
-                     )
+                     (isEmpty(defaultProductOption)
+                        ? 0
+                        : getPriceWithDiscount(
+                             defaultProductOption.price,
+                             defaultProductOption.discount
+                          ))
                   ).toFixed(2)
                )}
 

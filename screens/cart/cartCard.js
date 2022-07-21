@@ -332,7 +332,14 @@ export const CartCard = ({ productData, quantity }) => {
          <View style={styles.productMetaDetails}>
             <View>
                <Image
-                  source={{ uri: productData.image, width: 95, height: 95 }}
+                  source={{
+                     uri:
+                        productData?.image ||
+                        appConfig?.brandSettings?.productSettings?.defaultImage
+                           ?.value,
+                     width: 95,
+                     height: 95,
+                  }}
                   style={styles.productImage}
                />
             </View>
