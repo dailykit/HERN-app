@@ -1,6 +1,6 @@
 import { useSubscription } from '@apollo/client'
 import React from 'react'
-import { PRODUCTS_BY_CATEGORY } from '../graphql'
+import { PRODUCTS, PRODUCTS_BY_CATEGORY } from '../graphql'
 import { useConfig } from './../lib/config'
 
 //on demand menu context
@@ -29,11 +29,13 @@ const reducer = (state = initialState, { type, payload }) => {
 
 export const OnDemandMenuProvider = ({ children }) => {
    const date = React.useMemo(() => new Date(Date.now()).toISOString(), [])
-   const { brand, isConfigLoading, locationId } = useConfig()
+   const { brand, isConfigLoading, locationId, brandLocation } = useConfig()
    const [onDemandMenu, onDemandMenuDispatch] = React.useReducer(
       reducer,
       initialState
    )
+   const [productsStatus, setProductsStatus] = React.useState('loading')
+   const [hydratedMenu, setHydratedMenu] = React.useState([])
 
    const { error: menuError } = useSubscription(PRODUCTS_BY_CATEGORY, {
       skip: isConfigLoading || !brand?.id,
@@ -61,6 +63,57 @@ export const OnDemandMenuProvider = ({ children }) => {
       },
    })
 
+   const argsForByLocation = React.useMemo(
+      () => ({
+         brandId: brand?.id,
+         locationId: locationId,
+         brand_locationId: brandLocation?.id,
+      }),
+      [brand, locationId, brandLocation?.id]
+   )
+
+   const { loading: productsLoading, error: productsError } = useSubscription(
+      PRODUCTS,
+      {
+         skip: onDemandMenu.isMenuLoading,
+         variables: {
+            ids: onDemandMenu.allProductIds,
+            params: argsForByLocation,
+         },
+         // fetchPolicy: 'network-only',
+         onSubscriptionData: ({ subscriptionData }) => {
+            const { data } = subscriptionData
+            if (data && data.products.length) {
+               const productsList = data.products
+               const updatedMenu = onDemandMenu.categories.map(category => {
+                  const updatedProducts = category.products
+                     .map(productId => {
+                        const found = productsList.find(
+                           ({ id }) => id === productId
+                        )
+                        if (found) {
+                           return found
+                        }
+                        return null
+                     })
+                     .filter(Boolean)
+                  return {
+                     ...category,
+                     products: updatedProducts,
+                  }
+               })
+               setHydratedMenu(updatedMenu)
+               setProductsStatus('success')
+            }
+         },
+      }
+   )
+   React.useEffect(() => {
+      if (productsError) {
+         setProductsStatus('error')
+         console.error('products fetch error', productsError)
+      }
+   }, [productsError])
    React.useEffect(() => {
       if (menuError) {
          onDemandMenuDispatch({
@@ -73,7 +126,12 @@ export const OnDemandMenuProvider = ({ children }) => {
 
    return (
       <onDemandMenuContext.Provider
-         value={{ onDemandMenu, onDemandMenuDispatch }}
+         value={{
+            onDemandMenu,
+            onDemandMenuDispatch,
+            hydratedMenu,
+            productsStatus,
+         }}
       >
          {children}
       </onDemandMenuContext.Provider>
