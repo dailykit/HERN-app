@@ -32,24 +32,11 @@ const MenuScreen = ({ route }) => {
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
-   const {
-      onDemandMenu: { isMenuLoading, allProductIds, categories },
-   } = React.useContext(onDemandMenuContext)
+   const { hydratedMenu, productsStatus: status } =
+      React.useContext(onDemandMenuContext)
    const navigation = useNavigation()
    // state
-   const [status, setStatus] = useState('loading')
-   const [productsList, setProductsList] = React.useState([])
-   const [hydratedMenu, setHydratedMenu] = React.useState([])
    const categoryScroller = useRef()
-
-   const argsForByLocation = React.useMemo(
-      () => ({
-         brandId: brand?.id,
-         locationId: locationId,
-         brand_locationId: brandLocation?.id,
-      }),
-      [brand, locationId, brandLocation?.id]
-   )
 
    const [selectedCategoryName, setSelectedCategoryName] = React.useState(
       route?.params?.categoryName ||
@@ -59,66 +46,21 @@ const MenuScreen = ({ route }) => {
    )
 
    useEffect(() => {
-      categoryScroller.current?.scrollToIndex({
-         index: hydratedMenu.findIndex(x => x.name == selectedCategoryName),
-         animated: true,
-         viewPosition: 0,
-      })
-   }, [selectedCategoryName])
+      if (hydratedMenu.length > 0 && selectedCategoryName.length > 0) {
+         categoryScroller.current?.scrollToIndex({
+            index: hydratedMenu.findIndex(x => x.name == selectedCategoryName),
+            animated: true,
+            viewPosition: 0,
+         })
+      }
+   }, [selectedCategoryName, hydratedMenu])
 
    const selectedCategoryWithCompleteData = React.useMemo(() => {
       return hydratedMenu.find(x => x.name === selectedCategoryName)
    }, [selectedCategoryName])
 
-   // query
-   const { loading: productsLoading, error: productsError } = useSubscription(
-      PRODUCTS,
-      {
-         skip: isMenuLoading,
-         variables: {
-            ids: allProductIds,
-            params: argsForByLocation,
-         },
-         // fetchPolicy: 'network-only',
-         onSubscriptionData: ({ subscriptionData }) => {
-            const { data } = subscriptionData
-            if (data && data.products.length) {
-               setProductsList(data.products)
-            }
-         },
-      }
-   )
-
    React.useEffect(() => {
-      if (productsError) {
-         setStatus('error')
-      }
-   }, [productsError])
-
-   React.useEffect(() => {
-      if (productsList.length && categories.length) {
-         const updatedMenu = categories.map(category => {
-            const updatedProducts = category.products
-               .map(productId => {
-                  const found = productsList.find(({ id }) => id === productId)
-                  if (found) {
-                     return found
-                  }
-                  return null
-               })
-               .filter(Boolean)
-            return {
-               ...category,
-               products: updatedProducts,
-            }
-         })
-         setHydratedMenu(updatedMenu)
-         setStatus('success')
-      }
-   }, [productsList, categories])
-
-   React.useEffect(() => {
-      if (hydratedMenu.length) {
+      if (hydratedMenu.length > 0 && route?.params?.categoryName?.length > 0) {
          setSelectedCategoryName(
             route?.params?.categoryName ||
                hydratedMenu.find(
@@ -136,7 +78,7 @@ const MenuScreen = ({ route }) => {
          ) : status === 'error' ? (
             <Text style={{ fontFamily: globalStyle.font.medium }}>Error</Text>
          ) : null}
-         {status === 'success' ? (
+         {status === 'success' && hydratedMenu.length > 0 ? (
             <>
                {appConfig.brandSettings.menuSettings.productCategoryView.value
                   .value === 'NAVBAR' ? (
@@ -243,6 +185,9 @@ const MenuScreen = ({ route }) => {
                      )
                   }}
                   nestedScrollEnabled={true}
+                  onScrollToIndexFailed={err => {
+                     console.log('err', err)
+                  }}
                />
             </>
          ) : null}

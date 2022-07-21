@@ -25,9 +25,10 @@ import { getCartItemWithModifiers } from '../utils'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
-
+import CachedImage from 'react-native-expo-cached-image'
 const windowHeight = Dimensions.get('window').height
 
+const width = Dimensions.get('window').width
 const productViewStyles = {
    verticalCard: 'verticalCard',
    horizontalCard: 'horizontalCard',
@@ -53,13 +54,10 @@ export const ProductList = ({
       return [...nonNullData, ...nullData]
    }, [productsList])
 
-   const [currentGroupProducts, setCurrentGroupedProduct] = useState([])
+   const [currentGroupProducts, setCurrentGroupedProduct] = useState(
+      groupedByType[0].products
+   )
 
-   useEffect(() => {
-      if (groupedByType.length > 0) {
-         setCurrentGroupedProduct(groupedByType[0].products)
-      }
-   }, [groupedByType])
    return (
       <View>
          {heading && (
@@ -483,7 +481,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         : 'column',
                }}
             >
-               <Image
+               <CachedImage
                   source={{
                      uri:
                         productData.assets.images[0] ||
@@ -495,8 +493,9 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      ...(viewStyle === productViewStyles.horizontalCard
                         ? {
                              borderRadius: 4,
-                             width: '40%',
-                             height: '100%',
+                             width: '30%',
+                             height:
+                                (Dimensions.get('window').width - 12) * 0.225,
                           }
                         : {
                              borderTopLeftRadius: 4,
@@ -505,13 +504,14 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                              height: 115,
                           }),
                   }}
+                  resizeMode={'contain'}
                />
                <View
                   style={{
                      ...(viewStyle === productViewStyles.horizontalCard
                         ? {
                              paddingVertical: 8,
-                             width: '60%',
+                             width: '70%',
                              marginBottom: 0,
                           }
                         : {
@@ -760,6 +760,7 @@ const styles = StyleSheet.create({
    },
    priceContainer: {
       marginHorizontal: 4,
+      marginTop: 2,
    },
    productOriginalValue: {
       color: 'rgba(24, 24, 24, 0.28)',
