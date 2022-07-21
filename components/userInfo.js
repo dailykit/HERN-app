@@ -7,7 +7,7 @@ import { EditIcon } from '../assets/editIcon'
 import { useUser } from '../context/user'
 import { CartContext } from '../context/cart'
 import { UPDATE_PLATFORM_CUSTOMER } from '../graphql'
-import { useMutation } from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
 import {
    View,
    Text,
@@ -112,6 +112,24 @@ const UserInfoForm = props => {
                      cart?.customerInfo?.customerEmail ||
                      user.platform_customer?.email,
                },
+            },
+         },
+         optimisticResponse: {
+            updateCart: {
+               id: cart.id,
+               customerInfo: {
+                  customerFirstName: firstName,
+                  customerLastName: lastName,
+                  customerPhone: mobileNumber,
+                  customerEmail:
+                     cart?.customerInfo?.customerEmail ||
+                     user.platform_customer?.email,
+               },
+               fulfillmentInfo: cart.fulfillmentInfo,
+               address: cart.address,
+               __typename: 'order_cart',
+               orderTabId: cart?.id,
+               locationId: cart?.locationId,
             },
          },
       })
@@ -229,7 +247,14 @@ const UserInfoForm = props => {
       </ScrollView>
    )
 }
-
+const GET_USER_INFO = gql`
+   query cart($where: order_cart_bool_exp!) {
+      carts(where: $where) {
+         id
+         customerInfo
+      }
+   }
+`
 const UserDetails = ({
    handleOpen,
    cart,
@@ -239,13 +264,23 @@ const UserDetails = ({
    const { appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const { user } = useUser()
-   const { methods } = React.useContext(CartContext)
+   const { methods, storedCartId } = React.useContext(CartContext)
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
       onCompleted: () => {
          console.log('==> Platform Customer Updated!')
       },
       onError: error => {
          console.error('==>Error in Platform Customer Update', error)
+      },
+   })
+
+   const { data } = useQuery(GET_USER_INFO, {
+      variables: {
+         where: {
+            id: {
+               _eq: storedCartId,
+            },
+         },
       },
    })
 
@@ -324,8 +359,8 @@ const UserDetails = ({
                         marginLeft: 9,
                      }}
                   >
-                     {cart?.customerInfo?.customerFirstName}{' '}
-                     {cart?.customerInfo?.customerLastName}
+                     {data?.carts?.[0]?.customerInfo?.customerFirstName}{' '}
+                     {data?.carts?.[0]?.customerInfo?.customerLastName}
                   </Text>
                </View>
                <View style={styles.row}>
@@ -336,7 +371,7 @@ const UserDetails = ({
                         marginLeft: 9,
                      }}
                   >
-                     {cart?.customerInfo?.customerPhone}
+                     {data?.carts?.[0]?.customerInfo?.customerPhone}
                   </Text>
                </View>
                <TouchableOpacity onPress={handleOpen}>

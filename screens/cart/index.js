@@ -26,6 +26,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import CustomBackdrop from '../../components/modalBackdrop'
 import useGlobalStyle from '../../globalStyle'
+import { gql, useQuery } from '@apollo/client'
 
 const CartScreen = () => {
    const { globalStyle } = useGlobalStyle()
@@ -41,6 +42,19 @@ const CartScreen = () => {
    }, [isAuthenticated])
 
    const loginPopUp = createRef()
+
+   const { data: { carts = [] } = {} } = useQuery(
+      GET_FULFILLMENT_CUSTOMER_ADDRESS,
+      {
+         variables: {
+            where: {
+               id: {
+                  _eq: storedCartId,
+               },
+            },
+         },
+      }
+   )
 
    if (isFinalCartLoading)
       return (
@@ -107,13 +121,12 @@ const CartScreen = () => {
                textStyle={[styles.buttonText]}
                disabled={
                   isAuthenticated &&
-                  (!cartState?.cart?.fulfillmentInfo ||
+                  (!carts?.[0]?.fulfillmentInfo ||
                      !(
-                        cartState?.cart?.customerInfo?.customerFirstName
-                           ?.length &&
-                        cartState?.cart?.customerInfo?.customerPhone?.length
+                        carts?.[0]?.customerInfo?.customerFirstName?.length &&
+                        carts?.[0]?.customerInfo?.customerPhone?.length
                      ) ||
-                     !cartState?.cart?.address)
+                     !carts?.[0]?.address)
                }
                onPress={() => {
                   if (isAuthenticated) {
@@ -238,3 +251,14 @@ const LoginPopUp = ({ navigation, loginPopUp }) => {
       </View>
    )
 }
+
+const GET_FULFILLMENT_CUSTOMER_ADDRESS = gql`
+   query cart($where: order_cart_bool_exp!) {
+      carts(where: $where) {
+         id
+         customerInfo
+         fulfillmentInfo
+         address
+      }
+   }
+`

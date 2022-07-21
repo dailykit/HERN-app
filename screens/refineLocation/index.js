@@ -33,7 +33,7 @@ const RefineLocation = () => {
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const route = useRoute()
-   const { methods, storedCartId } = useCart()
+   const { methods, storedCartId, cartState } = useCart()
    const { user } = useUser()
    const navAddress = route.params.address
    const navFulfillmentType = route.params.fulfillmentType
@@ -246,6 +246,17 @@ const RefineLocation = () => {
                   locationId: selectedStore.location.id,
                   orderTabId: selectedOrderTab.id,
                   fulfillmentInfo: null,
+               },
+            },
+            optimisticResponse: {
+               updateCart: {
+                  address: customerAddress,
+                  fulfillmentInfo: null,
+                  id: cartState?.cart?.id,
+                  customerInfo: cartState?.cart?.customerInfo,
+                  orderTabId: selectedOrderTab.id,
+                  locationId: selectedStore.location.id,
+                  __typename: 'order_cart',
                },
             },
          })

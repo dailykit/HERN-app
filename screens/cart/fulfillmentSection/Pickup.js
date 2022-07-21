@@ -16,6 +16,7 @@ import { TimeSlots } from './timeSlots'
 import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
 import useGlobalStyle from '../../../globalStyle'
+import { gql, useQuery } from '@apollo/client'
 
 export const Pickup = () => {
    const {
@@ -470,6 +471,20 @@ export const Pickup = () => {
                fulfillmentInfo: slotInfo,
             },
          },
+         optimisticResponse: {
+            updateCart: {
+               id: cartState?.cart?.id,
+               customerInfo: cartState?.cart?.customerInfo,
+               fulfillmentInfo: {
+                  ...fulfillmentTabInfo,
+                  fulfillmentInfo: slotInfo,
+               },
+               address: cartState?.cart?.address,
+               orderTabId: cartState?.cart?.id,
+               locationId: cartState?.cart?.locationId,
+               __typename: 'order_cart',
+            },
+         },
       })
       await AsyncStorage.removeItem('lastStoreLocationId')
       dispatch({
@@ -517,6 +532,20 @@ export const Pickup = () => {
                locationId: locationId,
             },
          },
+         optimisticResponse: {
+            updateCart: {
+               id: cartState?.cart?.id,
+               customerInfo: cartState?.cart?.customerInfo,
+               fulfillmentInfo: {
+                  ...fulfillmentTabInfo,
+                  fulfillmentInfo: slotInfo,
+               },
+               address: cartState?.cart?.address,
+               orderTabId: cartState?.cart?.id,
+               locationId: cartState?.cart?.locationId,
+               __typename: 'order_cart',
+            },
+         },
       })
       await AsyncStorage.removeItem('lastStoreLocationId')
       dispatch({
@@ -550,6 +579,16 @@ export const Pickup = () => {
       return options
    }, [orderTabFulfillmentType])
 
+   const { data } = useQuery(GET_FULFILLMENT_INFO, {
+      variables: {
+         where: {
+            id: {
+               _eq: storedCartId,
+            },
+         },
+      },
+   })
+
    if (!showSlots) {
       return (
          <View>
@@ -571,22 +610,22 @@ export const Pickup = () => {
                      }}
                   >
                      {title}
-                     {cartState.cart?.fulfillmentInfo?.type ===
+                     {data?.carts?.[0]?.fulfillmentInfo?.type ===
                         'PREORDER_PICKUP' ||
-                     cartState.cart?.fulfillmentInfo?.type ===
+                     data?.carts?.[0]?.fulfillmentInfo?.type ===
                         'PREORDER_PICKUP' ? (
                         <Text style={{ fontFamily: globalStyle.font.medium }}>
                            {' '}
                            {moment(
-                              cartState.cart?.fulfillmentInfo?.slot?.from
+                              data?.carts?.[0]?.fulfillmentInfo?.slot?.from
                            ).format('DD MMM YYYY')}
                            {' ('}
                            {moment(
-                              cartState.cart?.fulfillmentInfo?.slot?.from
+                              data?.carts?.[0]?.fulfillmentInfo?.slot?.from
                            ).format('HH:mm')}
                            {'-'}
                            {moment(
-                              cartState.cart?.fulfillmentInfo?.slot?.to
+                              data?.carts?.[0]?.fulfillmentInfo?.slot?.to
                            ).format('HH:mm')}
                            {')'}
                         </Text>
@@ -712,3 +751,12 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
 })
+
+const GET_FULFILLMENT_INFO = gql`
+   query cart($where: order_cart_bool_exp!) {
+      carts(where: $where) {
+         id
+         fulfillmentInfo
+      }
+   }
+`
