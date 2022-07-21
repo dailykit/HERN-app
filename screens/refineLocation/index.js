@@ -18,19 +18,23 @@ import { Button } from '../../components/button'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { getStoresWithValidations } from '../../utils/location/sharedLocationUtils'
 import { useConfig } from '../../lib/config'
+import { useUser } from '../../context'
 import SearchIcon from '../../assets/searchIcon'
 import { GooglePlacesAutocompleteWrapper } from '../../components/location/googlePlaceAutoComplete'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useCart } from '../../context'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import useGlobalStyle from '../../globalStyle'
+import { useMutation } from '@apollo/client'
+import { MUTATIONS } from '../../graphql'
+import { Spinner } from '../../assets/loaders'
 
 const RefineLocation = () => {
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const route = useRoute()
    const { methods, storedCartId } = useCart()
-
+   const { user } = useUser()
    const navAddress = route.params.address
    const navFulfillmentType = route.params.fulfillmentType
 
@@ -43,6 +47,7 @@ const RefineLocation = () => {
    const [isStoreAvailableOnAddress, setIsStoreAvailableOnAddress] =
       React.useState(true)
    const [selectedStore, setSelectedStore] = useState(null)
+   const [isSettingLocation, setIsSettingLocation] = useState(false)
    const [runInitialMapChange, setRunInitialMapChange] = useState(false) // used to stop getting new address on first time map render (stop to run onChangeMap)
 
    const [showGoogleAutoComplete, setShowGoogleAutoComplete] = useState(false)
@@ -187,7 +192,22 @@ const RefineLocation = () => {
       }
    }
 
+   const [createAddress] = useMutation(MUTATIONS.CUSTOMER.ADDRESS.CREATE, {
+      onCompleted: () => {
+         console.log('==> User Address Created!')
+         // addToast(t('Address has been saved.'), {
+         //    appearance: 'success',
+         // })
+      },
+      onError: error => {
+         // addToast(error.message, {
+         //    appearance: 'error',
+         // })
+      },
+   })
+
    const handleSubmit = async () => {
+      setIsSettingLocation(true)
       const selectedOrderTab = orderTabs.find(
          x => x.orderFulfillmentTypeLabel === navFulfillmentType
       )
@@ -205,6 +225,13 @@ const RefineLocation = () => {
          lng: address.longitude.toString(),
          landmark: additionalAddressInfo?.landmark || '',
          searched: searchedLocation,
+      }
+      if (user?.keycloakId) {
+         createAddress({
+            variables: {
+               object: { ...customerAddress, keycloakId: user?.keycloakId },
+            },
+         })
       }
       const cartIdInLocal = await AsyncStorage.getItem('cart-id')
       if (cartIdInLocal || storedCartId) {
@@ -405,11 +432,17 @@ const RefineLocation = () => {
             }
             onPress={handleSubmit}
          >
-            {isGetStoresLoading
-               ? 'Searching store'
-               : isStoreAvailableOnAddress
-               ? 'Save & Proceed'
-               : 'No store available'}
+            {isGetStoresLoading ? (
+               'Searching store'
+            ) : isStoreAvailableOnAddress ? (
+               isSettingLocation ? (
+                  <Spinner color={'#ffffff'} />
+               ) : (
+                  'Save & Proceed'
+               )
+            ) : (
+               'No store available'
+            )}
          </Button>
       </SafeAreaView>
    )

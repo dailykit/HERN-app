@@ -13,9 +13,9 @@ export const GooglePlacesAutocompleteWrapper = ({
 }) => {
    const { globalStyle } = useGlobalStyle()
    const _googleRef = React.useRef()
-   React.useEffect(() => {
-      _googleRef.current.focus()
-   }, [])
+   // React.useEffect(() => {
+   //    _googleRef.current.focus()
+   // }, [])
    return (
       <View
          style={[
