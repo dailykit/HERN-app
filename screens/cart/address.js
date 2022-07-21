@@ -7,6 +7,8 @@ import { useConfig } from '../../lib/config'
 import { DownVector } from '../../assets/vector'
 import { useNavigation } from '@react-navigation/native'
 import useGlobalStyle from '../../globalStyle'
+import { gql, useQuery } from '@apollo/client'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Address = () => {
    const { orderTabs, selectedOrderTab, appConfig } = useConfig()
@@ -14,6 +16,19 @@ export const Address = () => {
    const navigation = useNavigation()
    const { cartState: { cart } = {} } = useCart()
    const [numberOfLines, setNumberOfLines] = React.useState(1)
+
+   const { data: { carts = [] } = {}, loading } = useQuery(
+      GET_CUSTOMER_ADDRESS,
+      {
+         variables: {
+            where: {
+               id: {
+                  _eq: cart?.id,
+               },
+            },
+         },
+      }
+   )
    const selectedFulfillment = React.useMemo(
       () =>
          selectedOrderTab
@@ -39,12 +54,12 @@ export const Address = () => {
    }, [selectedFulfillment])
 
    const address = React.useMemo(() => {
-      if (cart?.address) {
-         return cart?.address
+      if (carts[0]?.address && !loading) {
+         return carts?.[0]?.address
       } else {
-         return JSON.parse(localStorage.getItem('userLocation'))
+         return {}
       }
-   }, [cart])
+   }, [carts, loading])
 
    return (
       <View style={styles.addressContainer}>
@@ -92,7 +107,9 @@ export const Address = () => {
                      color: '#00000080',
                   }}
                >
-                  {`${address?.line1} ${address?.city} ${address?.state} ${address?.country},${address?.zipcode}`}
+                  {`${address?.line1 || ''} ${address?.city || ''} ${
+                     address?.state || ''
+                  } ${address?.country || ''} ,${address?.zipcode || ''}`}
                </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -142,3 +159,12 @@ const styles = StyleSheet.create({
       borderColor: '#00000030',
    },
 })
+const GET_CUSTOMER_ADDRESS = gql`
+   query carts($where: order_cart_bool_exp!) {
+      carts(where: $where) {
+         id
+         address
+         orderTabId
+      }
+   }
+`

@@ -17,11 +17,12 @@ export const MUTATIONS = {
          ) {
             updateCart(pk_columns: { id: $id }, _set: $_set, _inc: $_inc) {
                id
-               itemTotal
-               tax
-               deliveryPrice
-               discount
-               totalPrice
+               customerInfo
+               fulfillmentInfo
+               address
+               orderTabId
+               locationId
+               __typename
             }
          }
       `,
