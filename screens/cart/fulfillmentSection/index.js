@@ -6,7 +6,7 @@ import { Pickup } from './Pickup'
 import useGlobalStyle from '../../../globalStyle'
 import { OrderTime } from '../../../assets/orderTIme'
 
-export const FulfillmentSection = () => {
+export const FulfillmentSection = ({ deliveryTimePopUp, cartState }) => {
    const { orderTabs, selectedOrderTab } = useConfig()
    const { globalStyle } = useGlobalStyle()
 
@@ -37,22 +37,28 @@ export const FulfillmentSection = () => {
 
    return (
       <View style={styles.fulfillmentContainer}>
-         <View style={{ flex: 1, flexDirection: 'row', marginLeft: 3 }}>
-            <OrderTime size={20} />
-            <View>
-               <Text
-                  style={{
-                     fontFamily: globalStyle.font.medium,
-                     // color: '#00000080',
-                     marginLeft: 4,
-                  }}
-               >
-                  {fulfillmentLabel}
-               </Text>
+         {cartState?.cart?.fulfillmentInfo && (
+            <View style={{ flex: 1, flexDirection: 'row', marginLeft: 3 }}>
+               <OrderTime size={20} />
+               <View>
+                  <Text
+                     style={{
+                        fontFamily: globalStyle.font.medium,
+                        // color: '#00000080',
+                        marginLeft: 4,
+                     }}
+                  >
+                     {fulfillmentLabel}
+                  </Text>
+               </View>
             </View>
-         </View>
-         {selectedFulfillment === 'DELIVERY' ? <Delivery /> : null}
-         {selectedFulfillment === 'PICKUP' ? <Pickup /> : null}
+         )}
+         {selectedFulfillment === 'DELIVERY' ? (
+            <Delivery deliveryTimePopUp={deliveryTimePopUp} />
+         ) : null}
+         {selectedFulfillment === 'PICKUP' ? (
+            <Pickup deliveryTimePopUp={deliveryTimePopUp} />
+         ) : null}
       </View>
    )
 }

@@ -45,11 +45,6 @@ const CartScreen = () => {
 
    const loginPopUp = createRef()
    const deliveryTimePopUp = createRef()
-   // const [showPopUp, setShowPopUp] = useState(false)
-
-   // useEffect(() => {
-   //    deliveryTimePopUp?.current?.present()
-   // }, [showPopUp])
 
    const { data: { carts = [] } = {} } = useQuery(
       GET_FULFILLMENT_CUSTOMER_ADDRESS,
@@ -122,7 +117,10 @@ const CartScreen = () => {
                   {/* <FulfillmentSection /> */}
                </>
             )}
-            {cartState?.cart?.fulfillmentInfo && <FulfillmentSection />}
+            <FulfillmentSection
+               deliveryTimePopUp={deliveryTimePopUp}
+               cartState={cartState}
+            />
          </ScrollView>
          <View style={styles.buttonContainer}>
             {!cartState?.cart?.fulfillmentInfo ? (
@@ -130,7 +128,7 @@ const CartScreen = () => {
                   buttonStyle={styles.button}
                   textStyle={[styles.buttonText]}
                   onPress={() => {
-                     console.log('clicked')
+                     console.log('clicked', deliveryTimePopUp)
                      deliveryTimePopUp?.current?.present()
                   }}
                >
@@ -172,19 +170,6 @@ const CartScreen = () => {
          >
             <LoginPopUp navigation={navigation} loginPopUp={loginPopUp} />
          </BottomSheetModal>
-         {/* <BottomSheetModal
-            ref={deliveryTimePopUp}
-            snapPoints={[500]}
-            index={0}
-            enablePanDownToClose={true}
-            handleComponent={() => null}
-            backdropComponent={CustomBackdrop}
-         >
-            <BottomSheetScrollView> */}
-
-         <Delivery deliveryTimePopUp={deliveryTimePopUp} />
-         {/* </BottomSheetScrollView> */}
-         {/* </BottomSheetModal> */}
       </SafeAreaView>
    )
 }

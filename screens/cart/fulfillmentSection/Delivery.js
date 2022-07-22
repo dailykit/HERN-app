@@ -501,6 +501,8 @@ export const Delivery = ({ deliveryTimePopUp }) => {
    }
 
    const onFulfillmentTimeClick = async (timestamp, mileRangeId) => {
+      deliveryTimePopUp.current.dismiss()
+
       const slotInfo = {
          slot: {
             from: timestamp.from,
@@ -577,13 +579,6 @@ export const Delivery = ({ deliveryTimePopUp }) => {
       },
    })
 
-   // useEffect(() => {
-   //    if (showSlots) {
-   //       deliveryTimePopUp?.current?.present()
-   //    }
-   //    console.log(showSlots, deliveryTimePopUp)
-   // }, [showSlots])
-
    const handleChangeDeliveryTime = () => {
       if (deliveryRadioOptions.length > 1) {
          setFulfillmentTabInfo(prev => ({
@@ -592,8 +587,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
          }))
       }
       setShowSlots(true)
-      console.log(deliveryTimePopUp)
-      // deliveryTimePopUp?.current?.present()
+      deliveryTimePopUp?.current?.present()
    }
 
    const DeliveryTimePopUp = () => {
@@ -679,10 +673,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                   onFulfillmentTimeClick={onFulfillmentTimeClick}
                   selectedSlot={selectedSlot}
                   availableDaySlots={deliverySlots}
-                  setSelectedSlot={selectedSlot => {
-                     console.log(selectedSlot)
-                     setSelectedSlot(selectedSlot)
-                  }}
+                  setSelectedSlot={setSelectedSlot}
                   timeSlotsFor={'Delivery'}
                />
             ) : null}
@@ -704,7 +695,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
 
    return (
       <>
-         {!showSlots ? (
+         {cartState?.cart?.fulfillmentInfo ? (
             <View>
                <View
                   style={{
