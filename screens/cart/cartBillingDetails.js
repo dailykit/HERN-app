@@ -80,7 +80,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {formatCurrency(billing.deliveryPrice || 0)}
@@ -92,7 +92,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Tax (Inclusive)'}
@@ -100,7 +100,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {formatCurrency(
@@ -144,7 +144,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Total Discount'}
@@ -152,7 +152,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         - {formatCurrency(billing.totalDiscount || 0)}
@@ -164,7 +164,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Loyalty amount applied'}
@@ -172,7 +172,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         <Text
@@ -191,7 +191,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Wallet amount used'}
@@ -199,7 +199,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         - {formatCurrency(billing.walletAmountUsed)}
@@ -211,7 +211,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {'Tip'}
@@ -219,7 +219,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.regular },
+                           { fontFamily: globalStyle.font.medium },
                         ]}
                      >
                         {formatCurrency(tip)}
@@ -242,6 +242,7 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                         {
                            fontFamily: globalStyle.font.medium,
                            color: '#00000080',
+                           fontSize: 15,
                         },
                      ]}
                   >
@@ -250,7 +251,8 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalStyle.font.medium },
+
+                        { fontFamily: globalStyle.font.medium, fontSize: 15 },
                      ]}
                   >
                      {formatCurrency(billing.totalToPay || 0)}

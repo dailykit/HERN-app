@@ -403,6 +403,7 @@ const UserDetails = ({
                </>
             )}
          </View>
+         <View style={styles.divider}></View>
       </>
    )
 }

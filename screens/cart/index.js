@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef } from 'react'
+import React, { createRef, useEffect, useState } from 'react'
 import {
    ScrollView,
    StyleSheet,
@@ -45,6 +45,11 @@ const CartScreen = () => {
 
    const loginPopUp = createRef()
    const deliveryTimePopUp = createRef()
+   // const [showPopUp, setShowPopUp] = useState(false)
+
+   // useEffect(() => {
+   //    deliveryTimePopUp?.current?.present()
+   // }, [showPopUp])
 
    const { data: { carts = [] } = {} } = useQuery(
       GET_FULFILLMENT_CUSTOMER_ADDRESS,
@@ -125,7 +130,8 @@ const CartScreen = () => {
                   buttonStyle={styles.button}
                   textStyle={[styles.buttonText]}
                   onPress={() => {
-                     deliveryTimePopUp.current.present()
+                     console.log('clicked')
+                     deliveryTimePopUp?.current?.present()
                   }}
                >
                   Add Delivery Time
@@ -166,7 +172,7 @@ const CartScreen = () => {
          >
             <LoginPopUp navigation={navigation} loginPopUp={loginPopUp} />
          </BottomSheetModal>
-         <BottomSheetModal
+         {/* <BottomSheetModal
             ref={deliveryTimePopUp}
             snapPoints={[500]}
             index={0}
@@ -174,14 +180,11 @@ const CartScreen = () => {
             handleComponent={() => null}
             backdropComponent={CustomBackdrop}
          >
-            <BottomSheetScrollView>
-               <DeliveryTimePopUp
-                  navigation={navigation}
-                  deliveryTimePopUp={deliveryTimePopUp}
-                  cartState={cartState}
-               />
-            </BottomSheetScrollView>
-         </BottomSheetModal>
+            <BottomSheetScrollView> */}
+
+         <Delivery deliveryTimePopUp={deliveryTimePopUp} />
+         {/* </BottomSheetScrollView> */}
+         {/* </BottomSheetModal> */}
       </SafeAreaView>
    )
 }
@@ -297,13 +300,12 @@ const GET_FULFILLMENT_CUSTOMER_ADDRESS = gql`
       }
    }
 `
-const DeliveryTimePopUp = ({ navigation, deliveryTimePopUp, cartState }) => {
-   const { globalStyle } = useGlobalStyle()
-   return (
-      <ScrollView style={styles.deliveryTimePopUp}>
-         <Delivery />
-         {cartState?.cart?.fulfillmentInfo &&
-            deliveryTimePopUp.current.dismiss()}
-      </ScrollView>
-   )
-}
+// const DeliveryTimePopUp = ({ navigation, deliveryTimePopUp, cartState }) => {
+//    return (
+//       <ScrollView>
+//          <Delivery />
+//          {cartState?.cart?.fulfillmentInfo &&
+//             deliveryTimePopUp.current.dismiss()}
+//       </ScrollView>
+//    )
+// }
