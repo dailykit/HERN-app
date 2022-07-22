@@ -8,7 +8,7 @@ import {
    TouchableWithoutFeedback,
    Dimensions,
 } from 'react-native'
-import { chain } from 'lodash'
+import { chain, isEqual } from 'lodash'
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { Button } from './button'
@@ -34,80 +34,81 @@ const productViewStyles = {
    horizontalCard: 'horizontalCard',
 }
 
-export const ProductList = ({
-   productsList,
-   heading,
-   viewStyle = 'horizontalCard',
-}) => {
-   const { globalStyle } = useGlobalStyle()
-   // group the product list by product type
-   const groupedByType = React.useMemo(() => {
-      const data = chain(productsList)
-         .groupBy('subCategory')
-         .map((value, key) => ({
-            type: key,
-            products: value,
-         }))
-         .value()
-      const nullData = data.filter(x => x.type === 'null')
-      const nonNullData = data.filter(x => x.type !== 'null')
-      return [...nonNullData, ...nullData]
-   }, [productsList])
+export const ProductList = React.memo(
+   ({ productsList, heading, viewStyle = 'horizontalCard' }) => {
+      const { globalStyle } = useGlobalStyle()
+      // group the product list by product type
+      const groupedByType = React.useMemo(() => {
+         const data = chain(productsList)
+            .groupBy('subCategory')
+            .map((value, key) => ({
+               type: key,
+               products: value,
+            }))
+            .value()
+         const nullData = data.filter(x => x.type === 'null')
+         const nonNullData = data.filter(x => x.type !== 'null')
+         return [...nonNullData, ...nullData]
+      }, [productsList])
 
-   const [currentGroupProducts, setCurrentGroupedProduct] = useState(
-      groupedByType[0].products
-   )
+      const [currentGroupProducts, setCurrentGroupedProduct] = useState(
+         groupedByType[0].products
+      )
 
-   return (
-      <View>
-         {heading && (
-            <Text
-               style={[
-                  styles.productListHeading,
-                  { fontFamily: globalStyle.font.semibold },
-               ]}
-            >
-               {heading}
-            </Text>
-         )}
-         <ScrollView
-            contentContainerStyle={{ display: 'flex' }}
-            horizontal={viewStyle !== productViewStyles.horizontalCard}
-         >
-            {currentGroupProducts.length > 0 ? (
-               currentGroupProducts.map((eachProduct, index) => {
-                  const publishedProductOptions =
-                     eachProduct.productOptions.length > 0 &&
-                     eachProduct.productOptions.filter(
-                        option => option.isPublished
-                     ).length == 0
-                  if (!eachProduct.isPublished || publishedProductOptions) {
-                     return null
-                  }
-                  return (
-                     <ProductCard
-                        key={`${eachProduct.id}-${eachProduct.type}-${index}`}
-                        productData={eachProduct}
-                        viewStyle={viewStyle}
-                     />
-                  )
-               })
-            ) : (
-               <View
+      return (
+         <View>
+            {heading && (
+               <Text
                   style={[
-                     styles.noProductsMsgContainer,
-                     { fontFamily: globalStyle.font.medium },
+                     styles.productListHeading,
+                     { fontFamily: globalStyle.font.semibold },
                   ]}
                >
-                  <Text style={{ fontFamily: globalStyle.font.medium }}>
-                     No Products Found
-                  </Text>
-               </View>
+                  {heading}
+               </Text>
             )}
-         </ScrollView>
-      </View>
-   )
-}
+            <ScrollView
+               contentContainerStyle={{ display: 'flex' }}
+               horizontal={viewStyle !== productViewStyles.horizontalCard}
+            >
+               {currentGroupProducts.length > 0 ? (
+                  currentGroupProducts.map((eachProduct, index) => {
+                     const publishedProductOptions =
+                        eachProduct.productOptions.length > 0 &&
+                        eachProduct.productOptions.filter(
+                           option => option.isPublished
+                        ).length == 0
+                     if (!eachProduct.isPublished || publishedProductOptions) {
+                        return null
+                     }
+                     return (
+                        <ProductCard
+                           key={`${eachProduct.id}-${eachProduct.type}-${index}`}
+                           productData={eachProduct}
+                           viewStyle={viewStyle}
+                        />
+                     )
+                  })
+               ) : (
+                  <View
+                     style={[
+                        styles.noProductsMsgContainer,
+                        { fontFamily: globalStyle.font.medium },
+                     ]}
+                  >
+                     <Text style={{ fontFamily: globalStyle.font.medium }}>
+                        No Products Found
+                     </Text>
+                  </View>
+               )}
+            </ScrollView>
+         </View>
+      )
+   },
+   (prevProps, nextProps) => {
+      return isEqual(prevProps, nextProps)
+   }
+)
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const { cartState, methods, addToCart, combinedCartItems } = useCart()
@@ -199,29 +200,35 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
       })
    }
 
+   const productValidationResult = React.useMemo(() => {
+      const isProductAbleForModifiers =
+         productData.productOptions.length > 0 && productData.isPopupAllowed
+      return {
+         isProductAbleToAddIntoCart:
+            productData.isAvailable && showAddToCartButton,
+         isProductAbleForModifiers,
+         isProductOptionsAvailable:
+            productData.productOptions.filter(
+               option => option.isAvailable && option.isPublished
+            ).length > 0,
+      }
+   }, [productData, showAddToCartButton])
+
    const handelAddToCartClick = () => {
       // product availability
       if (!locationId) {
          navigation.navigate('LocationSelector')
          return
       }
-      if (productData.isAvailable) {
-         if (showAddToCartButton) {
-            if (
-               productData.productOptions.length > 0 &&
-               productData.isPopupAllowed
-            ) {
-               const availableProductOptions =
-                  productData.productOptions.filter(
-                     option => option.isAvailable && option.isPublished
-                  ).length
-               if (availableProductOptions > 0) {
-                  // setShowModifierPopup(true)
-                  bottomSheetModalRef.current?.present()
-               }
-            } else {
-               addToCart(productData.defaultCartItem, 1)
+
+      if (productValidationResult.isProductAbleToAddIntoCart) {
+         if (productValidationResult.isProductAbleForModifiers) {
+            if (productValidationResult.isProductOptionsAvailable) {
+               // setShowModifierPopup(true)
+               bottomSheetModalRef.current?.present()
             }
+         } else {
+            addToCart(productData.defaultCartItem, 1)
          }
       }
    }
@@ -594,12 +601,11 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      </View>
                      <View>
                         {availableQuantityInCart === 0 ? (
-                           <Button
-                              onPress={() => {
-                                 handelAddToCartClick()
-                              }}
-                           >
-                              +ADD
+                           <Button onPress={handelAddToCartClick}>
+                              {productValidationResult.isProductOptionsAvailable
+                                 ? '+'
+                                 : ''}
+                              ADD
                            </Button>
                         ) : (
                            <CounterButton
