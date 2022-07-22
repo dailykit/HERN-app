@@ -600,12 +600,12 @@ export const Pickup = () => {
                }}
             >
                <View style={{ flexDirection: 'row' }}>
-                  <OrderTime size={20} />
+                  {/* <OrderTime size={20} /> */}
                   {/* &nbsp;&nbsp; */}
                   <Text
                      style={{
                         marginLeft: 6,
-                        color: '#00000080',
+                        // color: '#00000080',
                         fontFamily: globalStyle.font.medium,
                      }}
                   >
@@ -614,7 +614,7 @@ export const Pickup = () => {
                         'PREORDER_PICKUP' ||
                      data?.carts?.[0]?.fulfillmentInfo?.type ===
                         'PREORDER_PICKUP' ? (
-                        <Text style={{ fontFamily: globalStyle.font.medium }}>
+                        <Text style={{ fontFamily: globalStyle.font.regular }}>
                            {' '}
                            {moment(
                               data?.carts?.[0]?.fulfillmentInfo?.slot?.from
@@ -665,12 +665,13 @@ export const Pickup = () => {
             style={{
                flexDirection: 'column',
                justifyContent: 'space-between',
-               alignItems: 'center',
+               alignItems: 'flex-start',
+               marginTop: 12,
             }}
          >
             <Text
                style={{
-                  fontFamily: globalStyle.font.semibold,
+                  fontFamily: globalStyle.font.medium,
                   alignSelf: 'flex-start',
                   marginBottom: 5,
                }}

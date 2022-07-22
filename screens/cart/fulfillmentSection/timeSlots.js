@@ -29,23 +29,25 @@ export const TimeSlots = ({
    }, [selectedSlot, showAllTimeSlots])
    return (
       <View>
-         <View>
+         <View style={{ marginVertical: 12 }}>
             <Text
                style={[
                   styles.headingStyle,
-                  { fontFamily: globalStyle.font.semibold },
+                  { fontFamily: globalStyle.font.medium },
                ]}
             >
                Select Date For Later
             </Text>
             <View>
-               <ScrollView horizontal={true}>
+               <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                   {daySlots.map((eachSlot, index) => {
                      return (
                         <Button
                            key={eachSlot.date}
                            buttonStyle={{
-                              marginHorizontal: 4,
+                              width: 100,
+                              marginRight: 4,
+                              marginBottom: 4,
                               ...(index == 0 ? { marginLeft: 0 } : {}),
                            }}
                            onPress={() => setSelectedSlot(eachSlot)}
@@ -57,7 +59,7 @@ export const TimeSlots = ({
                         </Button>
                      )
                   })}
-               </ScrollView>
+               </View>
             </View>
          </View>
          {selectedSlot ? (
@@ -65,12 +67,12 @@ export const TimeSlots = ({
                <Text
                   style={[
                      styles.headingStyle,
-                     { fontFamily: globalStyle.font.semibold },
+                     { fontFamily: globalStyle.font.medium },
                   ]}
                >
                   Select Time
                </Text>
-               <ScrollView horizontal={true}>
+               <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                   {sortBy(timeSlots, [
                      function (slot) {
                         return moment(slot.time, 'HH:mm')
@@ -98,7 +100,9 @@ export const TimeSlots = ({
                         <Button
                            key={`${eachSlot}-${index}`}
                            buttonStyle={{
-                              marginHorizontal: 4,
+                              width: 110,
+                              marginRight: 4,
+                              marginBottom: 4,
                               ...(index == 0 ? { marginLeft: 0 } : {}),
                            }}
                            variant={'outline'}
@@ -110,7 +114,7 @@ export const TimeSlots = ({
                         </Button>
                      )
                   })}
-               </ScrollView>
+               </View>
             </View>
          ) : null}
       </View>
@@ -119,7 +123,7 @@ export const TimeSlots = ({
 
 const styles = StyleSheet.create({
    headingStyle: {
-      color: '#00000060',
+      // color: '#00000060',
       marginVertical: 6,
    },
 })

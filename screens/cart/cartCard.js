@@ -423,7 +423,7 @@ export const CartCard = ({ productData, quantity }) => {
                         <Text
                            style={[
                               styles.originalPrice,
-                              { fontFamily: globalStyle.font.medium },
+                              { fontFamily: globalStyle.font.regular },
                            ]}
                         >
                            {formatCurrency(getTotalPrice.totalPrice)}
@@ -432,7 +432,7 @@ export const CartCard = ({ productData, quantity }) => {
                      <Text
                         style={[
                            styles.discountPrice,
-                           { fontFamily: globalStyle.font.medium },
+                           { fontFamily: globalStyle.font.regular },
                         ]}
                      >
                         {getTotalPrice.totalPrice !== 0
@@ -547,7 +547,7 @@ const AdditionalDetails = ({ productData }) => {
                   paddingHorizontal: 12,
                }}
             >
-               <Text style={{ fontFamily: globalStyle.font.semibold }}>
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
                   Customizable
                </Text>
                {showAdditionalDetailsOnCard ? (
@@ -796,12 +796,12 @@ const AdditionalDetails = ({ productData }) => {
 
 const styles = StyleSheet.create({
    cartContainer: {
-      padding: 12,
+      // padding: 12,
       borderRadius: 6,
-      shadowColor: '#00000030',
-      shadowOffset: { width: 0, height: 2 },
-      shadowRadius: 6,
-      elevation: 3,
+      // shadowColor: '#00000030',
+      // shadowOffset: { width: 0, height: 2 },
+      // shadowRadius: 6,
+      // elevation: 3,
       marginBottom: 6,
    },
    clearCartText: {
