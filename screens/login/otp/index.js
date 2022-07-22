@@ -229,7 +229,7 @@ export const OtpLogin = () => {
          const { data, status } = await axios.get(
             `${SERVER_URL}/server/api/auth/?authDetails=${authDetails}`
          )
-         console.log('resp', data)
+         // console.log('resp', data)
          if (status === 200) {
             const decode = JWT.decode(data.token, get_env('ADMIN_SECRET'), {
                timeSkew: 30,

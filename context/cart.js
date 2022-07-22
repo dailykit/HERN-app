@@ -60,6 +60,7 @@ export const CartProvider = ({ children }) => {
    const [combinedCartItems, setCombinedCartData] = useState(null)
    const [showCartIconToolTip, setShowCartIconToolTip] = useState(false)
    const [dineInTableInfo, setDineInTableInfo] = useState(null)
+   const [totalCartItems, setTotalCartItems] = useState(0)
    const [
       isCartValidByProductAvailability,
       setIsCartValidByProductAvailability,
@@ -89,6 +90,7 @@ export const CartProvider = ({ children }) => {
          } else {
             if (!isLoading && !isAuthenticated) {
                setStoredCartId(null)
+               setTotalCartItems(0)
             }
          }
       })()
@@ -190,40 +192,15 @@ export const CartProvider = ({ children }) => {
    }, [cartItemsData?.cartItems])
 
    useEffect(() => {
-      if (
-         !isCartLoading &&
-         !isEmpty(cartData) &&
-         !isEmpty(cartData.carts) &&
-         oiType === 'Kiosk Ordering'
-      ) {
+      if (!isCartLoading && !isEmpty(cartData) && !isEmpty(cartData.carts)) {
          const cart = cartData.carts[0]
-         const terminalPaymentOption = cart?.paymentMethods.find(
-            option =>
-               option?.supportedPaymentOption?.paymentOptionLabel === 'TERMINAL'
-         )
-         const codPaymentOption = cart?.paymentMethods.find(
-            option =>
-               option?.supportedPaymentOption?.paymentOptionLabel === 'CASH'
-         )
-         const terminalPaymentOptionId = !isEmpty(terminalPaymentOption)
-            ? terminalPaymentOption?.id
-            : null
-         const codPaymentOptionId = !isEmpty(codPaymentOption)
-            ? codPaymentOption?.id
-            : null
-         cartReducer({
-            type: 'KIOSK_PAYMENT_OPTION',
-            payload: [
-               {
-                  label: 'TERMINAL',
-                  id: terminalPaymentOptionId,
-               },
-               {
-                  label: 'COD',
-                  id: codPaymentOptionId,
-               },
-            ],
-         })
+         setTotalCartItems(cart?.cartItems_aggregate?.aggregate?.count)
+      }
+
+      // if there is no cart available make count 0 and set null store card id
+      if (!isCartLoading && cartData.carts?.length === 0) {
+         setTotalCartItems(0)
+         setStoredCartId(null)
       }
    }, [cartData, isCartLoading])
 
@@ -293,8 +270,6 @@ export const CartProvider = ({ children }) => {
    //delete cart
    const [deleteCart] = useMutation(MUTATIONS.CART.DELETE, {
       onCompleted: async () => {
-         await AsyncStorage.removeItem('cart-id')
-         setStoredCartId(null)
          setIsFinalCartLoading(false)
       },
       onError: error => {
@@ -334,6 +309,11 @@ export const CartProvider = ({ children }) => {
                variables: {
                   id: storedCartId,
                },
+               onCompleted: async () => {
+                  setTotalCartItems(0)
+                  setStoredCartId(null)
+                  await AsyncStorage.removeItem('cart-id')
+               },
             })
          }
          setIsFinalCartLoading(false)
@@ -361,6 +341,7 @@ export const CartProvider = ({ children }) => {
       // setIsFinalCartLoading(true)
       const cartItems = new Array(quantity).fill({ ...cartItem })
       const orderTabInLocal = await AsyncStorage.getItem('orderTab')
+      setTotalCartItems(prev => prev + quantity)
       let customerAddressFromLocal
       switch (orderTabInLocal) {
          case 'ONDEMAND_DELIVERY':
@@ -531,7 +512,12 @@ export const CartProvider = ({ children }) => {
                },
             },
          },
-         skip: !(brand?.id && user?.keycloakId && orderTabs.length > 0),
+         skip: !(
+            brand?.id &&
+            user?.keycloakId &&
+            orderTabs.length > 0 &&
+            user?.platform_customer?.firstName
+         ),
          fetchPolicy: 'no-cache',
          onSubscriptionData: async ({ subscriptionData }) => {
             // pending cart available
@@ -576,12 +562,15 @@ export const CartProvider = ({ children }) => {
                         },
                      })
                      // delete last one
-                     await deleteCart({
-                        variables: {
-                           id: subscriptionData.data.carts[0].id,
-                        },
-                     })
-                     await AsyncStorage.removeItem('cart-id')
+                     if (subscriptionData.data.carts[0].id !== storedCartId)
+                        await deleteCart({
+                           variables: {
+                              id: subscriptionData.data.carts[0].id,
+                           },
+                           onCompleted: async () => {
+                              await AsyncStorage.removeItem('cart-id')
+                           },
+                        })
                      setStoredCartId(guestCartId)
                      setIsFinalCartLoading(false)
                   } else {
@@ -730,6 +719,7 @@ export const CartProvider = ({ children }) => {
                },
             },
             isCartValidByProductAvailability,
+            totalCartItems,
          }}
       >
          {children}

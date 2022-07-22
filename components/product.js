@@ -111,7 +111,8 @@ export const ProductList = React.memo(
 )
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
-   const { cartState, methods, addToCart, combinedCartItems } = useCart()
+   const { cartState, methods, addToCart, combinedCartItems, storedCartId } =
+      useCart()
    const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const bottomSheetModalRef = React.useRef(null)
@@ -187,6 +188,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
          setAvailableQuantityInCart(allCartItemsIdsForThisProducts)
       }
    }, [combinedCartItems])
+
+   React.useEffect(() => {
+      if (storedCartId == null) {
+         setAvailableQuantityInCart(0)
+      }
+   }, [storedCartId])
 
    const removeCartItems = cartItemIds => {
       methods.cartItems.delete({
@@ -616,6 +623,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                                     .map(x => x.ids)
                                     .flat()
                                  removeCartItems([idsAv[idsAv.length - 1]])
+                                 setAvailableQuantityInCart(prev => prev - 1)
                               }}
                               onPlusClick={() => {
                                  if (
@@ -648,6 +656,9 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      bottomSheetModalRef.current?.dismiss()
                   }}
                   productData={productData}
+                  onComplete={quantity => {
+                     setAvailableQuantityInCart(prev => prev + quantity)
+                  }}
                />
             </BottomSheetModal>
             <Modal isVisible={showModifierPopup}>
@@ -690,7 +701,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         }}
                         onPress={() => {
                            setShowChooseIncreaseType(false)
-                           setShowModifierPopup(true)
+                           // setShowModifierPopup(true)
+                           bottomSheetModalRef.current?.present()
                         }}
                      >
                         I'LL CHOOSE

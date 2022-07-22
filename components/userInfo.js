@@ -85,7 +85,6 @@ const UserInfoForm = props => {
 
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
       onCompleted: () => {
-         console.log('==> Platform Customer Updated!')
          setSavingUserInfo(false)
          if (cart?.customerInfo === null) {
             setSettingCartInfo(true)
@@ -255,16 +254,15 @@ const GET_USER_INFO = gql`
       }
    }
 `
-const UserDetails = ({
-   handleOpen,
-   cart,
-   settingCartInfo,
-   setSettingCartInfo,
-}) => {
+const UserDetails = ({ handleOpen, settingCartInfo, setSettingCartInfo }) => {
    const { appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const { user } = useUser()
-   const { methods, storedCartId } = React.useContext(CartContext)
+   const {
+      methods,
+      storedCartId,
+      cartState: { cart } = {},
+   } = React.useContext(CartContext)
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
       onCompleted: () => {
          console.log('==> Platform Customer Updated!')
@@ -275,6 +273,7 @@ const UserDetails = ({
    })
 
    const { data } = useQuery(GET_USER_INFO, {
+      skip: !user?.keycloakId,
       variables: {
          where: {
             id: {

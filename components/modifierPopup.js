@@ -34,6 +34,7 @@ export const ModifierPopup = ({
    productCartDetail = null,
    showModifiers = true,
    productData,
+   onComplete = () => {},
 }) => {
    // context
    const { brand, locationId, brandLocation, appConfig } = useConfig()
@@ -170,8 +171,9 @@ export const ModifierPopup = ({
          )
          // const objects = new Array(quantity).fill({ ...cartItem })
          // console.log('cartItem', objects)
-         await addToCart(cartItem, quantity, onProductAddComplete)
-         console.log('==> Added to Cart!')
+         // await addToCart(cartItem, quantity, onProductAddComplete)
+         addToCart(cartItem, quantity)
+         onProductAddComplete()
          if (edit) {
             methods.cartItems.delete({
                variables: {
@@ -184,6 +186,7 @@ export const ModifierPopup = ({
             })
          }
          closeModifier()
+         onComplete(quantity)
          return
       }
 
@@ -288,13 +291,17 @@ export const ModifierPopup = ({
                nestedModifierOptionsGroupByParentModifierOptionId
             )
             // console.log('finalCartItem', cartItem)
-            await addToCart(cartItem, quantity, onProductAddComplete)
+            // await addToCart(cartItem, quantity, onProductAddComplete)
+            addToCart(cartItem, quantity)
+            onProductAddComplete()
          } else {
             const cartItem = getCartItemWithModifiers(
                productOption.cartItem,
                allSelectedOptions.map(x => x.cartItem)
             )
-            await addToCart(cartItem, quantity, onProductAddComplete)
+            // await addToCart(cartItem, quantity, onProductAddComplete)
+            addToCart(cartItem, quantity)
+            onProductAddComplete()
          }
          if (edit) {
             methods.cartItems.delete({
@@ -308,6 +315,7 @@ export const ModifierPopup = ({
             })
          }
          closeModifier()
+         onComplete(quantity)
       }
    }
    const totalAmount = () => {
@@ -548,11 +556,14 @@ export const ModifierPopup = ({
             {/*
             modifier options
             */}
-            {productOption?.modifier ? (
+            {!isModifiersLoading ? (
                <View>
-                  <Text style={{ fontFamily: globalStyle.font.semibold }}>
-                     Add On:
-                  </Text>
+                  {productOption.modifier?.categories?.length > 0 &&
+                  productOption.additionalModifiers.length > 0 ? (
+                     <Text style={{ fontFamily: globalStyle.font.semibold }}>
+                        Add On:
+                     </Text>
+                  ) : null}
                   {!isModifiersLoading &&
                   productOption.additionalModifiers.length > 0
                      ? productOption.additionalModifiers.map(
@@ -633,7 +644,7 @@ export const ModifierPopup = ({
                }}
                textStyle={{ fontSize: 14 }}
                onPress={handleAddOnCartOn}
-               disabled={isProductAdding}
+               disabled={isProductAdding || isModifiersLoading}
             >
                {isProductAdding ? (
                   <Spinner
