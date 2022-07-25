@@ -44,11 +44,14 @@ export const Delivery = ({ deliveryTimePopUp }) => {
       locationId: null,
       // fulfillmentInfo: null,
    })
+   const [fulfillmentTimeSlot, setFulfillmentTimeSlot] = useState({})
    const [isGetStoresLoading, setIsGetStoresLoading] = useState(true)
    const [updateFulfillmentInfoForNow, setUpdateFulfillmentInfoForNow] =
       React.useState(false)
    const [deliverySlots, setDeliverySlots] = useState(null)
    const [selectedSlot, setSelectedSlot] = useState(null)
+   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
+
    const [stores, setStores] = useState(null)
    const [showSlots, setShowSlots] = React.useState(false)
    const [isLoading, setIsLoading] = React.useState(true)
@@ -500,9 +503,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
       // setIsEdit(false)
    }
 
-   const onFulfillmentTimeClick = async (timestamp, mileRangeId) => {
-      deliveryTimePopUp.current.dismiss()
-
+   const onFulfillmentTimeClick = async ({ timestamp, mileRangeId }) => {
       const slotInfo = {
          slot: {
             from: timestamp.from,
@@ -583,7 +584,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
       if (deliveryRadioOptions.length > 1) {
          setFulfillmentTabInfo(prev => ({
             ...prev,
-            orderTabId: null,
+            // orderTabId: null,
          }))
       }
       setShowSlots(true)
@@ -592,7 +593,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
 
    const DeliveryTimePopUp = () => {
       return (
-         <View style={{ padding: 10 }}>
+         <View style={{ padding: 10, marginBottom: 70 }}>
             <View
                style={{
                   flexDirection: 'column',
@@ -642,6 +643,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                            setIsGetStoresLoading(true)
                            if (eachOption.value === 'ONDEMAND_DELIVERY') {
                               setUpdateFulfillmentInfoForNow(prev => !prev)
+                              deliveryTimePopUp.current.dismiss()
                            }
                         }}
                      >
@@ -672,23 +674,14 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                <TimeSlots
                   onFulfillmentTimeClick={onFulfillmentTimeClick}
                   selectedSlot={selectedSlot}
-                  availableDaySlots={deliverySlots}
                   setSelectedSlot={setSelectedSlot}
+                  selectedTimeSlot={selectedTimeSlot}
+                  setSelectedTimeSlot={setSelectedTimeSlot}
+                  availableDaySlots={deliverySlots}
                   timeSlotsFor={'Delivery'}
+                  setFulfillmentTimeSlot={setFulfillmentTimeSlot}
                />
             ) : null}
-            <View style={styles.buttonContainer}>
-               <Button
-                  buttonStyle={styles.button}
-                  textStyle={[styles.buttonText]}
-                  onPress={() => {
-                     // onFulfillmentTimeClick(timestamp, mileRangeId)
-                     deliveryTimePopUp.current.dismiss()
-                  }}
-               >
-                  Confirm
-               </Button>
-            </View>
          </View>
       )
    }
@@ -768,6 +761,19 @@ export const Delivery = ({ deliveryTimePopUp }) => {
             <BottomSheetScrollView>
                <DeliveryTimePopUp />
             </BottomSheetScrollView>
+            <View style={styles.buttonContainer}>
+               <Button
+                  buttonStyle={styles.button}
+                  textStyle={[styles.buttonText]}
+                  disabled={fulfillmentType === 'ONDEMAND_DELIVERY'}
+                  onPress={() => {
+                     onFulfillmentTimeClick(fulfillmentTimeSlot)
+                     deliveryTimePopUp.current.dismiss()
+                  }}
+               >
+                  Confirm
+               </Button>
+            </View>
          </BottomSheetModal>
       </>
    )
@@ -779,6 +785,10 @@ const styles = StyleSheet.create({
    },
    buttonContainer: {
       width: '100%',
+      height: 70,
+      backgroundColor: '#000',
+      position: 'absolute',
+      bottom: 0,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

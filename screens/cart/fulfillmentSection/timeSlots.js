@@ -10,7 +10,10 @@ export const TimeSlots = ({
    availableDaySlots,
    selectedSlot,
    setSelectedSlot,
+   selectedTimeSlot,
+   setSelectedTimeSlot,
    onFulfillmentTimeClick,
+   setFulfillmentTimeSlot,
 }) => {
    const { globalStyle } = useGlobalStyle()
    const [showAllDates, setShowAllDates] = React.useState(true)
@@ -91,10 +94,11 @@ export const TimeSlots = ({
                            selectedSlot.date,
                            eachSlot.intervalInMinutes
                         )
-                        onFulfillmentTimeClick(
-                           newTimeStamp,
-                           eachSlot.mileRangeId
-                        )
+                        setFulfillmentTimeSlot({
+                           timestamp: newTimeStamp,
+                           milerangeId: eachSlot.mileRangeId,
+                        })
+                        setSelectedTimeSlot(eachSlot)
                      }
                      return (
                         <Button
@@ -105,7 +109,11 @@ export const TimeSlots = ({
                               marginBottom: 4,
                               ...(index == 0 ? { marginLeft: 0 } : {}),
                            }}
-                           variant={'outline'}
+                           variant={
+                              eachSlot === selectedTimeSlot
+                                 ? 'primary'
+                                 : 'outline'
+                           }
                            onPress={handleOnTimeSlotClick}
                         >
                            {slot.from}
