@@ -272,7 +272,7 @@ const UserDetails = ({ handleOpen, settingCartInfo, setSettingCartInfo }) => {
       },
    })
 
-   const { data } = useQuery(GET_USER_INFO, {
+   const { data, loading } = useQuery(GET_USER_INFO, {
       skip: !user?.keycloakId,
       variables: {
          where: {
@@ -349,40 +349,44 @@ const UserDetails = ({ handleOpen, settingCartInfo, setSettingCartInfo }) => {
    return (
       <View style={styles.userInfoContainer}>
          {hasUserInfoInCart ? (
-            <>
-               <View style={styles.row}>
-                  <UserIcon size={16} />
-                  <Text
-                     style={{
-                        fontFamily: globalStyle.font.medium,
-                        marginLeft: 9,
-                     }}
-                  >
-                     {data?.carts?.[0]?.customerInfo?.customerFirstName}{' '}
-                     {data?.carts?.[0]?.customerInfo?.customerLastName}
-                  </Text>
-               </View>
-               <View style={styles.row}>
-                  <PhoneIcon size={16} />
-                  <Text
-                     style={{
-                        fontFamily: globalStyle.font.medium,
-                        marginLeft: 9,
-                     }}
-                  >
-                     {data?.carts?.[0]?.customerInfo?.customerPhone}
-                  </Text>
-               </View>
-               <TouchableOpacity onPress={handleOpen}>
-                  <EditIcon
-                     fill={
-                        appConfig?.brandSettings.buttonSettings.buttonBGColor
-                           .value || '#000000'
-                     }
-                     size={18}
-                  />
-               </TouchableOpacity>
-            </>
+            loading ? (
+               <ActivityIndicator size="small" color={'#000'} />
+            ) : (
+               <>
+                  <View style={styles.row}>
+                     <UserIcon size={16} />
+                     <Text
+                        style={{
+                           fontFamily: globalStyle.font.medium,
+                           marginLeft: 9,
+                        }}
+                     >
+                        {data?.carts?.[0]?.customerInfo?.customerFirstName}{' '}
+                        {data?.carts?.[0]?.customerInfo?.customerLastName}
+                     </Text>
+                  </View>
+                  <View style={styles.row}>
+                     <PhoneIcon size={16} />
+                     <Text
+                        style={{
+                           fontFamily: globalStyle.font.medium,
+                           marginLeft: 9,
+                        }}
+                     >
+                        {data?.carts?.[0]?.customerInfo?.customerPhone}
+                     </Text>
+                  </View>
+                  <TouchableOpacity onPress={handleOpen}>
+                     <EditIcon
+                        fill={
+                           appConfig?.brandSettings.buttonSettings.buttonBGColor
+                              .value || '#000000'
+                        }
+                        size={18}
+                     />
+                  </TouchableOpacity>
+               </>
+            )
          ) : (
             <>
                <UserIcon size={16} />

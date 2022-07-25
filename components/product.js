@@ -26,6 +26,8 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
 import CachedImage from 'react-native-expo-cached-image'
+import Toast from 'react-native-simple-toast'
+
 const windowHeight = Dimensions.get('window').height
 
 const width = Dimensions.get('window').width
@@ -111,8 +113,14 @@ export const ProductList = React.memo(
 )
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
-   const { cartState, methods, addToCart, combinedCartItems, storedCartId } =
-      useCart()
+   const {
+      cartState,
+      methods,
+      addToCart,
+      combinedCartItems,
+      storedCartId,
+      setTotalCartItems,
+   } = useCart()
    const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const bottomSheetModalRef = React.useRef(null)
@@ -205,6 +213,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
             },
          },
       })
+      setTotalCartItems(prev => prev - 1)
+      Toast.show('Item removed!')
    }
 
    const productValidationResult = React.useMemo(() => {
@@ -236,6 +246,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
             }
          } else {
             addToCart(productData.defaultCartItem, 1)
+            setAvailableQuantityInCart(prev => prev + 1)
+            Toast.show('Item added into cart.')
          }
       }
    }
@@ -461,6 +473,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
 
       addToCart(cartItem, 1)
       setShowChooseIncreaseType(false)
+      Toast.show('Item added into cart.')
    }
    const handlePresentModalPress = React.useCallback(() => {
       bottomSheetModalRef.current?.present()
@@ -633,6 +646,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                                     setShowChooseIncreaseType(true)
                                  } else {
                                     addToCart(productData.defaultCartItem, 1)
+                                    setAvailableQuantityInCart(prev => prev + 1)
+                                    Toast.show('Item added into cart.')
                                  }
                               }}
                            />

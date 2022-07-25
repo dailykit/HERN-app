@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+   ActivityIndicator,
+   StyleSheet,
+   Text,
+   TouchableOpacity,
+   View,
+} from 'react-native'
 import { EditIcon } from '../../assets/editIcon'
 import LocationIcon from '../../assets/locationIcon'
 import { useCart } from '../../context'
@@ -94,24 +100,30 @@ export const Address = () => {
                </Text>
                <DownVector size={12} stroke={'#00000080'} />
             </TouchableOpacity>
-            <TouchableOpacity
-               style={{ flex: 6, flexShrink: 1, marginLeft: 30 }}
-               onPress={() => {
-                  setNumberOfLines(prev => (prev == 1 ? 2 : 1))
-               }}
-            >
-               <Text
-                  numberOfLines={numberOfLines}
-                  style={{
-                     fontFamily: globalStyle.font.medium,
-                     color: '#00000080',
+            {loading ? (
+               <View style={{ flex: 6, flexShrink: 1, marginLeft: 30 }}>
+                  <ActivityIndicator size="small" color={'#000'} />
+               </View>
+            ) : (
+               <TouchableOpacity
+                  style={{ flex: 6, flexShrink: 1, marginLeft: 30 }}
+                  onPress={() => {
+                     setNumberOfLines(prev => (prev == 1 ? 2 : 1))
                   }}
                >
-                  {`${address?.line1 || ''} ${address?.city || ''} ${
-                     address?.state || ''
-                  } ${address?.country || ''} ,${address?.zipcode || ''}`}
-               </Text>
-            </TouchableOpacity>
+                  <Text
+                     numberOfLines={numberOfLines}
+                     style={{
+                        fontFamily: globalStyle.font.medium,
+                        color: '#00000080',
+                     }}
+                  >
+                     {`${address?.line1 || ''} ${address?.city || ''} ${
+                        address?.state || ''
+                     } ${address?.country || ''} ,${address?.zipcode || ''}`}
+                  </Text>
+               </TouchableOpacity>
+            )}
             <TouchableOpacity
                style={{
                   flex: 1,

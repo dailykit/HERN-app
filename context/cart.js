@@ -321,7 +321,6 @@ export const CartProvider = ({ children }) => {
             // addToast(('Item removed!'), {
             //    appearance: 'success',
             // })
-            Toast.show('Item removed!')
          }
       },
       onError: error => {
@@ -494,7 +493,6 @@ export const CartProvider = ({ children }) => {
             })
          }
       }
-      Toast.show('Item added into cart.')
    }
 
    // get user pending cart when logging in
@@ -720,6 +718,7 @@ export const CartProvider = ({ children }) => {
             },
             isCartValidByProductAvailability,
             totalCartItems,
+            setTotalCartItems,
          }}
       >
          {children}

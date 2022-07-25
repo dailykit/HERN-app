@@ -26,6 +26,7 @@ import { getCartItemWithModifiers } from '../utils'
 import { Spinner } from '../assets/loaders'
 import { ScrollView } from 'react-native-gesture-handler'
 import useGlobalStyle from '../globalStyle'
+import Toast from 'react-native-simple-toast'
 
 export const ModifierPopup = ({
    closeModifier,
@@ -314,6 +315,7 @@ export const ModifierPopup = ({
                },
             })
          }
+         Toast.show('Item added into cart.')
          closeModifier()
          onComplete(quantity)
       }
