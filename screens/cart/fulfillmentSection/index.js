@@ -6,7 +6,12 @@ import { Pickup } from './Pickup'
 import useGlobalStyle from '../../../globalStyle'
 import { OrderTime } from '../../../assets/orderTIme'
 
-export const FulfillmentSection = ({ deliveryTimePopUp, cartState }) => {
+export const FulfillmentSection = ({
+   deliveryTimePopUp,
+   pickupTimePopUp,
+   setMode,
+   cartState,
+}) => {
    const { orderTabs, selectedOrderTab } = useConfig()
    const { globalStyle } = useGlobalStyle()
 
@@ -57,8 +62,11 @@ export const FulfillmentSection = ({ deliveryTimePopUp, cartState }) => {
             <Delivery deliveryTimePopUp={deliveryTimePopUp} />
          ) : null}
          {selectedFulfillment === 'PICKUP' ? (
-            <Pickup deliveryTimePopUp={deliveryTimePopUp} />
+            <Pickup pickupTimePopUp={pickupTimePopUp} />
          ) : null}
+         {selectedFulfillment === 'DELIVERY'
+            ? setMode('DELIVERY')
+            : setMode('PICKUP')}
       </View>
    )
 }

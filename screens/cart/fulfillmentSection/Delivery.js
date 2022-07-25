@@ -581,12 +581,12 @@ export const Delivery = ({ deliveryTimePopUp }) => {
    })
 
    const handleChangeDeliveryTime = () => {
-      if (deliveryRadioOptions.length > 1) {
-         setFulfillmentTabInfo(prev => ({
-            ...prev,
-            // orderTabId: null,
-         }))
-      }
+      // if (deliveryRadioOptions.length > 1) {
+      //    setFulfillmentTabInfo(prev => ({
+      //       ...prev,
+      //       orderTabId: null,
+      //    }))
+      // }
       setShowSlots(true)
       deliveryTimePopUp?.current?.present()
    }
@@ -672,7 +672,6 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                </Text>
             ) : fulfillmentType === 'PREORDER_DELIVERY' ? (
                <TimeSlots
-                  onFulfillmentTimeClick={onFulfillmentTimeClick}
                   selectedSlot={selectedSlot}
                   setSelectedSlot={setSelectedSlot}
                   selectedTimeSlot={selectedTimeSlot}

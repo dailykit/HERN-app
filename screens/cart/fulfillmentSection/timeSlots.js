@@ -12,7 +12,6 @@ export const TimeSlots = ({
    setSelectedSlot,
    selectedTimeSlot,
    setSelectedTimeSlot,
-   onFulfillmentTimeClick,
    setFulfillmentTimeSlot,
 }) => {
    const { globalStyle } = useGlobalStyle()

@@ -17,8 +17,14 @@ import { isEmpty } from 'lodash'
 import { OrderTime } from '../../../assets/orderTIme'
 import useGlobalStyle from '../../../globalStyle'
 import { gql, useQuery } from '@apollo/client'
+import {
+   BottomSheetModal,
+   BottomSheetModalProvider,
+   BottomSheetScrollView,
+} from '@gorhom/bottom-sheet'
+import CustomBackdrop from '../../../components/modalBackdrop'
 
-export const Pickup = () => {
+export const Pickup = ({ pickupTimePopUp }) => {
    const {
       orderTabs,
       selectedOrderTab,
@@ -29,7 +35,7 @@ export const Pickup = () => {
       appConfig,
    } = useConfig()
    const { globalStyle } = useGlobalStyle()
-   const { cartState, methods } = useCart()
+   const { cartState, methods, storedCartId } = useCart()
 
    const [fulfillmentType, setFulfillmentType] = useState(
       selectedOrderTab?.orderFulfillmentTypeLabel || null
@@ -39,11 +45,13 @@ export const Pickup = () => {
       locationId: null,
       // fulfillmentInfo: null,
    })
+   const [fulfillmentTimeSlot, setFulfillmentTimeSlot] = useState({})
    const [isGetStoresLoading, setIsGetStoresLoading] = useState(true)
    const [updateFulfillmentInfoForNow, setUpdateFulfillmentInfoForNow] =
       React.useState(false)
    const [deliverySlots, setPickupSlots] = useState(null)
    const [selectedSlot, setSelectedSlot] = useState(null)
+   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
    const [stores, setStores] = useState(null)
    const [showSlots, setShowSlots] = React.useState(false)
    const [isLoading, setIsLoading] = React.useState(true)
@@ -495,7 +503,7 @@ export const Pickup = () => {
       // setIsEdit(false)
    }
 
-   const onFulfillmentTimeClick = async timestamp => {
+   const onFulfillmentTimeClick = async ({ timestamp, milerangeId }) => {
       let timeslotInfo = null
       stores[0].fulfillmentStatus.rec.forEach(x => {
          x.recurrence.timeSlots.forEach(timeSlot => {
@@ -589,167 +597,232 @@ export const Pickup = () => {
       },
    })
 
-   if (!showSlots) {
+   const handleChangePickupTime = () => {
+      // if (pickupRadioOptions.length > 1) {
+      //    setFulfillmentTabInfo(prev => ({
+      //       ...prev,
+      //       orderTabId: null,
+      //    }))
+      // }
+      setShowSlots(true)
+      pickupTimePopUp?.current?.present()
+   }
+
+   const PickupTimePopUp = () => {
       return (
-         <View>
+         <View style={{ padding: 10, marginBottom: 70 }}>
             <View
                style={{
-                  flexDirection: 'row',
+                  flexDirection: 'column',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
+                  marginTop: 12,
                }}
             >
-               <View style={{ flexDirection: 'row' }}>
-                  {/* <OrderTime size={20} /> */}
-                  {/* &nbsp;&nbsp; */}
-                  <Text
-                     style={{
-                        marginLeft: 6,
-                        // color: '#00000080',
-                        fontFamily: globalStyle.font.medium,
-                     }}
-                  >
-                     {title}
-                     {data?.carts?.[0]?.fulfillmentInfo?.type ===
-                        'PREORDER_PICKUP' ||
-                     data?.carts?.[0]?.fulfillmentInfo?.type ===
-                        'PREORDER_PICKUP' ? (
-                        <Text style={{ fontFamily: globalStyle.font.regular }}>
-                           {' '}
-                           {moment(
-                              data?.carts?.[0]?.fulfillmentInfo?.slot?.from
-                           ).format('DD MMM YYYY')}
-                           {' ('}
-                           {moment(
-                              data?.carts?.[0]?.fulfillmentInfo?.slot?.from
-                           ).format('HH:mm')}
-                           {'-'}
-                           {moment(
-                              data?.carts?.[0]?.fulfillmentInfo?.slot?.to
-                           ).format('HH:mm')}
-                           {')'}
-                        </Text>
-                     ) : null}
-                  </Text>
+               <Text
+                  style={{
+                     fontFamily: globalStyle.font.medium,
+                     alignSelf: 'flex-start',
+                     marginBottom: 5,
+                  }}
+               >
+                  When would you like to order?
+               </Text>
+               <View style={styles.fulfillmentButtonGroup}>
+                  {pickupRadioOptions.map((eachOption, index) => (
+                     <Button
+                        key={eachOption.value}
+                        variant="outline"
+                        showRadio={true}
+                        isActive={fulfillmentType === eachOption.value}
+                        buttonStyle={{
+                           ...(index > 0 ? { marginLeft: 8 } : null),
+                           height: 28,
+                        }}
+                        textStyle={{
+                           fontFamily: globalStyle.font.medium,
+                           fontSize: 11,
+                           paddingHorizontal: 7,
+                        }}
+                        radioStyle={{
+                           paddingLeft: 7,
+                        }}
+                        onPress={() => {
+                           setFulfillmentType(eachOption.value)
+                           const orderTabId = orderTabs.find(
+                              t =>
+                                 t.orderFulfillmentTypeLabel ===
+                                 `${eachOption.value}`
+                           )?.id
+                           setFulfillmentTabInfo(prev => {
+                              return { ...prev, orderTabId }
+                           })
+                           setIsGetStoresLoading(true)
+                           if (eachOption.value === 'ONDEMAND_PICKUP') {
+                              setUpdateFulfillmentInfoForNow(prev => !prev)
+                              pickupTimePopUp.current.dismiss()
+                           }
+                        }}
+                     >
+                        {eachOption.label}
+                     </Button>
+                  ))}
                </View>
-               {(pickupRadioOptions.length > 0 ||
-                  fulfillmentType === 'PREORDER_PICKUP') && (
-                  <Button
-                     variant="outline"
-                     isActive={true}
-                     onPress={() => {
-                        if (pickupRadioOptions.length > 1) {
-                           setFulfillmentTabInfo(prev => ({
-                              ...prev,
-                              orderTabId: null,
-                           }))
-                        }
-                        setShowSlots(true)
-                     }}
-                     textStyle={{
-                        color:
-                           appConfig.brandSettings.buttonSettings
-                              .activeTextColor.value || '#000000',
-                     }}
-                  >
-                     {'Change'}
-                  </Button>
-               )}
             </View>
+            {!fulfillmentType ? null : isGetStoresLoading ? (
+               <ActivityIndicator
+                  size={'small'}
+                  color={
+                     appConfig?.brandSettings?.brandColor?.value || '#000000'
+                  }
+                  style={{ marginVertical: 6 }}
+               />
+            ) : stores.length === 0 ? (
+               <Text
+                  style={{
+                     textAlign: 'center',
+                     marginVertical: 8,
+                     fontFamily: globalStyle.font.semibold,
+                  }}
+               >
+                  No store available
+               </Text>
+            ) : fulfillmentType === 'PREORDER_PICKUP' ? (
+               <TimeSlots
+                  selectedSlot={selectedSlot}
+                  setSelectedSlot={setSelectedSlot}
+                  selectedTimeSlot={selectedTimeSlot}
+                  setSelectedTimeSlot={setSelectedTimeSlot}
+                  availableDaySlots={deliverySlots}
+                  timeSlotsFor={'Delivery'}
+                  setFulfillmentTimeSlot={setFulfillmentTimeSlot}
+               />
+            ) : null}
          </View>
       )
    }
+
    return (
-      <View>
-         <View
-            style={{
-               flexDirection: 'column',
-               justifyContent: 'space-between',
-               alignItems: 'flex-start',
-               marginTop: 12,
-            }}
-         >
-            <Text
-               style={{
-                  fontFamily: globalStyle.font.medium,
-                  alignSelf: 'flex-start',
-                  marginBottom: 5,
-               }}
-            >
-               When would you like to order?
-            </Text>
-            <View style={styles.fulfillmentButtonGroup}>
-               {pickupRadioOptions.map((eachOption, index) => (
-                  <Button
-                     key={eachOption.value}
-                     variant="outline"
-                     showRadio={true}
-                     isActive={fulfillmentType === eachOption.value}
-                     buttonStyle={{
-                        ...(index > 0 ? { marginLeft: 8 } : null),
-                        height: 28,
-                     }}
-                     textStyle={{
-                        fontFamily: globalStyle.font.medium,
-                        fontSize: 11,
-                        paddingHorizontal: 7,
-                     }}
-                     radioStyle={{
-                        paddingLeft: 7,
-                     }}
-                     onPress={() => {
-                        setFulfillmentType(eachOption.value)
-                        const orderTabId = orderTabs.find(
-                           t =>
-                              t.orderFulfillmentTypeLabel ===
-                              `${eachOption.value}`
-                        )?.id
-                        setFulfillmentTabInfo(prev => {
-                           return { ...prev, orderTabId }
-                        })
-                        setIsGetStoresLoading(true)
-                        if (eachOption.value === 'ONDEMAND_PICKUP') {
-                           setUpdateFulfillmentInfoForNow(prev => !prev)
-                        }
-                     }}
-                  >
-                     {eachOption.label}
-                  </Button>
-               ))}
+      <>
+         {cartState?.cart?.fulfillmentInfo ? (
+            <View>
+               <View
+                  style={{
+                     flexDirection: 'row',
+                     justifyContent: 'space-between',
+                     alignItems: 'center',
+                  }}
+               >
+                  <View style={{ flexDirection: 'row' }}>
+                     {/* <OrderTime size={20} /> */}
+                     {/* &nbsp;&nbsp; */}
+                     <Text
+                        style={{
+                           marginLeft: 6,
+                           // color: '#00000080',
+                           fontFamily: globalStyle.font.medium,
+                        }}
+                     >
+                        {title}
+                        {data?.carts?.[0]?.fulfillmentInfo?.type ===
+                           'PREORDER_PICKUP' ||
+                        data?.carts?.[0]?.fulfillmentInfo?.type ===
+                           'PREORDER_PICKUP' ? (
+                           <Text
+                              style={{
+                                 fontFamily: globalStyle.font.medium,
+                              }}
+                           >
+                              {' '}
+                              {moment(
+                                 data?.carts?.[0]?.fulfillmentInfo?.slot?.from
+                              ).format('DD MMM YYYY')}
+                              {' ('}
+                              {moment(
+                                 data?.carts?.[0]?.fulfillmentInfo?.slot?.from
+                              ).format('HH:mm')}
+                              {'-'}
+                              {moment(
+                                 data?.carts?.[0]?.fulfillmentInfo?.slot?.to
+                              ).format('HH:mm')}
+                              {')'}
+                           </Text>
+                        ) : null}
+                     </Text>
+                  </View>
+                  {(pickupRadioOptions.length > 0 ||
+                     fulfillmentType === 'PREORDER_PICKUP') && (
+                     <Button
+                        variant="outline"
+                        isActive={true}
+                        onPress={handleChangePickupTime}
+                        textStyle={{
+                           color:
+                              appConfig.brandSettings.buttonSettings
+                                 .activeTextColor.value || '#000000',
+                        }}
+                     >
+                        {'Change'}
+                     </Button>
+                  )}
+               </View>
             </View>
-         </View>
-         {!fulfillmentType ? null : isGetStoresLoading ? (
-            <ActivityIndicator
-               size={'small'}
-               color={appConfig?.brandSettings?.brandColor?.value || '#000000'}
-               style={{ marginVertical: 6 }}
-            />
-         ) : stores.length === 0 ? (
-            <Text
-               style={{
-                  textAlign: 'center',
-                  marginVertical: 8,
-                  fontFamily: globalStyle.font.semibold,
-               }}
-            >
-               No store available
-            </Text>
-         ) : fulfillmentType === 'PREORDER_PICKUP' ? (
-            <TimeSlots
-               onFulfillmentTimeClick={onFulfillmentTimeClick}
-               selectedSlot={selectedSlot}
-               availableDaySlots={deliverySlots}
-               setSelectedSlot={setSelectedSlot}
-               timeSlotsFor={'Delivery'}
-            />
          ) : null}
-      </View>
+         <BottomSheetModal
+            ref={pickupTimePopUp}
+            snapPoints={[500]}
+            index={0}
+            enablePanDownToClose={true}
+            handleComponent={() => null}
+            backdropComponent={CustomBackdrop}
+         >
+            <BottomSheetScrollView>
+               <PickupTimePopUp />
+            </BottomSheetScrollView>
+            <View style={styles.buttonContainer}>
+               <Button
+                  buttonStyle={styles.button}
+                  textStyle={[styles.buttonText]}
+                  disabled={fulfillmentType === 'ONDEMAND_PICKUP'}
+                  onPress={() => {
+                     onFulfillmentTimeClick(fulfillmentTimeSlot)
+                     pickupTimePopUp.current.dismiss()
+                  }}
+               >
+                  Confirm
+               </Button>
+            </View>
+         </BottomSheetModal>
+      </>
    )
 }
 
 const styles = StyleSheet.create({
    fulfillmentButtonGroup: {
       flexDirection: 'row',
+   },
+   buttonContainer: {
+      width: '100%',
+      height: 70,
+      backgroundColor: '#000',
+      position: 'absolute',
+      bottom: 0,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8,
+   },
+   button: {
+      width: '80%',
+      borderRadius: 0,
+      paddingVertical: 6,
+      marginVertical: 10,
+      borderRadius: 8,
+   },
+   buttonText: {
+      textAlign: 'center',
+      fontSize: 15,
    },
 })
 

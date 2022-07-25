@@ -45,6 +45,8 @@ const CartScreen = () => {
 
    const loginPopUp = createRef()
    const deliveryTimePopUp = createRef()
+   const pickupTimePopUp = createRef()
+   const [mode, setMode] = useState('')
 
    const { data: { carts = [] } = {} } = useQuery(
       GET_FULFILLMENT_CUSTOMER_ADDRESS,
@@ -119,6 +121,8 @@ const CartScreen = () => {
             )}
             <FulfillmentSection
                deliveryTimePopUp={deliveryTimePopUp}
+               pickupTimePopUp={pickupTimePopUp}
+               setMode={setMode}
                cartState={cartState}
             />
          </ScrollView>
@@ -129,10 +133,16 @@ const CartScreen = () => {
                   textStyle={[styles.buttonText]}
                   onPress={() => {
                      console.log('clicked', deliveryTimePopUp)
-                     deliveryTimePopUp?.current?.present()
+                     {
+                        mode === 'DELIVERY'
+                           ? deliveryTimePopUp?.current?.present()
+                           : pickupTimePopUp?.current?.present()
+                     }
                   }}
                >
-                  Add Delivery Time
+                  {mode === 'DELIVERY'
+                     ? 'Add Delivery Time'
+                     : 'Add Pickup Time'}
                </Button>
             ) : (
                <Button
@@ -285,12 +295,3 @@ const GET_FULFILLMENT_CUSTOMER_ADDRESS = gql`
       }
    }
 `
-// const DeliveryTimePopUp = ({ navigation, deliveryTimePopUp, cartState }) => {
-//    return (
-//       <ScrollView>
-//          <Delivery />
-//          {cartState?.cart?.fulfillmentInfo &&
-//             deliveryTimePopUp.current.dismiss()}
-//       </ScrollView>
-//    )
-// }
