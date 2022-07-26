@@ -24,6 +24,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Spinner } from '../../assets/loaders'
 import useGlobalStyle from '../../globalStyle'
 import { isEmpty } from 'lodash'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import CustomBackdrop from '../../components/modalBackdrop'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -36,11 +38,11 @@ const ProductScreen = () => {
 
    // ref
    const _carousel = React.useRef()
+   const bottomSheetModalRef = React.useRef()
 
    // state
    const [showReadMore, setShowReadMore] = useState(false)
    const [numberOfLines, setNumberOfLines] = useState(4)
-   const [showModifierPopup, setShowModifierPopup] = useState(false)
 
    const argsForByLocation = React.useMemo(
       () => ({
@@ -142,7 +144,7 @@ const ProductScreen = () => {
                option => option.isAvailable && option.isPublished
             ).length
             if (availableProductOptions > 0) {
-               setShowModifierPopup(true)
+               bottomSheetModalRef.current.present()
             }
          } else {
             addToCart(products[0].defaultCartItem, 1)
@@ -330,14 +332,21 @@ const ProductScreen = () => {
                {')'}
             </Button>
          </View>
-         <Modal isVisible={showModifierPopup}>
+         <BottomSheetModal
+            ref={bottomSheetModalRef}
+            snapPoints={['90%']}
+            index={0}
+            enablePanDownToClose={true}
+            handleComponent={() => null}
+            backdropComponent={CustomBackdrop}
+         >
             <ModifierPopup
                closeModifier={() => {
-                  setShowModifierPopup(false)
+                  bottomSheetModalRef.current?.dismiss()
                }}
                productData={products[0]}
             />
-         </Modal>
+         </BottomSheetModal>
       </SafeAreaView>
    )
 }
