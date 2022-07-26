@@ -103,7 +103,7 @@ export const TimeSlots = ({
                         <Button
                            key={`${eachSlot}-${index}`}
                            buttonStyle={{
-                              width: 110,
+                              width: 115,
                               marginRight: 4,
                               marginBottom: 4,
                               ...(index == 0 ? { marginLeft: 0 } : {}),

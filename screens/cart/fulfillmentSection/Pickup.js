@@ -55,6 +55,7 @@ export const Pickup = ({ pickupTimePopUp }) => {
    const [stores, setStores] = useState(null)
    const [showSlots, setShowSlots] = React.useState(false)
    const [isLoading, setIsLoading] = React.useState(true)
+   const [clickConfirm, setClickConfirm] = useState(false)
 
    const orderTabFulfillmentType = React.useMemo(
       () =>
@@ -355,11 +356,12 @@ export const Pickup = ({ pickupTimePopUp }) => {
                // console.log('availableStore', availableStore)
                setIsGetStoresLoading(false)
                setUpdateFulfillmentInfoForNow(false)
+               setSelectedTimeSlot(null)
             }
             fetchStores()
          }
       })()
-   }, [brand?.id, fulfillmentType, cartState.cart?.locationId])
+   }, [brand?.id, fulfillmentType, cartState.cart?.locationId, clickConfirm])
 
    // this will run when ondemand delivery auto select --
    useEffect(() => {
@@ -658,10 +660,10 @@ export const Pickup = ({ pickupTimePopUp }) => {
                               return { ...prev, orderTabId }
                            })
                            setIsGetStoresLoading(true)
-                           if (eachOption.value === 'ONDEMAND_PICKUP') {
-                              setUpdateFulfillmentInfoForNow(prev => !prev)
-                              pickupTimePopUp.current.dismiss()
-                           }
+                           // if (eachOption.value === 'ONDEMAND_PICKUP') {
+                           //    setUpdateFulfillmentInfoForNow(prev => !prev)
+                           //    pickupTimePopUp.current.dismiss()
+                           // }
                         }}
                      >
                         {eachOption.label}
@@ -718,7 +720,7 @@ export const Pickup = ({ pickupTimePopUp }) => {
                      {/* &nbsp;&nbsp; */}
                      <Text
                         style={{
-                           marginLeft: 6,
+                           marginLeft: 23.5,
                            // color: '#00000080',
                            fontFamily: globalStyle.font.medium,
                         }}
@@ -770,7 +772,7 @@ export const Pickup = ({ pickupTimePopUp }) => {
          ) : null}
          <BottomSheetModal
             ref={pickupTimePopUp}
-            snapPoints={[500]}
+            snapPoints={fulfillmentType === 'ONDEMAND_PICKUP' ? [200] : [500]}
             index={0}
             enablePanDownToClose={true}
             handleComponent={() => null}
@@ -783,9 +785,11 @@ export const Pickup = ({ pickupTimePopUp }) => {
                <Button
                   buttonStyle={styles.button}
                   textStyle={[styles.buttonText]}
-                  disabled={fulfillmentType === 'ONDEMAND_PICKUP'}
                   onPress={() => {
-                     onFulfillmentTimeClick(fulfillmentTimeSlot)
+                     fulfillmentType === 'ONDEMAND_PICKUP'
+                        ? setUpdateFulfillmentInfoForNow(prev => !prev)
+                        : onFulfillmentTimeClick(fulfillmentTimeSlot)
+                     setClickConfirm(!clickConfirm)
                      pickupTimePopUp.current.dismiss()
                   }}
                >

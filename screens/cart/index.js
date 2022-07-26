@@ -132,7 +132,6 @@ const CartScreen = () => {
                   buttonStyle={styles.button}
                   textStyle={[styles.buttonText]}
                   onPress={() => {
-                     console.log('clicked', deliveryTimePopUp)
                      {
                         mode === 'DELIVERY'
                            ? deliveryTimePopUp?.current?.present()

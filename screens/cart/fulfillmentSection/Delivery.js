@@ -55,6 +55,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
    const [stores, setStores] = useState(null)
    const [showSlots, setShowSlots] = React.useState(false)
    const [isLoading, setIsLoading] = React.useState(true)
+   const [clickConfirm, setClickConfirm] = useState(false)
 
    const orderTabFulfillmentType = React.useMemo(
       () =>
@@ -347,11 +348,12 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                // console.log('availableStore', availableStore)
                setIsGetStoresLoading(false)
                setUpdateFulfillmentInfoForNow(false)
+               setSelectedTimeSlot(null)
             }
             fetchStores()
          }
       })()
-   }, [consumerAddress, brand?.id, fulfillmentType])
+   }, [consumerAddress, brand?.id, fulfillmentType, clickConfirm])
 
    // this will run when ondemand delivery auto select
    useEffect(() => {
@@ -641,10 +643,10 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                               return { ...prev, orderTabId }
                            })
                            setIsGetStoresLoading(true)
-                           if (eachOption.value === 'ONDEMAND_DELIVERY') {
-                              setUpdateFulfillmentInfoForNow(prev => !prev)
-                              deliveryTimePopUp.current.dismiss()
-                           }
+                           // if (eachOption.value === 'ONDEMAND_DELIVERY') {
+                           //    setUpdateFulfillmentInfoForNow(prev => !prev)
+                           //    deliveryTimePopUp.current.dismiss()
+                           // }
                         }}
                      >
                         {eachOption.label}
@@ -701,7 +703,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                      {/* &nbsp;&nbsp; */}
                      <Text
                         style={{
-                           marginLeft: 24,
+                           marginLeft: 23.5,
                            // color: '#00000080',
                            fontFamily: globalStyle.font.medium,
                         }}
@@ -751,7 +753,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
          ) : null}
          <BottomSheetModal
             ref={deliveryTimePopUp}
-            snapPoints={[500]}
+            snapPoints={fulfillmentType === 'ONDEMAND_DELIVERY' ? [200] : [500]}
             index={0}
             enablePanDownToClose={true}
             handleComponent={() => null}
@@ -764,9 +766,12 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                <Button
                   buttonStyle={styles.button}
                   textStyle={[styles.buttonText]}
-                  disabled={fulfillmentType === 'ONDEMAND_DELIVERY'}
                   onPress={() => {
-                     onFulfillmentTimeClick(fulfillmentTimeSlot)
+                     fulfillmentType === 'ONDEMAND_DELIVERY'
+                        ? setUpdateFulfillmentInfoForNow(prev => !prev)
+                        : onFulfillmentTimeClick(fulfillmentTimeSlot)
+                     // setFulfillmentType(null)
+                     setClickConfirm(!clickConfirm)
                      deliveryTimePopUp.current.dismiss()
                   }}
                >
