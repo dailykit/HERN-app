@@ -20,7 +20,7 @@ export const Address = () => {
    const { orderTabs, selectedOrderTab, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
-   const { cartState: { cart } = {} } = useCart()
+   const { storedCartId } = useCart()
    const [numberOfLines, setNumberOfLines] = React.useState(1)
 
    const { data: { carts = [] } = {}, loading } = useQuery(
@@ -29,7 +29,7 @@ export const Address = () => {
          variables: {
             where: {
                id: {
-                  _eq: cart?.id,
+                  _eq: storedCartId,
                },
             },
          },

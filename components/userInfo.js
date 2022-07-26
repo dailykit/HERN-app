@@ -5,7 +5,7 @@ import CloseIcon from '../assets/closeIcon'
 import { PhoneIcon } from '../assets/phoneIcon'
 import { EditIcon } from '../assets/editIcon'
 import { useUser } from '../context/user'
-import { CartContext } from '../context/cart'
+import { CartContext, useCart } from '../context/cart'
 import { UPDATE_PLATFORM_CUSTOMER } from '../graphql'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import {
@@ -34,13 +34,27 @@ export const UserInfo = props => {
    const handleClose = () => {
       UserInfoFormRef.current.dismiss()
    }
+
+   const { user } = useUser()
+   const { storedCartId } = useCart()
+   const { data, loading } = useQuery(GET_USER_INFO, {
+      skip: !user?.keycloakId,
+      variables: {
+         where: {
+            id: {
+               _eq: storedCartId,
+            },
+         },
+      },
+   })
    return (
       <>
          <UserDetails
             handleOpen={() => UserInfoFormRef.current.present()}
-            cart={props.cart}
             settingCartInfo={settingCartInfo}
             setSettingCartInfo={setSettingCartInfo}
+            data={data}
+            loading={loading}
          />
          <BottomSheetModal
             ref={UserInfoFormRef}
@@ -51,13 +65,13 @@ export const UserInfo = props => {
             setSettingCartInfo={setSettingCartInfo}
             backdropComponent={CustomBackdrop}
          >
-            <UserInfoForm handleClose={handleClose} cart={props.cart} />
+            <UserInfoForm handleClose={handleClose} cart={data?.carts?.[0]} />
          </BottomSheetModal>
       </>
    )
 }
 const UserInfoForm = props => {
-   const { handleClose, cart, settingCartInfo, setSettingCartInfo } = props
+   const { handleClose, settingCartInfo, setSettingCartInfo, cart } = props
    const { methods } = React.useContext(CartContext)
    const { user } = useUser()
    const { globalStyle } = useGlobalStyle()
@@ -254,15 +268,17 @@ const GET_USER_INFO = gql`
       }
    }
 `
-const UserDetails = ({ handleOpen, settingCartInfo, setSettingCartInfo }) => {
+const UserDetails = ({
+   handleOpen,
+   settingCartInfo,
+   setSettingCartInfo,
+   data,
+   loading,
+}) => {
    const { appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const { user } = useUser()
-   const {
-      methods,
-      storedCartId,
-      cartState: { cart } = {},
-   } = React.useContext(CartContext)
+   const { methods, storedCartId } = React.useContext(CartContext)
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
       onCompleted: () => {
          console.log('==> Platform Customer Updated!')
@@ -272,20 +288,9 @@ const UserDetails = ({ handleOpen, settingCartInfo, setSettingCartInfo }) => {
       },
    })
 
-   const { data, loading } = useQuery(GET_USER_INFO, {
-      skip: !user?.keycloakId,
-      variables: {
-         where: {
-            id: {
-               _eq: storedCartId,
-            },
-         },
-      },
-   })
-
    const hasUserInfoInCart =
-      cart?.customerInfo?.customerFirstName?.length &&
-      cart?.customerInfo?.customerPhone?.length
+      data?.carts?.[0]?.customerInfo?.customerFirstName?.length &&
+      data?.carts?.[0]?.customerInfo?.customerPhone?.length
 
    const hasUserInfo =
       user?.platform_customer?.firstName?.length &&
@@ -297,14 +302,14 @@ const UserDetails = ({ handleOpen, settingCartInfo, setSettingCartInfo }) => {
       }
       await methods.cart.update({
          variables: {
-            id: cart.id,
+            id: storedCartId,
             _set: {
                customerInfo: {
                   customerFirstName: firstName,
                   customerLastName: lastName,
                   customerPhone: mobileNumber,
                   customerEmail:
-                     cart?.customerInfo?.customerEmail ||
+                     data?.carts?.[0]?.customerInfo?.customerEmail ||
                      user.platform_customer?.email,
                },
             },
@@ -348,45 +353,43 @@ const UserDetails = ({ handleOpen, settingCartInfo, setSettingCartInfo }) => {
 
    return (
       <View style={styles.userInfoContainer}>
-         {hasUserInfoInCart ? (
-            loading ? (
-               <ActivityIndicator size="small" color={'#000'} />
-            ) : (
-               <>
-                  <View style={styles.row}>
-                     <UserIcon size={16} />
-                     <Text
-                        style={{
-                           fontFamily: globalStyle.font.medium,
-                           marginLeft: 9,
-                        }}
-                     >
-                        {data?.carts?.[0]?.customerInfo?.customerFirstName}{' '}
-                        {data?.carts?.[0]?.customerInfo?.customerLastName}
-                     </Text>
-                  </View>
-                  <View style={styles.row}>
-                     <PhoneIcon size={16} />
-                     <Text
-                        style={{
-                           fontFamily: globalStyle.font.medium,
-                           marginLeft: 9,
-                        }}
-                     >
-                        {data?.carts?.[0]?.customerInfo?.customerPhone}
-                     </Text>
-                  </View>
-                  <TouchableOpacity onPress={handleOpen}>
-                     <EditIcon
-                        fill={
-                           appConfig?.brandSettings.buttonSettings.buttonBGColor
-                              .value || '#000000'
-                        }
-                        size={18}
-                     />
-                  </TouchableOpacity>
-               </>
-            )
+         {loading ? (
+            <ActivityIndicator size="small" color={'#000'} />
+         ) : hasUserInfoInCart ? (
+            <>
+               <View style={styles.row}>
+                  <UserIcon size={16} />
+                  <Text
+                     style={{
+                        fontFamily: globalStyle.font.medium,
+                        marginLeft: 9,
+                     }}
+                  >
+                     {data?.carts?.[0]?.customerInfo?.customerFirstName}{' '}
+                     {data?.carts?.[0]?.customerInfo?.customerLastName}
+                  </Text>
+               </View>
+               <View style={styles.row}>
+                  <PhoneIcon size={16} />
+                  <Text
+                     style={{
+                        fontFamily: globalStyle.font.medium,
+                        marginLeft: 9,
+                     }}
+                  >
+                     {data?.carts?.[0]?.customerInfo?.customerPhone}
+                  </Text>
+               </View>
+               <TouchableOpacity onPress={handleOpen}>
+                  <EditIcon
+                     fill={
+                        appConfig?.brandSettings.buttonSettings.buttonBGColor
+                           .value || '#000000'
+                     }
+                     size={18}
+                  />
+               </TouchableOpacity>
+            </>
          ) : (
             <>
                <UserIcon size={16} />
