@@ -27,7 +27,7 @@ export const Delivery = () => {
    const navigation = useNavigation()
    const { orderTabs, brand, appConfig, dispatch } = useConfig()
    const { globalStyle } = useGlobalStyle()
-   const { methods, storedCartId } = useCart()
+   const { methods, storedCartId, cartState } = useCart()
 
    const [userCoordinate, setUserCoordinate] = useState({
       latitude: null,
@@ -119,6 +119,17 @@ export const Delivery = () => {
                               locationId: selectedStore.location.id,
                               orderTabId: selectedOrderTab.id,
                               fulfillmentInfo: null,
+                           },
+                        },
+                        optimisticResponse: {
+                           updateCart: {
+                              address: address,
+                              fulfillmentInfo: null,
+                              id: storedCartId,
+                              customerInfo: cartState?.cart?.customerInfo,
+                              orderTabId: selectedOrderTab.id,
+                              locationId: selectedStore.location.id,
+                              __typename: 'order_cart',
                            },
                         },
                      })
