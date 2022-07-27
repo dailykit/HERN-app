@@ -32,8 +32,13 @@ const CartScreen = () => {
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { isAuthenticated } = useUser()
-   const { cartState, combinedCartItems, isFinalCartLoading, storedCartId } =
-      useCart()
+   const {
+      cartState,
+      combinedCartItems,
+      isFinalCartLoading,
+      storedCartId,
+      totalCartItems,
+   } = useCart()
 
    useEffect(() => {
       if (isAuthenticated) {
@@ -56,7 +61,11 @@ const CartScreen = () => {
       }
    )
 
-   if (isFinalCartLoading)
+   if (
+      isFinalCartLoading ||
+      (totalCartItems > 0 &&
+         (combinedCartItems === null || combinedCartItems?.length === 0))
+   )
       return (
          <SafeAreaView style={{ flex: 1 }}>
             <CartHeader />

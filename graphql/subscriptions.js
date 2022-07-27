@@ -54,13 +54,9 @@ export const GET_CART = gql`
          tax
          source
          orderId
-         discount
-         itemTotal
-         totalPrice
          customerId
          customerInfo
          paymentStatus
-         deliveryPrice
          fulfillmentInfo
          paymentMethodId
          walletAmountUsed
@@ -80,10 +76,6 @@ export const GET_CART = gql`
             internalTableLabel
             id
             seatCover
-         }
-         subscriptionOccurence {
-            id
-            fulfillmentDate
          }
          address
          fulfillmentInfo

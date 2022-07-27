@@ -5,7 +5,7 @@ import CloseIcon from '../assets/closeIcon'
 import { PhoneIcon } from '../assets/phoneIcon'
 import { EditIcon } from '../assets/editIcon'
 import { useUser } from '../context/user'
-import { CartContext } from '../context/cart'
+import { CartContext, useCart } from '../context/cart'
 import { UPDATE_PLATFORM_CUSTOMER } from '../graphql'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import {
@@ -34,13 +34,27 @@ export const UserInfo = props => {
    const handleClose = () => {
       UserInfoFormRef.current.dismiss()
    }
+
+   const { user } = useUser()
+   const { storedCartId } = useCart()
+   const { data, loading } = useQuery(GET_USER_INFO, {
+      skip: !user?.keycloakId,
+      variables: {
+         where: {
+            id: {
+               _eq: storedCartId,
+            },
+         },
+      },
+   })
    return (
       <>
          <UserDetails
             handleOpen={() => UserInfoFormRef.current.present()}
-            cart={props.cart}
             settingCartInfo={settingCartInfo}
             setSettingCartInfo={setSettingCartInfo}
+            data={data}
+            loading={loading}
          />
          <BottomSheetModal
             ref={UserInfoFormRef}
@@ -51,13 +65,13 @@ export const UserInfo = props => {
             setSettingCartInfo={setSettingCartInfo}
             backdropComponent={CustomBackdrop}
          >
-            <UserInfoForm handleClose={handleClose} cart={props.cart} />
+            <UserInfoForm handleClose={handleClose} cart={data?.carts?.[0]} />
          </BottomSheetModal>
       </>
    )
 }
 const UserInfoForm = props => {
-   const { handleClose, cart, settingCartInfo, setSettingCartInfo } = props
+   const { handleClose, settingCartInfo, setSettingCartInfo, cart } = props
    const { methods } = React.useContext(CartContext)
    const { user } = useUser()
    const { globalStyle } = useGlobalStyle()
@@ -85,7 +99,6 @@ const UserInfoForm = props => {
 
    const [updateCustomer] = useMutation(UPDATE_PLATFORM_CUSTOMER, {
       onCompleted: () => {
-         console.log('==> Platform Customer Updated!')
          setSavingUserInfo(false)
          if (cart?.customerInfo === null) {
             setSettingCartInfo(true)
@@ -257,9 +270,10 @@ const GET_USER_INFO = gql`
 `
 const UserDetails = ({
    handleOpen,
-   cart,
    settingCartInfo,
    setSettingCartInfo,
+   data,
+   loading,
 }) => {
    const { appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
@@ -274,19 +288,9 @@ const UserDetails = ({
       },
    })
 
-   const { data } = useQuery(GET_USER_INFO, {
-      variables: {
-         where: {
-            id: {
-               _eq: storedCartId,
-            },
-         },
-      },
-   })
-
    const hasUserInfoInCart =
-      cart?.customerInfo?.customerFirstName?.length &&
-      cart?.customerInfo?.customerPhone?.length
+      data?.carts?.[0]?.customerInfo?.customerFirstName?.length &&
+      data?.carts?.[0]?.customerInfo?.customerPhone?.length
 
    const hasUserInfo =
       user?.platform_customer?.firstName?.length &&
@@ -298,14 +302,14 @@ const UserDetails = ({
       }
       await methods.cart.update({
          variables: {
-            id: cart.id,
+            id: storedCartId,
             _set: {
                customerInfo: {
                   customerFirstName: firstName,
                   customerLastName: lastName,
                   customerPhone: mobileNumber,
                   customerEmail:
-                     cart?.customerInfo?.customerEmail ||
+                     data?.carts?.[0]?.customerInfo?.customerEmail ||
                      user.platform_customer?.email,
                },
             },
@@ -349,7 +353,9 @@ const UserDetails = ({
 
    return (
       <View style={styles.userInfoContainer}>
-         {hasUserInfoInCart ? (
+         {loading ? (
+            <ActivityIndicator size="small" color={'#000'} />
+         ) : hasUserInfoInCart ? (
             <>
                <View style={styles.row}>
                   <UserIcon size={16} />

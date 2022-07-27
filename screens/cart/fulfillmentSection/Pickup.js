@@ -29,7 +29,7 @@ export const Pickup = () => {
       appConfig,
    } = useConfig()
    const { globalStyle } = useGlobalStyle()
-   const { cartState, methods } = useCart()
+   const { cartState, methods, storedCartId } = useCart()
 
    const [fulfillmentType, setFulfillmentType] = useState(
       selectedOrderTab?.orderFulfillmentTypeLabel || null

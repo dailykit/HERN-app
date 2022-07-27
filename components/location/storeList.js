@@ -7,11 +7,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import useGlobalStyle from '../../globalStyle'
+import { useCart } from '../../context'
 
 export const StoreList = ({ stores, address, fulfillmentType }) => {
    const { dispatch, orderTabs } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
+   const { storedCartId, methods, cartState } = useCart()
    const selectedOrderTab = React.useMemo(() => {
       return orderTabs.find(
          x => x.orderFulfillmentTypeLabel === fulfillmentType
@@ -65,7 +67,36 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                               landmark: '',
                               searched: address?.searched || '',
                            }
-
+                           const cartIdInLocal = await AsyncStorage.getItem(
+                              'cart-id'
+                           )
+                           if (cartIdInLocal || storedCartId) {
+                              const finalCartId = cartIdInLocal
+                                 ? JSON.parse(cartIdInLocal)
+                                 : storedCartId
+                              methods.cart.update({
+                                 variables: {
+                                    id: finalCartId,
+                                    _set: {
+                                       address: addressToBeSaveInCart,
+                                       locationId: storeAddress.id,
+                                       orderTabId: selectedOrderTab.id,
+                                    },
+                                 },
+                                 optimisticResponse: {
+                                    updateCart: {
+                                       address: addressToBeSaveInCart,
+                                       fulfillmentInfo: null,
+                                       id: storedCartId,
+                                       customerInfo:
+                                          cartState?.cart?.customerInfo,
+                                       orderTabId: selectedOrderTab.id,
+                                       locationId: storeAddress.id,
+                                       __typename: 'order_cart',
+                                    },
+                                 },
+                              })
+                           }
                            dispatch({
                               type: 'SET_LOCATION_ID',
                               payload: eachStore.location.id,
