@@ -55,7 +55,6 @@ export const Delivery = ({ deliveryTimePopUp }) => {
    const [stores, setStores] = useState(null)
    const [showSlots, setShowSlots] = React.useState(false)
    const [isLoading, setIsLoading] = React.useState(true)
-   const [clickConfirm, setClickConfirm] = useState(false)
 
    const orderTabFulfillmentType = React.useMemo(
       () =>
@@ -348,12 +347,18 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                // console.log('availableStore', availableStore)
                setIsGetStoresLoading(false)
                setUpdateFulfillmentInfoForNow(false)
+               setSelectedSlot(null)
                setSelectedTimeSlot(null)
             }
             fetchStores()
          }
       })()
-   }, [consumerAddress, brand?.id, fulfillmentType, clickConfirm])
+   }, [
+      consumerAddress,
+      brand?.id,
+      fulfillmentType,
+      updateFulfillmentInfoForNow,
+   ])
 
    // this will run when ondemand delivery auto select
    useEffect(() => {
@@ -590,6 +595,8 @@ export const Delivery = ({ deliveryTimePopUp }) => {
       //    }))
       // }
       setShowSlots(true)
+      setSelectedSlot(null)
+      setSelectedTimeSlot(null)
       deliveryTimePopUp?.current?.present()
    }
 
@@ -703,7 +710,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                      {/* &nbsp;&nbsp; */}
                      <Text
                         style={{
-                           marginLeft: 23.5,
+                           marginLeft: 27,
                            // color: '#00000080',
                            fontFamily: globalStyle.font.medium,
                         }}
@@ -714,9 +721,11 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                         data?.carts?.[0]?.fulfillmentInfo?.type ===
                            'PREORDER_DELIVERY' ? (
                            <Text
-                              style={{ fontFamily: globalStyle.font.medium }}
+                              style={{
+                                 fontFamily: globalStyle.font.medium,
+                              }}
                            >
-                              {' '}
+                              {/* {' '} */}
                               {moment(
                                  data.carts?.[0]?.fulfillmentInfo?.slot?.from
                               ).format('DD MMM YYYY')}
@@ -758,20 +767,23 @@ export const Delivery = ({ deliveryTimePopUp }) => {
             enablePanDownToClose={true}
             handleComponent={() => null}
             backdropComponent={CustomBackdrop}
+            height={'100%'}
          >
-            <BottomSheetScrollView>
+            <BottomSheetScrollView contentInsetAdjustmentBehavior="automatic">
                <DeliveryTimePopUp />
             </BottomSheetScrollView>
             <View style={styles.buttonContainer}>
                <Button
                   buttonStyle={styles.button}
                   textStyle={[styles.buttonText]}
+                  disabled={
+                     fulfillmentType === 'PREORDER_DELIVERY' &&
+                     (!selectedSlot || !selectedTimeSlot)
+                  }
                   onPress={() => {
                      fulfillmentType === 'ONDEMAND_DELIVERY'
                         ? setUpdateFulfillmentInfoForNow(prev => !prev)
                         : onFulfillmentTimeClick(fulfillmentTimeSlot)
-                     // setFulfillmentType(null)
-                     setClickConfirm(!clickConfirm)
                      deliveryTimePopUp.current.dismiss()
                   }}
                >
