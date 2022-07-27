@@ -127,8 +127,9 @@ export const GET_CART_ITEMS_BY_CART = gql`
    subscription GET_CART_ITEMS_BY_CART(
       $where: order_cartItem_bool_exp!
       $params: jsonb!
+      $order_by: [order_cartItem_order_by!]
    ) {
-      cartItems(where: $where) {
+      cartItems(where: $where, order_by: $order_by) {
          cartItemId: id
          parentCartItemId
          addOnLabel
@@ -138,43 +139,29 @@ export const GET_CART_ITEMS_BY_CART = gql`
          discount
          name: displayName
          image: displayImage
-         childs(where: { ingredientId: { _is_null: true } }) {
-            price: unitPrice
-            name: displayName
-            discount
-            productOption {
-               id
-               label
-            }
-            childs(where: { ingredientId: { _is_null: true } }) {
-               displayName
-               price: unitPrice
-               discount
-               modifierOption {
-                  id
-                  name
-               }
-               childs(where: { ingredientId: { _is_null: true } }) {
-                  displayName
-                  price: unitPrice
-                  discount
-                  modifierOption {
-                     id
-                     name
-                  }
-               }
-            }
-         }
+         level
+         rootCartItemId
          product {
-            isPublished: publishedByLocation(args: { params: $params })
+            id
+            name
+            price: priceByLocation(args: { params: $params })
+            discount: discountByLocation(args: { params: $params })
             isAvailable: availabilityByLocation(args: { params: $params })
-            isArchived
-            productOptions {
-               isPublished: publishedByLocation(args: { params: $params })
-               isAvailable: availabilityByLocation(args: { params: $params })
-               isArchived
-               id
-            }
+            isPublished: publishedByLocation(args: { params: $params })
+         }
+         productOption {
+            id
+            label
+            price: priceByLocation(args: { params: $params })
+            discount: discountByLocation(args: { params: $params })
+            isAvailable: availabilityByLocation(args: { params: $params })
+            isPublished: publishedByLocation(args: { params: $params })
+         }
+         modifierOption {
+            id
+            name
+            price: priceByLocation(args: { params: $params })
+            discount: discountByLocation(args: { params: $params })
          }
          productId
       }
