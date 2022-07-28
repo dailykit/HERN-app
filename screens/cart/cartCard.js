@@ -542,12 +542,14 @@ const AdditionalDetails = ({ productData }) => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   height: 36,
-                  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                  backgroundColor: globalStyle.color.primary,
                   borderRadius: 4,
                   paddingHorizontal: 12,
                }}
             >
-               <Text style={{ fontFamily: globalStyle.font.medium }}>
+               <Text
+                  style={{ fontFamily: globalStyle.font.medium, color: '#fff' }}
+               >
                   Customizable
                </Text>
                {showAdditionalDetailsOnCard ? (
@@ -796,13 +798,15 @@ const AdditionalDetails = ({ productData }) => {
 
 const styles = StyleSheet.create({
    cartContainer: {
-      // padding: 12,
-      borderRadius: 6,
+      padding: 6,
+      paddingVertical: 12,
+      borderRadius: 4,
       // shadowColor: '#00000030',
       // shadowOffset: { width: 0, height: 2 },
       // shadowRadius: 6,
       // elevation: 3,
       marginBottom: 6,
+      backgroundColor: 'rgba(0, 0, 0, 0.05)',
    },
    clearCartText: {
       fontSize: 12,
@@ -812,6 +816,7 @@ const styles = StyleSheet.create({
    },
    productMetaDetails: {
       flexDirection: 'row',
+      marginBottom: -6,
    },
    productDetails: {
       marginLeft: 10,

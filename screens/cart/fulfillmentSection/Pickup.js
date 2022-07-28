@@ -51,6 +51,7 @@ export const Pickup = ({ pickupTimePopUp }) => {
       React.useState(false)
    const [deliverySlots, setPickupSlots] = useState(null)
    const [selectedSlot, setSelectedSlot] = useState(null)
+   const [selectedDaySlot, setSelectedDaySlot] = useState(null)
    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
    const [stores, setStores] = useState(null)
    const [showSlots, setShowSlots] = React.useState(false)
@@ -349,14 +350,17 @@ export const Pickup = ({ pickupTimePopUp }) => {
                         timeSlotInfo:
                            availableStore[0].fulfillmentStatus.timeSlotInfo,
                      })
+                     setSelectedSlot(null)
+                     setSelectedDaySlot(null)
+                     setSelectedTimeSlot(null)
                   }
                }
                setStores(availableStore)
                // console.log('availableStore', availableStore)
                setIsGetStoresLoading(false)
                setUpdateFulfillmentInfoForNow(false)
-               setSelectedSlot(null)
-               setSelectedTimeSlot(null)
+               // setSelectedSlot(null)
+               // setSelectedTimeSlot(null)
             }
             fetchStores()
          }
@@ -612,14 +616,12 @@ export const Pickup = ({ pickupTimePopUp }) => {
       //    }))
       // }
       setShowSlots(true)
-      setSelectedSlot(null)
-      setSelectedTimeSlot(null)
       pickupTimePopUp?.current?.present()
    }
 
    const PickupTimePopUp = () => {
       return (
-         <View style={{ padding: 10, marginBottom: 70 }}>
+         <View style={{ paddingHorizontal: 10, marginBottom: 50 }}>
             <View
                style={{
                   flexDirection: 'column',
@@ -700,6 +702,8 @@ export const Pickup = ({ pickupTimePopUp }) => {
                <TimeSlots
                   selectedSlot={selectedSlot}
                   setSelectedSlot={setSelectedSlot}
+                  selectedDaySlot={selectedDaySlot}
+                  setSelectedDaySlot={setSelectedDaySlot}
                   selectedTimeSlot={selectedTimeSlot}
                   setSelectedTimeSlot={setSelectedTimeSlot}
                   availableDaySlots={deliverySlots}
@@ -725,39 +729,55 @@ export const Pickup = ({ pickupTimePopUp }) => {
                   <View style={{ flexDirection: 'row' }}>
                      {/* <OrderTime size={20} /> */}
                      {/* &nbsp;&nbsp; */}
-                     <Text
-                        style={{
-                           marginLeft: 27,
-                           // color: '#00000080',
-                           fontFamily: globalStyle.font.medium,
-                        }}
-                     >
-                        {title}
-                        {data?.carts?.[0]?.fulfillmentInfo?.type ===
-                           'PREORDER_PICKUP' ||
-                        data?.carts?.[0]?.fulfillmentInfo?.type ===
-                           'PREORDER_PICKUP' ? (
-                           <Text
-                              style={{
-                                 fontFamily: globalStyle.font.medium,
-                              }}
-                           >
-                              {/* {' '} */}
-                              {moment(
-                                 data?.carts?.[0]?.fulfillmentInfo?.slot?.from
-                              ).format('DD MMM YYYY')}
-                              {' ('}
-                              {moment(
-                                 data?.carts?.[0]?.fulfillmentInfo?.slot?.from
-                              ).format('HH:mm')}
-                              {'-'}
-                              {moment(
-                                 data?.carts?.[0]?.fulfillmentInfo?.slot?.to
-                              ).format('HH:mm')}
-                              {')'}
-                           </Text>
-                        ) : null}
-                     </Text>
+                     {data?.carts?.[0]?.fulfillmentInfo.slot ? (
+                        <Text
+                           style={{
+                              marginLeft: 27,
+                              // color: '#00000080',
+                              fontFamily: globalStyle.font.medium,
+                           }}
+                        >
+                           {title}
+                           {data?.carts?.[0]?.fulfillmentInfo?.type ===
+                              'PREORDER_PICKUP' ||
+                           data?.carts?.[0]?.fulfillmentInfo?.type ===
+                              'PREORDER_PICKUP' ? (
+                              <Text
+                                 style={{
+                                    fontFamily: globalStyle.font.medium,
+                                 }}
+                              >
+                                 {/* {' '} */}
+                                 {moment(
+                                    data?.carts?.[0]?.fulfillmentInfo?.slot
+                                       ?.from
+                                 ).format('DD MMM YYYY')}
+                                 {' ('}
+                                 {moment(
+                                    data?.carts?.[0]?.fulfillmentInfo?.slot
+                                       ?.from
+                                 ).format('HH:mm')}
+                                 {'-'}
+                                 {moment(
+                                    data?.carts?.[0]?.fulfillmentInfo?.slot?.to
+                                 ).format('HH:mm')}
+                                 {')'}
+                              </Text>
+                           ) : null}
+                        </Text>
+                     ) : (
+                        <ActivityIndicator
+                           size={'small'}
+                           color={
+                              appConfig?.brandSettings?.brandColor?.value ||
+                              '#000000'
+                           }
+                           style={{
+                              marginVertical: 6,
+                              marginLeft: 80,
+                           }}
+                        />
+                     )}
                   </View>
                   {(pickupRadioOptions.length > 0 ||
                      fulfillmentType === 'PREORDER_PICKUP') && (
@@ -785,6 +805,22 @@ export const Pickup = ({ pickupTimePopUp }) => {
             handleComponent={() => null}
             backdropComponent={CustomBackdrop}
          >
+            <View
+               style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  paddingVertical: 12,
+               }}
+            >
+               <View
+                  style={{
+                     width: 50,
+                     height: 4,
+                     backgroundColor: globalStyle.color.primary,
+                     borderRadius: 4,
+                  }}
+               ></View>
+            </View>
             <BottomSheetScrollView>
                <PickupTimePopUp />
             </BottomSheetScrollView>

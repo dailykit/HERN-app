@@ -10,6 +10,8 @@ export const TimeSlots = ({
    availableDaySlots,
    selectedSlot,
    setSelectedSlot,
+   selectedDaySlot,
+   setSelectedDaySlot,
    selectedTimeSlot,
    setSelectedTimeSlot,
    setFulfillmentTimeSlot,
@@ -43,6 +45,11 @@ export const TimeSlots = ({
             <View>
                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                   {daySlots.map((eachSlot, index) => {
+                     const handleOnDaySlotClick = () => {
+                        setSelectedSlot(eachSlot)
+                        setSelectedDaySlot(eachSlot.date)
+                        setSelectedTimeSlot(null)
+                     }
                      return (
                         <Button
                            key={eachSlot.date}
@@ -52,9 +59,11 @@ export const TimeSlots = ({
                               marginBottom: 4,
                               ...(index == 0 ? { marginLeft: 0 } : {}),
                            }}
-                           onPress={() => setSelectedSlot(eachSlot)}
+                           onPress={handleOnDaySlotClick}
                            variant={
-                              eachSlot === selectedSlot ? 'primary' : 'outline'
+                              eachSlot.date === selectedDaySlot
+                                 ? 'primary'
+                                 : 'outline'
                            }
                         >
                            {moment(eachSlot.date).format('DD MMM YY')}
@@ -97,7 +106,7 @@ export const TimeSlots = ({
                            timestamp: newTimeStamp,
                            milerangeId: eachSlot.mileRangeId,
                         })
-                        setSelectedTimeSlot(eachSlot)
+                        setSelectedTimeSlot(eachSlot.time)
                      }
                      return (
                         <Button
@@ -109,7 +118,7 @@ export const TimeSlots = ({
                               ...(index == 0 ? { marginLeft: 0 } : {}),
                            }}
                            variant={
-                              eachSlot === selectedTimeSlot
+                              eachSlot.time === selectedTimeSlot
                                  ? 'primary'
                                  : 'outline'
                            }

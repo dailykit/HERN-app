@@ -258,6 +258,15 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      {formatCurrency(billing.totalToPay || 0)}
                   </Text>
                </View>
+               {/* <View
+                  style={{
+                     width: '100%',
+                     height: 1,
+                     backgroundColor: '#00000030',
+                     marginTop: 2,
+                     marginBottom: 2,
+                  }}
+               ></View> */}
             </View>
          )}
       </View>
@@ -266,6 +275,9 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
 
 const styles = StyleSheet.create({
    cartDetailContainer: {
+      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+      padding: 6,
+      borderRadius: 4,
       marginHorizontal: 10,
       marginVertical: 20,
    },
