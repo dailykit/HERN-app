@@ -88,16 +88,6 @@ export const Delivery = () => {
       }
    }, [stores, fulfillmentType])
 
-   // title to show after select time slot
-   const title = React.useMemo(() => {
-      switch (cartState.cart?.fulfillmentInfo?.type) {
-         case 'ONDEMAND_DELIVERY':
-            return `Delivering in ${validMileRangeInfo?.prepTime || '...'} min.`
-         default:
-            return ''
-      }
-   }, [cartState.cart?.fulfillmentInfo?.type, validMileRangeInfo?.prepTime])
-
    // selected slot validation
    React.useEffect(() => {
       if (stores && stores.length > 0) {
@@ -342,7 +332,12 @@ export const Delivery = () => {
             fetchStores()
          }
       })()
-   }, [consumerAddress, brand?.id, fulfillmentType])
+   }, [
+      consumerAddress,
+      brand?.id,
+      fulfillmentType,
+      updateFulfillmentInfoForNow,
+   ])
 
    // this will run when ondemand delivery auto select
    useEffect(() => {
@@ -570,6 +565,15 @@ export const Delivery = () => {
          },
       },
    })
+   // title to show after select time slot
+   const title = React.useMemo(() => {
+      switch (data?.carts?.[0]?.fulfillmentInfo?.type) {
+         case 'ONDEMAND_DELIVERY':
+            return `Delivering in ${validMileRangeInfo?.prepTime || '...'} min.`
+         default:
+            return ''
+      }
+   }, [data?.carts?.[0]?.fulfillmentInfo?.type, validMileRangeInfo?.prepTime])
 
    if (!showSlots) {
       return (
@@ -690,7 +694,7 @@ export const Delivery = () => {
                         })
                         setIsGetStoresLoading(true)
                         if (eachOption.value === 'ONDEMAND_DELIVERY') {
-                           setUpdateFulfillmentInfoForNow(prev => !prev)
+                           setUpdateFulfillmentInfoForNow(true)
                         }
                      }}
                   >

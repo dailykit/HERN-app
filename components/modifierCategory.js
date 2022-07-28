@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { ModifierOptionCard } from './modifierOption'
 import RadioIcon from '../assets/radioIcon'
@@ -48,83 +48,87 @@ export const ModifierCategory = props => {
       }
    }
 
-   const onCheckClick = (eachOption, eachModifierCategory) => {
-      //selected option
-      const selectedOption = {
-         modifierCategoryID: eachModifierCategory.id,
-         modifierCategoryOptionsID: eachOption.id,
-         modifierCategoryOptionsPrice: eachOption.price,
-         modifierCategoryOptionsDiscount: eachOption.discount,
-         cartItem: eachOption.cartItem,
-         parentModifierOptionId: parentModifierOptionId,
-      }
-      //modifierCategoryOptionID
-      //modifierCategoryID
-      if (eachModifierCategory.type === 'single') {
-         const existCategoryIndex = selectedOptions.single.findIndex(
-            x => x.modifierCategoryID == eachModifierCategory.id
-         )
-         //single-->already exist category
-         if (existCategoryIndex !== -1) {
-            //for uncheck the option
-            if (
-               selectedOptions.single[existCategoryIndex][
-                  'modifierCategoryOptionsID'
-               ] === eachOption.id &&
-               !eachModifierCategory.isRequired
-            ) {
-               const newSelectedOptions = selectedOptions.single.filter(
-                  x =>
-                     x.modifierCategoryID !== eachModifierCategory.id &&
-                     x.modifierCategoryOptionsID !== eachOption.id
-               )
+   const onCheckClick = React.useCallback(
+      (eachOption, eachModifierCategory) => {
+         //selected option
+         const selectedOption = {
+            modifierCategoryID: eachModifierCategory.id,
+            modifierCategoryOptionsID: eachOption.id,
+            modifierCategoryOptionsPrice: eachOption.price,
+            modifierCategoryOptionsDiscount: eachOption.discount,
+            cartItem: eachOption.cartItem,
+            parentModifierOptionId: parentModifierOptionId,
+         }
+         //modifierCategoryOptionID
+         //modifierCategoryID
+         if (eachModifierCategory.type === 'single') {
+            const existCategoryIndex = selectedOptions.single.findIndex(
+               x => x.modifierCategoryID == eachModifierCategory.id
+            )
+            //single-->already exist category
+            if (existCategoryIndex !== -1) {
+               //for uncheck the option
+               if (
+                  selectedOptions.single[existCategoryIndex][
+                     'modifierCategoryOptionsID'
+                  ] === eachOption.id &&
+                  !eachModifierCategory.isRequired
+               ) {
+                  const newSelectedOptions = selectedOptions.single.filter(
+                     x =>
+                        x.modifierCategoryID !== eachModifierCategory.id &&
+                        x.modifierCategoryOptionsID !== eachOption.id
+                  )
+                  setSelectedOptions({
+                     ...selectedOptions,
+                     single: newSelectedOptions,
+                  })
+                  return
+               }
+               const newSelectedOptions = selectedOptions.single
+               newSelectedOptions[existCategoryIndex] = selectedOption
                setSelectedOptions({
                   ...selectedOptions,
                   single: newSelectedOptions,
                })
                return
+            } else {
+               //single--> already not exist
+               setSelectedOptions({
+                  ...selectedOptions,
+                  single: [...selectedOptions.single, selectedOption],
+               })
+               return
             }
-            const newSelectedOptions = selectedOptions.single
-            newSelectedOptions[existCategoryIndex] = selectedOption
-            setSelectedOptions({
-               ...selectedOptions,
-               single: newSelectedOptions,
-            })
-            return
-         } else {
-            //single--> already not exist
-            setSelectedOptions({
-               ...selectedOptions,
-               single: [...selectedOptions.single, selectedOption],
-            })
-            return
          }
-      }
-      if (eachModifierCategory.type === 'multiple') {
-         const existOptionIndex = selectedOptions.multiple.findIndex(
-            x => x.modifierCategoryOptionsID == eachOption.id
-         )
-
-         //already exist option
-         if (existOptionIndex !== -1) {
-            const newSelectedOptions = selectedOptions.multiple.filter(
-               x => x.modifierCategoryOptionsID !== eachOption.id
+         if (eachModifierCategory.type === 'multiple') {
+            const existOptionIndex = selectedOptions.multiple.findIndex(
+               x => x.modifierCategoryOptionsID == eachOption.id
             )
-            setSelectedOptions({
-               ...selectedOptions,
-               multiple: newSelectedOptions,
-            })
-            return
+
+            //already exist option
+            if (existOptionIndex !== -1) {
+               const newSelectedOptions = selectedOptions.multiple.filter(
+                  x => x.modifierCategoryOptionsID !== eachOption.id
+               )
+               setSelectedOptions({
+                  ...selectedOptions,
+                  multiple: newSelectedOptions,
+               })
+               return
+            }
+            //new option select
+            else {
+               setSelectedOptions({
+                  ...selectedOptions,
+                  multiple: [...selectedOptions.multiple, selectedOption],
+               })
+            }
          }
-         //new option select
-         else {
-            setSelectedOptions({
-               ...selectedOptions,
-               multiple: [...selectedOptions.multiple, selectedOption],
-            })
-         }
-      }
-   }
+      },
+      [selectedOptions]
+   )
+
    return (
       <View style={{ marginVertical: 6 }}>
          <View style={styles.categoryHeader}>
@@ -192,6 +196,17 @@ const ModifierOption = ({
       setShowAdditionalModifierOptions(prev => !prev)
    }
 
+   const eachOptionInfo = React.useMemo(() => {
+      const isOptionSelected = selectedOptions[eachCategory.type].find(
+         x =>
+            x.modifierCategoryID === eachCategory.id &&
+            x.modifierCategoryOptionsID === eachOption.id
+      )
+      return {
+         isOptionSelected,
+      }
+   }, [selectedOptions])
+
    const ConditionalIcon = useCallback(() => {
       const {
          checkIconFillColor,
@@ -199,12 +214,9 @@ const ModifierOption = ({
          checkIconUnFillColor,
          boundaryColor,
       } = appConfig.brandSettings.checkIconSettings
+      const { isOptionSelected } = eachOptionInfo
+
       const Icon = () => {
-         const isOptionSelected = selectedOptions[eachCategory.type].find(
-            x =>
-               x.modifierCategoryID === eachCategory.id &&
-               x.modifierCategoryOptionsID === eachOption.id
-         )
          return eachCategory.type === 'single' ? (
             Boolean(isOptionSelected) ? (
                <RadioIcon checked={true} stroke={checkIconFillColor.value} />
@@ -224,7 +236,8 @@ const ModifierOption = ({
          )
       }
       return <Icon />
-   }, [selectedOptions])
+   }, [eachOptionInfo])
+
    return (
       <View>
          <ModifierOptionCard

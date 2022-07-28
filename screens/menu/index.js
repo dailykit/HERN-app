@@ -44,6 +44,11 @@ const MenuScreen = ({ route }) => {
             ?.name ||
          ''
    )
+   const [isMenuLoading, setIsMenuLoading] = React.useState(true)
+
+   React.useEffect(() => {
+      setIsMenuLoading(false)
+   }, [])
 
    useEffect(() => {
       if (hydratedMenu.length > 0 && selectedCategoryName.length > 0) {
@@ -73,12 +78,12 @@ const MenuScreen = ({ route }) => {
    return (
       <SafeAreaView style={{ backgroundColor: '#ffffff', flex: 1 }}>
          <Header />
-         {status === 'loading' ? (
+         {status === 'loading' || isMenuLoading ? (
             <Spinner size="large" showText={true} />
          ) : status === 'error' ? (
             <Text style={{ fontFamily: globalStyle.font.medium }}>Error</Text>
          ) : null}
-         {status === 'success' && hydratedMenu.length > 0 ? (
+         {status === 'success' && !isMenuLoading && hydratedMenu.length > 0 ? (
             <>
                {appConfig.brandSettings.menuSettings.productCategoryView.value
                   .value === 'NAVBAR' ? (
