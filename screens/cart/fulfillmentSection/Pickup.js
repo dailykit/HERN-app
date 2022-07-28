@@ -41,7 +41,7 @@ export const Pickup = ({ pickupTimePopUp }) => {
       selectedOrderTab?.orderFulfillmentTypeLabel || null
    )
    const [fulfillmentTabInfo, setFulfillmentTabInfo] = useState({
-      orderTabId: null,
+      orderTabId: selectedOrderTab?.id || null,
       locationId: null,
       // fulfillmentInfo: null,
    })
@@ -350,9 +350,6 @@ export const Pickup = ({ pickupTimePopUp }) => {
                         timeSlotInfo:
                            availableStore[0].fulfillmentStatus.timeSlotInfo,
                      })
-                     setSelectedSlot(null)
-                     setSelectedDaySlot(null)
-                     setSelectedTimeSlot(null)
                   }
                }
                setStores(availableStore)
@@ -494,13 +491,10 @@ export const Pickup = ({ pickupTimePopUp }) => {
             updateCart: {
                id: cartState?.cart?.id,
                customerInfo: cartState?.cart?.customerInfo,
-               fulfillmentInfo: {
-                  ...fulfillmentTabInfo,
-                  fulfillmentInfo: slotInfo,
-               },
+               fulfillmentInfo: slotInfo,
                address: cartState?.cart?.address,
-               orderTabId: cartState?.cart?.id,
-               locationId: cartState?.cart?.locationId,
+               orderTabId: fulfillmentTabInfo.orderTabId,
+               locationId: fulfillmentTabInfo.locationId || locationId,
                __typename: 'order_cart',
             },
          },
@@ -510,6 +504,9 @@ export const Pickup = ({ pickupTimePopUp }) => {
          type: 'SET_LAST_LOCATION_ID',
          payload: null,
       })
+      setSelectedSlot(null)
+      setSelectedDaySlot(null)
+      setSelectedTimeSlot(null)
       setShowSlots(false)
       // setIsEdit(false)
    }
@@ -548,20 +545,16 @@ export const Pickup = ({ pickupTimePopUp }) => {
             _set: {
                ...fulfillmentTabInfo,
                fulfillmentInfo: slotInfo,
-               locationId: locationId,
             },
          },
          optimisticResponse: {
             updateCart: {
                id: cartState?.cart?.id,
                customerInfo: cartState?.cart?.customerInfo,
-               fulfillmentInfo: {
-                  ...fulfillmentTabInfo,
-                  fulfillmentInfo: slotInfo,
-               },
+               fulfillmentInfo: slotInfo,
                address: cartState?.cart?.address,
-               orderTabId: cartState?.cart?.id,
-               locationId: cartState?.cart?.locationId,
+               orderTabId: fulfillmentTabInfo.orderTabId,
+               locationId: fulfillmentTabInfo.locationId || locationId,
                __typename: 'order_cart',
             },
          },
@@ -717,7 +710,7 @@ export const Pickup = ({ pickupTimePopUp }) => {
 
    return (
       <>
-         {cartState?.cart?.fulfillmentInfo ? (
+         {data?.carts?.[0]?.fulfillmentInfo ? (
             <View>
                <View
                   style={{
@@ -729,7 +722,7 @@ export const Pickup = ({ pickupTimePopUp }) => {
                   <View style={{ flexDirection: 'row' }}>
                      {/* <OrderTime size={20} /> */}
                      {/* &nbsp;&nbsp; */}
-                     {data?.carts?.[0]?.fulfillmentInfo.slot ? (
+                     {data?.carts?.[0]?.fulfillmentInfo?.slot ? (
                         <Text
                            style={{
                               marginLeft: 27,

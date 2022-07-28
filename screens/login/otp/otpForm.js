@@ -42,7 +42,12 @@ export const OTPform = ({
                setShowResendBtn(false)
             }}
          >
-            <Text style={{ color: 'red', fontFamily: globalStyle.font.medium }}>
+            <Text
+               style={{
+                  color: globalStyle.color.primary,
+                  fontFamily: globalStyle.font.medium,
+               }}
+            >
                Resend OTP
             </Text>
          </TouchableOpacity>

@@ -20,9 +20,11 @@ import { PRODUCTS_QUERY } from '../../graphql'
 import { useQuery } from '@apollo/client'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import useGlobalStyle from '../../globalStyle'
+import { ProductsLoader } from '../../assets/loaders/productsLoader'
 
 const HomeScreen = () => {
-   const { brand, locationId, brandLocation, appConfig } = useConfig()
+   const { brand, locationId, brandLocation, appConfig, storeStatus } =
+      useConfig()
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const {
@@ -101,7 +103,14 @@ const HomeScreen = () => {
             )}
 
             {/* Trending Products */}
-            {trendingProducts && trendingProducts.length && !loading ? (
+            {trendingProducts == undefined || loading || storeStatus.loading ? (
+               <ProductsLoader
+                  heading={'Trending Now'}
+                  numberOfProducts={
+                     appConfig?.data?.trendingProducts?.length || 3
+                  }
+               />
+            ) : trendingProducts.length > 0 ? (
                <ProductList
                   productsList={trendingProducts}
                   heading={'Trending Now'}

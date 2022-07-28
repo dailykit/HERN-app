@@ -13,6 +13,7 @@ export const combineCartItems = cartItems => {
       const updatedItem = JSON.parse(JSON.stringify(item))
       delete updatedItem.cartItemId
       delete updatedItem.created_at
+      delete updatedItem.rootCartItemId
       return updatedItem
    })
 
@@ -21,7 +22,7 @@ export const combineCartItems = cartItems => {
       let found = false
       for (const combinedItem of combinedItems) {
          const combinedItemIds = combinedItem.ids
-         const newCombinedItem = omit(combinedItem, 'ids')
+         const newCombinedItem = omit(combinedItem, ['ids', 'rootCartItemId'])
 
          if (isEqual(newCombinedItem, item)) {
             combinedItem.ids = [...combinedItemIds, cartItemRootIds[index]]

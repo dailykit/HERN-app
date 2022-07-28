@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+   ActivityIndicator,
+   StyleSheet,
+   Text,
+   TouchableOpacity,
+   View,
+} from 'react-native'
 import { EditIcon } from '../../assets/editIcon'
 import LocationIcon from '../../assets/locationIcon'
 import { useCart } from '../../context'
@@ -14,7 +20,7 @@ export const Address = () => {
    const { orderTabs, selectedOrderTab, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
-   const { cartState: { cart } = {} } = useCart()
+   const { storedCartId } = useCart()
    const [numberOfLines, setNumberOfLines] = React.useState(1)
 
    const { data: { carts = [] } = {}, loading } = useQuery(
@@ -23,7 +29,7 @@ export const Address = () => {
          variables: {
             where: {
                id: {
-                  _eq: cart?.id,
+                  _eq: storedCartId,
                },
             },
          },
@@ -96,35 +102,40 @@ export const Address = () => {
                </Text>
                {/* <DownVector size={12} stroke={'#00000080'} /> */}
             </TouchableOpacity>
-
-            <TouchableOpacity
-               style={{
-                  // flex: 1,
-                  // alignItems: 'center',
-                  height: '100%',
-                  // justifyContent: 'center',
-                  marginRight: 8,
-               }}
-               onPress={() => {
-                  navigation.navigate('RefineLocation', {
-                     address: {
-                        ...address,
-                        latitude: address?.lat,
-                        longitude: address?.lng,
-                     },
-                     fulfillmentType:
-                        selectedOrderTab.orderFulfillmentTypeLabel,
-                  })
-               }}
-            >
-               <EditIcon
-                  fill={
-                     appConfig.brandSettings.buttonSettings.buttonBGColor
-                        .value || '#00000080'
-                  }
-                  size={18}
-               />
-            </TouchableOpacity>
+            {loading ? (
+               <View style={{ flex: 6, flexShrink: 1, marginLeft: 30 }}>
+                  <ActivityIndicator size="small" color={'#000'} />
+               </View>
+            ) : (
+               <TouchableOpacity
+                  style={{
+                     // flex: 1,
+                     // alignItems: 'center',
+                     height: '100%',
+                     // justifyContent: 'center',
+                     marginRight: 8,
+                  }}
+                  onPress={() => {
+                     navigation.navigate('RefineLocation', {
+                        address: {
+                           ...address,
+                           latitude: address?.lat,
+                           longitude: address?.lng,
+                        },
+                        fulfillmentType:
+                           selectedOrderTab.orderFulfillmentTypeLabel,
+                     })
+                  }}
+               >
+                  <EditIcon
+                     fill={
+                        appConfig.brandSettings.buttonSettings.buttonBGColor
+                           .value || '#00000080'
+                     }
+                     size={18}
+                  />
+               </TouchableOpacity>
+            )}
          </View>
          <View>
             <TouchableOpacity

@@ -40,7 +40,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
       selectedOrderTab?.orderFulfillmentTypeLabel || null
    )
    const [fulfillmentTabInfo, setFulfillmentTabInfo] = useState({
-      orderTabId: null,
+      orderTabId: selectedOrderTab?.id || null,
       locationId: null,
       // fulfillmentInfo: null,
    })
@@ -97,16 +97,6 @@ export const Delivery = ({ deliveryTimePopUp }) => {
          null
       }
    }, [stores, fulfillmentType])
-
-   // title to show after select time slot
-   const title = React.useMemo(() => {
-      switch (cartState.cart?.fulfillmentInfo?.type) {
-         case 'ONDEMAND_DELIVERY':
-            return `Delivering in ${validMileRangeInfo?.prepTime || '...'} min.`
-         default:
-            return ''
-      }
-   }, [cartState.cart?.fulfillmentInfo?.type, validMileRangeInfo?.prepTime])
 
    // selected slot validation
    React.useEffect(() => {
@@ -342,9 +332,6 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                            availableStore[0].fulfillmentStatus.mileRangeInfo.id,
                         locationId: availableStore[0].location.id,
                      })
-                     setSelectedSlot(null)
-                     setSelectedDaySlot(null)
-                     setSelectedTimeSlot(null)
                   }
                }
 
@@ -500,18 +487,19 @@ export const Delivery = ({ deliveryTimePopUp }) => {
             updateCart: {
                id: cartState?.cart?.id,
                customerInfo: cartState?.cart?.customerInfo,
-               fulfillmentInfo: {
-                  ...fulfillmentTabInfo,
-                  fulfillmentInfo: slotInfo,
-               },
+               fulfillmentInfo: slotInfo,
                address: cartState?.cart?.address,
-               orderTabId: cartState?.cart?.id,
-               locationId: cartState?.cart?.locationId,
+               orderTabId: fulfillmentTabInfo.orderTabId,
+               locationId: fulfillmentTabInfo.locationId || locationId,
                __typename: 'order_cart',
             },
          },
       })
+      setSelectedSlot(null)
+      setSelectedDaySlot(null)
+      setSelectedTimeSlot(null)
       setShowSlots(false)
+
       // setIsEdit(false)
    }
 
@@ -539,13 +527,10 @@ export const Delivery = ({ deliveryTimePopUp }) => {
             updateCart: {
                id: cartState?.cart?.id,
                customerInfo: cartState?.cart?.customerInfo,
-               fulfillmentInfo: {
-                  ...fulfillmentTabInfo,
-                  fulfillmentInfo: slotInfo,
-               },
+               fulfillmentInfo: slotInfo,
                address: cartState?.cart?.address,
-               orderTabId: cartState?.cart?.id,
-               locationId: cartState?.cart?.locationId,
+               orderTabId: fulfillmentTabInfo.orderTabId,
+               locationId: fulfillmentTabInfo.locationId || locationId,
                __typename: 'order_cart',
             },
          },
@@ -591,6 +576,15 @@ export const Delivery = ({ deliveryTimePopUp }) => {
          },
       },
    })
+   // title to show after select time slot
+   const title = React.useMemo(() => {
+      switch (data?.carts?.[0]?.fulfillmentInfo?.type) {
+         case 'ONDEMAND_DELIVERY':
+            return `Delivering in ${validMileRangeInfo?.prepTime || '...'} min.`
+         default:
+            return ''
+      }
+   }, [data?.carts?.[0]?.fulfillmentInfo?.type, validMileRangeInfo?.prepTime])
 
    const handleChangeDeliveryTime = () => {
       // if (deliveryRadioOptions.length > 1) {
@@ -701,7 +695,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
 
    return (
       <>
-         {cartState?.cart?.fulfillmentInfo ? (
+         {data?.carts?.[0]?.fulfillmentInfo ? (
             <View>
                <View
                   style={{
@@ -713,7 +707,7 @@ export const Delivery = ({ deliveryTimePopUp }) => {
                   <View style={{ flexDirection: 'row' }}>
                      {/* <OrderTime size={20} /> */}
                      {/* &nbsp;&nbsp; */}
-                     {data?.carts?.[0]?.fulfillmentInfo.slot ? (
+                     {data?.carts?.[0]?.fulfillmentInfo?.slot ? (
                         <Text
                            style={{
                               marginLeft: 27,

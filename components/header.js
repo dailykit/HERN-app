@@ -7,6 +7,7 @@ import { useCart } from '../context/cart'
 import React, { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import useGlobalStyle from '../globalStyle'
+import { useUser } from '../context'
 
 export const Header = () => {
    const navigation = useNavigation()
@@ -20,7 +21,8 @@ export const Header = () => {
       appConfig,
    } = useConfig()
    const { globalStyle } = useGlobalStyle()
-   const { cartState } = useCart()
+   const { totalCartItems } = useCart()
+   const { user } = useUser()
    React.useEffect(() => {
       if (orderTabs?.length > 0) {
          ;(async function () {
@@ -69,11 +71,19 @@ export const Header = () => {
                         loading: false,
                      },
                   })
+                  dispatch({
+                     type: 'SET_SELECTED_ORDER_TAB',
+                     payload: null,
+                  })
+                  dispatch({
+                     type: 'SET_USER_LOCATION',
+                     payload: null,
+                  })
                }
             }
          })()
       }
-   }, [orderTabs, selectedOrderTab])
+   }, [orderTabs, selectedOrderTab, user?.isAuthenticate, locationId])
 
    const label = React.useMemo(() => {
       if (selectedOrderTab?.orderFulfillmentTypeLabel) {
@@ -174,7 +184,7 @@ export const Header = () => {
                navigation.navigate('Cart')
             }}
          >
-            {cartState?.cart?.cartItems_aggregate?.aggregate?.count > 0 ? (
+            {totalCartItems > 0 ? (
                <Text
                   style={[
                      styles.cartItemCount,
@@ -190,7 +200,7 @@ export const Header = () => {
                      },
                   ]}
                >
-                  {cartState?.cart?.cartItems_aggregate?.aggregate?.count}
+                  {totalCartItems}
                </Text>
             ) : null}
             <CartIcon

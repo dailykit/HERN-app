@@ -5,7 +5,7 @@ import { EditIcon } from '../../assets/editIcon'
 import { CounterButton } from '../../components/counterButton'
 import { useCart } from '../../context'
 import { formatCurrency } from '../../utils/formatCurrency'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { DownVector, UpVector } from '../../assets/vector'
 import { ModifierPopup } from '../../components/modifierPopup'
 import { PRODUCT_ONE } from '../../graphql'
@@ -15,6 +15,8 @@ import Modal from 'react-native-modal'
 import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
 import useGlobalStyle from '../../globalStyle'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import CustomBackdrop from '../../components/modalBackdrop'
 
 export const CartCard = ({ productData, quantity }) => {
    // context
@@ -22,6 +24,10 @@ export const CartCard = ({ productData, quantity }) => {
    const { globalStyle } = useGlobalStyle()
    const { addToCart, methods } = useCart()
 
+   // Ref
+   const bottomSheetModalRef = useRef()
+
+   // State
    const [modifyProductId, setModifyProductId] = useState(null)
    const [modifyProduct, setModifyProduct] = useState(null)
    const [modifierType, setModifierType] = useState(null)
@@ -30,7 +36,6 @@ export const CartCard = ({ productData, quantity }) => {
    const [showAdditionalDetailsOnCard, setShowAdditionalDetailsOnCard] =
       useState(false) // show modifier and product options details
    const [showChooseIncreaseType, setShowChooseIncreaseType] = useState(false) // show I'll choose or repeat last one popup
-   const [showModifier, setShowModifier] = useState(false) // show modifier popup
    const [forRepeatLastOne, setForRepeatLastOne] = useState(false) // to run repeatLastOne fn in PRODUCTS query
 
    const argsForByLocation = React.useMemo(
@@ -299,9 +304,11 @@ export const CartCard = ({ productData, quantity }) => {
    }
    const getTotalPrice = React.useMemo(() => price(productData), [productData])
    const isProductAvailable = product => {
-      const selectedProductOption = product.product.productOptions.find(
-         option => option.id === product.childs[0]?.productOption?.id
-      )
+      // const selectedProductOption = product.product.productOptions.find(
+      //    option => option.id === product.childs[0]?.productOption?.id
+      // )
+      const selectedProductOption = product.productOption
+
       if (!isEmpty(selectedProductOption)) {
          return (
             product.product.isAvailable &&
@@ -370,7 +377,7 @@ export const CartCard = ({ productData, quantity }) => {
                               setModifierType('edit')
                               setCartDetailSelectedProduct(productData)
                               setModifyProductId(productData.productId)
-                              setShowModifier(true)
+                              bottomSheetModalRef.current?.present()
                            }}
                         >
                            <EditIcon />
@@ -450,22 +457,29 @@ export const CartCard = ({ productData, quantity }) => {
             productData={productData}
             showAdditionalDetailsOnCard={true}
          />
-         {modifyProduct ? (
-            <Modal isVisible={showModifier}>
+         <BottomSheetModal
+            ref={bottomSheetModalRef}
+            snapPoints={['90%']}
+            index={0}
+            enablePanDownToClose={true}
+            handleComponent={() => null}
+            backdropComponent={CustomBackdrop}
+         >
+            {modifyProduct ? (
                <ModifierPopup
                   closeModifier={() => {
-                     setShowModifier(false)
                      setModifyProduct(null)
                      setModifyProductId(null)
                      setModifierType(null)
+                     bottomSheetModalRef.current.dismiss()
                   }}
                   productData={modifyProduct}
                   forNewItem={Boolean(modifierType === 'newItem')}
                   edit={Boolean(modifierType === 'edit')}
                   productCartDetail={cartDetailSelectedProduct}
                />
-            </Modal>
-         ) : null}
+            ) : null}
+         </BottomSheetModal>
          <Modal
             isVisible={showChooseIncreaseType}
             onBackdropPress={() => {
@@ -501,7 +515,7 @@ export const CartCard = ({ productData, quantity }) => {
                         setCartDetailSelectedProduct(productData)
                         setModifyProductId(productData.productId)
                         setShowChooseIncreaseType(false)
-                        setShowModifier(true)
+                        bottomSheetModalRef.current?.present()
                      }}
                   >
                      I'LL CHOOSE

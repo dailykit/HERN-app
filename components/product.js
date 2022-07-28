@@ -8,7 +8,7 @@ import {
    TouchableWithoutFeedback,
    Dimensions,
 } from 'react-native'
-import { chain } from 'lodash'
+import { chain, isEqual } from 'lodash'
 import { formatCurrency } from '../utils/formatCurrency'
 import { getPriceWithDiscount } from '../utils/getPriceWithDiscount'
 import { Button } from './button'
@@ -26,6 +26,8 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
 import CachedImage from 'react-native-expo-cached-image'
+import Toast from 'react-native-simple-toast'
+
 const windowHeight = Dimensions.get('window').height
 
 const width = Dimensions.get('window').width
@@ -34,83 +36,91 @@ const productViewStyles = {
    horizontalCard: 'horizontalCard',
 }
 
-export const ProductList = ({
-   productsList,
-   heading,
-   viewStyle = 'horizontalCard',
-}) => {
-   const { globalStyle } = useGlobalStyle()
-   // group the product list by product type
-   const groupedByType = React.useMemo(() => {
-      const data = chain(productsList)
-         .groupBy('subCategory')
-         .map((value, key) => ({
-            type: key,
-            products: value,
-         }))
-         .value()
-      const nullData = data.filter(x => x.type === 'null')
-      const nonNullData = data.filter(x => x.type !== 'null')
-      return [...nonNullData, ...nullData]
-   }, [productsList])
+export const ProductList = React.memo(
+   ({ productsList, heading, viewStyle = 'horizontalCard' }) => {
+      const { globalStyle } = useGlobalStyle()
+      // group the product list by product type
+      const groupedByType = React.useMemo(() => {
+         const data = chain(productsList)
+            .groupBy('subCategory')
+            .map((value, key) => ({
+               type: key,
+               products: value,
+            }))
+            .value()
+         const nullData = data.filter(x => x.type === 'null')
+         const nonNullData = data.filter(x => x.type !== 'null')
+         return [...nonNullData, ...nullData]
+      }, [productsList])
 
-   const [currentGroupProducts, setCurrentGroupedProduct] = useState(
-      groupedByType[0].products
-   )
+      const [currentGroupProducts, setCurrentGroupedProduct] = useState(
+         groupedByType[0].products
+      )
 
-   return (
-      <View>
-         {heading && (
-            <Text
-               style={[
-                  styles.productListHeading,
-                  { fontFamily: globalStyle.font.semibold },
-               ]}
-            >
-               {heading}
-            </Text>
-         )}
-         <ScrollView
-            contentContainerStyle={{ display: 'flex' }}
-            horizontal={viewStyle !== productViewStyles.horizontalCard}
-         >
-            {currentGroupProducts.length > 0 ? (
-               currentGroupProducts.map((eachProduct, index) => {
-                  const publishedProductOptions =
-                     eachProduct.productOptions.length > 0 &&
-                     eachProduct.productOptions.filter(
-                        option => option.isPublished
-                     ).length == 0
-                  if (!eachProduct.isPublished || publishedProductOptions) {
-                     return null
-                  }
-                  return (
-                     <ProductCard
-                        key={`${eachProduct.id}-${eachProduct.type}-${index}`}
-                        productData={eachProduct}
-                        viewStyle={viewStyle}
-                     />
-                  )
-               })
-            ) : (
-               <View
+      return (
+         <View>
+            {heading && (
+               <Text
                   style={[
-                     styles.noProductsMsgContainer,
-                     { fontFamily: globalStyle.font.medium },
+                     styles.productListHeading,
+                     { fontFamily: globalStyle.font.semibold },
                   ]}
                >
-                  <Text style={{ fontFamily: globalStyle.font.medium }}>
-                     No Products Found
-                  </Text>
-               </View>
+                  {heading}
+               </Text>
             )}
-         </ScrollView>
-      </View>
-   )
-}
+            <ScrollView
+               contentContainerStyle={{ display: 'flex' }}
+               horizontal={viewStyle !== productViewStyles.horizontalCard}
+            >
+               {currentGroupProducts.length > 0 ? (
+                  currentGroupProducts.map((eachProduct, index) => {
+                     const publishedProductOptions =
+                        eachProduct.productOptions.length > 0 &&
+                        eachProduct.productOptions.filter(
+                           option => option.isPublished
+                        ).length == 0
+                     if (!eachProduct.isPublished || publishedProductOptions) {
+                        return null
+                     }
+                     return (
+                        <ProductCard
+                           key={`${eachProduct.id}-${eachProduct.type}-${index}`}
+                           productData={eachProduct}
+                           viewStyle={viewStyle}
+                        />
+                     )
+                  })
+               ) : (
+                  <View
+                     style={[
+                        styles.noProductsMsgContainer,
+                        { fontFamily: globalStyle.font.medium },
+                     ]}
+                  >
+                     <Text style={{ fontFamily: globalStyle.font.medium }}>
+                        No Products Found
+                     </Text>
+                  </View>
+               )}
+            </ScrollView>
+         </View>
+      )
+   },
+   (prevProps, nextProps) => {
+      return isEqual(prevProps, nextProps)
+   }
+)
 
 export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
-   const { cartState, methods, addToCart, combinedCartItems } = useCart()
+   const {
+      cartState,
+      methods,
+      addToCart,
+      combinedCartItems,
+      storedCartId,
+      setTotalCartItems,
+   } = useCart()
    const { brand, locationId, brandLocation, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const bottomSheetModalRef = React.useRef(null)
@@ -187,6 +197,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
       }
    }, [combinedCartItems])
 
+   React.useEffect(() => {
+      if (storedCartId == null) {
+         setAvailableQuantityInCart(0)
+      }
+   }, [storedCartId])
+
    const removeCartItems = cartItemIds => {
       methods.cartItems.delete({
          variables: {
@@ -197,7 +213,23 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
             },
          },
       })
+      setTotalCartItems(prev => prev - 1)
+      Toast.show('Item removed!')
    }
+
+   const productValidationResult = React.useMemo(() => {
+      const isProductAbleForModifiers =
+         productData.productOptions.length > 0 && productData.isPopupAllowed
+      return {
+         isProductAbleToAddIntoCart:
+            productData.isAvailable && showAddToCartButton,
+         isProductAbleForModifiers,
+         isProductOptionsAvailable:
+            productData.productOptions.filter(
+               option => option.isAvailable && option.isPublished
+            ).length > 0,
+      }
+   }, [productData, showAddToCartButton])
 
    const handelAddToCartClick = () => {
       // product availability
@@ -205,23 +237,17 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
          navigation.navigate('LocationSelector')
          return
       }
-      if (productData.isAvailable) {
-         if (showAddToCartButton) {
-            if (
-               productData.productOptions.length > 0 &&
-               productData.isPopupAllowed
-            ) {
-               const availableProductOptions =
-                  productData.productOptions.filter(
-                     option => option.isAvailable && option.isPublished
-                  ).length
-               if (availableProductOptions > 0) {
-                  // setShowModifierPopup(true)
-                  bottomSheetModalRef.current?.present()
-               }
-            } else {
-               addToCart(productData.defaultCartItem, 1)
+
+      if (productValidationResult.isProductAbleToAddIntoCart) {
+         if (productValidationResult.isProductAbleForModifiers) {
+            if (productValidationResult.isProductOptionsAvailable) {
+               // setShowModifierPopup(true)
+               bottomSheetModalRef.current?.present()
             }
+         } else {
+            addToCart(productData.defaultCartItem, 1)
+            setAvailableQuantityInCart(prev => prev + 1)
+            Toast.show('Item added into cart.')
          }
       }
    }
@@ -243,7 +269,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                params: argsForByLocation,
             },
          })
-
+      setAvailableQuantityInCart(prev => prev + 1)
       const cartDetailSelectedProduct = cartState.cartItems
          .filter(x => x.productId === productData.id)
          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
@@ -447,6 +473,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
 
       addToCart(cartItem, 1)
       setShowChooseIncreaseType(false)
+      Toast.show('Item added into cart.')
    }
    const handlePresentModalPress = React.useCallback(() => {
       bottomSheetModalRef.current?.present()
@@ -594,12 +621,11 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      </View>
                      <View>
                         {availableQuantityInCart === 0 ? (
-                           <Button
-                              onPress={() => {
-                                 handelAddToCartClick()
-                              }}
-                           >
-                              +ADD
+                           <Button onPress={handelAddToCartClick}>
+                              {productValidationResult.isProductOptionsAvailable
+                                 ? '+'
+                                 : ''}
+                              ADD
                            </Button>
                         ) : (
                            <CounterButton
@@ -610,6 +636,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                                     .map(x => x.ids)
                                     .flat()
                                  removeCartItems([idsAv[idsAv.length - 1]])
+                                 setAvailableQuantityInCart(prev => prev - 1)
                               }}
                               onPlusClick={() => {
                                  if (
@@ -619,6 +646,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                                     setShowChooseIncreaseType(true)
                                  } else {
                                     addToCart(productData.defaultCartItem, 1)
+                                    setAvailableQuantityInCart(prev => prev + 1)
+                                    Toast.show('Item added into cart.')
                                  }
                               }}
                            />
@@ -642,6 +671,9 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      bottomSheetModalRef.current?.dismiss()
                   }}
                   productData={productData}
+                  onComplete={quantity => {
+                     setAvailableQuantityInCart(prev => prev + quantity)
+                  }}
                />
             </BottomSheetModal>
             <Modal isVisible={showModifierPopup}>
@@ -684,7 +716,8 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         }}
                         onPress={() => {
                            setShowChooseIncreaseType(false)
-                           setShowModifierPopup(true)
+                           // setShowModifierPopup(true)
+                           bottomSheetModalRef.current?.present()
                         }}
                      >
                         I'LL CHOOSE

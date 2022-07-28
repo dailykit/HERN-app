@@ -7,10 +7,13 @@ import { client } from '../lib/apollo'
 import { DELETE_BRAND_CUSTOMER_DEVICE } from '../graphql/mutations'
 import * as Notifications from 'expo-notifications'
 import { useMutation } from '@apollo/client'
+import { useConfig } from '../lib/config'
 
 export const useSession = () => {
    const [isLoading, setIsLoading] = useState(true)
    const [session, setSession] = useState({})
+
+   const { dispatch } = useConfig()
 
    const login = useCallback(async () => {
       const token = await AsyncStorage.getItem('accessToken')
@@ -114,6 +117,10 @@ export const useSession = () => {
          }
 
          await AsyncStorage.clear()
+         dispatch({
+            type: 'SET_LOCATION_ID',
+            payload: null,
+         })
          setSession({
             status: false,
          })
