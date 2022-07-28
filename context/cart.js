@@ -74,6 +74,7 @@ export const CartProvider = ({ children }) => {
       }),
       [brand, locationId, brandLocation?.id]
    )
+   console.log('Cart Id', storedCartId)
    React.useEffect(() => {
       // case 1 - user is not authenticated
       //case 1.1 if there is cart-id in local storage , set storedCartId
@@ -528,171 +529,182 @@ export const CartProvider = ({ children }) => {
          onSubscriptionData: async ({ subscriptionData }) => {
             // pending cart available
             ;(async () => {
-               if (
-                  subscriptionData.data.carts &&
-                  subscriptionData.data.carts.length > 0
-               ) {
-                  const unParsedGuestCartId = await AsyncStorage.getItem(
-                     'cart-id'
-                  )
-                  const guestCartId = unParsedGuestCartId
-                     ? JSON.parse(unParsedGuestCartId)
-                     : unParsedGuestCartId
-                  if (guestCartId) {
-                     // delete pending cart and assign guest cart to the user
-                     await updateCart({
-                        variables: {
-                           id: guestCartId,
-                           _set: {
-                              // isTest: user.isTest,
-                              customerId: user.id,
-                              customerKeycloakId: user.keycloakId,
-                              paymentMethodId:
-                                 user.platform_customer?.defaultPaymentMethodId,
-                              brandId: brand.id,
-                              paymentCustomerId:
-                                 user.platform_customer?.paymentCustomerId,
-                              ...(user.platform_customer?.firstName && {
-                                 customerInfo: {
-                                    customerFirstName:
-                                       user.platform_customer?.firstName,
-                                    customerLastName:
-                                       user.platform_customer?.lastName,
-                                    customerEmail:
-                                       user.platform_customer?.email,
-                                    customerPhone:
-                                       user.platform_customer?.phoneNumber,
-                                 },
-                              }),
-                           },
-                        },
-                     })
-                     // delete last one
-                     if (subscriptionData.data.carts[0].id !== storedCartId)
-                        await deleteCart({
+               try {
+                  if (
+                     subscriptionData.data.carts &&
+                     subscriptionData.data.carts.length > 0
+                  ) {
+                     const unParsedGuestCartId = await AsyncStorage.getItem(
+                        'cart-id'
+                     )
+                     const guestCartId = unParsedGuestCartId
+                        ? JSON.parse(unParsedGuestCartId)
+                        : unParsedGuestCartId
+                     if (guestCartId) {
+                        // delete pending cart and assign guest cart to the user
+                        await updateCart({
                            variables: {
-                              id: subscriptionData.data.carts[0].id,
-                           },
-                           onCompleted: async () => {
-                              await AsyncStorage.removeItem('cart-id')
+                              id: guestCartId,
+                              _set: {
+                                 // isTest: user.isTest,
+                                 customerId: user.id,
+                                 customerKeycloakId: user.keycloakId,
+                                 paymentMethodId:
+                                    user.platform_customer
+                                       ?.defaultPaymentMethodId,
+                                 brandId: brand.id,
+                                 paymentCustomerId:
+                                    user.platform_customer?.paymentCustomerId,
+                                 ...(user.platform_customer?.firstName && {
+                                    customerInfo: {
+                                       customerFirstName:
+                                          user.platform_customer?.firstName,
+                                       customerLastName:
+                                          user.platform_customer?.lastName,
+                                       customerEmail:
+                                          user.platform_customer?.email,
+                                       customerPhone:
+                                          user.platform_customer?.phoneNumber,
+                                    },
+                                 }),
+                              },
                            },
                         })
-                     setStoredCartId(guestCartId)
-                     setIsFinalCartLoading(false)
-                  } else {
-                     const addressInCart =
-                        subscriptionData.data.carts[0].address
-                     const addressToBeSaveInLocal = {
-                        city: addressInCart.city,
-                        country: addressInCart.country,
-                        label: addressInCart.label,
-                        landmark: addressInCart.landmark,
-                        latitude: addressInCart.lat,
-                        line1: addressInCart.line1,
-                        line2: addressInCart.line2,
-                        longitude: addressInCart.lng,
-                        mainText: addressInCart.line1,
-                        notes: addressInCart.notes,
-                        secondaryText: `${addressInCart.city}, ${addressInCart.state} ${addressInCart.zipcode}, ${addressInCart.country}`,
-                        state: addressInCart.state,
-                        zipcode: addressInCart.zipcode,
-                        searched: addressInCart.searched || '',
-                     }
-                     const orderTabForLocal =
-                        subscriptionData.data.carts[0].fulfillmentInfo?.type ||
-                        orderTabs.find(
-                           eachOrderTab =>
-                              eachOrderTab.id ===
-                              subscriptionData.data.carts[0].orderTabId
-                        )?.orderFulfillmentTypeLabel
-                     const locationIdForLocal =
-                        subscriptionData.data.carts[0].locationId
-                     await AsyncStorage.setItem('orderTab', orderTabForLocal)
-                     if (
-                        orderTabForLocal === 'ONDEMAND_PICKUP' ||
-                        orderTabForLocal === 'PREORDER_PICKUP'
-                     ) {
-                        await AsyncStorage.setItem(
-                           'storeLocation',
-                           JSON.stringify(addressToBeSaveInLocal)
+                        // delete last one
+                        if (subscriptionData.data.carts[0].id !== storedCartId)
+                           await deleteCart({
+                              variables: {
+                                 id: subscriptionData.data.carts[0].id,
+                              },
+                              onCompleted: async () => {
+                                 await AsyncStorage.removeItem('cart-id')
+                              },
+                           })
+                        setStoredCartId(guestCartId)
+                        setIsFinalCartLoading(false)
+                     } else {
+                        const addressInCart =
+                           subscriptionData.data.carts[0].address
+                        const addressToBeSaveInLocal = {
+                           city: addressInCart.city,
+                           country: addressInCart.country,
+                           label: addressInCart.label,
+                           landmark: addressInCart.landmark,
+                           latitude: addressInCart.lat,
+                           line1: addressInCart.line1,
+                           line2: addressInCart.line2,
+                           longitude: addressInCart.lng,
+                           mainText: addressInCart.line1,
+                           notes: addressInCart.notes,
+                           secondaryText: `${addressInCart.city}, ${addressInCart.state} ${addressInCart.zipcode}, ${addressInCart.country}`,
+                           state: addressInCart.state,
+                           zipcode: addressInCart.zipcode,
+                           searched: addressInCart.searched || '',
+                        }
+                        const orderTabForLocal =
+                           subscriptionData.data.carts[0].fulfillmentInfo
+                              ?.type ||
+                           orderTabs.find(
+                              eachOrderTab =>
+                                 eachOrderTab.id ===
+                                 subscriptionData.data.carts[0].orderTabId
+                           )?.orderFulfillmentTypeLabel
+                        const locationIdForLocal =
+                           subscriptionData.data.carts[0].locationId
+                        console.log(
+                           'orderTabId',
+                           subscriptionData.data.carts[0].id
                         )
-                     } else if (
-                        orderTabForLocal === 'PREORDER_DELIVERY' ||
-                        orderTabForLocal === 'ONDEMAND_DELIVERY'
-                     ) {
+                        await AsyncStorage.setItem('orderTab', orderTabForLocal)
+                        if (
+                           orderTabForLocal === 'ONDEMAND_PICKUP' ||
+                           orderTabForLocal === 'PREORDER_PICKUP'
+                        ) {
+                           await AsyncStorage.setItem(
+                              'storeLocation',
+                              JSON.stringify(addressToBeSaveInLocal)
+                           )
+                        } else if (
+                           orderTabForLocal === 'PREORDER_DELIVERY' ||
+                           orderTabForLocal === 'ONDEMAND_DELIVERY'
+                        ) {
+                           await AsyncStorage.setItem(
+                              'userLocation',
+                              JSON.stringify(addressToBeSaveInLocal)
+                           )
+                           dispatch({
+                              type: 'SET_USER_LOCATION',
+                              payload: addressToBeSaveInLocal,
+                           })
+                        }
                         await AsyncStorage.setItem(
-                           'userLocation',
-                           JSON.stringify(addressToBeSaveInLocal)
+                           'storeLocationId',
+                           JSON.stringify(locationIdForLocal)
                         )
                         dispatch({
-                           type: 'SET_USER_LOCATION',
-                           payload: addressToBeSaveInLocal,
+                           type: 'SET_LOCATION_ID',
+                           payload: locationIdForLocal,
                         })
-                     }
-                     await AsyncStorage.setItem(
-                        'storeLocationId',
-                        JSON.stringify(locationIdForLocal)
-                     )
-                     dispatch({
-                        type: 'SET_LOCATION_ID',
-                        payload: locationIdForLocal,
-                     })
-                     dispatch({
-                        type: 'SET_SELECTED_ORDER_TAB',
-                        payload: orderTabs.find(
-                           eachOrderTab =>
-                              eachOrderTab.id ===
-                              subscriptionData.data.carts[0].orderTabId
-                        ),
-                     })
-                     dispatch({
-                        type: 'SET_STORE_STATUS',
-                        payload: {
-                           status: true,
-                           message: 'Store available on your location.',
-                           loading: false,
-                        },
-                     })
-                     setStoredCartId(subscriptionData.data.carts[0].id)
-                     await AsyncStorage.removeItem('cart-id')
-                     setIsFinalCartLoading(false)
-                  }
-               } else {
-                  // no pending cart
-                  if (storedCartId) {
-                     await updateCart({
-                        variables: {
-                           id: storedCartId,
-                           _set: {
-                              // isTest: user.isTest,
-                              customerId: user.id,
-                              customerKeycloakId: user.keycloakId,
-                              paymentMethodId:
-                                 user.platform_customer?.defaultPaymentMethodId,
-                              brandId: brand.id,
-                              paymentCustomerId:
-                                 user.platform_customer?.paymentCustomerId,
-                              ...(user.platform_customer?.firstName && {
-                                 customerInfo: {
-                                    customerFirstName:
-                                       user.platform_customer?.firstName,
-                                    customerLastName:
-                                       user.platform_customer?.lastName,
-                                    customerEmail:
-                                       user.platform_customer?.email,
-                                    customerPhone:
-                                       user.platform_customer?.phoneNumber,
-                                 },
-                              }),
+                        dispatch({
+                           type: 'SET_SELECTED_ORDER_TAB',
+                           payload: orderTabs.find(
+                              eachOrderTab =>
+                                 eachOrderTab.id ===
+                                 subscriptionData.data.carts[0].orderTabId
+                           ),
+                        })
+                        dispatch({
+                           type: 'SET_STORE_STATUS',
+                           payload: {
+                              status: true,
+                              message: 'Store available on your location.',
+                              loading: false,
                            },
-                        },
-                     })
-                     await AsyncStorage.removeItem('cart-id')
-                     setIsFinalCartLoading(false)
+                        })
+                        setStoredCartId(subscriptionData.data.carts[0].id)
+                        await AsyncStorage.removeItem('cart-id')
+                        setIsFinalCartLoading(false)
+                     }
                   } else {
-                     setCombinedCartData([])
-                     setIsFinalCartLoading(false)
+                     // no pending cart
+                     if (storedCartId) {
+                        await updateCart({
+                           variables: {
+                              id: storedCartId,
+                              _set: {
+                                 // isTest: user.isTest,
+                                 customerId: user.id,
+                                 customerKeycloakId: user.keycloakId,
+                                 paymentMethodId:
+                                    user.platform_customer
+                                       ?.defaultPaymentMethodId,
+                                 brandId: brand.id,
+                                 paymentCustomerId:
+                                    user.platform_customer?.paymentCustomerId,
+                                 ...(user.platform_customer?.firstName && {
+                                    customerInfo: {
+                                       customerFirstName:
+                                          user.platform_customer?.firstName,
+                                       customerLastName:
+                                          user.platform_customer?.lastName,
+                                       customerEmail:
+                                          user.platform_customer?.email,
+                                       customerPhone:
+                                          user.platform_customer?.phoneNumber,
+                                    },
+                                 }),
+                              },
+                           },
+                        })
+                        await AsyncStorage.removeItem('cart-id')
+                        setIsFinalCartLoading(false)
+                     } else {
+                        setCombinedCartData([])
+                        setIsFinalCartLoading(false)
+                     }
                   }
+               } catch (error) {
+                  console.log(error)
                }
             })()
          },

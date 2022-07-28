@@ -81,6 +81,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                                        address: addressToBeSaveInCart,
                                        locationId: storeAddress.id,
                                        orderTabId: selectedOrderTab.id,
+                                       fulfillmentInfo: null,
                                     },
                                  },
                                  optimisticResponse: {

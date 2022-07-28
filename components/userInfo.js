@@ -141,7 +141,7 @@ const UserInfoForm = props => {
                fulfillmentInfo: cart.fulfillmentInfo,
                address: cart.address,
                __typename: 'order_cart',
-               orderTabId: cart?.id,
+               orderTabId: cart?.orderTabId,
                locationId: cart?.locationId,
             },
          },
@@ -352,74 +352,76 @@ const UserDetails = ({
    }, [user])
 
    return (
-      <View style={styles.userInfoContainer}>
-         {loading ? (
-            <ActivityIndicator size="small" color={'#000'} />
-         ) : hasUserInfoInCart ? (
-            <>
-               <View style={styles.row}>
-                  <UserIcon size={16} />
-                  <Text
-                     style={{
-                        fontFamily: globalStyle.font.medium,
-                        marginLeft: 9,
-                     }}
-                  >
-                     {data?.carts?.[0]?.customerInfo?.customerFirstName}{' '}
-                     {data?.carts?.[0]?.customerInfo?.customerLastName}
-                  </Text>
-               </View>
-               <View style={styles.row}>
-                  <PhoneIcon size={16} />
-                  <Text
-                     style={{
-                        fontFamily: globalStyle.font.medium,
-                        marginLeft: 9,
-                     }}
-                  >
-                     {data?.carts?.[0]?.customerInfo?.customerPhone}
-                  </Text>
-               </View>
-               <TouchableOpacity onPress={handleOpen}>
-                  <EditIcon
-                     fill={
-                        appConfig?.brandSettings.buttonSettings.buttonBGColor
-                           .value || '#000000'
-                     }
-                     size={18}
-                  />
-               </TouchableOpacity>
-            </>
-         ) : (
-            <>
-               <UserIcon size={16} />
-               {!settingCartInfo ? (
-                  <Button
-                     onPress={() => {
-                        handleOpen()
-                     }}
-                     buttonStyle={styles.addUserInfoBtn}
-                  >
-                     Add User Info
-                  </Button>
-               ) : (
-                  <ActivityIndicator size="small" color={'#000'} />
-               )}
-            </>
-         )}
-      </View>
+      <>
+         <View style={styles.userInfoContainer}>
+            {loading ? (
+               <ActivityIndicator size="small" color={'#000'} />
+            ) : hasUserInfoInCart ? (
+               <>
+                  <View style={styles.row}>
+                     <UserIcon size={16} />
+                     <Text
+                        style={{
+                           fontFamily: globalStyle.font.medium,
+                           marginLeft: 9,
+                        }}
+                     >
+                        {data?.carts?.[0]?.customerInfo?.customerFirstName}{' '}
+                        {data?.carts?.[0]?.customerInfo?.customerLastName}
+                     </Text>
+                  </View>
+                  <View style={styles.row}>
+                     <PhoneIcon size={16} />
+                     <Text
+                        style={{
+                           fontFamily: globalStyle.font.medium,
+                           marginLeft: 9,
+                        }}
+                     >
+                        {data?.carts?.[0]?.customerInfo?.customerPhone}
+                     </Text>
+                  </View>
+                  <TouchableOpacity onPress={handleOpen}>
+                     <EditIcon
+                        fill={
+                           appConfig?.brandSettings.buttonSettings.buttonBGColor
+                              .value || '#000000'
+                        }
+                        size={18}
+                     />
+                  </TouchableOpacity>
+               </>
+            ) : (
+               <>
+                  {!settingCartInfo ? (
+                     <Button
+                        onPress={() => {
+                           handleOpen()
+                        }}
+                        buttonStyle={styles.addUserInfoBtn}
+                     >
+                        Add User Info
+                     </Button>
+                  ) : (
+                     <ActivityIndicator size="small" color={'#000'} />
+                  )}
+               </>
+            )}
+         </View>
+         <View style={styles.divider}></View>
+      </>
    )
 }
 
 const styles = StyleSheet.create({
    userInfoContainer: {
       display: 'flex',
-      marginHorizontal: 17,
+      marginHorizontal: 2,
       marginBottom: 4,
       marginTop: 12,
-      borderWidth: 1,
-      borderColor: '#00000030',
-      borderRadius: 5,
+      // borderWidth: 1,
+      // borderColor: '#00000030',
+      // borderRadius: 5,
       paddingVertical: 8,
       paddingHorizontal: 8,
       flexDirection: 'row',
@@ -497,5 +499,11 @@ const styles = StyleSheet.create({
    error: {
       borderWidth: 1,
       borderColor: 'red',
+   },
+   divider: {
+      height: 1,
+      backgroundColor: '#00000030',
+      marginVertical: 6,
+      marginHorizontal: 8,
    },
 })

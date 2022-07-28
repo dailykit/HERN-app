@@ -45,7 +45,7 @@ export const CounterButton = ({ count = 1, onPlusClick, onMinusClick }) => {
                   styles.textStyle,
                   {
                      color: countColor.value,
-                     fontFamily: globalStyle.font.semibold,
+                     fontFamily: globalStyle.font.medium,
                   },
                ]}
             >

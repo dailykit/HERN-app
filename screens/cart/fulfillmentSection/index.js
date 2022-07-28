@@ -4,8 +4,14 @@ import { useConfig } from '../../../lib/config'
 import { Delivery } from './Delivery'
 import { Pickup } from './Pickup'
 import useGlobalStyle from '../../../globalStyle'
+import { OrderTime } from '../../../assets/orderTIme'
 
-export const FulfillmentSection = () => {
+export const FulfillmentSection = ({
+   deliveryTimePopUp,
+   pickupTimePopUp,
+   setMode,
+   cartState,
+}) => {
    const { orderTabs, selectedOrderTab } = useConfig()
    const { globalStyle } = useGlobalStyle()
 
@@ -36,29 +42,42 @@ export const FulfillmentSection = () => {
 
    return (
       <View style={styles.fulfillmentContainer}>
-         <View>
-            <Text
-               style={{
-                  fontFamily: globalStyle.font.medium,
-                  color: '#00000080',
-               }}
-            >
-               {fulfillmentLabel}
-            </Text>
-         </View>
-         {selectedFulfillment === 'DELIVERY' ? <Delivery /> : null}
-         {selectedFulfillment === 'PICKUP' ? <Pickup /> : null}
+         {cartState?.cart?.fulfillmentInfo && (
+            <View style={{ flex: 1, flexDirection: 'row', marginLeft: 3 }}>
+               <OrderTime size={20} />
+               <View>
+                  <Text
+                     style={{
+                        fontFamily: globalStyle.font.medium,
+                        // color: '#00000080',
+                        marginLeft: 4,
+                     }}
+                  >
+                     {fulfillmentLabel}
+                  </Text>
+               </View>
+            </View>
+         )}
+         {selectedFulfillment === 'DELIVERY' ? (
+            <Delivery deliveryTimePopUp={deliveryTimePopUp} />
+         ) : null}
+         {selectedFulfillment === 'PICKUP' ? (
+            <Pickup pickupTimePopUp={pickupTimePopUp} />
+         ) : null}
+         {selectedFulfillment === 'DELIVERY'
+            ? setMode('DELIVERY')
+            : setMode('PICKUP')}
       </View>
    )
 }
 
 const styles = StyleSheet.create({
    fulfillmentContainer: {
-      marginHorizontal: 17,
+      marginHorizontal: 2,
       marginBottom: 10,
       padding: 6,
-      borderRadius: 5,
-      borderWidth: 1,
-      borderColor: '#00000030',
+      // borderRadius: 5,
+      // borderWidth: 1,
+      // borderColor: '#00000030',
    },
 })

@@ -22,7 +22,10 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
          <Text
             style={[
                styles.textCommonStyle,
-               { fontFamily: globalStyle.font.semibold },
+               {
+                  fontSize: 14,
+                  fontFamily: globalStyle.font.medium,
+               },
             ]}
          >
             {'Bill Details'}
@@ -33,7 +36,10 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalStyle.font.medium },
+                        {
+                           fontFamily: globalStyle.font.medium,
+                           color: '#00000080',
+                        },
                      ]}
                   >
                      {'Item total'}
@@ -51,16 +57,22 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalStyle.font.medium },
+                        {
+                           fontFamily: globalStyle.font.medium,
+                           color: '#00000080',
+                        },
                      ]}
                   >
                      {'Delivery fee'}
                   </Text>
                   {billing.deliveryPrice === 0 ? (
                      <Text
-                        style={{
-                           fontFamily: globalStyle.font.bold,
-                        }}
+                        style={[
+                           styles.textCommonStyle,
+                           {
+                              fontFamily: globalStyle.font.medium,
+                           },
+                        ]}
                      >
                         {'Free'}
                      </Text>
@@ -104,7 +116,10 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                      <Text
                         style={[
                            styles.textCommonStyle,
-                           { fontFamily: globalStyle.font.medium },
+                           {
+                              fontFamily: globalStyle.font.medium,
+                              color: '#00000080',
+                           },
                         ]}
                      >
                         {'Tax'}
@@ -224,7 +239,11 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalStyle.font.semibold },
+                        {
+                           fontFamily: globalStyle.font.medium,
+                           color: '#00000080',
+                           fontSize: 15,
+                        },
                      ]}
                   >
                      {'Total'}
@@ -232,12 +251,22 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
                   <Text
                      style={[
                         styles.textCommonStyle,
-                        { fontFamily: globalStyle.font.semibold },
+
+                        { fontFamily: globalStyle.font.medium, fontSize: 15 },
                      ]}
                   >
                      {formatCurrency(billing.totalToPay || 0)}
                   </Text>
                </View>
+               {/* <View
+                  style={{
+                     width: '100%',
+                     height: 1,
+                     backgroundColor: '#00000030',
+                     marginTop: 2,
+                     marginBottom: 2,
+                  }}
+               ></View> */}
             </View>
          )}
       </View>
@@ -246,7 +275,11 @@ export const CartBillingDetails = ({ cart, billing, tip = false }) => {
 
 const styles = StyleSheet.create({
    cartDetailContainer: {
-      marginHorizontal: 30,
+      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+      padding: 6,
+      borderRadius: 4,
+      marginHorizontal: 10,
+      marginVertical: 20,
    },
    rowCommonStyle: {
       flexDirection: 'row',

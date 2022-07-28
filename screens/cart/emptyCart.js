@@ -13,7 +13,7 @@ export const EmptyCart = () => {
             <Text
                style={[
                   styles.emptyCartMessage,
-                  { fontFamily: globalStyle.font.medium },
+                  { fontFamily: globalStyle.font.semibold },
                ]}
             >
                Oops! Your cart is empty.

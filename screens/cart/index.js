@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef } from 'react'
+import React, { createRef, useEffect, useState } from 'react'
 import {
    ScrollView,
    StyleSheet,
@@ -9,6 +9,7 @@ import {
 import {
    BottomSheetModal,
    BottomSheetModalProvider,
+   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet'
 import { EmptyCart } from './emptyCart'
 import { Button } from '../../components/button'
@@ -27,6 +28,7 @@ import { Spinner } from '../../assets/loaders'
 import CustomBackdrop from '../../components/modalBackdrop'
 import useGlobalStyle from '../../globalStyle'
 import { gql, useQuery } from '@apollo/client'
+import { Delivery } from './fulfillmentSection/Delivery'
 
 const CartScreen = () => {
    const { globalStyle } = useGlobalStyle()
@@ -47,6 +49,9 @@ const CartScreen = () => {
    }, [isAuthenticated])
 
    const loginPopUp = createRef()
+   const deliveryTimePopUp = createRef()
+   const pickupTimePopUp = createRef()
+   const [mode, setMode] = useState('')
 
    const { data: { carts = [] } = {} } = useQuery(
       GET_FULFILLMENT_CUSTOMER_ADDRESS,
@@ -120,33 +125,58 @@ const CartScreen = () => {
                <>
                   <UserInfo cart={cartState.cart} />
                   <Address />
-                  <FulfillmentSection />
+                  {/* <FulfillmentSection /> */}
                </>
             )}
+            <FulfillmentSection
+               deliveryTimePopUp={deliveryTimePopUp}
+               pickupTimePopUp={pickupTimePopUp}
+               setMode={setMode}
+               cartState={cartState}
+            />
          </ScrollView>
          <View style={styles.buttonContainer}>
-            <Button
-               buttonStyle={styles.button}
-               textStyle={[styles.buttonText]}
-               disabled={
-                  isAuthenticated &&
-                  (!carts?.[0]?.fulfillmentInfo ||
-                     !(
-                        carts?.[0]?.customerInfo?.customerFirstName?.length &&
-                        carts?.[0]?.customerInfo?.customerPhone?.length
-                     ) ||
-                     !carts?.[0]?.address)
-               }
-               onPress={() => {
-                  if (isAuthenticated) {
-                     navigation.navigate('PaymentOptions')
-                  } else {
-                     loginPopUp.current.present()
+            {!cartState?.cart?.fulfillmentInfo ? (
+               <Button
+                  buttonStyle={styles.button}
+                  textStyle={[styles.buttonText]}
+                  onPress={() => {
+                     {
+                        mode === 'DELIVERY'
+                           ? deliveryTimePopUp?.current?.present()
+                           : pickupTimePopUp?.current?.present()
+                     }
+                  }}
+               >
+                  {mode === 'DELIVERY'
+                     ? 'Add Delivery Time'
+                     : 'Add Pickup Time'}
+               </Button>
+            ) : (
+               <Button
+                  buttonStyle={styles.button}
+                  textStyle={[styles.buttonText]}
+                  disabled={
+                     isAuthenticated &&
+                     (!cartState?.cart?.fulfillmentInfo ||
+                        !(
+                           cartState?.cart?.customerInfo?.customerFirstName
+                              ?.length &&
+                           cartState?.cart?.customerInfo?.customerPhone?.length
+                        ) ||
+                        !cartState?.cart?.address)
                   }
-               }}
-            >
-               Checkout
-            </Button>
+                  onPress={() => {
+                     if (isAuthenticated) {
+                        navigation.navigate('PaymentOptions')
+                     } else {
+                        loginPopUp.current.present()
+                     }
+                  }}
+               >
+                  Checkout
+               </Button>
+            )}
          </View>
          <BottomSheetModal
             ref={loginPopUp}
@@ -211,7 +241,6 @@ const styles = StyleSheet.create({
    loginPopUpHeading: {
       fontSize: 24,
       lineHeight: 24,
-
       marginBottom: 12,
    },
    loginPopUpDescription: {
@@ -222,6 +251,9 @@ const styles = StyleSheet.create({
    loginPopUpButton: {
       width: '80%',
       paddingVertical: 4,
+   },
+   deliveryTimePopUp: {
+      padding: 10,
    },
 })
 
