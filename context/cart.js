@@ -74,7 +74,7 @@ export const CartProvider = ({ children }) => {
       }),
       [brand, locationId, brandLocation?.id]
    )
-   console.log('Cart Id', storedCartId)
+
    React.useEffect(() => {
       // case 1 - user is not authenticated
       //case 1.1 if there is cart-id in local storage , set storedCartId
@@ -611,10 +611,6 @@ export const CartProvider = ({ children }) => {
                            )?.orderFulfillmentTypeLabel
                         const locationIdForLocal =
                            subscriptionData.data.carts[0].locationId
-                        console.log(
-                           'orderTabId',
-                           subscriptionData.data.carts[0].id
-                        )
                         await AsyncStorage.setItem('orderTab', orderTabForLocal)
                         if (
                            orderTabForLocal === 'ONDEMAND_PICKUP' ||
