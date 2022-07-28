@@ -89,7 +89,8 @@ const ProductSearchScreen = () => {
             <View>
                {isEmpty(searchText)
                   ? null
-                  : searchedResult && (
+                  : searchedResult &&
+                    searchedResult.length > 0 && (
                        <ProductList productsList={searchedResult} />
                     )}
             </View>
