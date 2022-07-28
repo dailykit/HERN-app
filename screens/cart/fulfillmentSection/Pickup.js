@@ -652,6 +652,9 @@ export const Pickup = ({ pickupTimePopUp }) => {
                            paddingLeft: 7,
                         }}
                         onPress={() => {
+                           if (eachOption.value === fulfillmentType) {
+                              return
+                           }
                            setFulfillmentType(eachOption.value)
                            const orderTabId = orderTabs.find(
                               t =>

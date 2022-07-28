@@ -265,6 +265,10 @@ const GET_USER_INFO = gql`
       carts(where: $where) {
          id
          customerInfo
+         fulfillmentInfo
+         address
+         orderTabId
+         locationId
       }
    }
 `

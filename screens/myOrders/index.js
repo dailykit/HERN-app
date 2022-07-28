@@ -54,17 +54,17 @@ const MyOrdersScreen = () => {
    return (
       <SafeAreaView style={{ flex: 1 }}>
          <Header />
-         <ScrollView>
-            {userLoading ? (
+         {userLoading ? (
+            <Spinner size="large" showText={true} />
+         ) : user?.keycloakId ? (
+            orderHistoryLoading || componentStatus === 'loading' ? (
                <Spinner size="large" showText={true} />
-            ) : user?.keycloakId ? (
-               orderHistoryLoading || componentStatus === 'loading' ? (
-                  <Spinner size="large" showText={true} />
-               ) : error ? (
-                  <Text style={{ fontFamily: globalStyle.font.medium }}>
-                     Something went wrong
-                  </Text>
-               ) : (
+            ) : error ? (
+               <Text style={{ fontFamily: globalStyle.font.medium }}>
+                  Something went wrong
+               </Text>
+            ) : (
+               <ScrollView>
                   <View style={{ paddingHorizontal: 10 }}>
                      {orders.length === 0 ? (
                         <NoOrdersAvailable />
@@ -76,11 +76,11 @@ const MyOrdersScreen = () => {
                         })
                      )}
                   </View>
-               )
-            ) : (
-               <LoginScreenForAuthScreen />
-            )}
-         </ScrollView>
+               </ScrollView>
+            )
+         ) : (
+            <LoginScreenForAuthScreen />
+         )}
       </SafeAreaView>
    )
 }
