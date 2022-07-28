@@ -18,6 +18,7 @@ import { indexOf } from 'lodash'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useUser } from '../context/user'
 import Toast from 'react-native-simple-toast'
+import { groupByRootCartItemId } from '../utils/mapedCartItems'
 
 export const CartContext = React.createContext()
 
@@ -131,9 +132,6 @@ export const CartProvider = ({ children }) => {
       skip: !storedCartId,
       variables: {
          where: {
-            level: {
-               _eq: 1,
-            },
             cartId: {
                _eq: storedCartId,
             },
@@ -147,18 +145,19 @@ export const CartProvider = ({ children }) => {
             },
          },
          params: argsForByLocation,
+         order_by: [{ id: 'asc' }],
       },
       fetchPolicy: 'no-cache',
    })
 
    React.useEffect(() => {
-      if (cartItemsData?.cartItems) {
-         for (let node of cartItemsData?.cartItems) {
+      if (groupedCartItems) {
+         for (let node of groupedCartItems) {
             let isCartValid = true
-            const selectedProductOption = node.product.productOptions.find(
-               option => option.id === node.childs[0]?.productOption?.id
-            )
-
+            // const selectedProductOption = node.product.productOptions.find(
+            //    option => option.id === node.childs[0]?.productOption?.id
+            // )
+            const selectedProductOption = node.productOption
             if (!isEmpty(selectedProductOption)) {
                isCartValid =
                   node.product.isAvailable &&
@@ -180,8 +179,8 @@ export const CartProvider = ({ children }) => {
             }
 
             if (
-               indexOf(cartItemsData?.cartItems, node) ===
-               cartItemsData?.cartItems.length - 1
+               indexOf(groupedCartItems, node) ===
+               groupedCartItems.length - 1
             ) {
                if (isCartValid) {
                   setIsCartValidByProductAvailability(true)
@@ -189,7 +188,7 @@ export const CartProvider = ({ children }) => {
             }
          }
       }
-   }, [cartItemsData?.cartItems])
+   }, [groupedCartItems])
 
    useEffect(() => {
       if (!isCartLoading && !isEmpty(cartData) && !isEmpty(cartData.carts)) {
@@ -204,9 +203,18 @@ export const CartProvider = ({ children }) => {
       }
    }, [cartData, isCartLoading])
 
-   useEffect(() => {
+   const groupedCartItems = React.useMemo(() => {
       if (cartItemsData?.cartItems) {
-         const combinedCartItems = combineCartItems(cartItemsData?.cartItems)
+         return groupByRootCartItemId(cartItemsData?.cartItems)
+      } else {
+         return null
+      }
+   }, [cartItemsData?.cartItems])
+   // console.log('groupedCartItems', groupedCartItems, storedCartId)
+   // console.log('cartItemsData?.cartItems', cartItemsData?.cartItems)
+   useEffect(() => {
+      if (groupedCartItems) {
+         const combinedCartItems = combineCartItems(groupedCartItems)
          setCombinedCartData(combinedCartItems)
       } else {
          ;(async function () {
@@ -217,7 +225,7 @@ export const CartProvider = ({ children }) => {
             }
          })()
       }
-   }, [cartItemsData?.cartItems, isLoading])
+   }, [groupedCartItems, isLoading])
 
    const cartToolTipStopper = () => {
       setShowCartIconToolTip(false)
@@ -695,7 +703,7 @@ export const CartProvider = ({ children }) => {
          value={{
             cartState: {
                cart: !isEmpty(cartData?.carts) ? cartData?.carts[0] : {} || {},
-               cartItems: cartItemsData?.cartItems || {},
+               cartItems: groupedCartItems || {},
             },
             isFinalCartLoading,
             cartReducer,

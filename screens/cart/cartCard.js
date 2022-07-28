@@ -304,9 +304,11 @@ export const CartCard = ({ productData, quantity }) => {
    }
    const getTotalPrice = React.useMemo(() => price(productData), [productData])
    const isProductAvailable = product => {
-      const selectedProductOption = product.product.productOptions.find(
-         option => option.id === product.childs[0]?.productOption?.id
-      )
+      // const selectedProductOption = product.product.productOptions.find(
+      //    option => option.id === product.childs[0]?.productOption?.id
+      // )
+      const selectedProductOption = product.productOption
+
       if (!isEmpty(selectedProductOption)) {
          return (
             product.product.isAvailable &&

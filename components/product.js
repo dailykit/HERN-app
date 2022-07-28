@@ -269,7 +269,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                params: argsForByLocation,
             },
          })
-
+      setAvailableQuantityInCart(prev => prev + 1)
       const cartDetailSelectedProduct = cartState.cartItems
          .filter(x => x.productId === productData.id)
          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
