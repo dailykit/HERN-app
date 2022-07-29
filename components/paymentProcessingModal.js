@@ -175,11 +175,13 @@ const PaymentProcessingModal = ({
          extra = [
             <Button
                buttonStyle={styles.authenticateBtn}
+               key={'authenticate'}
                //    href={cartPayment?.actionUrl}
             >
                Authenticate Here
             </Button>,
             <Button
+               key={'cancelPayment'}
                onPress={cancelPayment}
                variant={'outline'}
                buttonStyle={styles.cancelPaymentBtn}
@@ -222,6 +224,7 @@ const PaymentProcessingModal = ({
             <Button
                buttonStyle={styles.tryOtherPayment}
                onPress={resetStateAfterModalClose}
+               key={'tryOtherPaymentMethod'}
             >
                Try other payment method
             </Button>,
@@ -261,6 +264,7 @@ const PaymentProcessingModal = ({
             <Button
                buttonStyle={styles.tryOtherPayment}
                onPress={resetStateAfterModalClose}
+               key={'tryOtherPaymentMethod'}
             >
                Try other payment method
             </Button>,
@@ -300,6 +304,7 @@ const PaymentProcessingModal = ({
             <Button
                buttonStyle={styles.tryOtherPayment}
                onPress={resetStateAfterModalClose}
+               key={'tryOtherPaymentMethod'}
             >
                Try other payment method
             </Button>,

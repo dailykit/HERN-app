@@ -17,6 +17,7 @@ import { getCartItemWithModifiers } from '../../utils'
 import useGlobalStyle from '../../globalStyle'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from '../../components/modalBackdrop'
+import Toast from 'react-native-simple-toast'
 
 export const CartCard = ({ productData, quantity }) => {
    // context
@@ -75,6 +76,7 @@ export const CartCard = ({ productData, quantity }) => {
    const repeatLastOne = productData => {
       if (cartDetailSelectedProduct.childs.length === 0) {
          addToCart(productData.defaultCartItem, 1)
+         Toast.show('Item added into cart.')
          setForRepeatLastOne(false)
          setModifyProduct(null)
          setModifyProductId(null)
@@ -264,6 +266,7 @@ export const CartCard = ({ productData, quantity }) => {
          )
 
          addToCart(cartItem, 1)
+         Toast.show('Item added into cart.')
          setForRepeatLastOne(false)
          setModifyProduct(null)
          setModifyProductId(null)
@@ -278,6 +281,7 @@ export const CartCard = ({ productData, quantity }) => {
       )
 
       addToCart(cartItem, 1)
+      Toast.show('Item added into cart.')
       setForRepeatLastOne(false)
       setModifyProduct(null)
       setModifyProductId(null)
@@ -333,6 +337,7 @@ export const CartCard = ({ productData, quantity }) => {
             },
          },
       })
+      Toast.show('Item removed!')
    }
    return (
       <View style={[styles.cartContainer]}>

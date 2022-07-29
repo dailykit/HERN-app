@@ -77,7 +77,8 @@ export function groupByRootCartItemId(cartItems) {
             finalCartItem.childs[0].childs.push(child)
          } else if (eachCartItem.level === 4) {
             const level3ChildsIndex = finalCartItem.childs[0].childs.findIndex(
-               eachChild => eachChild.cartItemId === eachCartItem.id
+               eachChild =>
+                  eachChild.cartItemId === eachCartItem.parentCartItemId
             )
             const child = {
                price: eachCartItem.price,
@@ -93,6 +94,34 @@ export function groupByRootCartItemId(cartItems) {
             finalCartItem.childs[0].childs[level3ChildsIndex].child.push(child)
          }
       })
+      if (
+         finalCartItem.childs.length > 0 &&
+         finalCartItem.childs[0].childs.length > 0
+      ) {
+         const level3ModifierOptions = JSON.parse(JSON.stringify(finalCartItem))
+            .childs[0].childs
+         const sortedFinalCartItemIdLevel3 = level3ModifierOptions
+            .sort((a, b) => {
+               return a.modifierOption.id > b.modifierOption.id
+            })
+            .map(eachModifierOption => {
+               if (eachModifierOption.childs.length === 0) {
+                  return eachModifierOption
+               }
+               let level4ModifierOptions = JSON.parse(
+                  JSON.stringify(eachModifierOption)
+               ).childs
+               const sortedLevel4ModifierOptions = level4ModifierOptions.sort(
+                  a,
+                  b => a.modifierOption.id > b.modifierOption.id
+               )
+               level4ModifierOptions.childs = sortedLevel4ModifierOptions
+               return level4ModifierOptions
+            })
+
+         finalCartItem.childs[0].childs = sortedFinalCartItemIdLevel3
+      }
+
       return finalCartItem
    })
    return mapedData
