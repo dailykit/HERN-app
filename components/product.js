@@ -551,17 +551,27 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                   }}
                >
                   <View>
-                     <Text
-                        style={[
-                           styles.productName,
-                           { fontFamily: globalStyle.font.medium },
-                        ]}
-                        numberOfLines={
-                           viewStyle === productViewStyles.verticalCard ? 1 : 0
-                        }
+                     <View
+                        style={{
+                           flexDirection: 'row',
+                           alignItems: 'flex-start',
+                        }}
                      >
-                        {productData.name}
-                     </Text>
+                        <VegNonVegIcon size={12} fill={'#61D836'} />
+                        <Text
+                           style={[
+                              styles.productName,
+                              { fontFamily: globalStyle.font.medium },
+                           ]}
+                           numberOfLines={
+                              viewStyle === productViewStyles.verticalCard
+                                 ? 1
+                                 : 0
+                           }
+                        >
+                           {productData.name}
+                        </Text>
+                     </View>
                      <Text
                         style={[
                            styles.additionalText,
@@ -571,12 +581,14 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                            viewStyle === productViewStyles.verticalCard ? 1 : 0
                         }
                      >
-                        {productData.additionalText || ' '}
+                        {productData.additionalText
+                           ? productData.additionalText.slice(0, 75) + '...'
+                           : ''}
                      </Text>
                   </View>
                   <View style={styles.footer}>
                      <View style={styles.footerLeft}>
-                        <VegNonVegIcon size={12} fill={'#61D836'} />
+                        {/* <VegNonVegIcon size={12} fill={'#61D836'} /> */}
                         <View style={styles.priceContainer}>
                            <Text
                               style={[
@@ -771,6 +783,8 @@ const styles = StyleSheet.create({
    floatingImage: {},
    productName: {
       fontSize: 12,
+      marginLeft: 4,
+      marginTop: -2,
    },
    additionalText: {
       fontSize: 10,
@@ -799,7 +813,6 @@ const styles = StyleSheet.create({
       color: 'rgba(24, 24, 24, 0.28)',
       textDecorationLine: 'line-through',
       textDecorationStyle: 'solid',
-
       fontSize: 10,
    },
    productDiscountValue: {

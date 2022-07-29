@@ -227,7 +227,9 @@ const ProductScreen = () => {
                      <Text
                         style={[
                            styles.discountPrice,
-                           { fontFamily: globalStyle.font.medium },
+                           {
+                              fontFamily: globalStyle.font.medium,
+                           },
                         ]}
                      >
                         {formatCurrency(
@@ -247,7 +249,10 @@ const ProductScreen = () => {
                         <Text
                            style={[
                               styles.additionalText,
-                              { fontFamily: globalStyle.font.medium },
+                              {
+                                 fontFamily: globalStyle.font.medium,
+                                 color: globalStyle.color.grey,
+                              },
                            ]}
                         >
                            {products[0].additionalText}
@@ -260,7 +265,7 @@ const ProductScreen = () => {
                                  styles.description,
                                  {
                                     fontFamily: globalStyle.font.medium,
-                                    color: globalStyle.color.grey,
+                                    color: globalStyle.color.primary,
                                  },
                               ]}
                               numberOfLines={numberOfLines}
@@ -385,12 +390,13 @@ const styles = StyleSheet.create({
       color: '#00000080',
    },
    discountPrice: {
-      fontSize: 12,
-      color: '#00000080',
+      fontSize: 14,
+      color: '#000',
    },
    additionalText: {
       fontSize: 14,
-      color: '#00000040',
+      // color: '#00000080',
+      marginBottom: 20,
    },
    description: {
       fontSize: 14,

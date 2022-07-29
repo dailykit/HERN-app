@@ -68,7 +68,7 @@ export const ProductCategory = ({
                   {
                      ...categoryStyles.categoryText,
                      color: textColor,
-                     fontFamily: globalStyle.font.medium,
+                     fontFamily: globalStyle.font.regular,
                   },
                   viewStyle === categoryViewStyles.cardView
                      ? { marginVertical: 8 }
@@ -90,13 +90,13 @@ const categoryStyles = StyleSheet.create({
       flexDirection: 'column',
       alignItems: 'center',
       // justifyContent: 'center',
-      marginHorizontal: 10,
+      marginHorizontal: 2,
       marginVertical: 9,
       shadowColor: 'rgba(0, 0, 0, 0.08)',
       shadowOffset: { width: 0, height: 1 },
       shadowRadius: 12,
       elevation: 3,
-      width: 80,
+      width: 68,
    },
    selectedCategory: {
       paddingHorizontal: 8,
@@ -106,7 +106,7 @@ const categoryStyles = StyleSheet.create({
       borderRadius: 10,
    },
    categoryText: {
-      fontSize: 12,
+      fontSize: 10,
       lineHeight: 14,
       textTransform: 'capitalize',
       textAlign: 'center',

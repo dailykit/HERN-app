@@ -96,6 +96,7 @@ export const FloatingMenu = ({
                paddingHorizontal: 12,
                height: 40,
                elevation: 4,
+               backgroundColor: '#000',
 
                ...(position === 'RIGHT'
                   ? {
