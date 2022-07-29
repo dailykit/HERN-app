@@ -178,6 +178,10 @@ const ProductScreen = () => {
    }
 
    const onAddItemClick = () => {
+      if (!locationId) {
+         navigation.navigate('LocationSelector')
+         return
+      }
       if (products[0].isAvailable) {
          if (
             products[0].productOptions.length > 0 &&
