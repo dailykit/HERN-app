@@ -64,62 +64,70 @@ export const LocationSelector = () => {
                <CloseIcon />
             </TouchableOpacity>
          </View>
-         <View style={styles.fulfillmentTypes}>
-            {orderTabFulfillmentType.includes('ONDEMAND_DELIVERY') ||
-            orderTabFulfillmentType.includes('PREORDER_DELIVERY') ? (
-               <Button
-                  onPress={() => setFulfillmentType('DELIVERY')}
-                  buttonStyle={{ marginLeft: 10 }}
-                  variant="outline"
-                  showRadio={true}
-                  isActive={fulfillmentType === 'DELIVERY'}
-               >
-                  {
-                     orderTabs.find(
-                        x =>
-                           x.orderFulfillmentTypeLabel ===
-                              'ONDEMAND_DELIVERY' ||
-                           x.orderFulfillmentTypeLabel === 'PREORDER_DELIVERY'
-                     ).label
-                  }
-               </Button>
-            ) : null}
-            {orderTabFulfillmentType.includes('ONDEMAND_PICKUP') ||
-            orderTabFulfillmentType.includes('PREORDER_PICKUP') ? (
-               <Button
-                  onPress={() => setFulfillmentType('PICKUP')}
-                  buttonStyle={{ marginLeft: 10 }}
-                  variant="outline"
-                  showRadio={true}
-                  isActive={fulfillmentType === 'PICKUP'}
-               >
-                  {
-                     orderTabs.find(
-                        x =>
-                           x.orderFulfillmentTypeLabel === 'ONDEMAND_PICKUP' ||
-                           x.orderFulfillmentTypeLabel === 'PREORDER_PICKUP'
-                     ).label
-                  }
-               </Button>
-            ) : null}
-            {orderTabFulfillmentType.includes('ONDEMAND_DINEIN') ||
-            orderTabFulfillmentType.includes('PREORDER_DINEIN') ? (
-               <Button
-                  onPress={() => setFulfillmentType('DINEIN')}
-                  buttonStyle={{ marginLeft: 10 }}
-                  variant="outline"
-                  showRadio={true}
-                  isActive={fulfillmentType === 'DINEIN'}
-               >
-                  {
-                     orderTabs.find(
-                        x =>
-                           x.orderFulfillmentTypeLabel === 'ONDEMAND_DINEIN' ||
-                           x.orderFulfillmentTypeLabel === 'PREORDER_DINEIN'
-                     ).label
-                  }
-               </Button>
-            ) : null}
+         <View style={styles.orderType}>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
+               Order Type
+            </Text>
+            <View style={styles.fulfillmentTypes}>
+               {orderTabFulfillmentType.includes('ONDEMAND_DELIVERY') ||
+               orderTabFulfillmentType.includes('PREORDER_DELIVERY') ? (
+                  <Button
+                     onPress={() => setFulfillmentType('DELIVERY')}
+                     buttonStyle={{ marginLeft: 10 }}
+                     variant="outline"
+                     showRadio={true}
+                     isActive={fulfillmentType === 'DELIVERY'}
+                  >
+                     {
+                        orderTabs.find(
+                           x =>
+                              x.orderFulfillmentTypeLabel ===
+                                 'ONDEMAND_DELIVERY' ||
+                              x.orderFulfillmentTypeLabel ===
+                                 'PREORDER_DELIVERY'
+                        ).label
+                     }
+                  </Button>
+               ) : null}
+               {orderTabFulfillmentType.includes('ONDEMAND_PICKUP') ||
+               orderTabFulfillmentType.includes('PREORDER_PICKUP') ? (
+                  <Button
+                     onPress={() => setFulfillmentType('PICKUP')}
+                     buttonStyle={{ marginLeft: 10 }}
+                     variant="outline"
+                     showRadio={true}
+                     isActive={fulfillmentType === 'PICKUP'}
+                  >
+                     {
+                        orderTabs.find(
+                           x =>
+                              x.orderFulfillmentTypeLabel ===
+                                 'ONDEMAND_PICKUP' ||
+                              x.orderFulfillmentTypeLabel === 'PREORDER_PICKUP'
+                        ).label
+                     }
+                  </Button>
+               ) : null}
+               {orderTabFulfillmentType.includes('ONDEMAND_DINEIN') ||
+               orderTabFulfillmentType.includes('PREORDER_DINEIN') ? (
+                  <Button
+                     onPress={() => setFulfillmentType('DINEIN')}
+                     buttonStyle={{ marginLeft: 10 }}
+                     variant="outline"
+                     showRadio={true}
+                     isActive={fulfillmentType === 'DINEIN'}
+                  >
+                     {
+                        orderTabs.find(
+                           x =>
+                              x.orderFulfillmentTypeLabel ===
+                                 'ONDEMAND_DINEIN' ||
+                              x.orderFulfillmentTypeLabel === 'PREORDER_DINEIN'
+                        ).label
+                     }
+                  </Button>
+               ) : null}
+            </View>
          </View>
          <View>
             {fulfillmentType === 'DELIVERY' && <Delivery />}
@@ -152,5 +160,12 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
+   },
+   orderType: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 12,
    },
 })
