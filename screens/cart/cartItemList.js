@@ -39,7 +39,7 @@ export const CartItemList = () => {
                flexDirection: 'row',
                alignItems: 'center',
                justifyContent: 'space-between',
-               margin: 8,
+               marginTop: 8,
             }}
          >
             <Text

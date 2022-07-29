@@ -233,7 +233,9 @@ export const Pickup = () => {
    return (
       <View style={{ paddingHorizontal: 12 }}>
          <View style={styles.pickupTime}>
-            <Text>Pickup Time</Text>
+            <Text style={{ fontFamily: globalStyle.font.medium }}>
+               Pickup Time
+            </Text>
             <View style={{ flexDirection: 'row' }}>
                {pickupRadioOptions.map((option, index) => (
                   <Button

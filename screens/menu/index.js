@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 10,
       zIndex: 10000000,
-      width: '100%',
       alignItems: 'flex-end',
       right: -35,
    },

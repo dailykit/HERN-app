@@ -2,7 +2,7 @@ import React from 'react'
 import Svg, { Path } from 'react-native-svg'
 
 export const DownVector = props => {
-   const { size = 26, stroke = '#5A5A5A', ...rest } = props
+   const { size = 26, stroke = '#fff', ...rest } = props
    return (
       <Svg
          width={size}
@@ -21,7 +21,7 @@ export const DownVector = props => {
 }
 
 export const UpVector = props => {
-   const { size = 26, stroke = '#5A5A5A', ...rest } = props
+   const { size = 26, stroke = '#fff', ...rest } = props
    return (
       <Svg
          width={size}
