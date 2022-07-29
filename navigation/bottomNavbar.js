@@ -71,7 +71,7 @@ function BottomNavbar({ state, descriptors, navigation }) {
                            fill: isFocused
                               ? globalStyle.color.primary
                               : '#ffffff',
-                           size: 36,
+                           size: 40,
                         })}
                      </View>
                      <Text
@@ -100,7 +100,7 @@ export default BottomNavbar
 const styles = StyleSheet.create({
    container: {
       flexDirection: 'row',
-      height: 48,
+      height: 54,
       alignItems: 'center',
       backgroundColor: '#000',
    },
