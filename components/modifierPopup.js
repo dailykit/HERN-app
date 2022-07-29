@@ -270,6 +270,7 @@ export const ModifierPopup = ({
       nestedSetErrorCategories(nestedFinalErrorCategories)
       if (errorState.length > 0 || nestedFinalErrorCategories.length > 0) {
          // console.log('FAIL')
+         Toast.show('Please select all required categories.', 10)
          onProductAddComplete()
          return
       } else {
