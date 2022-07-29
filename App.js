@@ -13,10 +13,13 @@ import { PaymentProvider } from './lib/payment'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useFonts } from 'expo-font'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
 export default function App() {
+   const { isConnected } = useNetInfo()
+
    const [fontLoaded] = useFonts({
       Metropolis: require('./assets/fonts/Metropolis-Regular.otf'),
       MetropolisBold: require('./assets/fonts/Metropolis-Bold.otf'),
@@ -41,7 +44,7 @@ export default function App() {
                            <CartProvider>
                               <PaymentProvider>
                                  <BottomSheetModalProvider>
-                                    <Navigation />
+                                    <Navigation isConnected={isConnected} />
                                  </BottomSheetModalProvider>
                               </PaymentProvider>
                            </CartProvider>
