@@ -195,6 +195,7 @@ const ProductScreen = () => {
             }
          } else {
             addToCart(products[0].defaultCartItem, 1)
+            Toast.show('Item added into cart.')
             setAvailableQuantityInCart(prev => prev + 1)
          }
       }
@@ -217,6 +218,7 @@ const ProductScreen = () => {
 
       if (cartDetailSelectedProduct.childs.length === 0) {
          addToCart(productData.defaultCartItem, 1)
+         Toast.show('Item added into cart.')
          setShowChooseIncreaseType(false)
          return
       }
@@ -402,6 +404,7 @@ const ProductScreen = () => {
          )
 
          addToCart(cartItem, 1)
+         Toast.show('Item added into cart.')
          setShowChooseIncreaseType(false)
          return
       }

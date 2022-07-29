@@ -17,6 +17,7 @@ import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
 import useGlobalStyle from '../../globalStyle'
+import Toast from 'react-native-simple-toast'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems, methods } = useCart()
@@ -31,6 +32,7 @@ export const CartItemList = () => {
             },
          },
       })
+      Toast.show('Item removed!')
    }
    return (
       <View style={{ marginHorizontal: 10 }}>

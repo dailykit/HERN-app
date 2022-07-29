@@ -277,6 +277,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
 
       if (cartDetailSelectedProduct.childs.length === 0) {
          addToCart(productData.defaultCartItem, 1)
+         Toast.show('Item added into cart.')
          setShowChooseIncreaseType(false)
          return
       }
@@ -462,6 +463,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
          )
 
          addToCart(cartItem, 1)
+         Toast.show('Item added into cart.')
          setShowChooseIncreaseType(false)
          return
       }

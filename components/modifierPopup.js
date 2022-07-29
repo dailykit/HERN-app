@@ -187,6 +187,7 @@ export const ModifierPopup = ({
          }
          closeModifier()
          onComplete(quantity)
+         Toast.show('Item added into cart.')
          return
       }
 
