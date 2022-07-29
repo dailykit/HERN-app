@@ -29,6 +29,7 @@
       "expo": "~45.0.0",
       "expo-av": "~11.2.3",
       "expo-device": "~4.2.0",
+      "expo-file-system": "~14.0.0",
       "expo-font": "~10.1.0",
       "expo-jwt": "^1.4.1",
       "expo-location": "~14.2.2",

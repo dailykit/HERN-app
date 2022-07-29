@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { Image, Text, Dimensions, View, StyleSheet } from 'react-native'
-import { Video } from 'expo-av'
+import CacheVideo from '../../components/cacheVideo'
 import useGlobalStyle from '../../globalStyle'
 const windowWidth = Dimensions.get('window').width
 
@@ -23,7 +23,7 @@ export const PromotionCarousel = ({ data, height = 128, showDots = true }) => {
                />
             )}
             {item?.type === 'videoUpload' && (
-               <Video
+               <CacheVideo
                   style={{ ...styles.image, height: height }}
                   source={{ uri: item?.value }}
                   shouldPlay={true}
