@@ -51,6 +51,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                return (
                   <TouchableOpacity
                      onPress={async () => {
+                        // currently used for pickup only
                         if (eachStore['fulfillmentStatus'].status) {
                            const storeAddress = eachStore.location
                            const addressToBeSaveInCart = {
@@ -108,7 +109,7 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                            })
                            dispatch({
                               type: 'SET_USER_LOCATION',
-                              payload: address,
+                              payload: addressToBeSaveInCart,
                            })
                            dispatch({
                               type: 'SET_STORE_STATUS',
