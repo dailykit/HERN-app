@@ -319,7 +319,9 @@ const RefineLocation = () => {
          const lastRoute = states.routes[states.routes.length - 2]
          if (lastRoute.name === 'LocationSelector') {
             const secondLastRoute = states.routes[states.routes.length - 3]
-            navigation.navigate(secondLastRoute.name)
+            navigation.navigate(secondLastRoute.name, {
+               ...(secondLastRoute.params && { ...secondLastRoute.params }),
+            })
          } else {
             navigation.goBack()
          }
