@@ -642,12 +642,22 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      </View>
                      <View>
                         {availableQuantityInCart === 0 ? (
-                           <Button onPress={handelAddToCartClick}>
-                              {productValidationResult.isProductOptionsAvailable
-                                 ? '+'
-                                 : ''}
-                              ADD
-                           </Button>
+                           <>
+                              <Button onPress={handelAddToCartClick}>
+                                 ADD
+                              </Button>
+                              {productValidationResult.isProductOptionsAvailable ? (
+                                 <Text
+                                    style={{
+                                       fontFamily: globalStyle.font.medium,
+                                       fontSize: 7,
+                                       textAlign: 'center',
+                                    }}
+                                 >
+                                    Customizable
+                                 </Text>
+                              ) : null}
+                           </>
                         ) : (
                            <CounterButton
                               count={availableQuantityInCart}
