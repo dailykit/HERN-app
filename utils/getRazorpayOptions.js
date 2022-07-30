@@ -28,33 +28,75 @@ export const getRazorpayOptions = ({
       } = orderDetails
 
       let checkout_option = {}
+      let config = {}
       if (
          paymentInfo?.supportedPaymentOption?.paymentOptionLabel ===
          'NETBANKING'
       ) {
-         checkout_option = {
-            method:
-               METHOD[paymentInfo?.supportedPaymentOption?.paymentOptionLabel],
-            bank: '',
+         // checkout_option = {
+         //    method:
+         //       METHOD[paymentInfo?.supportedPaymentOption?.paymentOptionLabel],
+         //    bank: '',
+         // }
+         config = {
+            config: {
+               display: {
+                  hide: [
+                     { method: 'card' },
+                     { method: 'wallet' },
+                     { method: 'upi' },
+                     { method: 'cardless_emi' },
+                     { method: 'paylater' },
+                     { method: 'app' },
+                  ],
+               },
+            },
          }
       } else if (
          paymentInfo?.supportedPaymentOption?.paymentOptionLabel === 'UPI'
       ) {
-         checkout_option = {
-            method:
-               METHOD[paymentInfo?.supportedPaymentOption?.paymentOptionLabel],
-            vpa: '',
+         // checkout_option = {
+         //    method:
+         //       METHOD[paymentInfo?.supportedPaymentOption?.paymentOptionLabel],
+         //    vpa: '',
+         // }
+         config = {
+            config: {
+               display: {
+                  hide: [
+                     { method: 'card' },
+                     { method: 'netbanking' },
+                     { method: 'wallet' },
+                     { method: 'cardless_emi' },
+                     { method: 'paylater' },
+                  ],
+               },
+            },
          }
       } else if (
          paymentInfo?.supportedPaymentOption?.paymentOptionLabel === 'CARD'
       ) {
-         checkout_option = {
-            method:
-               METHOD[paymentInfo?.supportedPaymentOption?.paymentOptionLabel],
-            'card[name]': '',
-            'card[number]': '',
-            'card[expiry]': '',
-            'card[cvv]': '',
+         // checkout_option = {
+         //    method:
+         //       METHOD[paymentInfo?.supportedPaymentOption?.paymentOptionLabel],
+         //    'card[name]': '',
+         //    'card[number]': '',
+         //    'card[expiry]': '',
+         //    'card[cvv]': '',
+         // }
+         config = {
+            config: {
+               display: {
+                  hide: [
+                     { method: 'netbanking' },
+                     { method: 'wallet' },
+                     { method: 'upi' },
+                     { method: 'cardless_emi' },
+                     { method: 'paylater' },
+                     { method: 'app' },
+                  ],
+               },
+            },
          }
       }
 
@@ -87,6 +129,7 @@ export const getRazorpayOptions = ({
             enabled: false,
          },
          redirect: true,
+         ...config,
       }
       return options
    }

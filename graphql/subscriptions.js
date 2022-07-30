@@ -209,6 +209,7 @@ export const GET_PAYMENT_OPTIONS = gql`
                country
                supportedPaymentCompanyId
                paymentOptionLabel
+               paymentOptionLabelToShow
                isLoginRequired
                canShowWhileLoggedIn
                supportedPaymentCompany {
@@ -450,6 +451,7 @@ export const GET_AVAILABLE_PAYMENT_OPTIONS = gql`
             country
             supportedPaymentCompanyId
             paymentOptionLabel
+            paymentOptionLabelToShow
             isLoginRequired
             canShowWhileLoggedIn
             supportedPaymentCompany {
