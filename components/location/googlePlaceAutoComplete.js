@@ -68,7 +68,10 @@ export const GooglePlacesAutocompleteWrapper = ({
                   top: 10,
                   paddingHorizontal: 10,
                }}
-               onPress={onGPSiconClick}
+               onPress={() => {
+                  _googleRef.current?.setAddressText('')
+                  onGPSiconClick()
+               }}
             >
                <GPSicon />
             </TouchableOpacity>
