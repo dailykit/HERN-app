@@ -29,35 +29,9 @@ export const FulfillmentSection = ({
                  .split(' ')[1],
       [orderTabs, selectedOrderTab]
    )
-   const fulfillmentLabel = React.useMemo(() => {
-      switch (selectedFulfillment) {
-         case 'DELIVERY':
-            return 'Delivery Time'
-         case 'PICKUP':
-            return 'Pickup Time'
-         case 'DINEIN':
-            return 'Dine In Time'
-      }
-   }, [selectedFulfillment])
 
    return (
       <View style={styles.fulfillmentContainer}>
-         {cartState?.cart?.fulfillmentInfo && (
-            <View style={{ flex: 1, flexDirection: 'row', marginLeft: 3 }}>
-               <OrderTime size={20} />
-               <View>
-                  <Text
-                     style={{
-                        fontFamily: globalStyle.font.medium,
-                        // color: '#00000080',
-                        marginLeft: 4,
-                     }}
-                  >
-                     {fulfillmentLabel}
-                  </Text>
-               </View>
-            </View>
-         )}
          {selectedFulfillment === 'DELIVERY' ? (
             <Delivery deliveryTimePopUp={deliveryTimePopUp} />
          ) : null}
