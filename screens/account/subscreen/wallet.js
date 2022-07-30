@@ -200,6 +200,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
 
    const { user } = useUser()
    const [amount, setAmount] = useState(0)
+   const [showPaymentOptions, setShowPaymentOption] = useState(true)
    const predefinedAmount = React.useMemo(() => {
       return [
          {
@@ -277,6 +278,8 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
                value={`${amount}`}
                placeholder="Enter amount..."
                keyboardType="numeric"
+               onFocus={() => setShowPaymentOption(false)}
+               onBlur={() => setShowPaymentOption(true)}
             />
             <View style={{ flexDirection: 'row' }}>
                {predefinedAmount.map((eachAmount, index) => {
@@ -309,7 +312,7 @@ const AddWalletAmount = ({ setShowTopUpTab }) => {
          </View>
 
          <View style={{ flex: 8 }}>
-            {amount ? (
+            {amount && showPaymentOptions ? (
                <PaymentOptionsRenderer
                   amount={amount}
                   availablePaymentOptionIds={

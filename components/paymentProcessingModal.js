@@ -93,7 +93,7 @@ const PaymentProcessingModal = ({
                   },
                ]}
             >
-               Please do not refresh or reload the page
+               Please do not press back button or close the app
             </Text>
             <Text
                style={[

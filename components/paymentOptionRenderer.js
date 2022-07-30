@@ -198,9 +198,9 @@ export default function PaymentOptionsRenderer({
                                  <PaymentOptionCard
                                     key={option?.id}
                                     title={
-                                       option?.label ||
                                        option?.supportedPaymentOption
-                                          ?.paymentOptionLabel
+                                          ?.paymentOptionLabelToShow ||
+                                       option?.label
                                     }
                                     isSelected={
                                        paymentInfo
@@ -239,13 +239,13 @@ export default function PaymentOptionsRenderer({
                            )}
                         </>
                      )
-                  ) : availablePaymentOptions.length > 0 ? (
+                  ) : availablePaymentOptions?.length > 0 ? (
                      availablePaymentOptions.map(option => (
                         <PaymentOptionCard
                            key={option?.id}
                            title={
-                              option?.label ||
-                              option?.supportedPaymentOption?.paymentOptionLabel
+                              option?.supportedPaymentOption
+                                 ?.paymentOptionLabelToShow || option?.label
                            }
                            isSelected={
                               paymentInfo?.selectedAvailablePaymentOption
@@ -277,7 +277,7 @@ export default function PaymentOptionsRenderer({
                   )}
                </ScrollView>
                {(cart?.availablePaymentOptionToCart?.length > 0 ||
-                  availablePaymentOptions.length > 0) &&
+                  availablePaymentOptions?.length > 0) &&
                   paymentInfo?.selectedAvailablePaymentOption
                      ?.supportedPaymentOption?.supportedPaymentCompany &&
                   paymentInfo?.selectedAvailablePaymentOption
@@ -285,7 +285,11 @@ export default function PaymentOptionsRenderer({
                      'stripe' && (
                      <PayButton
                         cartId={cartId}
-                        balanceToPay={cart?.cartOwnerBilling?.balanceToPay}
+                        balanceToPay={
+                           cartId
+                              ? cart?.cartOwnerBilling?.balanceToPay
+                              : amount
+                        }
                         metaData={metaData}
                         style={{
                            ...styles.payButton,
@@ -340,14 +344,6 @@ const PaymentOptionCard = ({
    }
    return (
       <TouchableOpacity onPress={onClick} style={styles.paymentOptionContainer}>
-         <Text
-            style={{
-               ...styles.paymentOptionCardHeader,
-               fontFamily: globalStyle.font.semibold,
-            }}
-         >
-            {title}
-         </Text>
          <View
             style={{
                ...styles.paymentOptionCard,
