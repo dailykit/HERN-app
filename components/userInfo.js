@@ -239,7 +239,7 @@ const UserInfoForm = props => {
             textContainerStyle={styles.phoneInputTextContainerStyle}
             disableArrowIcon={true}
             textInputProps={{ placeholderTextColor: globalStyle.color.grey }}
-            placeholder={'Enter Phone Number...'}
+            placeholder={'Enter Phone Number'}
             codeTextStyle={[
                styles.phoneInputCodeTextStyle,
                { fontFamily: globalStyle.font.medium },

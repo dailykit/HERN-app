@@ -193,18 +193,18 @@ const styles = StyleSheet.create({
    },
    containerStyle: {
       backgroundColor: '#242424',
-      borderRadius: 6,
-      height: 50,
+      borderRadius: 3,
+      // height: 50,
       width: '100%',
    },
    textContainerStyle: {
       backgroundColor: '#242424',
-      borderRadius: 6,
+      borderRadius: 3,
    },
    textInputStyle: {
       // borderLeftWidth: 4,
       fontSize: 16,
-      lineHeight: 20,
+      // lineHeight: 16,
       color: '#FFFFFF',
    },
    codeTextStyle: {
