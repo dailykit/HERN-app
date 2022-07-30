@@ -27,6 +27,7 @@ import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
 import CachedImage from 'react-native-expo-cached-image'
 import Toast from 'react-native-simple-toast'
+import { totalMemory } from 'expo-device'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -488,6 +489,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const handleSheetChanges = React.useCallback(index => {
       console.log('handleSheetChanges', index)
    }, [])
+   const chooseIncreaseTypeModalDismiss = React.useRef()
 
    return (
       <TouchableWithoutFeedback
@@ -708,6 +710,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                onBackdropPress={() => {
                   setShowChooseIncreaseType(false)
                }}
+               onModalHide={() => {
+                  if (chooseIncreaseTypeModalDismiss.current) {
+                     chooseIncreaseTypeModalDismiss.current()
+                     chooseIncreaseTypeModalDismiss.current = null
+                  }
+               }}
             >
                <View style={{ backgroundColor: 'white', padding: 12 }}>
                   <View style={{ marginBottom: 12 }}>
@@ -736,7 +744,10 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         onPress={() => {
                            setShowChooseIncreaseType(false)
                            // setShowModifierPopup(true)
-                           bottomSheetModalRef.current?.present()
+                           // bottomSheetModalRef.current?.present()
+                           chooseIncreaseTypeModalDismiss.current = () => {
+                              bottomSheetModalRef.current.present()
+                           }
                         }}
                      >
                         I'LL CHOOSE
@@ -746,8 +757,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                            flex: 1,
                            marginLeft: 20,
                         }}
-                        onPress={async () => {
-                           await repeatLastOne(productData)
+                        onPress={() => {
+                           setShowChooseIncreaseType(false)
+                           chooseIncreaseTypeModalDismiss.current = () => {
+                              repeatLastOne(productData)
+                           }
+                           Toast.show('Item added into cart.')
                         }}
                      >
                         REPEAT LAST ONE

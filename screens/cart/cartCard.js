@@ -342,6 +342,7 @@ export const CartCard = ({ productData, quantity }) => {
       })
       Toast.show('Item removed!')
    }
+   const chooseIncreaseTypeModalDismiss = useRef()
    return (
       <View style={[styles.cartContainer]}>
          <View style={styles.productMetaDetails}>
@@ -412,6 +413,7 @@ export const CartCard = ({ productData, quantity }) => {
                            removeCartItems([
                               productData.ids[productData.ids.length - 1],
                            ])
+                           Toast.show('Removing Item...')
                         }}
                         onPlusClick={() => {
                            if (productData.childs.length > 0) {
@@ -494,6 +496,12 @@ export const CartCard = ({ productData, quantity }) => {
             onBackdropPress={() => {
                setShowChooseIncreaseType(false)
             }}
+            onModalHide={() => {
+               if (chooseIncreaseTypeModalDismiss.current) {
+                  chooseIncreaseTypeModalDismiss.current()
+                  chooseIncreaseTypeModalDismiss.current = null
+               }
+            }}
          >
             <View style={{ backgroundColor: 'white', padding: 12 }}>
                <View style={{ marginBottom: 12 }}>
@@ -503,7 +511,7 @@ export const CartCard = ({ productData, quantity }) => {
                         fontFamily: globalStyle.font.medium,
                      }}
                   >
-                     Repeat last used customization?
+                     Repeat last used customization???
                   </Text>
                </View>
                <View style={{ flexDirection: 'row' }}>
@@ -520,11 +528,14 @@ export const CartCard = ({ productData, quantity }) => {
                         marginRight: 20,
                      }}
                      onPress={() => {
+                        setShowChooseIncreaseType(false)
                         setModifierType('newItem')
                         setCartDetailSelectedProduct(productData)
                         setModifyProductId(productData.productId)
-                        setShowChooseIncreaseType(false)
-                        bottomSheetModalRef.current?.present()
+                        // bottomSheetModalRef.current.present()
+                        chooseIncreaseTypeModalDismiss.current = () => {
+                           bottomSheetModalRef.current.present()
+                        }
                      }}
                   >
                      I'LL CHOOSE
@@ -535,9 +546,14 @@ export const CartCard = ({ productData, quantity }) => {
                         marginLeft: 20,
                      }}
                      onPress={() => {
+                        setShowChooseIncreaseType(false)
                         setCartDetailSelectedProduct(productData)
                         setModifyProductId(productData.productId)
-                        setForRepeatLastOne(true)
+                        // setForRepeatLastOne(true)
+                        chooseIncreaseTypeModalDismiss.current = () => {
+                           setForRepeatLastOne(true)
+                        }
+                        Toast.show('Updating Cart Items...')
                      }}
                   >
                      REPEAT LAST ONE
@@ -587,6 +603,7 @@ export const CartCard = ({ productData, quantity }) => {
                         marginLeft: 20,
                      }}
                      onPress={() => {
+                        setShowDeleteItemModal(false)
                         removeCartItems(productData.ids)
                         Toast.show('Removing Item from Cart...')
                      }}
