@@ -9,7 +9,7 @@ import React from 'react'
 import useGlobalStyle from '../../globalStyle'
 import { useCart } from '../../context'
 
-export const StoreList = ({ stores, address, fulfillmentType }) => {
+export const StoreList = ({ stores, address, fulfillmentType, redirect }) => {
    const { dispatch, orderTabs } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
@@ -139,6 +139,12 @@ export const StoreList = ({ stores, address, fulfillmentType }) => {
                                  JSON.stringify(addressToBeSaveInCart)
                               )
                               navigation.goBack()
+                              if (redirect && redirect?.to) {
+                                 navigation.navigate(
+                                    redirect.to,
+                                    redirect?.params || {}
+                                 )
+                              }
                            } catch (err) {
                               console.error('storeSelect', err)
                            }

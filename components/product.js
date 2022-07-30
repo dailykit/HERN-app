@@ -234,7 +234,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const handelAddToCartClick = () => {
       // product availability
       if (!locationId) {
-         navigation.navigate('LocationSelector')
+         navigation.navigate('LocationSelector', {
+            redirect: {
+               to: 'ProductScreen',
+               params: { productId: productData.id },
+            },
+         })
          return
       }
 

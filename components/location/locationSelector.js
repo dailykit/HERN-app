@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import CloseIcon from '../../assets/closeIcon'
 import { useConfig } from '../../lib/config'
@@ -13,7 +13,7 @@ import useGlobalStyle from '../../globalStyle'
 
 export const LocationSelector = () => {
    const navigation = useNavigation()
-
+   const route = useRoute()
    const { brand, orderTabs } = useConfig()
 
    const { globalStyle } = useGlobalStyle()
@@ -130,9 +130,15 @@ export const LocationSelector = () => {
             </View>
          </View>
          <View>
-            {fulfillmentType === 'DELIVERY' && <Delivery />}
-            {fulfillmentType === 'PICKUP' && <Pickup />}
-            {fulfillmentType === 'DINEIN' && <DineIn />}
+            {fulfillmentType === 'DELIVERY' && (
+               <Delivery redirect={route.params?.redirect} />
+            )}
+            {fulfillmentType === 'PICKUP' && (
+               <Pickup redirect={route.params?.redirect} />
+            )}
+            {fulfillmentType === 'DINEIN' && (
+               <DineIn redirect={route.params?.redirect} />
+            )}
          </View>
       </SafeAreaView>
    )

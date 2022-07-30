@@ -14,7 +14,7 @@ import { StoreList } from './storeList'
 import { Button } from '../button'
 import useGlobalStyle from '../../globalStyle'
 
-export const Pickup = () => {
+export const Pickup = ({ redirect }) => {
    const navigation = useNavigation()
    const { orderTabs, brand, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
@@ -333,6 +333,7 @@ export const Pickup = () => {
                stores={stores}
                fulfillmentType={fulfillmentType}
                address={address}
+               redirect={redirect}
             />
          ) : null}
          {/* <StoreList

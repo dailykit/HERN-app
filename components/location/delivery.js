@@ -23,7 +23,7 @@ import { UserAddressList } from './userAddressList'
 import { useCart } from '../../context'
 import { Spinner } from '../../assets/loaders'
 
-export const Delivery = () => {
+export const Delivery = ({ redirect }) => {
    const navigation = useNavigation()
    const route = useRoute()
    const { orderTabs, brand, appConfig, dispatch } = useConfig()
@@ -108,6 +108,7 @@ export const Delivery = () => {
                   navigation.navigate('RefineLocation', {
                      address: address,
                      fulfillmentType: fulfillmentType,
+                     redirect: redirect,
                   })
                } else {
                   setIsSettingLocation(true)
@@ -197,6 +198,12 @@ export const Delivery = () => {
                      console.error('ExistingLocationSelectSubmit', err)
                   }
                   navigation.goBack()
+                  if (route.params?.redirect && route.params?.redirect?.to) {
+                     navigation.navigate(
+                        route.params.redirect.to,
+                        route.params.redirect?.params || {}
+                     )
+                  }
                }
             }
          }
