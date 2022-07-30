@@ -44,6 +44,7 @@ const MenuScreen = ({ route }) => {
             ?.name ||
          ''
    )
+   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(null)
    const [isMenuLoading, setIsMenuLoading] = React.useState(true)
 
    React.useEffect(() => {
@@ -51,29 +52,42 @@ const MenuScreen = ({ route }) => {
    }, [])
 
    useEffect(() => {
-      if (hydratedMenu.length > 0 && selectedCategoryName.length > 0) {
+      if (
+         hydratedMenu.length > 0 &&
+         hydratedMenu?.[currentCategoryIndex]?.name
+      ) {
+         setSelectedCategoryName(hydratedMenu?.[currentCategoryIndex]?.name)
+      }
+   }, [currentCategoryIndex, hydratedMenu])
+
+   function scrollToCategory(name) {
+      if (hydratedMenu.length > 0 && name.length > 0) {
          categoryScroller.current?.scrollToIndex({
-            index: hydratedMenu.findIndex(x => x.name == selectedCategoryName),
+            index: hydratedMenu.findIndex(x => x.name == name),
             animated: true,
             viewPosition: 0,
          })
       }
-   }, [selectedCategoryName, hydratedMenu])
-
-   const selectedCategoryWithCompleteData = React.useMemo(() => {
-      return hydratedMenu.find(x => x.name === selectedCategoryName)
-   }, [selectedCategoryName])
+   }
 
    React.useEffect(() => {
       if (hydratedMenu.length > 0 && route?.params?.categoryName?.length > 0) {
+         let firstPublishedCategory = hydratedMenu.find(
+            x => x.isCategoryPublished && x.isCategoryAvailable
+         )?.name
          setSelectedCategoryName(
-            route?.params?.categoryName ||
-               hydratedMenu.find(
-                  x => x.isCategoryPublished && x.isCategoryAvailable
-               )?.name
+            route?.params?.categoryName || firstPublishedCategory
          )
+         scrollToCategory(route?.params?.categoryName || firstPublishedCategory)
       }
    }, [hydratedMenu, route?.params?.categoryName])
+
+   const onViewRef = React.useRef(({ viewableItems }) => {
+      if (viewableItems?.length && viewableItems.length > 0) {
+         setCurrentCategoryIndex(viewableItems[viewableItems.length - 1].index)
+      }
+   })
+   const viewConfigRef = React.useRef({ itemVisiblePercentThreshold: 10 })
 
    return (
       <SafeAreaView style={{ backgroundColor: '#ffffff', flex: 1 }}>
@@ -100,6 +114,7 @@ const MenuScreen = ({ route }) => {
                                  key={`${eachCategory.name}-${index}`}
                                  onCategoryClick={() => {
                                     setSelectedCategoryName(eachCategory.name)
+                                    scrollToCategory(eachCategory.name)
                                  }}
                                  isActiveCategory={isActiveCategory}
                                  eachCategory={eachCategory}
@@ -121,6 +136,7 @@ const MenuScreen = ({ route }) => {
                         selectedCategoryName={selectedCategoryName}
                         onCategoryClick={name => {
                            setSelectedCategoryName(name)
+                           scrollToCategory(name)
                         }}
                         position={floatingMenuPosition}
                      />
@@ -190,6 +206,8 @@ const MenuScreen = ({ route }) => {
                      )
                   }}
                   nestedScrollEnabled={true}
+                  onViewableItemsChanged={onViewRef.current}
+                  viewabilityConfig={viewConfigRef.current}
                   onScrollToIndexFailed={err => {
                      console.log('err', err)
                   }}
