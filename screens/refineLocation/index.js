@@ -348,6 +348,12 @@ const RefineLocation = () => {
          } else {
             navigation.goBack()
          }
+         if (route.params?.redirect && route.params?.redirect?.to) {
+            navigation.navigate(
+               route.params.redirect.to,
+               route.params.redirect?.params || {}
+            )
+         }
       } catch (err) {
          console.error('refineLocationSubmit', err)
       }
