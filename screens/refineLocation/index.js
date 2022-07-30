@@ -6,6 +6,7 @@ import {
    TouchableOpacity,
    ScrollView,
    TextInput,
+   BackHandler,
 } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import React, { useState, useEffect } from 'react'
@@ -145,6 +146,28 @@ const RefineLocation = () => {
             console.error('error', e)
          })
    }
+
+   useEffect(() => {
+      const backAction = () => {
+         const states = navigation.getState()
+         const lastRoute = states.routes[states.routes.length - 2]
+         if (lastRoute.name === 'LocationSelector') {
+            navigation.navigate('LocationSelector', {
+               resetStores: true,
+            })
+         } else {
+            navigation.goBack()
+         }
+         return true
+      }
+
+      const backHandler = BackHandler.addEventListener(
+         'hardwareBackPress',
+         backAction
+      )
+
+      return () => backHandler.remove()
+   }, [])
 
    const SERVER_URL = React.useMemo(() => {
       return __DEV__ ? get_env('BASE_BRAND_DEV_URL') : get_env('BASE_BRAND_URL')
@@ -343,7 +366,15 @@ const RefineLocation = () => {
             </Text>
             <TouchableOpacity
                onPress={() => {
-                  navigation.goBack()
+                  const states = navigation.getState()
+                  const lastRoute = states.routes[states.routes.length - 2]
+                  if (lastRoute.name === 'LocationSelector') {
+                     navigation.navigate('LocationSelector', {
+                        resetStores: true,
+                     })
+                  } else {
+                     navigation.goBack()
+                  }
                }}
                style={{ padding: 8 }}
             >

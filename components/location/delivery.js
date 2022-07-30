@@ -16,7 +16,7 @@ import LocationIcon from '../../assets/locationIcon'
 import { getStoresWithValidations } from '../../utils/location/sharedLocationUtils'
 import { getFormattedAddress } from '../../utils/getFormattedAddress'
 import { AddressInfo } from './addressInfo'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { Button } from '../button'
 import useGlobalStyle from '../../globalStyle'
 import { UserAddressList } from './userAddressList'
@@ -25,6 +25,7 @@ import { Spinner } from '../../assets/loaders'
 
 export const Delivery = () => {
    const navigation = useNavigation()
+   const route = useRoute()
    const { orderTabs, brand, appConfig, dispatch } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const { methods, storedCartId, cartState } = useCart()
@@ -83,6 +84,14 @@ export const Delivery = () => {
       useState(false)
 
    useEffect(() => {
+      if (route?.params?.resetStores) {
+         setStores(null)
+         setAddress(null)
+         navigation.setParams({ resetStores: false })
+      }
+   }, [route?.params?.resetStores])
+
+   useEffect(() => {
       if (address && brand.id) {
          async function fetchStores() {
             const brandClone = { ...brand }
@@ -95,13 +104,13 @@ export const Delivery = () => {
             setStores(availableStore)
             setIsGetStoresLoading(false)
             if (availableStore.length > 0) {
-               setIsSettingLocation(true)
                if (!isUserExistingAddressSelected) {
                   navigation.navigate('RefineLocation', {
                      address: address,
                      fulfillmentType: fulfillmentType,
                   })
                } else {
+                  setIsSettingLocation(true)
                   const selectedStore = availableStore[0]
                   const selectedOrderTab = orderTabs.find(
                      x => x.orderFulfillmentTypeLabel === fulfillmentType
@@ -374,6 +383,7 @@ export const Delivery = () => {
          <GooglePlacesAutocompleteWrapper
             formatAddress={formatAddress}
             onGPSiconClick={getLocationFromDevice}
+            resetTextInput={route?.params?.resetStores}
          />
          <ScrollView style={{ height: '76%' }}>
             <View style={{ zIndex: -10 }}>
