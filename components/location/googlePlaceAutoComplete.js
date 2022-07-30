@@ -10,12 +10,17 @@ export const GooglePlacesAutocompleteWrapper = ({
    onGPSiconClick,
    showGPSicon = true,
    googleContainerStyle,
+   resetTextInput = false,
 }) => {
    const { globalStyle } = useGlobalStyle()
    const _googleRef = React.useRef()
-   // React.useEffect(() => {
-   //    _googleRef.current.focus()
-   // }, [])
+
+   React.useEffect(() => {
+      if (resetTextInput) {
+         _googleRef.current?.setAddressText('')
+      }
+   }, [resetTextInput])
+
    return (
       <View
          style={[
