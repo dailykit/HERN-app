@@ -131,12 +131,17 @@ export const OTPform = ({
                autoFocusOnLoad
                codeInputFieldStyle={[
                   styles.underlineStyleBase,
-                  { fontFamily: globalStyle.font.medium },
+                  {
+                     fontFamily: globalStyle.font.medium,
+                  },
                ]}
                codeInputHighlightStyle={[
                   styles.underlineStyleHighLighted,
-                  { borderColor: globalStyle.color.highlight },
+                  {
+                     borderColor: globalStyle.color.highlight,
+                  },
                ]}
+               selectionColor={globalStyle.color.primary}
                onCodeFilled={code => {
                   console.log('filledCode', code)
                }}
