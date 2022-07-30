@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import 'react-native-gesture-handler'
 import { Platform, StatusBar } from 'react-native'
@@ -14,11 +14,15 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useFonts } from 'expo-font'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useNetInfo } from '@react-native-community/netinfo'
+import { useEffect, useState } from 'react'
+import { isEmpty } from 'lodash'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const paddingTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
 export default function App() {
    const { isConnected } = useNetInfo()
+   const [navigationInitialState, setNavigationInitialState] = useState({})
 
    const [fontLoaded] = useFonts({
       Metropolis: require('./assets/fonts/Metropolis-Regular.otf'),
@@ -29,14 +33,28 @@ export default function App() {
       MetropolisMediumItalic: require('./assets/fonts/Metropolis-MediumItalic.otf'),
    })
 
-   if (!fontLoaded) {
+   useEffect(() => {
+      AsyncStorage.getItem('preferredOrderTab').then(preferredOrderTab => {
+         if (!preferredOrderTab) {
+            setNavigationInitialState(prev => ({
+               routes: [{ name: 'Fulfillment' }],
+            }))
+         } else {
+            setNavigationInitialState(prev => ({
+               routes: [{ name: 'TabMenu' }],
+            }))
+         }
+      })
+   }, [])
+
+   if (!fontLoaded || isEmpty(navigationInitialState)) {
       return null
    }
 
    return (
       <SafeAreaProvider>
          <GestureHandlerRootView style={{ flex: 1 }}>
-            <NavigationContainer>
+            <NavigationContainer initialState={navigationInitialState}>
                <ApolloProvider>
                   <ConfigProvider>
                      <UserProvider>

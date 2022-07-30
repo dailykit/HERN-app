@@ -18,10 +18,7 @@ import OrderTrackingScreen from '../screens/myOrders/subscreen/orderTracking'
 import ProductSearchScreen from '../screens/productSearch'
 import ProductScreen from '../screens/product'
 import FulfillmentScreen from '../screens/fulfillment'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import NetInfo from '@react-native-community/netinfo'
 import NoNetworkConnection from '../components/noNetworkConnection'
 
 const Tab = createBottomTabNavigator()
@@ -54,16 +51,6 @@ const TabNavigator = ({ isConnected }) => {
 }
 
 const Navigator = ({ isConnected }) => {
-   const navigation = useNavigation()
-
-   AsyncStorage.getItem('preferredOrderTab').then(preferredOrderTab => {
-      if (!preferredOrderTab) {
-         navigation.reset({
-            routes: [{ name: 'Fulfillment' }],
-         })
-      }
-   })
-
    const TabNavigatorWrapper = () => {
       return <TabNavigator isConnected={isConnected} />
    }
