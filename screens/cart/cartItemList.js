@@ -16,12 +16,15 @@ import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
+import Toast from 'react-native-simple-toast'
 import useGlobalStyle from '../../globalStyle'
 import Toast from 'react-native-simple-toast'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems, methods } = useCart()
+   const { appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
+   const [showClearCartItems, setShowClearCartItems] = useState(false)
    const removeCartItems = cartItemIds => {
       methods.cartItems.delete({
          variables: {
@@ -60,10 +63,11 @@ export const CartItemList = () => {
                   paddingLeft: 16,
                }}
                onPress={() => {
-                  const cartItemsIds = combinedCartItems
-                     .map(each => each.ids)
-                     .flat()
-                  removeCartItems(cartItemsIds)
+                  // const cartItemsIds = combinedCartItems
+                  //    .map(each => each.ids)
+                  //    .flat()
+                  // removeCartItems(cartItemsIds)
+                  setShowClearCartItems(true)
                }}
             >
                <Text
@@ -92,6 +96,61 @@ export const CartItemList = () => {
                )
             })}
          </ScrollView>
+         <Modal
+            isVisible={showClearCartItems}
+            onBackdropPress={() => {
+               setShowClearCartItems(false)
+            }}
+         >
+            <View style={{ backgroundColor: 'white', padding: 12 }}>
+               <View style={{ marginBottom: 12 }}>
+                  <Text
+                     style={{
+                        fontSize: 16,
+                        fontFamily: globalStyle.font.medium,
+                     }}
+                  >
+                     Clear Cart Items?
+                  </Text>
+               </View>
+               <View style={{ flexDirection: 'row' }}>
+                  <Button
+                     variant="outline"
+                     isActive={true}
+                     textStyle={{
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#000000',
+                     }}
+                     buttonStyle={{
+                        flex: 1,
+                        marginRight: 20,
+                     }}
+                     onPress={() => {
+                        setShowClearCartItems(false)
+                     }}
+                  >
+                     NO
+                  </Button>
+                  <Button
+                     buttonStyle={{
+                        flex: 1,
+                        marginLeft: 20,
+                     }}
+                     onPress={() => {
+                        const cartItemsIds = combinedCartItems
+                           .map(each => each.ids)
+                           .flat()
+                        setShowClearCartItems(false)
+                        removeCartItems(cartItemsIds)
+                        Toast.show('Removing Cart Items...')
+                     }}
+                  >
+                     YES
+                  </Button>
+               </View>
+            </View>
+         </Modal>
       </View>
    )
 }

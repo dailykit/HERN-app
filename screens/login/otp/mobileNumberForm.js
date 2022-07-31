@@ -56,17 +56,24 @@ export const MobileNumberForm = ({
                   autoFocus
                   textInputStyle={[
                      styles.textInputStyle,
-                     { fontFamily: globalStyle.font.medium },
+                     {
+                        fontFamily: globalStyle.font.medium,
+                     },
                   ]}
                   containerStyle={styles.containerStyle}
                   textContainerStyle={styles.textContainerStyle}
                   codeTextStyle={[
                      styles.codeTextStyle,
-                     { fontFamily: globalStyle.font.medium },
+                     {
+                        fontFamily: globalStyle.font.medium,
+                     },
                   ]}
                   disableArrowIcon={true}
-                  textInputProps={{ placeholderTextColor: '#ffffff80' }}
-                  placeholder={'Enter Phone Number...'}
+                  textInputProps={{
+                     placeholderTextColor: '#ffffff80',
+                     selectionColor: globalStyle.color.primary,
+                  }}
+                  placeholder={'Enter Phone Number'}
                />
             </View>
             <View style={styles.infoLine}>
@@ -186,18 +193,18 @@ const styles = StyleSheet.create({
    },
    containerStyle: {
       backgroundColor: '#242424',
-      borderRadius: 6,
-      height: 50,
+      borderRadius: 3,
+      // height: 50,
       width: '100%',
    },
    textContainerStyle: {
       backgroundColor: '#242424',
-      borderRadius: 6,
+      borderRadius: 3,
    },
    textInputStyle: {
-      borderLeftWidth: 4,
+      // borderLeftWidth: 4,
       fontSize: 16,
-      lineHeight: 20,
+      // lineHeight: 16,
       color: '#FFFFFF',
    },
    codeTextStyle: {

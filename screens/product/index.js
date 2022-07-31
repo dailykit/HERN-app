@@ -435,7 +435,6 @@ const ProductScreen = () => {
          </View>
       )
    }
-
    return (
       <SafeAreaView style={styles.productScreen}>
          <View style={{ flex: 10 }}>
@@ -446,13 +445,26 @@ const ProductScreen = () => {
                         navigation.goBack()
                      }}
                   >
-                     <View style={styles.leftArrow}>
+                     <View
+                        style={[
+                           styles.leftArrow,
+                           { backgroundColor: globalStyle.color.primary },
+                        ]}
+                     >
                         <LeftArrow />
                      </View>
                   </TouchableWithoutFeedback>
                   <Carousel
                      ref={_carousel}
-                     data={products[0].assets.images}
+                     data={
+                        !products[0].assets.images ||
+                        products[0].assets.images?.length == 0
+                           ? [
+                                appConfig.brandSettings.productSettings
+                                   .defaultImage.value,
+                             ]
+                           : products[0].assets.images
+                     }
                      renderItem={_renderItem}
                      sliderWidth={windowWidth}
                      itemWidth={windowWidth}
@@ -549,9 +561,7 @@ const ProductScreen = () => {
                               >
                                  <Text
                                     style={{
-                                       color:
-                                          appConfig.brandSettings.brandColor
-                                             .value || '#000000',
+                                       color: globalStyle.color.highlight,
                                        fontFamily: globalStyle.font.medium,
                                        fontSize: 14,
                                        textAlign: 'right',
@@ -726,6 +736,8 @@ const styles = StyleSheet.create({
       top: 20,
       left: 20,
       zIndex: 1000,
+      borderRadius: 20,
+      opacity: 0.9,
    },
    carouselItem: {},
    image: {},

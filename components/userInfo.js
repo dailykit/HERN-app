@@ -239,7 +239,7 @@ const UserInfoForm = props => {
             textContainerStyle={styles.phoneInputTextContainerStyle}
             disableArrowIcon={true}
             textInputProps={{ placeholderTextColor: globalStyle.color.grey }}
-            placeholder={'Enter Phone Number...'}
+            placeholder={'Enter Phone Number'}
             codeTextStyle={[
                styles.phoneInputCodeTextStyle,
                { fontFamily: globalStyle.font.medium },
@@ -359,7 +359,14 @@ const UserDetails = ({
       <>
          <View style={styles.userInfoContainer}>
             {loading ? (
-               <ActivityIndicator size="small" color={'#000'} />
+               <>
+                  <UserIcon size={16} />
+                  <ActivityIndicator
+                     size="small"
+                     color={globalStyle.color.primary}
+                     style={styles.activityIndicator}
+                  />
+               </>
             ) : hasUserInfoInCart ? (
                <>
                   <View style={styles.row}>
@@ -407,7 +414,10 @@ const UserDetails = ({
                         Add User Info
                      </Button>
                   ) : (
-                     <ActivityIndicator size="small" color={'#000'} />
+                     <ActivityIndicator
+                        size="small"
+                        color={globalStyle.color.primary}
+                     />
                   )}
                </>
             )}
@@ -431,6 +441,10 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+   },
+   activityIndicator: {
+      position: 'absolute',
+      left: '50%',
    },
    row: {
       display: 'flex',

@@ -411,8 +411,12 @@ export const ModifierPopup = ({
          <ScrollView style={{ paddingHorizontal: 12 }}>
             <View style={styles.productDetails}>
                <Image
+                  style={{ borderRadius: 4 }}
                   source={{
-                     uri: productData.assets.images[0],
+                     uri:
+                        productData.assets.images[0] ||
+                        appConfig.brandSettings.productSettings.defaultImage
+                           .value,
                      width: 120,
                      height: 84,
                   }}

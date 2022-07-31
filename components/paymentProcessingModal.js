@@ -82,7 +82,7 @@ const PaymentProcessingModal = ({
                   },
                ]}
             >
-               Please wait while we process your payment
+               Please wait while we process your payment.
             </Text>
             <Text
                style={[
@@ -104,7 +104,7 @@ const PaymentProcessingModal = ({
                   },
                ]}
             >
-               you'll be automatically redirected
+               You'll be automatically redirected.
             </Text>
          </View>
       )

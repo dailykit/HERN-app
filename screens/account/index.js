@@ -22,6 +22,7 @@ import { AccountHeader } from './header'
 import { UserInfo } from './userInfo'
 import { Spinner } from '../../assets/loaders'
 import { useConfig } from '../../lib/config'
+import Toast from 'react-native-simple-toast'
 import useGlobalStyle from '../../globalStyle'
 
 const AccountScreen = () => {
@@ -180,6 +181,7 @@ const AccountScreen = () => {
                   ></View>
                   <Tile
                      onPress={async () => {
+                        Toast.show('Signing Out...')
                         await logout()
                      }}
                   >

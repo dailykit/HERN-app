@@ -69,98 +69,106 @@ export const Address = () => {
 
    return (
       <View style={styles.addressContainer}>
-         <View
-            style={{
-               flex: 1,
-               flexDirection: 'row',
-               alignItems: 'center',
-               justifyContent: 'space-between',
-               height: '100%',
-               marginLeft: 4,
-            }}
-         >
-            <TouchableOpacity
-               style={{
-                  flex: 3,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-               }}
-               onPress={() => {
-                  navigation.navigate('LocationSelector')
-               }}
-            >
+         {loading ? (
+            <View style={{ marginLeft: 4 }}>
                <LocationIcon fill={globalStyle.color.grey} />
-               <Text
+               <ActivityIndicator
+                  size="small"
+                  color={globalStyle.color.primary}
+                  style={styles.activityIndicator}
+               />
+            </View>
+         ) : (
+            <>
+               <View
                   style={{
-                     fontFamily: globalStyle.font.medium,
-                     // color: '#00000080',
+                     flex: 1,
+                     flexDirection: 'row',
+                     alignItems: 'center',
+                     justifyContent: 'space-between',
+                     height: '100%',
                      marginLeft: 4,
                   }}
                >
-                  {fulfillmentLabel}
-               </Text>
-               {/* <DownVector size={12} stroke={'#00000080'} /> */}
-            </TouchableOpacity>
-            {loading ? (
-               <View style={{ flex: 6, flexShrink: 1, marginLeft: 30 }}>
-                  <ActivityIndicator size="small" color={'#000'} />
+                  <TouchableOpacity
+                     style={{
+                        flex: 3,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                     }}
+                     onPress={() => {
+                        navigation.navigate('LocationSelector')
+                     }}
+                  >
+                     <LocationIcon fill={globalStyle.color.grey} />
+                     <Text
+                        style={{
+                           fontFamily: globalStyle.font.medium,
+                           // color: '#00000080',
+                           marginLeft: 4,
+                        }}
+                     >
+                        {fulfillmentLabel}
+                     </Text>
+                     {/* <DownVector size={12} stroke={'#00000080'} /> */}
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                     style={{
+                        // flex: 1,
+                        // alignItems: 'center',
+                        height: '100%',
+                        // justifyContent: 'center',
+                        marginRight: 8,
+                     }}
+                     onPress={() => {
+                        navigation.navigate('RefineLocation', {
+                           address: {
+                              ...address,
+                              latitude: address?.lat,
+                              longitude: address?.lng,
+                           },
+                           fulfillmentType:
+                              selectedOrderTab.orderFulfillmentTypeLabel,
+                        })
+                     }}
+                  >
+                     <EditIcon
+                        fill={
+                           appConfig.brandSettings.buttonSettings.buttonBGColor
+                              .value || '#00000080'
+                        }
+                        size={18}
+                     />
+                  </TouchableOpacity>
                </View>
-            ) : (
-               <TouchableOpacity
-                  style={{
-                     // flex: 1,
-                     // alignItems: 'center',
-                     height: '100%',
-                     // justifyContent: 'center',
-                     marginRight: 8,
-                  }}
-                  onPress={() => {
-                     navigation.navigate('RefineLocation', {
-                        address: {
-                           ...address,
-                           latitude: address?.lat,
-                           longitude: address?.lng,
-                        },
-                        fulfillmentType:
-                           selectedOrderTab.orderFulfillmentTypeLabel,
-                     })
-                  }}
-               >
-                  <EditIcon
-                     fill={
-                        appConfig.brandSettings.buttonSettings.buttonBGColor
-                           .value || '#00000080'
-                     }
-                     size={18}
-                  />
-               </TouchableOpacity>
-            )}
-         </View>
-         <View>
-            <TouchableOpacity
-               style={{
-                  flex: 6,
-                  // flexShrink: 1,
-                  marginLeft: 32,
-                  marginRight: 22,
-                  marginTop: 4,
-               }}
-               onPress={() => {
-                  setNumberOfLines(prev => (prev == 1 ? 2 : 1))
-               }}
-            >
-               <Text
-                  numberOfLines={numberOfLines}
-                  style={{
-                     fontFamily: globalStyle.font.medium,
-                     // color: '#00000080',
-                  }}
-               >
-                  {`${address?.line1} ${address?.city} ${address?.state} ${address?.country},${address?.zipcode}`}
-               </Text>
-            </TouchableOpacity>
-         </View>
+               <View>
+                  <TouchableOpacity
+                     style={{
+                        flex: 6,
+                        // flexShrink: 1,
+                        marginLeft: 32,
+                        marginRight: 22,
+                        marginTop: 4,
+                     }}
+                     onPress={() => {
+                        setNumberOfLines(prev => (prev == 1 ? 2 : 1))
+                     }}
+                  >
+                     <Text
+                        numberOfLines={numberOfLines}
+                        style={{
+                           fontFamily: globalStyle.font.medium,
+                           // color: '#00000080',
+                        }}
+                     >
+                        {`${address?.line1} ${address?.city} ${address?.state} ${address?.country},${address?.zipcode}`}
+                     </Text>
+                  </TouchableOpacity>
+               </View>
+            </>
+         )}
          <View style={styles.divider}></View>
       </View>
    )
@@ -179,6 +187,10 @@ const styles = StyleSheet.create({
       // borderRadius: 5,
       // borderWidth: 1,
       // borderColor: '#00000030',
+   },
+   activityIndicator: {
+      position: 'absolute',
+      left: '47.5%',
    },
    divider: {
       height: 1,

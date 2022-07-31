@@ -27,6 +27,7 @@ import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
 import CachedImage from 'react-native-expo-cached-image'
 import Toast from 'react-native-simple-toast'
+import { totalMemory } from 'expo-device'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -488,6 +489,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
    const handleSheetChanges = React.useCallback(index => {
       console.log('handleSheetChanges', index)
    }, [])
+   const chooseIncreaseTypeModalDismiss = React.useRef()
 
    return (
       <TouchableWithoutFeedback
@@ -503,7 +505,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                width:
                   viewStyle === productViewStyles.verticalCard ? 156 : 'auto',
                height:
-                  viewStyle === productViewStyles.verticalCard ? 200 : 'auto',
+                  viewStyle === productViewStyles.verticalCard ? 212 : 'auto',
             }}
          >
             <View
@@ -526,7 +528,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      ...styles.floatingImage,
                      ...(viewStyle === productViewStyles.horizontalCard
                         ? {
-                             borderRadius: 4,
+                             borderRadius: productData.assets.images[0] ? 4 : 0,
                              width: '30%',
                              height:
                                 (Dimensions.get('window').width - 12) * 0.225,
@@ -640,36 +642,63 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      </View>
                      <View>
                         {availableQuantityInCart === 0 ? (
-                           <Button onPress={handelAddToCartClick}>
-                              {productValidationResult.isProductOptionsAvailable
-                                 ? '+'
-                                 : ''}
-                              ADD
-                           </Button>
+                           <>
+                              <Button onPress={handelAddToCartClick}>
+                                 ADD
+                              </Button>
+                              {productValidationResult.isProductOptionsAvailable ? (
+                                 <Text
+                                    style={{
+                                       fontFamily: globalStyle.font.medium,
+                                       fontSize: 7,
+                                       textAlign: 'center',
+                                    }}
+                                 >
+                                    Customizable
+                                 </Text>
+                              ) : null}
+                           </>
                         ) : (
-                           <CounterButton
-                              count={availableQuantityInCart}
-                              onMinusClick={() => {
-                                 const idsAv = combinedCartItems
-                                    .filter(x => x.productId === productData.id)
-                                    .map(x => x.ids)
-                                    .flat()
-                                 removeCartItems([idsAv[idsAv.length - 1]])
-                                 setAvailableQuantityInCart(prev => prev - 1)
-                              }}
-                              onPlusClick={() => {
-                                 if (
-                                    productData.productOptions.length > 0 &&
-                                    productData.isPopupAllowed
-                                 ) {
-                                    setShowChooseIncreaseType(true)
-                                 } else {
-                                    addToCart(productData.defaultCartItem, 1)
-                                    setAvailableQuantityInCart(prev => prev + 1)
-                                    Toast.show('Item added into cart.')
-                                 }
-                              }}
-                           />
+                           <>
+                              <CounterButton
+                                 count={availableQuantityInCart}
+                                 onMinusClick={() => {
+                                    const idsAv = combinedCartItems
+                                       .filter(
+                                          x => x.productId === productData.id
+                                       )
+                                       .map(x => x.ids)
+                                       .flat()
+                                    removeCartItems([idsAv[idsAv.length - 1]])
+                                    setAvailableQuantityInCart(prev => prev - 1)
+                                 }}
+                                 onPlusClick={() => {
+                                    if (
+                                       productData.productOptions.length > 0 &&
+                                       productData.isPopupAllowed
+                                    ) {
+                                       setShowChooseIncreaseType(true)
+                                    } else {
+                                       addToCart(productData.defaultCartItem, 1)
+                                       setAvailableQuantityInCart(
+                                          prev => prev + 1
+                                       )
+                                       Toast.show('Item added into cart.')
+                                    }
+                                 }}
+                              />
+                              {productValidationResult.isProductOptionsAvailable ? (
+                                 <Text
+                                    style={{
+                                       fontFamily: globalStyle.font.medium,
+                                       fontSize: 7,
+                                       textAlign: 'center',
+                                    }}
+                                 >
+                                    Customizable
+                                 </Text>
+                              ) : null}
+                           </>
                         )}
                      </View>
                   </View>
@@ -708,6 +737,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                onBackdropPress={() => {
                   setShowChooseIncreaseType(false)
                }}
+               onModalHide={() => {
+                  if (chooseIncreaseTypeModalDismiss.current) {
+                     chooseIncreaseTypeModalDismiss.current()
+                     chooseIncreaseTypeModalDismiss.current = null
+                  }
+               }}
             >
                <View style={{ backgroundColor: 'white', padding: 12 }}>
                   <View style={{ marginBottom: 12 }}>
@@ -736,7 +771,10 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                         onPress={() => {
                            setShowChooseIncreaseType(false)
                            // setShowModifierPopup(true)
-                           bottomSheetModalRef.current?.present()
+                           // bottomSheetModalRef.current?.present()
+                           chooseIncreaseTypeModalDismiss.current = () => {
+                              bottomSheetModalRef.current.present()
+                           }
                         }}
                      >
                         I'LL CHOOSE
@@ -746,8 +784,12 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                            flex: 1,
                            marginLeft: 20,
                         }}
-                        onPress={async () => {
-                           await repeatLastOne(productData)
+                        onPress={() => {
+                           setShowChooseIncreaseType(false)
+                           chooseIncreaseTypeModalDismiss.current = () => {
+                              repeatLastOne(productData)
+                           }
+                           Toast.show('Item added into cart.')
                         }}
                      >
                         REPEAT LAST ONE
@@ -777,6 +819,7 @@ const styles = StyleSheet.create({
    },
    productFloatContainer: {
       width: '100%',
+      height: '100%',
       borderRadius: 6,
       shadowColor: 'rgba(0, 0, 0, 0.08)',
       backgroundColor: '#fff',

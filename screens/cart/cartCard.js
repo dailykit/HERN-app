@@ -14,6 +14,7 @@ import { useQuery } from '@apollo/client'
 import Modal from 'react-native-modal'
 import { Button } from '../../components/button'
 import { getCartItemWithModifiers } from '../../utils'
+import Toast from 'react-native-simple-toast'
 import useGlobalStyle from '../../globalStyle'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from '../../components/modalBackdrop'
@@ -38,6 +39,8 @@ export const CartCard = ({ productData, quantity }) => {
       useState(false) // show modifier and product options details
    const [showChooseIncreaseType, setShowChooseIncreaseType] = useState(false) // show I'll choose or repeat last one popup
    const [forRepeatLastOne, setForRepeatLastOne] = useState(false) // to run repeatLastOne fn in PRODUCTS query
+
+   const [showDeleteItemModal, setShowDeleteItemModal] = useState(false)
 
    const argsForByLocation = React.useMemo(
       () => ({
@@ -339,6 +342,7 @@ export const CartCard = ({ productData, quantity }) => {
       })
       Toast.show('Item removed!')
    }
+   const chooseIncreaseTypeModalDismiss = useRef()
    return (
       <View style={[styles.cartContainer]}>
          <View style={styles.productMetaDetails}>
@@ -393,7 +397,8 @@ export const CartCard = ({ productData, quantity }) => {
                            padding: 6,
                         }}
                         onPress={() => {
-                           removeCartItems(productData.ids)
+                           setShowDeleteItemModal(true)
+                           // removeCartItems(productData.ids)
                         }}
                      >
                         <DeleteIcon stroke={'#40404099'} />
@@ -408,6 +413,7 @@ export const CartCard = ({ productData, quantity }) => {
                            removeCartItems([
                               productData.ids[productData.ids.length - 1],
                            ])
+                           Toast.show('Removing Item...')
                         }}
                         onPlusClick={() => {
                            if (productData.childs.length > 0) {
@@ -490,6 +496,12 @@ export const CartCard = ({ productData, quantity }) => {
             onBackdropPress={() => {
                setShowChooseIncreaseType(false)
             }}
+            onModalHide={() => {
+               if (chooseIncreaseTypeModalDismiss.current) {
+                  chooseIncreaseTypeModalDismiss.current()
+                  chooseIncreaseTypeModalDismiss.current = null
+               }
+            }}
          >
             <View style={{ backgroundColor: 'white', padding: 12 }}>
                <View style={{ marginBottom: 12 }}>
@@ -499,7 +511,7 @@ export const CartCard = ({ productData, quantity }) => {
                         fontFamily: globalStyle.font.medium,
                      }}
                   >
-                     Repeat last used customization?
+                     Repeat last used customization???
                   </Text>
                </View>
                <View style={{ flexDirection: 'row' }}>
@@ -516,11 +528,14 @@ export const CartCard = ({ productData, quantity }) => {
                         marginRight: 20,
                      }}
                      onPress={() => {
+                        setShowChooseIncreaseType(false)
                         setModifierType('newItem')
                         setCartDetailSelectedProduct(productData)
                         setModifyProductId(productData.productId)
-                        setShowChooseIncreaseType(false)
-                        bottomSheetModalRef.current?.present()
+                        // bottomSheetModalRef.current.present()
+                        chooseIncreaseTypeModalDismiss.current = () => {
+                           bottomSheetModalRef.current.present()
+                        }
                      }}
                   >
                      I'LL CHOOSE
@@ -531,12 +546,69 @@ export const CartCard = ({ productData, quantity }) => {
                         marginLeft: 20,
                      }}
                      onPress={() => {
+                        setShowChooseIncreaseType(false)
                         setCartDetailSelectedProduct(productData)
                         setModifyProductId(productData.productId)
-                        setForRepeatLastOne(true)
+                        // setForRepeatLastOne(true)
+                        chooseIncreaseTypeModalDismiss.current = () => {
+                           setForRepeatLastOne(true)
+                        }
+                        Toast.show('Updating Cart Items...')
                      }}
                   >
                      REPEAT LAST ONE
+                  </Button>
+               </View>
+            </View>
+         </Modal>
+         <Modal
+            isVisible={showDeleteItemModal}
+            onBackdropPress={() => {
+               setShowDeleteItemModal(false)
+            }}
+         >
+            <View style={{ backgroundColor: 'white', padding: 12 }}>
+               <View style={{ marginBottom: 12 }}>
+                  <Text
+                     style={{
+                        fontSize: 16,
+                        fontFamily: globalStyle.font.medium,
+                     }}
+                  >
+                     Remove Item from Cart?
+                  </Text>
+               </View>
+               <View style={{ flexDirection: 'row' }}>
+                  <Button
+                     variant="outline"
+                     isActive={true}
+                     textStyle={{
+                        color:
+                           appConfig.brandSettings.buttonSettings
+                              .activeTextColor.value || '#000000',
+                     }}
+                     buttonStyle={{
+                        flex: 1,
+                        marginRight: 20,
+                     }}
+                     onPress={() => {
+                        setShowDeleteItemModal(false)
+                     }}
+                  >
+                     NO
+                  </Button>
+                  <Button
+                     buttonStyle={{
+                        flex: 1,
+                        marginLeft: 20,
+                     }}
+                     onPress={() => {
+                        setShowDeleteItemModal(false)
+                        removeCartItems(productData.ids)
+                        Toast.show('Removing Item from Cart...')
+                     }}
+                  >
+                     YES
                   </Button>
                </View>
             </View>
