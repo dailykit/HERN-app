@@ -27,7 +27,6 @@ import CustomBackdrop from './modalBackdrop'
 import useGlobalStyle from '../globalStyle'
 import CachedImage from 'react-native-expo-cached-image'
 import Toast from 'react-native-simple-toast'
-import { totalMemory } from 'expo-device'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -819,7 +818,6 @@ const styles = StyleSheet.create({
    },
    productFloatContainer: {
       width: '100%',
-      height: '100%',
       borderRadius: 6,
       shadowColor: 'rgba(0, 0, 0, 0.08)',
       backgroundColor: '#fff',
