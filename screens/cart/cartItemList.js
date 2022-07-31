@@ -18,7 +18,6 @@ import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
 import Toast from 'react-native-simple-toast'
 import useGlobalStyle from '../../globalStyle'
-import Toast from 'react-native-simple-toast'
 
 export const CartItemList = () => {
    const { cartState, combinedCartItems, methods } = useCart()
