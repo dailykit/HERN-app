@@ -505,7 +505,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                width:
                   viewStyle === productViewStyles.verticalCard ? 156 : 'auto',
                height:
-                  viewStyle === productViewStyles.verticalCard ? 200 : 'auto',
+                  viewStyle === productViewStyles.verticalCard ? 212 : 'auto',
             }}
          >
             <View
@@ -659,29 +659,46 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                               ) : null}
                            </>
                         ) : (
-                           <CounterButton
-                              count={availableQuantityInCart}
-                              onMinusClick={() => {
-                                 const idsAv = combinedCartItems
-                                    .filter(x => x.productId === productData.id)
-                                    .map(x => x.ids)
-                                    .flat()
-                                 removeCartItems([idsAv[idsAv.length - 1]])
-                                 setAvailableQuantityInCart(prev => prev - 1)
-                              }}
-                              onPlusClick={() => {
-                                 if (
-                                    productData.productOptions.length > 0 &&
-                                    productData.isPopupAllowed
-                                 ) {
-                                    setShowChooseIncreaseType(true)
-                                 } else {
-                                    addToCart(productData.defaultCartItem, 1)
-                                    setAvailableQuantityInCart(prev => prev + 1)
-                                    Toast.show('Item added into cart.')
-                                 }
-                              }}
-                           />
+                           <>
+                              <CounterButton
+                                 count={availableQuantityInCart}
+                                 onMinusClick={() => {
+                                    const idsAv = combinedCartItems
+                                       .filter(
+                                          x => x.productId === productData.id
+                                       )
+                                       .map(x => x.ids)
+                                       .flat()
+                                    removeCartItems([idsAv[idsAv.length - 1]])
+                                    setAvailableQuantityInCart(prev => prev - 1)
+                                 }}
+                                 onPlusClick={() => {
+                                    if (
+                                       productData.productOptions.length > 0 &&
+                                       productData.isPopupAllowed
+                                    ) {
+                                       setShowChooseIncreaseType(true)
+                                    } else {
+                                       addToCart(productData.defaultCartItem, 1)
+                                       setAvailableQuantityInCart(
+                                          prev => prev + 1
+                                       )
+                                       Toast.show('Item added into cart.')
+                                    }
+                                 }}
+                              />
+                              {productValidationResult.isProductOptionsAvailable ? (
+                                 <Text
+                                    style={{
+                                       fontFamily: globalStyle.font.medium,
+                                       fontSize: 7,
+                                       textAlign: 'center',
+                                    }}
+                                 >
+                                    Customizable
+                                 </Text>
+                              ) : null}
+                           </>
                         )}
                      </View>
                   </View>
@@ -802,6 +819,7 @@ const styles = StyleSheet.create({
    },
    productFloatContainer: {
       width: '100%',
+      height: '100%',
       borderRadius: 6,
       shadowColor: 'rgba(0, 0, 0, 0.08)',
       backgroundColor: '#fff',
