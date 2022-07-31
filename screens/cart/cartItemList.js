@@ -141,6 +141,7 @@ export const CartItemList = () => {
                         const cartItemsIds = combinedCartItems
                            .map(each => each.ids)
                            .flat()
+                        setShowClearCartItems(false)
                         removeCartItems(cartItemsIds)
                         Toast.show('Removing Cart Items...')
                      }}
