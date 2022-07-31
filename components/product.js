@@ -528,7 +528,7 @@ export const ProductCard = ({ productData, viewStyle = 'verticalCard' }) => {
                      ...styles.floatingImage,
                      ...(viewStyle === productViewStyles.horizontalCard
                         ? {
-                             borderRadius: 4,
+                             borderRadius: productData.assets.images[0] ? 4 : 0,
                              width: '30%',
                              height:
                                 (Dimensions.get('window').width - 12) * 0.225,
