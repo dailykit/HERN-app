@@ -314,16 +314,16 @@ export const CartProvider = ({ children }) => {
                .count === 0 &&
             storedCartId
          ) {
-            deleteCart({
-               variables: {
-                  id: storedCartId,
-               },
-               onCompleted: async () => {
-                  setTotalCartItems(0)
-                  setStoredCartId(null)
-                  await AsyncStorage.removeItem('cart-id')
-               },
-            })
+            // deleteCart({
+            //    variables: {
+            //       id: storedCartId,
+            //    },
+            //    onCompleted: async () => {
+            //       setTotalCartItems(0)
+            //       setStoredCartId(null)
+            //       await AsyncStorage.removeItem('cart-id')
+            //    },
+            // })
          }
          setIsFinalCartLoading(false)
          if (deleteCartItems && deleteCartItems.returning.length) {
