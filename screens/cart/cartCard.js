@@ -18,7 +18,6 @@ import Toast from 'react-native-simple-toast'
 import useGlobalStyle from '../../globalStyle'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import CustomBackdrop from '../../components/modalBackdrop'
-import Toast from 'react-native-simple-toast'
 
 export const CartCard = ({ productData, quantity }) => {
    // context
