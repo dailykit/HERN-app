@@ -1,4 +1,4 @@
-import { useMutation, useSubscription } from '@apollo/client'
+import { useMutation, useQuery, useSubscription } from '@apollo/client'
 import isEmpty from 'lodash/isEmpty'
 import React, { useEffect, useState, useContext } from 'react'
 import {
@@ -303,7 +303,7 @@ export const CartProvider = ({ children }) => {
          //  })
       },
    })
-
+   console.log('storeCartItd', storedCartId)
    // delete cartItems
    const [deleteCartItems] = useMutation(DELETE_CART_ITEMS, {
       onCompleted: ({ deleteCartItems = null }) => {
@@ -505,8 +505,9 @@ export const CartProvider = ({ children }) => {
    }
 
    // get user pending cart when logging in
-   const { loading: existingCartLoading, error: existingCartError } =
-      useSubscription(GET_CARTS, {
+   const { loading: existingCartLoading, error: existingCartError } = useQuery(
+      GET_CARTS,
+      {
          variables: {
             where: {
                paymentStatus: { _eq: 'PENDING' },
@@ -526,14 +527,12 @@ export const CartProvider = ({ children }) => {
             user?.platform_customer?.firstName
          ),
          fetchPolicy: 'no-cache',
-         onSubscriptionData: async ({ subscriptionData }) => {
+         onCompleted: async ({ carts }) => {
             // pending cart available
+            console.log('carts', carts)
             ;(async () => {
                try {
-                  if (
-                     subscriptionData.data.carts &&
-                     subscriptionData.data.carts.length > 0
-                  ) {
+                  if (carts && carts.length > 0) {
                      const unParsedGuestCartId = await AsyncStorage.getItem(
                         'cart-id'
                      )
@@ -571,10 +570,10 @@ export const CartProvider = ({ children }) => {
                            },
                         })
                         // delete last one
-                        if (subscriptionData.data.carts[0].id !== storedCartId)
+                        if (carts[0].id !== storedCartId)
                            await deleteCart({
                               variables: {
-                                 id: subscriptionData.data.carts[0].id,
+                                 id: carts[0].id,
                               },
                               onCompleted: async () => {
                                  await AsyncStorage.removeItem('cart-id')
@@ -583,8 +582,7 @@ export const CartProvider = ({ children }) => {
                         setStoredCartId(guestCartId)
                         setIsFinalCartLoading(false)
                      } else {
-                        const addressInCart =
-                           subscriptionData.data.carts[0].address
+                        const addressInCart = carts[0].address
                         const addressToBeSaveInLocal = {
                            city: addressInCart.city,
                            country: addressInCart.country,
@@ -602,15 +600,12 @@ export const CartProvider = ({ children }) => {
                            searched: addressInCart.searched || '',
                         }
                         const orderTabForLocal =
-                           subscriptionData.data.carts[0].fulfillmentInfo
-                              ?.type ||
+                           carts[0].fulfillmentInfo?.type ||
                            orderTabs.find(
                               eachOrderTab =>
-                                 eachOrderTab.id ===
-                                 subscriptionData.data.carts[0].orderTabId
+                                 eachOrderTab.id === carts[0].orderTabId
                            )?.orderFulfillmentTypeLabel
-                        const locationIdForLocal =
-                           subscriptionData.data.carts[0].locationId
+                        const locationIdForLocal = carts[0].locationId
                         await AsyncStorage.setItem('orderTab', orderTabForLocal)
                         if (
                            orderTabForLocal === 'ONDEMAND_PICKUP' ||
@@ -645,8 +640,7 @@ export const CartProvider = ({ children }) => {
                            type: 'SET_SELECTED_ORDER_TAB',
                            payload: orderTabs.find(
                               eachOrderTab =>
-                                 eachOrderTab.id ===
-                                 subscriptionData.data.carts[0].orderTabId
+                                 eachOrderTab.id === carts[0].orderTabId
                            ),
                         })
                         dispatch({
@@ -657,7 +651,7 @@ export const CartProvider = ({ children }) => {
                               loading: false,
                            },
                         })
-                        setStoredCartId(subscriptionData.data.carts[0].id)
+                        setStoredCartId(carts[0].id)
                         await AsyncStorage.removeItem('cart-id')
                         setIsFinalCartLoading(false)
                      }
@@ -704,7 +698,8 @@ export const CartProvider = ({ children }) => {
                }
             })()
          },
-      })
+      }
+   )
 
    return (
       <CartContext.Provider
