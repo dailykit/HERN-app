@@ -412,7 +412,6 @@ export const CartCard = ({ productData, quantity }) => {
                            removeCartItems([
                               productData.ids[productData.ids.length - 1],
                            ])
-                           Toast.show('Removing Item...')
                         }}
                         onPlusClick={() => {
                            if (productData.childs.length > 0) {
@@ -604,7 +603,6 @@ export const CartCard = ({ productData, quantity }) => {
                      onPress={() => {
                         setShowDeleteItemModal(false)
                         removeCartItems(productData.ids)
-                        Toast.show('Removing Item from Cart...')
                      }}
                   >
                      YES

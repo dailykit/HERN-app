@@ -142,7 +142,6 @@ export const CartItemList = () => {
                            .flat()
                         setShowClearCartItems(false)
                         removeCartItems(cartItemsIds)
-                        Toast.show('Removing Cart Items...')
                      }}
                   >
                      YES
