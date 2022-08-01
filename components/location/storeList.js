@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+   ActivityIndicator,
+   StyleSheet,
+   Text,
+   TouchableOpacity,
+   View,
+} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import DistanceIcon from '../../assets/distanceIcon'
 import LocationIcon from '../../assets/locationIcon'
@@ -8,9 +14,10 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import useGlobalStyle from '../../globalStyle'
 import { useCart } from '../../context'
+import { useState } from 'react'
 
 export const StoreList = ({ stores, address, fulfillmentType, redirect }) => {
-   const { dispatch, orderTabs } = useConfig()
+   const { dispatch, orderTabs, appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const navigation = useNavigation()
    const { storedCartId, methods, cartState } = useCart()
@@ -19,6 +26,8 @@ export const StoreList = ({ stores, address, fulfillmentType, redirect }) => {
          x => x.orderFulfillmentTypeLabel === fulfillmentType
       )
    }, [orderTabs])
+   const [isStoreSelecting, setIsStoreSelecting] = useState(false)
+
    return (
       <View style={{ marginVertical: 8 }}>
          <Text
@@ -29,6 +38,13 @@ export const StoreList = ({ stores, address, fulfillmentType, redirect }) => {
          >
             Select Store
          </Text>
+         {isStoreSelecting ? (
+            <ActivityIndicator
+               size={'large'}
+               color={appConfig?.brandSettings?.brandColor?.value || '#000000'}
+               style={{ marginVertical: 6 }}
+            />
+         ) : null}
          <ScrollView>
             {stores.map(eachStore => {
                const {
@@ -53,6 +69,7 @@ export const StoreList = ({ stores, address, fulfillmentType, redirect }) => {
                      onPress={async () => {
                         // currently used for pickup only
                         if (eachStore['fulfillmentStatus'].status) {
+                           setIsStoreSelecting(true)
                            const storeAddress = eachStore.location
                            const addressToBeSaveInCart = {
                               line1: storeAddress.locationAddress.line1,
@@ -138,6 +155,7 @@ export const StoreList = ({ stores, address, fulfillmentType, redirect }) => {
                                  'storeLocation',
                                  JSON.stringify(addressToBeSaveInCart)
                               )
+                              setIsStoreSelecting(false)
                               navigation.goBack()
                               if (redirect && redirect?.to) {
                                  navigation.navigate(
@@ -147,6 +165,7 @@ export const StoreList = ({ stores, address, fulfillmentType, redirect }) => {
                               }
                            } catch (err) {
                               console.error('storeSelect', err)
+                              setIsStoreSelecting(false)
                            }
                         }
                      }}

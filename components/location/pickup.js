@@ -180,12 +180,11 @@ export const Pickup = ({ redirect }) => {
 
    // console.log('address', address, stores, fulfillmentType)
 
-   const SERVER_URL = React.useMemo(() => {
-      return __DEV__ ? get_env('BASE_BRAND_DEV_URL') : get_env('BASE_BRAND_URL')
-   }, [])
-
    const formatAddress = async input => {
       // save user's search text
+      const SERVER_URL = __DEV__
+         ? get_env('BASE_BRAND_DEV_URL')
+         : get_env('BASE_BRAND_URL')
       setSelectedLocationInputDescription(input.description)
       try {
          const response = await fetch(
