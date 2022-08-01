@@ -70,6 +70,8 @@ export const GET_CART = gql`
          toUseAvailablePaymentOptionId
          posistOrderStatus
          posistOrderResponse
+         address
+         fulfillmentInfo
          cartItems_aggregate(where: { level: { _eq: 1 } }) {
             aggregate {
                count
