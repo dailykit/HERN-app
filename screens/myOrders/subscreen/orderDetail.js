@@ -121,7 +121,7 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                      </View>
                      {carts[0].address.label ? (
                         <Text style={{ fontFamily: globalStyle.font.medium }}>
-                           carts[0].address.label
+                           {carts[0].address.label}
                         </Text>
                      ) : null}
                      <Text
