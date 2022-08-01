@@ -1,41 +1,42 @@
-import { isEmpty } from 'lodash'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { DeleteIcon } from '../../assets/deleteIcon'
-import { EditIcon } from '../../assets/editIcon'
-import { CounterButton } from '../../components/counterButton'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useCart } from '../../context'
-import { formatCurrency } from '../../utils/formatCurrency'
-import React, { useState, useEffect } from 'react'
-import { DownVector, UpVector } from '../../assets/vector'
-import { ModifierPopup } from '../../components/modifierPopup'
-import { PRODUCT_ONE } from '../../graphql'
+import React, { useState } from 'react'
 import { useConfig } from '../../lib/config'
-import { useQuery } from '@apollo/client'
 import Modal from 'react-native-modal'
 import { Button } from '../../components/button'
-import { getCartItemWithModifiers } from '../../utils'
 import { CartCard } from './cartCard'
 import { ScrollView } from 'react-native-gesture-handler'
 import Toast from 'react-native-simple-toast'
 import useGlobalStyle from '../../globalStyle'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const CartItemList = () => {
-   const { cartState, combinedCartItems, methods } = useCart()
+   const {
+      cartState,
+      combinedCartItems,
+      methods,
+      setTotalCartItems,
+      storedCartId,
+      setStoredCartId,
+   } = useCart()
    const { appConfig } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const [showClearCartItems, setShowClearCartItems] = useState(false)
-   const removeCartItems = cartItemIds => {
-      methods.cartItems.delete({
+
+   const deleteCart = () => {
+      methods.cart.delete({
          variables: {
-            where: {
-               id: {
-                  _in: cartItemIds,
-               },
-            },
+            id: storedCartId,
+         },
+         onCompleted: async () => {
+            setTotalCartItems(0)
+            setStoredCartId(null)
+            await AsyncStorage.removeItem('cart-id')
          },
       })
-      Toast.show('Item removed!')
+      Toast.show('Cart Cleared!')
    }
+
    return (
       <View style={{ marginHorizontal: 10 }}>
          <View
@@ -62,10 +63,6 @@ export const CartItemList = () => {
                   paddingLeft: 16,
                }}
                onPress={() => {
-                  // const cartItemsIds = combinedCartItems
-                  //    .map(each => each.ids)
-                  //    .flat()
-                  // removeCartItems(cartItemsIds)
                   setShowClearCartItems(true)
                }}
             >
@@ -90,7 +87,6 @@ export const CartItemList = () => {
                      productData={product}
                      quantity={product?.ids?.length}
                      index={index}
-                     //   removeCartItems={removeCartItems}
                   />
                )
             })}
@@ -137,11 +133,7 @@ export const CartItemList = () => {
                         marginLeft: 20,
                      }}
                      onPress={() => {
-                        const cartItemsIds = combinedCartItems
-                           .map(each => each.ids)
-                           .flat()
-                        setShowClearCartItems(false)
-                        removeCartItems(cartItemsIds)
+                        deleteCart()
                      }}
                   >
                      YES

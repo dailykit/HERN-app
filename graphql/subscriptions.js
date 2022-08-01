@@ -66,19 +66,10 @@ export const GET_CART = gql`
          loyaltyPointsUsable
          customerKeycloakId
          cartOwnerBilling
-         billing: billingDetails
          subscriptionOccurenceId
          toUseAvailablePaymentOptionId
          posistOrderStatus
          posistOrderResponse
-         locationTableId
-         locationTable {
-            internalTableLabel
-            id
-            seatCover
-         }
-         address
-         fulfillmentInfo
          cartItems_aggregate(where: { level: { _eq: 1 } }) {
             aggregate {
                count
