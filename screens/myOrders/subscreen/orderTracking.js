@@ -24,12 +24,22 @@ import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
 import useGlobalStyle from '../../../globalStyle'
+import { groupByRootCartItemId } from '../../../utils/mapedCartItems'
 
 const OrderTrackingScreen = () => {
    const { globalStyle } = useGlobalStyle()
    const route = useRoute()
    const cartId = React.useMemo(() => route.params.cartId, [])
+   const { brand, locationId, brandLocation } = useConfig()
 
+   const argsForByLocation = React.useMemo(
+      () => ({
+         brandId: brand?.id,
+         locationId: locationId,
+         brand_locationId: brandLocation?.id,
+      }),
+      [brand, locationId, brandLocation?.id]
+   )
    const {
       loading,
       error,
@@ -41,6 +51,7 @@ const OrderTrackingScreen = () => {
                _eq: cartId,
             },
          },
+         params: argsForByLocation,
       },
    })
    const cart = React.useMemo(() => carts[0], [carts])
@@ -122,9 +133,10 @@ const OrderDetail = ({ cart }) => {
    const [cartItems, setCartItems] = useState()
 
    React.useEffect(() => {
-      setCartItems(combineCartItems(cart.cartItems))
+      const groupedCartItems = groupByRootCartItemId(cart.cartItems)
+      setCartItems(combineCartItems(groupedCartItems))
       setComponentStatus('success')
-   }, [cart])
+   }, [cart.cartItems])
 
    const label = React.useMemo(() => {
       if (cart?.fulfillmentInfo?.type) {
@@ -284,7 +296,9 @@ const OrderDetail = ({ cart }) => {
                               }}
                            />
                            <Text
-                              style={{ fontFamily: globalStyle.font.medium }}
+                              style={{
+                                 fontFamily: globalStyle.font.medium,
+                              }}
                            >
                               {product.name}{' '}
                               {product.price > 0 ? (

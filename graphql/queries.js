@@ -487,7 +487,7 @@ export const CUSTOMER_REFERRALS = gql`
    }
 `
 export const GET_ORDER_DETAIL_ONE = gql`
-   query GET_ORDER_DETAIL_ONE($where: order_cart_bool_exp!) {
+   query GET_ORDER_DETAIL_ONE($where: order_cart_bool_exp!, $params: jsonb!) {
       carts(where: $where, order_by: { order: { created_at: desc } }) {
          id
          status
@@ -513,7 +513,7 @@ export const GET_ORDER_DETAIL_ONE = gql`
                paymentOptionLabel
             }
          }
-         cartItems(where: { level: { _eq: 1 } }) {
+         cartItems(order_by: [{ id: asc }]) {
             cartItemId: id
             parentCartItemId
             addOnLabel
@@ -523,32 +523,29 @@ export const GET_ORDER_DETAIL_ONE = gql`
             discount
             name: displayName
             image: displayImage
-            childs {
-               price: unitPrice
-               name: displayName
-               discount
-               productOption {
-                  id
-                  label
-               }
-               childs {
-                  displayName
-                  price: unitPrice
-                  discount
-                  modifierOption {
-                     id
-                     name
-                  }
-                  childs {
-                     displayName
-                     price: unitPrice
-                     discount
-                     modifierOption {
-                        id
-                        name
-                     }
-                  }
-               }
+            level
+            rootCartItemId
+            product {
+               id
+               name
+               price: priceByLocation(args: { params: $params })
+               discount: discountByLocation(args: { params: $params })
+               isAvailable: availabilityByLocation(args: { params: $params })
+               isPublished: publishedByLocation(args: { params: $params })
+            }
+            productOption {
+               id
+               label
+               price: priceByLocation(args: { params: $params })
+               discount: discountByLocation(args: { params: $params })
+               isAvailable: availabilityByLocation(args: { params: $params })
+               isPublished: publishedByLocation(args: { params: $params })
+            }
+            modifierOption {
+               id
+               name
+               price: priceByLocation(args: { params: $params })
+               discount: discountByLocation(args: { params: $params })
             }
             productId
          }

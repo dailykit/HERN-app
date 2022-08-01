@@ -14,14 +14,24 @@ import { Spinner } from '../../../assets/loaders'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useConfig } from '../../../lib/config'
 import useGlobalStyle from '../../../globalStyle'
+import { groupByRootCartItemId } from '../../../utils/mapedCartItems'
 
 const OrderDetailScreen = ({ products, createdAt }) => {
-   const { appConfig } = useConfig()
+   const { appConfig, brand, locationId, brandLocation } = useConfig()
    const { globalStyle } = useGlobalStyle()
    const route = useRoute()
    const [componentStatus, setComponentStatus] = React.useState('loading')
    const [cartItems, setCartItems] = React.useState([])
    // console.log('cartID', route.params.cartId)
+
+   const argsForByLocation = React.useMemo(
+      () => ({
+         brandId: brand?.id,
+         locationId: locationId,
+         brand_locationId: brandLocation?.id,
+      }),
+      [brand, locationId, brandLocation?.id]
+   )
    const {
       loading,
       error,
@@ -33,19 +43,28 @@ const OrderDetailScreen = ({ products, createdAt }) => {
                _eq: route.params.cartId,
             },
          },
+         params: argsForByLocation,
       },
    })
+   const groupedCartItems = React.useMemo(() => {
+      if (carts?.[0]?.cartItems) {
+         return groupByRootCartItemId(carts[0].cartItems)
+      } else {
+         return null
+      }
+   }, [carts?.[0]?.cartItems])
 
    React.useEffect(() => {
-      if (!loading) {
+      if (groupedCartItems) {
          if (error) {
             setComponentStatus('error')
          } else {
-            setCartItems(combineCartItems(carts[0].cartItems))
+            setCartItems(combineCartItems(groupedCartItems))
             setComponentStatus('success')
          }
       }
-   }, [loading, carts])
+   }, [groupedCartItems, error])
+
    const label = React.useMemo(() => {
       if (carts[0]?.fulfillmentInfo?.type) {
          const fulfillmentType = carts[0]?.fulfillmentInfo?.type
